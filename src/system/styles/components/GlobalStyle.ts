@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: ${colors.neutral['075']};
+    font-size: 14px;
     margin: 0;
   }
 `;
