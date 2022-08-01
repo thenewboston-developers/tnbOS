@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Menu, MenuItemConstructorOptions, shell} from 'electron';
+import {app, BrowserWindow, Menu, MenuItemConstructorOptions} from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -10,34 +10,6 @@ export default class MenuBuilder {
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow;
-  }
-
-  buildMenu(): Menu {
-    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-      this.setupDevelopmentEnvironment();
-    }
-
-    const template = process.platform === 'darwin' ? this.buildDarwinTemplate() : this.buildDefaultTemplate();
-
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-
-    return menu;
-  }
-
-  setupDevelopmentEnvironment(): void {
-    this.mainWindow.webContents.on('context-menu', (_, props) => {
-      const {x, y} = props;
-
-      Menu.buildFromTemplate([
-        {
-          click: () => {
-            this.mainWindow.webContents.inspectElement(x, y);
-          },
-          label: 'Inspect element',
-        },
-      ]).popup({window: this.mainWindow});
-    });
   }
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
@@ -170,44 +142,15 @@ export default class MenuBuilder {
         },
       ],
     };
-    const subMenuHelp: MenuItemConstructorOptions = {
-      label: 'Help',
-      submenu: [
-        {
-          click() {
-            shell.openExternal('https://electronjs.org');
-          },
-          label: 'Learn More',
-        },
-        {
-          click() {
-            shell.openExternal('https://github.com/electron/electron/tree/main/docs#readme');
-          },
-          label: 'Documentation',
-        },
-        {
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
-          },
-          label: 'Community Discussions',
-        },
-        {
-          click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
-          },
-          label: 'Search Issues',
-        },
-      ],
-    };
 
     const subMenuView =
       process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true' ? subMenuViewDev : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow];
   }
 
   buildDefaultTemplate() {
-    const templateDefault = [
+    return [
       {
         label: '&File',
         submenu: [
@@ -261,37 +204,34 @@ export default class MenuBuilder {
                 },
               ],
       },
-      {
-        label: 'Help',
-        submenu: [
-          {
-            click() {
-              shell.openExternal('https://electronjs.org');
-            },
-            label: 'Learn More',
-          },
-          {
-            click() {
-              shell.openExternal('https://github.com/electron/electron/tree/main/docs#readme');
-            },
-            label: 'Documentation',
-          },
-          {
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-            label: 'Community Discussions',
-          },
-          {
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
-            },
-            label: 'Search Issues',
-          },
-        ],
-      },
     ];
+  }
 
-    return templateDefault;
+  buildMenu(): Menu {
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+      this.setupDevelopmentEnvironment();
+    }
+
+    const template = process.platform === 'darwin' ? this.buildDarwinTemplate() : this.buildDefaultTemplate();
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+
+    return menu;
+  }
+
+  setupDevelopmentEnvironment(): void {
+    this.mainWindow.webContents.on('context-menu', (_, props) => {
+      const {x, y} = props;
+
+      Menu.buildFromTemplate([
+        {
+          click: () => {
+            this.mainWindow.webContents.inspectElement(x, y);
+          },
+          label: 'Inspect element',
+        },
+      ]).popup({window: this.mainWindow});
+    });
   }
 }
