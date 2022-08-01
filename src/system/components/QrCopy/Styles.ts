@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {fonts} from 'system/styles';
+
 export const AccountNumber = styled.div`
   color: #626a85; // TODO: Must be part of standardized style guide
   margin-right: 16px;
@@ -25,5 +27,5 @@ export const CopyContainer = styled.div`
 
 export const CopyText = styled.div`
   cursor: pointer;
-  // TODO: Add in standardized font weight
+  font-weight: ${fonts.weight.bold};
 `;

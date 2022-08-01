@@ -9,7 +9,7 @@ export const Arrow = styled.img`
 
 export const Footer = styled.div`
   align-items: center;
-  border-top: 1px solid ${colors.gray['100']};
+  border-top: 1px solid ${colors.palette.gray['100']};
   display: flex;
   justify-content: space-between;
   padding: 16px 24px;

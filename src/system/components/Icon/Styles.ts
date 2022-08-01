@@ -6,12 +6,12 @@ const buttonStyle = css`
   cursor: pointer;
 
   &:hover {
-    background: ${colors.gray['100']};
+    background: ${colors.palette.gray['100']};
   }
 `;
 
 const disabledStyle = css`
-  color: ${colors.gray['300']};
+  color: ${colors.palette.gray['300']};
   cursor: default;
 
   &:hover {
@@ -40,7 +40,7 @@ export const Wrapper = styled.div<WrapperProps>`
   transition: background-color 0.3s, color 0.3s;
 
   &:focus {
-    background: ${({unfocusable}) => (unfocusable ? null : colors.gray['100'])};
+    background: ${({unfocusable}) => (unfocusable ? null : colors.palette.gray['100'])};
   }
 
   ${({size, totalSize}) => totalSize !== 'unset' && sizeStyle(size, totalSize)};

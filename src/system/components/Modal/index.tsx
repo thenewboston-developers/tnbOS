@@ -5,6 +5,7 @@ import {ThemeProvider} from 'styled-components';
 import {mdiClose} from '@mdi/js';
 
 import Icon from 'system/components/Icon';
+import {fonts} from 'system/styles';
 import {SFC} from 'types';
 import * as S from './Styles';
 
@@ -31,7 +32,7 @@ interface ModalThemeHeader {
 
 const systemTheme: ModalTheme = {
   borderRadius: 8,
-  fontFamily: 'sans-serif', // TODO: Replace
+  fontFamily: fonts.family.default,
   header: {
     fontSize: 12,
     fontWeight: 400,
