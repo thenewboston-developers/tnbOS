@@ -1,3 +1,3 @@
-import {GenericVoidFunction} from './generic';
+import {GenericVoidFunction, SFC} from './generic';
 
-export {GenericVoidFunction};
+export {GenericVoidFunction, SFC};
