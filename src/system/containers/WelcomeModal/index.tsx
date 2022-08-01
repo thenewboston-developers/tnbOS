@@ -1,5 +1,6 @@
 import TNBLogo from 'system/assets/tnb-logo.png';
 import Modal from 'system/components/Modal';
+import QrCopy from 'system/components/QrCopy';
 import {SFC} from 'types';
 import Arrow from './assets/arrow.png';
 import * as S from './Styles';
@@ -25,6 +26,7 @@ const WelcomeModal: SFC<WelcomeModalProps> = ({className, close}) => {
         To <b>get started</b>, share your account number with an existing user so that they can then send credits to
         your account.
       </S.GettingStartedText>
+      <QrCopy accountNumber="c960478b3204204434223e6a30e27f327386074a6bbacdaf34d2f3902ef3207a" />
     </Modal>
   );
 };
