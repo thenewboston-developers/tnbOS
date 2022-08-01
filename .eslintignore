@@ -1,0 +1,30 @@
+# Build resources
+.erb/dll
+release/app/dist
+release/build
+
+# Dependencies
+node_modules
+
+# ESLint
+.eslintcache
+
+# ESLint ignores hidden directories by default
+!.erb
+
+# IDEs
+.idea
+.vscode
+
+# Logs
+*.log
+logs
+npm-debug.log.*
+
+# OSX
+.DS_Store
+
+# Runtime data
+*.pid
+*.seed
+pids
