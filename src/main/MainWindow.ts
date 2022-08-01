@@ -3,7 +3,7 @@
 import {app, BrowserWindow, shell, WebContents} from 'electron';
 import path from 'path';
 
-import MenuBuilder from './menu';
+import MenuBuilder from './MenuBuilder';
 import {GenericVoidFunction} from '../types';
 import {isDevelopment, resolveHtmlPath} from './util';
 
