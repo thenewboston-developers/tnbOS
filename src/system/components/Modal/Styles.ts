@@ -17,7 +17,7 @@ export const Content = styled.div`
 
 export const Header = styled.div`
   align-items: center;
-  color: ${colors.gray['500']};
+  color: ${colors.palette.gray['500']};
   display: flex;
   font-size: ${({theme}) => `${theme.header.fontSize}px`};
   font-weight: ${({theme}) => theme.header.fontWeight};

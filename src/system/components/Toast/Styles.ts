@@ -8,12 +8,12 @@ import {ToastType} from 'types';
 export const Container = styled.div<{type: ToastType}>`
   background-color: ${({type}) => {
     if (type === ToastType.success) {
-      return colors.green['400'];
+      return colors.palette.green['400'];
     }
     if (type === ToastType.warning) {
-      return colors.yellow['400'];
+      return colors.palette.yellow['400'];
     }
-    return colors.red['400'];
+    return colors.palette.red['400'];
   }};
   display: flex;
   padding: 12px;
