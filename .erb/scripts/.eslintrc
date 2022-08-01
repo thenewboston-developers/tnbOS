@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "@typescript-eslint/no-var-requires": "off",
+    "global-require": "off",
+    "import/no-dynamic-require": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-console": "off"
+  }
+}
