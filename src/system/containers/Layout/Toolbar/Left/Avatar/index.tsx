@@ -2,13 +2,13 @@ import {useSelector} from 'react-redux';
 
 import DefaultAvatar from 'system/assets/default-avatar.png';
 import {useToggle} from 'system/hooks';
-import EditAccountModal from 'system/modals/EditAccountModal';
+import EditSelfModal from 'system/modals/EditSelfModal';
 import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const Avatar: SFC = ({className}) => {
-  const [editAccountModalIsOpen, toggleEditAccountModal] = useToggle(false);
+  const [editSelfModalIsOpen, toggleEditSelfModal] = useToggle(false);
   const self = useSelector(getSelf);
 
   return (
@@ -16,10 +16,10 @@ const Avatar: SFC = ({className}) => {
       <S.Img
         alt="avatar"
         className={className}
-        onClick={toggleEditAccountModal}
+        onClick={toggleEditSelfModal}
         src={self.displayImage || DefaultAvatar}
       />
-      {editAccountModalIsOpen ? <EditAccountModal close={toggleEditAccountModal} /> : null}
+      {editSelfModalIsOpen ? <EditSelfModal close={toggleEditSelfModal} /> : null}
     </>
   );
 };

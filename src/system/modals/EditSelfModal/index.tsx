@@ -9,11 +9,11 @@ import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 
-export interface EditAccountModalProps {
+export interface EditSelfModalProps {
   close(): void;
 }
 
-const EditAccountModal: SFC<EditAccountModalProps> = ({className, close}) => {
+const EditSelfModal: SFC<EditSelfModalProps> = ({className, close}) => {
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -66,4 +66,4 @@ const EditAccountModal: SFC<EditAccountModalProps> = ({className, close}) => {
   );
 };
 
-export default EditAccountModal;
+export default EditSelfModal;
