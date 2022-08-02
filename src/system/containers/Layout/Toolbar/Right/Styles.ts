@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import UToolbarDivider from 'system/components/ToolbarDivider';
+import UDivider from 'system/containers/Layout/Toolbar/Divider';
 
 export const Container = styled.div`
   align-items: center;
@@ -8,6 +8,6 @@ export const Container = styled.div`
   padding-right: 12px;
 `;
 
-export const ToolbarDivider = styled(UToolbarDivider)`
+export const Divider = styled(UDivider)`
   margin-right: 10px;
 `;

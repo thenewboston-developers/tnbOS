@@ -25,7 +25,7 @@ const Right: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <DropupMenu direction={DropupMenuDirection.left} icon={mdiDevTo} options={developmentMenuOptions} />
-      <S.ToolbarDivider />
+      <S.Divider />
       <Balance />
     </S.Container>
   );
