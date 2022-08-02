@@ -1,8 +1,8 @@
-import {IpcRendererApi} from './ipc';
+import {IpcApi} from './ipc';
 import {TnbApi} from './tnb';
 
 export interface ElectronApi {
-  ipcRenderer: IpcRendererApi;
+  ipc: IpcApi;
   tnb: TnbApi;
 }
 

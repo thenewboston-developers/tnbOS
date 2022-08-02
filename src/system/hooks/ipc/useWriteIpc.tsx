@@ -18,7 +18,7 @@ function useWriteIpc<P = undefined>({
   useIpcEffect(getSuccessChannel(channel), successCallback);
   useIpcEffect(getFailChannel(channel), failCallback);
 
-  return useCallback(() => window.electron.ipcRenderer.send(channel, payload), [channel, payload]);
+  return useCallback(() => window.electron.ipc.send(channel, payload), [channel, payload]);
 }
 
 export default useWriteIpc;
