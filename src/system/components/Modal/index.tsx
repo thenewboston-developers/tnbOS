@@ -6,7 +6,7 @@ import {mdiClose} from '@mdi/js';
 
 import Icon from 'system/components/Icon';
 import {fonts} from 'system/styles';
-import {SFC} from 'types';
+import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface ModalProps {

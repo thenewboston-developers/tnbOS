@@ -2,7 +2,7 @@ import {ReactNode} from 'react';
 import {toast} from 'react-toastify';
 
 import Toast from 'system/components/Toast';
-import {ToastType} from 'types';
+import {ToastType} from 'system/types';
 
 export const displayErrorToast = (error: any) => {
   let errorStr: string;

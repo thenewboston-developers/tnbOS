@@ -1,20 +1,12 @@
-import {contextBridge, ipcRenderer, IpcRendererEvent} from 'electron';
+import {contextBridge} from 'electron';
 
-export type Channels = 'ipc-example';
+import {ElectronApi} from '../shared/types';
+import {ipcRendererApi} from './bridges/ipcRenderer';
+import {tnbApi} from './bridges/tnb';
 
-contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer: {
-    on(channel: Channels, func: (...args: unknown[]) => void) {
-      const subscription = (_event: IpcRendererEvent, ...args: unknown[]) => func(...args);
-      ipcRenderer.on(channel, subscription);
+const electronApi: ElectronApi = {
+  ipcRenderer: ipcRendererApi,
+  tnb: tnbApi,
+};
 
-      return () => ipcRenderer.removeListener(channel, subscription);
-    },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
-      ipcRenderer.once(channel, (_event, ...args) => func(...args));
-    },
-    sendMessage(channel: Channels, args: unknown[]) {
-      ipcRenderer.send(channel, args);
-    },
-  },
-});
+contextBridge.exposeInMainWorld('electron', electronApi);

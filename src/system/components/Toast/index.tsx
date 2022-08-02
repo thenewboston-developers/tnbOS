@@ -1,6 +1,6 @@
 import {ReactNode, useCallback} from 'react';
 
-import {SFC, ToastType} from 'types';
+import {SFC, ToastType} from 'system/types';
 import * as S from './Styles';
 
 export interface ToastProps {
