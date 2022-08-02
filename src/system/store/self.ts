@@ -7,7 +7,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 export const initialState: SelfSlice = {
   accountNumber: '',
   displayImage: '',
-  displayName: 'Bob',
+  displayName: '',
   signingKey: '',
 };
 
