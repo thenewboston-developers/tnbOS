@@ -1,7 +1,9 @@
 import {IpcRendererApi} from './ipc';
+import {TnbApi} from './tnb';
 
-interface ElectronApi {
+export interface ElectronApi {
   ipcRenderer: IpcRendererApi;
+  tnb: TnbApi;
 }
 
 declare global {

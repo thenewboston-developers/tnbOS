@@ -1,7 +1,7 @@
 import {ipcRenderer} from 'electron';
 
-import {IpcChannel, IpcRendererApi} from '../shared/types';
-import {getFailChannel, getSuccessChannel} from '../shared/utils/ipc';
+import {IpcChannel, IpcRendererApi} from '../../shared/types';
+import {getFailChannel, getSuccessChannel} from '../../shared/utils/ipc';
 
 const baseValidChannels = [IpcChannel.clearStore, IpcChannel.loadStoreData, IpcChannel.setStoreValue];
 const failValidChannels = baseValidChannels.map(getFailChannel);

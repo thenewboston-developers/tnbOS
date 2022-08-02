@@ -1,7 +1,12 @@
 import {contextBridge} from 'electron';
 
-import {ipcRendererApi} from './ipcRenderer';
+import {ElectronApi} from '../shared/types';
+import {ipcRendererApi} from './bridges/ipcRenderer';
+import {tnbApi} from './bridges/tnb';
 
-contextBridge.exposeInMainWorld('electron', {
+const electronApi: ElectronApi = {
   ipcRenderer: ipcRendererApi,
-});
+  tnb: tnbApi,
+};
+
+contextBridge.exposeInMainWorld('electron', electronApi);

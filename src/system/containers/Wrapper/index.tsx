@@ -13,6 +13,7 @@ import {getSelf, getStoreLoaded} from 'system/selectors/state';
 import {setStoreLoadedTrue} from 'system/store/internal';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
+import {generateAccount} from 'system/utils/tnb';
 
 const loadStoreFailToast = (_: any, errorMessage: string) => {
   displayErrorToast(`Could not load store data: ${errorMessage}`);
@@ -36,8 +37,8 @@ const Wrapper: FC = () => {
       dispatch(setStoreLoadedTrue());
 
       if (!storeSelf.accountNumber) {
-        // const {publicKeyHex, signingKeyHex} = generateAccount();
-        dispatch(setSelf({accountNumber: '', displayImage: '', displayName: '', signingKey: ''}));
+        const {publicKeyHex, signingKeyHex} = generateAccount();
+        dispatch(setSelf({accountNumber: publicKeyHex, displayImage: '', displayName: '', signingKey: signingKeyHex}));
         toggleWelcomeModal();
       }
     },
