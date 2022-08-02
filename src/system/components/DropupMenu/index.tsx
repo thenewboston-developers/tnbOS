@@ -3,7 +3,7 @@ import {createPortal} from 'react-dom';
 
 import {GenericVoidFunction} from 'shared/types';
 import Icon from 'system/components/Icon';
-import ToolbarItemContainer from 'system/components/ToolbarItemContainer';
+import ToolbarItem from 'system/components/ToolbarItem';
 import {useEventListener, useToggle} from 'system/hooks';
 import {TOOLBAR_HEIGHT} from 'system/styles';
 import {SFC} from 'system/types';
@@ -80,9 +80,9 @@ const DropupMenu: SFC<DropupMenuProps> = ({className, direction, icon, options})
 
   return (
     <>
-      <ToolbarItemContainer className={className} onClick={handleIconClick} refObject={iconRef}>
+      <ToolbarItem className={className} onClick={handleIconClick} refObject={iconRef}>
         <Icon icon={icon} size={24} />
-      </ToolbarItemContainer>
+      </ToolbarItem>
       {isOpen && createPortal(renderMenu(), dropupRoot)}
     </>
   );
