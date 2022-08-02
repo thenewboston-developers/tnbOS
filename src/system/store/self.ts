@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import {SYSTEM_SELF} from 'system/store/constants';
-import {SelfSlice} from 'system/types';
+import {Self} from 'system/types';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
 
-export const initialState: SelfSlice = {
+export const initialState: Self = {
   accountNumber: '',
   displayImage: '',
   displayName: '',
@@ -15,7 +15,7 @@ const self = createSlice({
   initialState,
   name: SYSTEM_SELF,
   reducers: {
-    setSelfSlice: setLocalAndStateReducer<SelfSlice>(SYSTEM_SELF),
+    setSelfSlice: setLocalAndStateReducer<Self>(SYSTEM_SELF),
   },
 });
 

@@ -1,7 +1,7 @@
-import {SelfSlice} from '../../system/types';
+import {Self} from '../../system/types';
 
 // export interface LocalElectronStore extends AppsLocalElectronStore, SystemElectronStore {}
 
 export interface LocalElectronStore {
-  self: SelfSlice;
+  self: Self;
 }
