@@ -15,9 +15,9 @@ const self = createSlice({
   initialState,
   name: SYSTEM_SELF,
   reducers: {
-    setSelfSlice: setLocalAndStateReducer<Self>(SYSTEM_SELF),
+    setSelf: setLocalAndStateReducer<Self>(SYSTEM_SELF),
   },
 });
 
-export const {setSelfSlice} = self.actions;
+export const {setSelf} = self.actions;
 export default self.reducer;
