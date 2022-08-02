@@ -74,6 +74,7 @@
     "@reduxjs/toolkit": "^1.8.3",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
+    "electron-store": "^8.1.0",
     "electron-updater": "^5.0.3",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.5.1",

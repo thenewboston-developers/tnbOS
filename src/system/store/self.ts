@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {SYSTEM_SELF} from 'system/store/constants';
 import {SelfSlice} from 'system/types';
+import {setLocalAndStateReducer} from 'system/utils/store';
 
 export const initialState: SelfSlice = {
   accountNumber: '',
@@ -13,8 +14,10 @@ export const initialState: SelfSlice = {
 const self = createSlice({
   initialState,
   name: SYSTEM_SELF,
-  reducers: {},
+  reducers: {
+    setSelfSlice: setLocalAndStateReducer<SelfSlice>(SYSTEM_SELF),
+  },
 });
 
-export const {} = self.actions;
+export const {setSelfSlice} = self.actions;
 export default self.reducer;
