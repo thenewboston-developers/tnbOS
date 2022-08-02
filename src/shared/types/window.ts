@@ -1,4 +1,4 @@
-import {IpcRendererApi} from 'main/ipc/ipcRenderer';
+import {IpcRendererApi} from './ipc';
 
 interface ElectronApi {
   ipcRenderer: IpcRendererApi;

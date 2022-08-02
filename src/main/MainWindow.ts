@@ -3,9 +3,9 @@
 import {app, BrowserWindow, shell, WebContents} from 'electron';
 import path from 'path';
 
-import {GenericVoidFunction} from '../system/types';
+import {GenericVoidFunction} from '../shared/types';
 import MenuBuilder from './MenuBuilder';
-import {isDevelopment, resolveHtmlPath} from './util';
+import {isDevelopment, resolveHtmlPath} from './utils';
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');

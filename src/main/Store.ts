@@ -1,27 +1,27 @@
 import ElectronStore from 'electron-store';
 
-import {SystemElectronStore} from 'system/types';
+import {LocalElectronStore} from '../shared/types';
 
 class Store {
-  private static instance = new ElectronStore<SystemElectronStore>();
+  private static instance = new ElectronStore<LocalElectronStore>();
 
   public static clear(): void {
     Store.instance.clear();
   }
 
-  public static get<K extends keyof SystemElectronStore>(key: K): SystemElectronStore[K] {
+  public static get<K extends keyof LocalElectronStore>(key: K): LocalElectronStore[K] {
     return Store.instance.get(key);
   }
 
-  public static getStore(): SystemElectronStore {
+  public static getStore(): LocalElectronStore {
     return Store.instance.store;
   }
 
-  public static set<K extends keyof SystemElectronStore>(key: K, value: SystemElectronStore[K]): void {
+  public static set<K extends keyof LocalElectronStore>(key: K, value: LocalElectronStore[K]): void {
     Store.instance.set(key, value);
   }
 
-  public static setStore(state: SystemElectronStore): void {
+  public static setStore(state: LocalElectronStore): void {
     Store.instance.set(state);
   }
 }

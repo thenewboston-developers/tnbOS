@@ -1,19 +1,8 @@
 import {ipcRenderer} from 'electron';
 
-import {GenericFunction, IpcChannel} from 'system/types';
+import {IpcChannel, IpcRendererApi} from '../../shared/types';
 
-export interface IpcRendererApi {
-  on(channel: string, callback: GenericFunction): void;
-  removeListener(channel: string, callback: GenericFunction): void;
-  send(channel: string, payload?: any): void;
-}
-
-const baseValidChannels = [
-  IpcChannel.clearStore,
-  IpcChannel.loadStoreData,
-  IpcChannel.restartApp,
-  IpcChannel.setStoreValue,
-];
+const baseValidChannels = [IpcChannel.clearStore, IpcChannel.loadStoreData, IpcChannel.setStoreValue];
 const failValidChannels = baseValidChannels.map((channel) => `${channel}-fail`);
 const successValidChannels = baseValidChannels.map((channel) => `${channel}-success`);
 const validChannels = [...baseValidChannels, ...failValidChannels, ...successValidChannels];

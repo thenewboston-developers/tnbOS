@@ -1,6 +1,6 @@
 import {contextBridge} from 'electron';
 
-import {ipcRendererApi} from 'main/ipc/ipcRenderer';
+import {ipcRendererApi} from './ipc/ipcRenderer';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: ipcRendererApi,

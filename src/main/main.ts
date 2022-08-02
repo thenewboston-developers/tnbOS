@@ -12,8 +12,7 @@
 import {app} from 'electron';
 
 import MainWindow from './MainWindow';
-import {isDevelopment} from './util';
-
+import {isDevelopment} from './utils';
 import './ipcMain';
 
 if (process.env.NODE_ENV === 'production') {
@@ -38,7 +37,7 @@ app
     MainWindow.createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other
-      // windows open.
+      // windows open
       if (!MainWindow.exists()) MainWindow.createWindow();
     });
   })
