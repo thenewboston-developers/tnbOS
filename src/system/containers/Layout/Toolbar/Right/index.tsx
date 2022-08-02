@@ -1,16 +1,15 @@
 import {mdiDevTo} from '@mdi/js';
 
 import DropupMenu, {DropupMenuDirection} from 'system/components/DropupMenu';
-import {useToggle} from 'system/hooks';
-import AccountNumberModal from 'system/modals/AccountNumberModal';
+import ToolbarItem from 'system/components/ToolbarItem';
+import Divider from 'system/containers/Layout/Toolbar/Divider';
 import {SFC, ToastType} from 'system/types';
 import {clearStore} from 'system/utils/ipc';
 import {displayToast} from 'system/utils/toast';
+import QrIcon from './QrIcon';
 import * as S from './Styles';
 
 const Right: SFC = ({className}) => {
-  const [accountNumberModalIsOpen, toggleAccountNumberModal] = useToggle(false);
-
   const handleClearStore = () => {
     clearStore();
     displayToast('Store cleared', ToastType.success);
@@ -26,14 +25,13 @@ const Right: SFC = ({className}) => {
   ];
 
   return (
-    <>
-      <S.Container className={className}>
-        <DropupMenu direction={DropupMenuDirection.left} icon={mdiDevTo} options={developmentMenuOptions} />
-        <S.Divider />
-        <S.TempContainer onClick={toggleAccountNumberModal}>Click me</S.TempContainer>
-      </S.Container>
-      {accountNumberModalIsOpen ? <AccountNumberModal close={toggleAccountNumberModal} /> : null}
-    </>
+    <S.Container className={className}>
+      <DropupMenu direction={DropupMenuDirection.left} icon={mdiDevTo} options={developmentMenuOptions} />
+      <Divider />
+      <ToolbarItem>
+        <QrIcon />
+      </ToolbarItem>
+    </S.Container>
   );
 };
 

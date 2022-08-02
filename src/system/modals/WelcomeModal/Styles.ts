@@ -31,6 +31,6 @@ export const GettingStartedText = styled.div`
   width: 276px;
 `;
 
-export const Logo = styled.img`
-  height: 24px;
+export const QrCode = styled.img`
+  height: 30px;
 `;
