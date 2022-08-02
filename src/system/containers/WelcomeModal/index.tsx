@@ -1,7 +1,7 @@
 import TNBLogo from 'system/assets/tnb-logo.png';
 import Modal from 'system/components/Modal';
 import QrCopy from 'system/components/QrCopy';
-import {SFC} from 'types';
+import {SFC} from 'system/types';
 import Arrow from './assets/arrow.png';
 import * as S from './Styles';
 

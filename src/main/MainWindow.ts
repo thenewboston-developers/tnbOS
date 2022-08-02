@@ -3,8 +3,8 @@
 import {app, BrowserWindow, shell, WebContents} from 'electron';
 import path from 'path';
 
+import {GenericVoidFunction} from '../system/types';
 import MenuBuilder from './MenuBuilder';
-import {GenericVoidFunction} from '../types';
 import {isDevelopment, resolveHtmlPath} from './util';
 
 const installExtensions = async () => {

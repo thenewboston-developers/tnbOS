@@ -3,7 +3,7 @@ import {mdiAlertCircleOutline, mdiCheckCircle} from '@mdi/js';
 
 import Icon from 'system/components/Icon';
 import {colors} from 'system/styles';
-import {ToastType} from 'types';
+import {ToastType} from 'system/types';
 
 export const Container = styled.div<{type: ToastType}>`
   background-color: ${({type}) => {

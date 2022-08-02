@@ -1,13 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-export const initialState: any = {
-  account_number: '',
-  signing_key: '',
+import {SYSTEM_SELF} from 'system/store/constants';
+import {SelfSlice} from 'system/types';
+
+export const initialState: SelfSlice = {
+  accountNumber: '',
+  displayImage: '',
+  displayName: 'Bob',
+  signingKey: '',
 };
 
 const self = createSlice({
   initialState,
-  name: 'sample',
+  name: SYSTEM_SELF,
   reducers: {},
 });
 

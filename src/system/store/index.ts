@@ -1,10 +1,14 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
 
 import selfReducer from 'system/store/self';
 
+const systemReducer = combineReducers({
+  self: selfReducer,
+});
+
 const store = configureStore({
   reducer: {
-    self: selfReducer,
+    system: systemReducer,
   },
 });
 
