@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 
-import {IpcChannel} from 'system/types';
+import {IpcChannel} from 'shared/types';
 
 export const clearStore = () => {
   window.electron.ipcRenderer.send(IpcChannel.clearStore);

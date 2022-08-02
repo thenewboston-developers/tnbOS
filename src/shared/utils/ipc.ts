@@ -1,4 +1,4 @@
-import {IpcChannel} from 'system/types';
+import {IpcChannel} from 'shared/types';
 
 export const getFailChannel = (channel: IpcChannel) => `${channel}-fail`;
 

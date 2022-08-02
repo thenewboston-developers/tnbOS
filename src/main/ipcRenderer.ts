@@ -1,10 +1,11 @@
 import {ipcRenderer} from 'electron';
 
-import {IpcChannel, IpcRendererApi} from '../../shared/types';
+import {IpcChannel, IpcRendererApi} from '../shared/types';
+import {getFailChannel, getSuccessChannel} from '../shared/utils/ipc';
 
 const baseValidChannels = [IpcChannel.clearStore, IpcChannel.loadStoreData, IpcChannel.setStoreValue];
-const failValidChannels = baseValidChannels.map((channel) => `${channel}-fail`);
-const successValidChannels = baseValidChannels.map((channel) => `${channel}-success`);
+const failValidChannels = baseValidChannels.map(getFailChannel);
+const successValidChannels = baseValidChannels.map(getSuccessChannel);
 const validChannels = [...baseValidChannels, ...failValidChannels, ...successValidChannels];
 
 const on = (channel: string, func: any) => {
