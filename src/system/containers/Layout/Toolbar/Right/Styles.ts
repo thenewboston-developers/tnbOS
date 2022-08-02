@@ -11,3 +11,9 @@ export const Container = styled.div`
 export const Divider = styled(UDivider)`
   margin-right: 10px;
 `;
+
+// TODO: Remove
+export const TempContainer = styled.div`
+  align-items: center;
+  display: flex;
+`;
