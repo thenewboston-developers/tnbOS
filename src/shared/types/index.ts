@@ -1,6 +1,6 @@
 import {Block, UnsignedBlock} from './blocks';
 import {GenericFunction, GenericVoidFunction, Id} from './generic';
-import {IpcChannel, IpcRendererApi, SetStoreValuePayload} from './ipc';
+import {IpcApi, IpcChannel, SetStoreValuePayload} from './ipc';
 import {LocalElectronStore} from './localElectronStore';
 import {AccountNumber, SigningKey, TnbKeyPair} from './signing';
 import {KeyPairDetails, TnbApi} from './tnb';
@@ -13,8 +13,8 @@ export {
   GenericFunction,
   GenericVoidFunction,
   Id,
+  IpcApi,
   IpcChannel,
-  IpcRendererApi,
   KeyPairDetails,
   LocalElectronStore,
   SetStoreValuePayload,

@@ -1,6 +1,6 @@
 import {ipcRenderer} from 'electron';
 
-import {IpcChannel, IpcRendererApi} from '../../shared/types';
+import {IpcApi, IpcChannel} from '../../shared/types';
 import {getFailChannel, getSuccessChannel} from '../../shared/utils/ipc';
 
 const baseValidChannels = [IpcChannel.clearStore, IpcChannel.loadStoreData, IpcChannel.setStoreValue];
@@ -28,7 +28,7 @@ const send = (channel: string, payload: any) => {
   }
 };
 
-export const ipcRendererApi: IpcRendererApi = {
+export const ipcApi: IpcApi = {
   on,
   removeListener,
   send,

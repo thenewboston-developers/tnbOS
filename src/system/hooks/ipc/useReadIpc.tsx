@@ -16,7 +16,7 @@ function useReadIpc({
   useIpcEffect(getFailChannel(channel), failCallback);
   useIpcEffect(getSuccessChannel(channel), successCallback);
 
-  return useCallback(() => window.electron.ipcRenderer.send(channel), [channel]);
+  return useCallback(() => window.electron.ipc.send(channel), [channel]);
 }
 
 export default useReadIpc;
