@@ -76,6 +76,7 @@
     "electron-log": "^4.4.7",
     "electron-store": "^8.1.0",
     "electron-updater": "^5.0.3",
+    "formik": "^2.2.9",
     "lodash-es": "^4.17.21",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",
@@ -85,7 +86,8 @@
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.7",
     "styled-components": "^5.3.5",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "yup": "^0.32.11"
   },
   "description": "Platform for applications.",
   "devDependencies": {
@@ -104,6 +106,7 @@
     "@types/styled-components": "^5.1.25",
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack-bundle-analyzer": "^4.4.1",
+    "@types/yup": "^0.29.14",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "browserslist-config-erb": "^0.0.3",

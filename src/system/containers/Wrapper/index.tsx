@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {IpcChannel, LocalElectronStore} from 'shared/types';
 import Layout from 'system/containers/Layout';
-import WelcomeModal from 'system/containers/WelcomeModal';
 import {useReadIpc, useToggle} from 'system/hooks';
+import WelcomeModal from 'system/modals/WelcomeModal';
 import {SYSTEM_SELF} from 'system/store/constants';
 import {initialState as selfInitialState, setSelf} from 'system/store/self';
 import {getSelf, getStoreLoaded} from 'system/selectors/state';
