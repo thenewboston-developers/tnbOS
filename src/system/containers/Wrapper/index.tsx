@@ -7,7 +7,8 @@ import {IpcChannel, LocalElectronStore} from 'shared/types';
 import Layout from 'system/containers/Layout';
 import {useReadIpc, useToggle} from 'system/hooks';
 import WelcomeModal from 'system/modals/WelcomeModal';
-import {SYSTEM_SELF} from 'system/store/constants';
+import {SYSTEM_MANAGER, SYSTEM_SELF} from 'system/store/constants';
+import {initialState as managerInitialState, setManager} from 'system/store/manager';
 import {initialState as selfInitialState, setSelf} from 'system/store/self';
 import {getSelf, getStoreLoaded} from 'system/selectors/state';
 import {setStoreLoadedTrue} from 'system/store/internal';
@@ -30,7 +31,9 @@ const Wrapper: FC = () => {
       if (storeLoaded) return;
 
       // System
+      const storeManager = store?.[SYSTEM_MANAGER] || managerInitialState;
       const storeSelf = store?.[SYSTEM_SELF] || selfInitialState;
+      dispatch(setManager(storeManager));
       dispatch(setSelf(storeSelf));
 
       // Signal completion
