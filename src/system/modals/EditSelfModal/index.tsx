@@ -1,12 +1,13 @@
 import {useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
 import Button, {ButtonType} from 'system/components/Button';
 import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
 import {getSelf} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {updateSelf} from 'system/store/self';
+import {AppDispatch, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 
 export interface EditSelfModalProps {
@@ -14,6 +15,7 @@ export interface EditSelfModalProps {
 }
 
 const EditSelfModal: SFC<EditSelfModalProps> = ({className, close}) => {
+  const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -25,7 +27,7 @@ const EditSelfModal: SFC<EditSelfModalProps> = ({className, close}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      console.log(values);
+      dispatch(updateSelf(values));
       close();
     } catch (error) {
       console.error(error);
@@ -33,6 +35,7 @@ const EditSelfModal: SFC<EditSelfModalProps> = ({className, close}) => {
   };
 
   const validationSchema = useMemo(() => {
+    // TODO: Proper validation
     return yup.object().shape({
       displayImage: yup.string(),
       displayName: yup.string(),
