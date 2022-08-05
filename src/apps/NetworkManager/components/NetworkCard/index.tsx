@@ -1,29 +1,46 @@
+import {useDispatch} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
-import noop from 'lodash/noop';
 
+import NetworkModal from 'apps/NetworkManager/modals/NetworkModal';
 import PopupMenu from 'system/components/DropdownMenu';
-import {SFC} from 'system/types';
+import {useToggle} from 'system/hooks';
+import {deleteNetwork} from 'system/store/networks';
+import {AppDispatch, Network, SFC} from 'system/types';
 import * as S from './Styles';
 
-const NetworkCard: SFC = ({className}) => {
+export interface NetworkCardProps {
+  network: Network;
+}
+
+const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
+  const [networkModalIsOpen, toggleNetworkModal] = useToggle(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDeleteNetwork = () => {
+    dispatch(deleteNetwork(network.networkId));
+  };
+
   const menuOptions = [
-    {label: 'Edit', onClick: noop},
-    {label: 'Delete', onClick: noop},
+    {label: 'Edit', onClick: toggleNetworkModal},
+    {label: 'Delete', onClick: handleDeleteNetwork},
   ];
 
   return (
-    <S.Container className={className}>
-      <S.Left>
-        <S.NetworkLogo isOnline={true} />
-        <S.LeftText>
-          <S.NetworkId>thenewboston.network</S.NetworkId>
-          <S.DisplayName>TNB</S.DisplayName>
-        </S.LeftText>
-      </S.Left>
-      <S.Right>
-        <PopupMenu icon={mdiDotsVertical} options={menuOptions} />
-      </S.Right>
-    </S.Container>
+    <>
+      <S.Container className={className}>
+        <S.Left>
+          <S.NetworkLogo displayImage={network.displayImage} isOnline={true} />
+          <S.LeftText>
+            <S.NetworkId>{network.networkId}</S.NetworkId>
+            <S.DisplayName>{network.displayName}</S.DisplayName>
+          </S.LeftText>
+        </S.Left>
+        <S.Right>
+          <PopupMenu icon={mdiDotsVertical} options={menuOptions} />
+        </S.Right>
+      </S.Container>
+      {networkModalIsOpen ? <NetworkModal close={toggleNetworkModal} network={network} /> : null}
+    </>
   );
 };
 
