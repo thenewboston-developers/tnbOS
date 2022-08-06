@@ -11,10 +11,11 @@
 
 import {app} from 'electron';
 
+import {isDevelopment} from '../shared/utils/environment';
 import MainWindow from './MainWindow';
-import {isDevelopment} from './utils';
 import './ipcMain';
 
+// TODO: Create constants for NODE_ENV states
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

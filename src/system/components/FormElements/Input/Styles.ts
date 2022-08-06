@@ -17,6 +17,12 @@ export const Field = styled(UField)`
   height: 40px;
   padding: 10px 14px;
   width: 260px;
+
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export const Label = styled.div`
