@@ -1,4 +1,5 @@
 import {useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
 import NetworkCard from 'apps/NetworkManager/components/NetworkCard';
 import {getNetworks} from 'system/selectors/state';
@@ -9,8 +10,8 @@ const MainArea: SFC = ({className}) => {
   const networks = useSelector(getNetworks);
 
   const renderNetworkCards = () => {
-    // TODO: Sort alphabetically
-    return Object.values(networks).map((network) => <NetworkCard key={network.id} network={network} />);
+    const orderedNetworks = orderBy(Object.values(networks), ['domain']);
+    return orderedNetworks.map((network) => <NetworkCard key={network.id} network={network} />);
   };
 
   // TODO: Empty state

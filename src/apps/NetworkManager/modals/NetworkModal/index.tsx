@@ -1,11 +1,12 @@
 import {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
 import {isDevelopment} from 'shared/utils/environment';
 import Button, {ButtonType} from 'system/components/Button';
 import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
+import {getNetworks} from 'system/selectors/state';
 import {setNetwork} from 'system/store/networks';
 import {AppDispatch, Network, NetworkProtocol, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
@@ -17,9 +18,10 @@ export interface NetworkModalProps {
 
 const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const networks = useSelector(getNetworks);
 
   const developmentInitialValues = {
-    port: network?.port || '',
+    port: network?.port?.toString() || '',
     protocol: network?.protocol || '',
   };
 
@@ -32,15 +34,19 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
 
   type FormValues = typeof initialValues;
 
+  const getModalTitle = () => {
+    const verb = network?.id ? 'Edit' : 'Add';
+    return `${verb} Network`;
+  };
+
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      const protocol = network?.protocol || NetworkProtocol.https;
       dispatch(
         setNetwork({
           ...values,
           id: network?.id || crypto.randomUUID(),
-          port: network?.port || undefined,
-          protocol,
+          port: values.port?.toString() ? parseInt(values.port, 10) : undefined,
+          protocol: (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https,
         }),
       );
       close();
@@ -50,25 +56,32 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   };
 
   const validationSchema = useMemo(() => {
-    // TODO: Proper validation including checking uniqueness of domain (if domain changed or network does not have
-    //  any id yet "new network")
-    // TODO: Ensure port is not 0 (also check upper bounds)
-
     const developmentFields = {
-      port: yup.number().integer(),
-      protocol: yup.string(),
+      port: yup.number().integer().max(65535).min(0),
+      protocol: yup
+        .string()
+        .required()
+        .test('is-valid-protocol', 'Invalid protocol', (value: any) => Object.values(NetworkProtocol).includes(value)),
     };
 
     return yup.object().shape({
       ...(isDevelopment ? developmentFields : {}),
-      displayImage: yup.string(),
-      displayName: yup.string(),
-      domain: yup.string(),
+      displayImage: yup.string().required(),
+      displayName: yup.string().required(),
+      domain: yup
+        .string()
+        .required()
+        .test('domain-is-unique', 'Network with this domain already exists', (value: any) => {
+          let networkList = Object.values(networks);
+          if (network?.id) networkList = networkList.filter(({domain}) => domain !== network.domain);
+          const domains = networkList.map(({domain}) => domain);
+          return !domains.includes(value);
+        }),
     });
-  }, []);
+  }, [network?.domain, network?.id, networks]);
 
   return (
-    <Modal className={className} close={close} header="Add/Edit Network">
+    <Modal className={className} close={close} header={getModalTitle()}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -84,8 +97,8 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
                 <Input errors={errors} label="Port" name="port" touched={touched} type="number" />
               </>
             ) : null}
-            <Input errors={errors} label="Display Image" name="displayImage" touched={touched} />
             <Input errors={errors} label="Display Name" name="displayName" touched={touched} />
+            <Input errors={errors} label="Logo URL" name="displayImage" touched={touched} />
             <Button
               dirty={dirty}
               disabled={isSubmitting}
