@@ -14,7 +14,6 @@ const MainArea: SFC = ({className}) => {
     return orderedNetworks.map((network) => <NetworkCard key={network.id} network={network} />);
   };
 
-  // TODO: Empty state
   return <S.Container className={className}>{renderNetworkCards()}</S.Container>;
 };
 
