@@ -19,6 +19,12 @@ const WebSocket: SFC<WebSocketProps> = ({domain, port, protocol}) => {
   useEffect(() => {
     const socketAddress = getSocketAddress(domain, protocol, port);
     const socket = new ReconnectingWebSocket(`${socketAddress}/ws/accounts/${self.accountNumber}`);
+    // When the custom auth message is sent onOpen, the online indicator can be yellow (indicating waiting on BE)
+    socket.onopen = (event) => {
+      console.log(event);
+      // update online indicator to yellow
+      // send custom auth WS message
+    };
     socket.onmessage = (event) => console.log(dispatch, event);
     return () => {
       socket.close();
