@@ -7,7 +7,7 @@ import Button, {ButtonType} from 'system/components/Button';
 import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
 import {getNetworks} from 'system/selectors/state';
-import {setNetwork} from 'system/store/networks';
+import {deleteNetwork, setNetwork} from 'system/store/networks';
 import {AppDispatch, Network, NetworkProtocol, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 
@@ -29,22 +29,24 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
     ...(isDevelopment ? developmentInitialValues : {}),
     displayImage: network?.displayImage || '',
     displayName: network?.displayName || '',
-    domain: network?.domain || '',
+    networkId: network?.networkId || '',
   };
 
   type FormValues = typeof initialValues;
 
   const getModalTitle = () => {
-    const verb = network?.id ? 'Edit' : 'Add';
+    const verb = network ? 'Edit' : 'Add';
     return `${verb} Network`;
   };
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
+      if (network && network.networkId !== values.networkId) {
+        dispatch(deleteNetwork(network.networkId));
+      }
       dispatch(
         setNetwork({
           ...values,
-          id: network?.id || crypto.randomUUID(),
           port: values.port?.toString() ? parseInt(values.port, 10) : undefined,
           protocol: (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https,
         }),
@@ -68,17 +70,17 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
       ...(isDevelopment ? developmentFields : {}),
       displayImage: yup.string().required(),
       displayName: yup.string().required(),
-      domain: yup
+      networkId: yup
         .string()
         .required()
-        .test('domain-is-unique', 'Network with this domain already exists', (value: any) => {
+        .test('network-id-is-unique', 'Network with this ID already exists', (value: any) => {
           let networkList = Object.values(networks);
-          if (network?.id) networkList = networkList.filter(({domain}) => domain !== network.domain);
-          const domains = networkList.map(({domain}) => domain);
-          return !domains.includes(value);
+          if (network) networkList = networkList.filter(({networkId}) => networkId !== network.networkId);
+          const networkIds = networkList.map(({networkId}) => networkId);
+          return !networkIds.includes(value);
         }),
     });
-  }, [network?.domain, network?.id, networks]);
+  }, [network, networks]);
 
   return (
     <Modal className={className} close={close} header={getModalTitle()}>
@@ -90,7 +92,7 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
       >
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
-            <Input errors={errors} label="Domain" name="domain" touched={touched} />
+            <Input errors={errors} label="Network ID" name="networkId" touched={touched} />
             {isDevelopment ? (
               <>
                 <Input errors={errors} label="Protocol" name="protocol" touched={touched} />

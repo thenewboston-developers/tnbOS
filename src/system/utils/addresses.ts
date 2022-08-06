@@ -5,7 +5,7 @@ const getFormattedAddress = (domain: string, protocol: string, port?: number): s
   return port ? `${base}:${port}` : base;
 };
 
-export const getSocketAddress = (domain: string, protocol: NetworkProtocol, port?: number): string => {
+export const getSocketAddress = (networkId: string, protocol: NetworkProtocol, port?: number): string => {
   const socketProtocol = protocol === NetworkProtocol.https ? 'wss' : 'ws';
-  return getFormattedAddress(domain, socketProtocol, port);
+  return getFormattedAddress(networkId, socketProtocol, port);
 };

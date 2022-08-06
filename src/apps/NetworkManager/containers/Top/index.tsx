@@ -1,4 +1,5 @@
 import NetworkModal from 'apps/NetworkManager/modals/NetworkModal';
+import AppHeader from 'system/components/AppHeader';
 import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
@@ -8,10 +9,10 @@ const Top: SFC = ({className}) => {
 
   return (
     <>
-      <S.Container className={className}>
+      <AppHeader className={className}>
         <h2>Network Manager</h2>
         <S.Button onClick={toggleNetworkModal} text="Add Network" />
-      </S.Container>
+      </AppHeader>
       {networkModalIsOpen ? <NetworkModal close={toggleNetworkModal} /> : null}
     </>
   );

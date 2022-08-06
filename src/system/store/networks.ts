@@ -11,13 +11,13 @@ const networks = createSlice({
   initialState,
   name: SYSTEM_NETWORKS,
   reducers: {
-    deleteNetwork: (state: Networks, {payload: id}: PayloadAction<string>) => {
-      delete state[id];
+    deleteNetwork: (state: Networks, {payload: networkId}: PayloadAction<string>) => {
+      delete state[networkId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_NETWORKS, state: current(state)});
     },
     setNetwork: (state: Networks, {payload}: PayloadAction<Network>) => {
-      const {id} = payload;
-      state[id] = payload;
+      const {networkId} = payload;
+      state[networkId] = payload;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_NETWORKS, state: current(state)});
     },
     setNetworks: setLocalAndStateReducer<Networks>(SYSTEM_NETWORKS),

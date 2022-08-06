@@ -7,17 +7,17 @@ import {AppDispatch, NetworkProtocol, SFC} from 'system/types';
 import {getSocketAddress} from 'system/utils/addresses';
 
 interface WebSocketProps {
-  domain: string;
+  networkId: string;
   port?: number;
   protocol: NetworkProtocol;
 }
 
-const WebSocket: SFC<WebSocketProps> = ({domain, port, protocol}) => {
+const WebSocket: SFC<WebSocketProps> = ({networkId, port, protocol}) => {
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
   useEffect(() => {
-    const socketAddress = getSocketAddress(domain, protocol, port);
+    const socketAddress = getSocketAddress(networkId, protocol, port);
     const socket = new ReconnectingWebSocket(`${socketAddress}/ws/accounts/${self.accountNumber}`);
     // When the custom auth message is sent onOpen, the online indicator can be yellow (indicating waiting on BE)
     socket.onopen = (event) => {
@@ -29,7 +29,7 @@ const WebSocket: SFC<WebSocketProps> = ({domain, port, protocol}) => {
     return () => {
       socket.close();
     };
-  }, [dispatch, domain, port, protocol, self.accountNumber]);
+  }, [dispatch, networkId, port, protocol, self.accountNumber]);
 
   return null;
 };

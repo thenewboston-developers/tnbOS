@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-import UNetworkLogo from 'apps/NetworkManager/components/NetworkLogo';
+import UAvatar from 'apps/AccountManager/components/Avatar';
+
+export const AccountNumber = styled.div`
+  font-size: 12px;
+`;
+
+export const Avatar = styled(UAvatar)`
+  margin-right: 10px;
+`;
 
 export const Container = styled.div`
   border-radius: 3px;
@@ -20,13 +28,5 @@ export const Left = styled.div`
 `;
 
 export const LeftText = styled.div``;
-
-export const NetworkId = styled.div`
-  font-size: 12px;
-`;
-
-export const NetworkLogo = styled(UNetworkLogo)`
-  margin-right: 10px;
-`;
 
 export const Right = styled.div``;

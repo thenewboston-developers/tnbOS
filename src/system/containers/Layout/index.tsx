@@ -10,9 +10,9 @@ const Layout: SFC = ({className}) => {
   const networks = useSelector(getNetworks);
 
   const renderWebSockets = () => {
-    const orderedNetworks = orderBy(Object.values(networks), ['domain']);
-    return orderedNetworks.map(({domain, id, port, protocol}) => (
-      <WebSocket domain={domain} key={id} port={port} protocol={protocol} />
+    const orderedNetworks = orderBy(Object.values(networks), ['networkId']);
+    return orderedNetworks.map(({networkId, port, protocol}) => (
+      <WebSocket key={networkId} networkId={networkId} port={port} protocol={protocol} />
     ));
   };
 
