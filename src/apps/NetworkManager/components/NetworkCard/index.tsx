@@ -17,7 +17,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDeleteNetwork = () => {
-    dispatch(deleteNetwork(network.id));
+    dispatch(deleteNetwork(network.networkId));
   };
 
   const menuOptions = [
@@ -31,7 +31,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
         <S.Left>
           <S.NetworkLogo displayImage={network.displayImage} isOnline={false} />
           <S.LeftText>
-            <S.Domain>{network.domain}</S.Domain>
+            <S.NetworkId>{network.networkId}</S.NetworkId>
             <S.DisplayName>{network.displayName}</S.DisplayName>
           </S.LeftText>
         </S.Left>
