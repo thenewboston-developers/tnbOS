@@ -6,6 +6,7 @@ import PopupMenu from 'system/components/DropdownMenu';
 import {useToggle} from 'system/hooks';
 import {deleteNetwork} from 'system/store/networks';
 import {AppDispatch, Network, SFC} from 'system/types';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface NetworkCardProps {
@@ -31,8 +32,8 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
         <S.Left>
           <S.NetworkLogo displayImage={network.displayImage} isOnline={false} />
           <S.LeftText>
-            <S.NetworkId>{network.networkId}</S.NetworkId>
             <S.DisplayName>{network.displayName}</S.DisplayName>
+            <S.NetworkId>{truncate(network.networkId, 24)}</S.NetworkId>
           </S.LeftText>
         </S.Left>
         <S.Right>

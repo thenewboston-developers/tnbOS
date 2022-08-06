@@ -11,7 +11,8 @@ export const Container = styled.div`
 `;
 
 export const DisplayName = styled.div`
-  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
 `;
 
 export const Left = styled.div`
@@ -21,8 +22,7 @@ export const Left = styled.div`
 export const LeftText = styled.div``;
 
 export const NetworkId = styled.div`
-  font-weight: 600;
-  margin-bottom: 2px;
+  font-size: 12px;
 `;
 
 export const NetworkLogo = styled(UNetworkLogo)`
