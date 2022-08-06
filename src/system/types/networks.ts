@@ -1,8 +1,9 @@
+import {Id} from 'shared/types';
 import {Dict} from 'system/types/generic';
 import {IdentificationData} from 'system/types/identification';
 
-export interface Network extends IdentificationData {
-  networkId: string;
+export interface Network extends Id, IdentificationData {
+  domain: string;
   port?: number;
   protocol: NetworkProtocol;
 }

@@ -14,16 +14,16 @@ export const DisplayName = styled.div`
   font-size: 12px;
 `;
 
+export const Domain = styled.div`
+  font-weight: 600;
+  margin-bottom: 2px;
+`;
+
 export const Left = styled.div`
   display: flex;
 `;
 
 export const LeftText = styled.div``;
-
-export const NetworkId = styled.div`
-  font-weight: 600;
-  margin-bottom: 2px;
-`;
 
 export const NetworkLogo = styled(UNetworkLogo)`
   margin-right: 10px;

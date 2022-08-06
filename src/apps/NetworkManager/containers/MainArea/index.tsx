@@ -10,7 +10,7 @@ const MainArea: SFC = ({className}) => {
 
   const renderNetworkCards = () => {
     // TODO: Sort alphabetically
-    return Object.values(networks).map((network) => <NetworkCard key={network.networkId} network={network} />);
+    return Object.values(networks).map((network) => <NetworkCard key={network.id} network={network} />);
   };
 
   // TODO: Empty state
