@@ -29,7 +29,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.NetworkLogo displayImage={network.displayImage} isOnline={true} />
+          <S.NetworkLogo displayImage={network.displayImage} isOnline={false} />
           <S.LeftText>
             <S.Domain>{network.domain}</S.Domain>
             <S.DisplayName>{network.displayName}</S.DisplayName>
