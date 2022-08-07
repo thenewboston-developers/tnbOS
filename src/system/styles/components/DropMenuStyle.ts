@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Menu = styled.div`
-  // TODO: Standardize this (copied from Figma)
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
@@ -16,7 +15,6 @@ export const Option = styled.div`
   transition: background 0.1s;
   white-space: nowrap;
 
-  // TODO: Standardize
   &:hover {
     background: rgba(0, 0, 0, 0.04);
     cursor: pointer;
