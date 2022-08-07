@@ -11,17 +11,3 @@ export const Img = styled.img`
   height: 36px;
   width: 36px;
 `;
-
-export const OnlineIndicatorInner = styled.div`
-  bottom: 0;
-  display: flex;
-  position: absolute;
-  right: 0;
-`;
-
-export const OnlineIndicatorOuter = styled.div`
-  bottom: -2px;
-  display: flex;
-  position: absolute;
-  right: -2px;
-`;
