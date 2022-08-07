@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import {fonts} from 'system/styles';
+import {colors, fonts} from 'system/styles';
 
 export const AccountNumber = styled.div`
-  color: #626a85; // TODO: Must be part of standardized style guide
+  color: ${colors.palette.gray['500']};
   margin-right: 16px;
   overflow-wrap: anywhere;
 `;
@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 export const CopyContainer = styled.div`
   align-items: center;
-  background: #e5f0fa; // TODO: Must be part of standardized style guide
+  background: ${colors.palette.neutral['075']};
   border-radius: 8px;
   display: flex;
   font-size: 12px;

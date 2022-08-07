@@ -6,8 +6,8 @@ import Icon from 'system/components/Icon';
 import ToolbarItem from 'system/components/ToolbarItem';
 import {useEventListener, useToggle} from 'system/hooks';
 import {TOOLBAR_HEIGHT} from 'system/styles';
+import {Menu, Option} from 'system/styles/components/DropMenuStyle';
 import {SFC} from 'system/types';
-import * as S from './Styles';
 
 export enum DropupMenuDirection {
   left,
@@ -62,9 +62,9 @@ const DropupMenu: SFC<DropupMenuProps> = ({className, direction, icon, options})
   };
 
   const renderMenu = () => (
-    <S.Menu style={menuPosition}>
+    <Menu style={menuPosition}>
       {options.map(({label, onClick: optionOnClick}, index) => (
-        <S.Option
+        <Option
           key={index}
           onClick={handleOptionClick(optionOnClick)}
           ref={(el) => {
@@ -73,9 +73,9 @@ const DropupMenu: SFC<DropupMenuProps> = ({className, direction, icon, options})
           role="button"
         >
           {label}
-        </S.Option>
+        </Option>
       ))}
-    </S.Menu>
+    </Menu>
   );
 
   return (

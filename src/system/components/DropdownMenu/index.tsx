@@ -4,8 +4,8 @@ import {createPortal} from 'react-dom';
 import {GenericVoidFunction} from 'shared/types';
 import Icon from 'system/components/Icon';
 import {useEventListener, useToggle} from 'system/hooks';
+import {Menu, Option} from 'system/styles/components/DropMenuStyle';
 import {SFC} from 'system/types';
-import * as S from './Styles';
 
 export interface DropdownMenuOption {
   label: ReactNode;
@@ -57,9 +57,9 @@ const DropdownMenu: SFC<DropdownMenuProps> = ({className, icon, options}) => {
   };
 
   const renderMenu = () => (
-    <S.Menu style={menuPosition}>
+    <Menu style={menuPosition}>
       {options.map(({label, onClick: optionOnClick}, index) => (
-        <S.Option
+        <Option
           key={index}
           onClick={handleOptionClick(optionOnClick)}
           ref={(el) => {
@@ -68,9 +68,9 @@ const DropdownMenu: SFC<DropdownMenuProps> = ({className, icon, options}) => {
           role="button"
         >
           {label}
-        </S.Option>
+        </Option>
       ))}
-    </S.Menu>
+    </Menu>
   );
 
   return (

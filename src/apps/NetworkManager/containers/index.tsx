@@ -7,10 +7,10 @@ import * as S from './Styles';
 const NetworkManager: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.Container>
+      <S.AppContainer>
         <Top />
         <MainArea />
-      </S.Container>
+      </S.AppContainer>
     </AppWindow>
   );
 };

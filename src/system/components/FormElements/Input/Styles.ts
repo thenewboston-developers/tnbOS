@@ -10,7 +10,7 @@ export const ErrorMessage = styled.div`
 `;
 
 export const Field = styled(UField)`
-  background: #f1f6fa; // TODO: Must be part of standardized style guide
+  background: ${colors.palette.neutral['075']};
   border-radius: 3px;
   border: 1px solid ${({$error}) => ($error ? colors.palette.red['500'] : 'transparent')};
   display: block;
