@@ -8,7 +8,7 @@ import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
 import {getNetworks} from 'system/selectors/state';
 import {deleteNetwork, setNetwork} from 'system/store/networks';
-import {AppDispatch, Network, NetworkProtocol, SFC} from 'system/types';
+import {AppDispatch, Network, NetworkConnectionStatus, NetworkProtocol, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 
 export interface NetworkModalProps {
@@ -41,16 +41,30 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
-      if (network && network.networkId !== values.networkId) {
-        dispatch(deleteNetwork(network.networkId));
+      let connectionStatus = network?.connectionStatus || NetworkConnectionStatus.disconnected;
+      const networkId = values.networkId;
+      const port = values.port?.toString() ? parseInt(values.port, 10) : undefined;
+      const protocol = (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https;
+
+      if (network) {
+        if (network.networkId !== networkId) {
+          dispatch(deleteNetwork(network.networkId));
+        }
+
+        if (network.networkId !== networkId || network.port !== port || network.protocol !== protocol) {
+          connectionStatus = NetworkConnectionStatus.disconnected;
+        }
       }
+
       dispatch(
         setNetwork({
           ...values,
-          port: values.port?.toString() ? parseInt(values.port, 10) : undefined,
-          protocol: (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https,
+          connectionStatus,
+          port,
+          protocol,
         }),
       );
+
       close();
     } catch (error) {
       console.error(error);

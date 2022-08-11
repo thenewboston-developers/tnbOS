@@ -7,12 +7,12 @@ import {IpcChannel, LocalElectronStore} from 'shared/types';
 import Layout from 'system/containers/Layout';
 import {useReadIpc, useToggle} from 'system/hooks';
 import WelcomeModal from 'system/modals/WelcomeModal';
+import {getSelf, getStoreLoaded} from 'system/selectors/state';
 import {initialState as accountsInitialState, setAccounts} from 'system/store/accounts';
 import {SYSTEM_ACCOUNTS, SYSTEM_MANAGER, SYSTEM_NETWORKS, SYSTEM_SELF} from 'system/store/constants';
 import {initialState as managerInitialState, setManager} from 'system/store/manager';
-import {initialState as networksInitialState, setNetworks} from 'system/store/networks';
+import {initializeNetworks, initialState as networksInitialState, setNetworks} from 'system/store/networks';
 import {initialState as selfInitialState, setSelf} from 'system/store/self';
-import {getSelf, getStoreLoaded} from 'system/selectors/state';
 import {setStoreLoadedTrue} from 'system/store/internal';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
@@ -32,7 +32,7 @@ const Wrapper: FC = () => {
     (store: LocalElectronStore) => {
       if (storeLoaded) return;
 
-      // System
+      // System data
       const storeAccounts = store?.[SYSTEM_ACCOUNTS] || accountsInitialState;
       const storeManager = store?.[SYSTEM_MANAGER] || managerInitialState;
       const storeNetworks = store?.[SYSTEM_NETWORKS] || networksInitialState;
@@ -41,6 +41,9 @@ const Wrapper: FC = () => {
       dispatch(setManager(storeManager));
       dispatch(setNetworks(storeNetworks));
       dispatch(setSelf(storeSelf));
+
+      // System initialization
+      dispatch(initializeNetworks());
 
       // Signal completion
       dispatch(setStoreLoadedTrue());
