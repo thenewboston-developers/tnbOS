@@ -42,18 +42,26 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   const handleSubmit = async (values: FormValues): Promise<void> => {
     try {
       let connectionStatus = network?.connectionStatus || NetworkConnectionStatus.disconnected;
+      const networkId = values.networkId;
+      const port = values.port?.toString() ? parseInt(values.port, 10) : undefined;
+      const protocol = (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https;
 
-      if (network && network.networkId !== values.networkId) {
-        dispatch(deleteNetwork(network.networkId));
-        connectionStatus = NetworkConnectionStatus.disconnected;
+      if (network) {
+        if (network.networkId !== networkId) {
+          dispatch(deleteNetwork(network.networkId));
+        }
+
+        if (network.networkId !== networkId || network.port !== port || network.protocol !== protocol) {
+          connectionStatus = NetworkConnectionStatus.disconnected;
+        }
       }
 
       dispatch(
         setNetwork({
           ...values,
           connectionStatus,
-          port: values.port?.toString() ? parseInt(values.port, 10) : undefined,
-          protocol: (values.protocol as NetworkProtocol) || network?.protocol || NetworkProtocol.https,
+          port,
+          protocol,
         }),
       );
 
