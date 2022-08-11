@@ -2,7 +2,7 @@ import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
 
 import {IpcChannel} from 'shared/types';
 import {SYSTEM_NETWORKS} from 'system/store/constants';
-import {Network, Networks} from 'system/types';
+import {Network, NetworkConnectionStatus, Networks} from 'system/types';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Networks = {};
@@ -13,6 +13,12 @@ const networks = createSlice({
   reducers: {
     deleteNetwork: (state: Networks, {payload: networkId}: PayloadAction<string>) => {
       delete state[networkId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_NETWORKS, state: current(state)});
+    },
+    initializeNetworks: (state: Networks) => {
+      for (const network of Object.values(state)) {
+        state[network.networkId].connectionStatus = NetworkConnectionStatus.disconnected;
+      }
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_NETWORKS, state: current(state)});
     },
     setConnectionStatus: (
@@ -32,5 +38,5 @@ const networks = createSlice({
   },
 });
 
-export const {deleteNetwork, setConnectionStatus, setNetwork, setNetworks} = networks.actions;
+export const {deleteNetwork, initializeNetworks, setConnectionStatus, setNetwork, setNetworks} = networks.actions;
 export default networks.reducer;
