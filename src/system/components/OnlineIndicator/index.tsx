@@ -5,12 +5,27 @@ import {colors} from 'system/styles';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-export interface OnlineIndicatorProps {
-  isOnline?: boolean;
+export enum OnlineIndicatorColor {
+  gray = 'gray',
+  green = 'green',
+  red = 'red',
+  yellow = 'yellow',
 }
 
-const OnlineIndicator: SFC<OnlineIndicatorProps> = ({isOnline}) => {
-  const color = isOnline ? colors.palette.green['400'] : colors.palette.gray['300'];
+export interface OnlineIndicatorProps {
+  color: OnlineIndicatorColor;
+}
+
+const OnlineIndicator: SFC<OnlineIndicatorProps> = ({color}) => {
+  const getIconColor = () => {
+    const iconColors = {
+      [OnlineIndicatorColor.gray]: colors.palette.gray['300'],
+      [OnlineIndicatorColor.green]: colors.palette.green['400'],
+      [OnlineIndicatorColor.red]: colors.palette.red['400'],
+      [OnlineIndicatorColor.yellow]: colors.palette.yellow['300'],
+    };
+    return iconColors[color];
+  };
 
   return (
     <>
@@ -18,7 +33,7 @@ const OnlineIndicator: SFC<OnlineIndicatorProps> = ({isOnline}) => {
         <Icon color="white" path={mdiCircle} size="14px" />
       </S.Outer>
       <S.Inner>
-        <Icon color={color} path={mdiCircle} size="10px" />
+        <Icon color={getIconColor()} path={mdiCircle} size="10px" />
       </S.Inner>
     </>
   );

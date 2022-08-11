@@ -1,18 +1,27 @@
-import OnlineIndicator from 'system/components/OnlineIndicator';
-import {SFC} from 'system/types';
+import OnlineIndicator, {OnlineIndicatorColor} from 'system/components/OnlineIndicator';
+import {NetworkConnectionStatus, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface NetworkLogoProps {
+  connectionStatus: NetworkConnectionStatus;
   displayImage: string;
-  displayOnlineStatus?: boolean;
-  isOnline?: boolean;
 }
 
-const NetworkLogo: SFC<NetworkLogoProps> = ({className, displayImage, displayOnlineStatus = true, isOnline}) => {
+const NetworkLogo: SFC<NetworkLogoProps> = ({className, connectionStatus, displayImage}) => {
+  const getColor = () => {
+    const iconColors = {
+      [NetworkConnectionStatus.authenticated]: OnlineIndicatorColor.green,
+      [NetworkConnectionStatus.connected]: OnlineIndicatorColor.yellow,
+      [NetworkConnectionStatus.disconnected]: OnlineIndicatorColor.gray,
+      [NetworkConnectionStatus.error]: OnlineIndicatorColor.red,
+    };
+    return iconColors[connectionStatus];
+  };
+
   return (
     <S.Container className={className}>
       <S.Img alt="logo" src={displayImage} />
-      {displayOnlineStatus && <OnlineIndicator isOnline={isOnline} />}
+      <OnlineIndicator color={getColor()} />
     </S.Container>
   );
 };

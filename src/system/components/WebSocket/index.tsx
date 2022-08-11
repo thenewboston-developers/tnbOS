@@ -2,9 +2,12 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
+import rootRouter from 'system/routers/rootRouter';
 import {getSelf} from 'system/selectors/state';
-import {AppDispatch, NetworkProtocol, SFC} from 'system/types';
+import {setConnectionStatus} from 'system/store/networks';
+import {AppDispatch, NetworkConnectionStatus, NetworkProtocol, SFC} from 'system/types';
 import {getSocketAddress} from 'system/utils/addresses';
+import {getAuthToken} from 'system/utils/auth';
 
 interface WebSocketProps {
   networkId: string;
@@ -19,17 +22,19 @@ const WebSocket: SFC<WebSocketProps> = ({networkId, port, protocol}) => {
   useEffect(() => {
     const socketAddress = getSocketAddress(networkId, protocol, port);
     const socket = new ReconnectingWebSocket(`${socketAddress}/ws/accounts/${self.accountNumber}`);
-    // When the custom auth message is sent onOpen, the online indicator can be yellow (indicating waiting on BE)
-    socket.onopen = (event) => {
-      console.log(event);
-      // update online indicator to yellow
-      // send custom auth WS message
+    socket.onmessage = (event) => rootRouter(dispatch, event, networkId);
+    socket.onopen = () => {
+      dispatch(setConnectionStatus({connectionStatus: NetworkConnectionStatus.connected, networkId}));
+      const payload = {
+        method: 'authenticate',
+        token: getAuthToken(self),
+      };
+      socket.send(JSON.stringify(payload));
     };
-    socket.onmessage = (event) => console.log(dispatch, event);
     return () => {
       socket.close();
     };
-  }, [dispatch, networkId, port, protocol, self.accountNumber]);
+  }, [dispatch, networkId, port, protocol, self]);
 
   return null;
 };
