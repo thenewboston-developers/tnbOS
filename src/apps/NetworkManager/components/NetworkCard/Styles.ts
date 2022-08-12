@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import UNetworkLogo from 'apps/NetworkManager/components/NetworkLogo';
 
+export const Balance = styled.div`
+  font-size: 12px;
+`;
+
 export const Container = styled.div`
   border-radius: 3px;
   border: 1px solid #e3e8ee;
@@ -23,6 +27,7 @@ export const LeftText = styled.div``;
 
 export const NetworkId = styled.div`
   font-size: 12px;
+  margin-bottom: 2px;
 `;
 
 export const NetworkLogo = styled(UNetworkLogo)`
