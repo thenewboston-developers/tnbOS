@@ -11,7 +11,7 @@ const networks = createSlice({
   initialState,
   name: SYSTEM_NETWORKS,
   reducers: {
-    deleteNetwork: (state: Networks, {payload: networkId}: PayloadAction<string>) => {
+    _deleteNetwork: (state: Networks, {payload: networkId}: PayloadAction<string>) => {
       delete state[networkId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_NETWORKS, state: current(state)});
     },
@@ -38,5 +38,5 @@ const networks = createSlice({
   },
 });
 
-export const {deleteNetwork, initializeNetworks, setConnectionStatus, setNetwork, setNetworks} = networks.actions;
+export const {_deleteNetwork, initializeNetworks, setConnectionStatus, setNetwork, setNetworks} = networks.actions;
 export default networks.reducer;

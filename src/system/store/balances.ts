@@ -11,7 +11,7 @@ const balances = createSlice({
   initialState,
   name: SYSTEM_BALANCES,
   reducers: {
-    deleteBalance: (state: Balances, {payload: networkId}: PayloadAction<string>) => {
+    _deleteBalance: (state: Balances, {payload: networkId}: PayloadAction<string>) => {
       delete state[networkId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SYSTEM_BALANCES, state: current(state)});
     },
@@ -30,5 +30,5 @@ const balances = createSlice({
   },
 });
 
-export const {deleteBalance, initializeBalances, setBalance, setBalances} = balances.actions;
+export const {_deleteBalance, initializeBalances, setBalance, setBalances} = balances.actions;
 export default balances.reducer;
