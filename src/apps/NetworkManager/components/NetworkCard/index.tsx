@@ -4,6 +4,7 @@ import {mdiDotsVertical} from '@mdi/js';
 import NetworkModal from 'apps/NetworkManager/modals/NetworkModal';
 import PopupMenu from 'system/components/DropdownMenu';
 import {useToggle} from 'system/hooks';
+import {deleteBalance} from 'system/store/balances';
 import {deleteNetwork} from 'system/store/networks';
 import {AppDispatch, Network, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
@@ -19,6 +20,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
 
   const handleDeleteNetwork = () => {
     dispatch(deleteNetwork(network.networkId));
+    dispatch(deleteBalance(network.networkId));
   };
 
   const menuOptions = [

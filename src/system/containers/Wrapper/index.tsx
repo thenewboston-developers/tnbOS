@@ -9,7 +9,8 @@ import {useReadIpc, useToggle} from 'system/hooks';
 import WelcomeModal from 'system/modals/WelcomeModal';
 import {getSelf, getStoreLoaded} from 'system/selectors/state';
 import {initialState as accountsInitialState, setAccounts} from 'system/store/accounts';
-import {SYSTEM_ACCOUNTS, SYSTEM_MANAGER, SYSTEM_NETWORKS, SYSTEM_SELF} from 'system/store/constants';
+import {initializeBalances, initialState as balancesInitialState, setBalances} from 'system/store/balances';
+import {SYSTEM_ACCOUNTS, SYSTEM_BALANCES, SYSTEM_MANAGER, SYSTEM_NETWORKS, SYSTEM_SELF} from 'system/store/constants';
 import {initialState as managerInitialState, setManager} from 'system/store/manager';
 import {initializeNetworks, initialState as networksInitialState, setNetworks} from 'system/store/networks';
 import {initialState as selfInitialState, setSelf} from 'system/store/self';
@@ -34,16 +35,19 @@ const Wrapper: FC = () => {
 
       // System data
       const storeAccounts = store?.[SYSTEM_ACCOUNTS] || accountsInitialState;
+      const storeBalances = store?.[SYSTEM_BALANCES] || balancesInitialState;
       const storeManager = store?.[SYSTEM_MANAGER] || managerInitialState;
       const storeNetworks = store?.[SYSTEM_NETWORKS] || networksInitialState;
       const storeSelf = store?.[SYSTEM_SELF] || selfInitialState;
       dispatch(setAccounts(storeAccounts));
+      dispatch(setBalances(storeBalances));
       dispatch(setManager(storeManager));
       dispatch(setNetworks(storeNetworks));
       dispatch(setSelf(storeSelf));
 
       // System initialization
       dispatch(initializeNetworks());
+      dispatch(initializeBalances());
 
       // Signal completion
       dispatch(setStoreLoadedTrue());

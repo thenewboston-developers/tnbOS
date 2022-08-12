@@ -7,6 +7,7 @@ import Button, {ButtonType} from 'system/components/Button';
 import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
 import {getNetworks} from 'system/selectors/state';
+import {deleteBalance, setBalance} from 'system/store/balances';
 import {deleteNetwork, setNetwork} from 'system/store/networks';
 import {AppDispatch, Network, NetworkConnectionStatus, NetworkProtocol, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
@@ -49,11 +50,16 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
       if (network) {
         if (network.networkId !== networkId) {
           dispatch(deleteNetwork(network.networkId));
+          dispatch(deleteBalance(network.networkId));
         }
 
         if (network.networkId !== networkId || network.port !== port || network.protocol !== protocol) {
           connectionStatus = NetworkConnectionStatus.disconnected;
         }
+      }
+
+      if (!network || network.networkId !== networkId) {
+        dispatch(setBalance({balance: 0, networkId: networkId}));
       }
 
       dispatch(
