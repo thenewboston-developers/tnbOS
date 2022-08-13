@@ -1,6 +1,6 @@
 import {ipcMain} from 'electron';
 
-import {IpcChannel, SetStoreValuePayload, LocalElectronStore} from '../shared/types';
+import {IpcChannel, LocalElectronStore, SetStoreValuePayload} from '../shared/types';
 import {getFailChannel, getSuccessChannel} from '../shared/utils/ipc';
 import Store from './Store';
 

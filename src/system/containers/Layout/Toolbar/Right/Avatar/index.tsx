@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 
 import DefaultAvatar from 'system/assets/default-avatar.png';
+import ToolbarItem from 'system/components/ToolbarItem';
 import {useToggle} from 'system/hooks';
 import EditSelfModal from 'system/modals/EditSelfModal';
 import {getSelf} from 'system/selectors/state';
@@ -13,12 +14,9 @@ const Avatar: SFC = ({className}) => {
 
   return (
     <>
-      <S.Img
-        alt="avatar"
-        className={className}
-        onClick={toggleEditSelfModal}
-        src={self.displayImage || DefaultAvatar}
-      />
+      <ToolbarItem className={className}>
+        <S.Img alt="avatar" onClick={toggleEditSelfModal} src={self.displayImage || DefaultAvatar} />
+      </ToolbarItem>
       {editSelfModalIsOpen ? <EditSelfModal close={toggleEditSelfModal} /> : null}
     </>
   );
