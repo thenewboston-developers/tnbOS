@@ -14,14 +14,14 @@ const NetworkLogo: SFC<NetworkLogoProps> = ({className, displayImage, networkId}
   const socketStatuses = useSelector(getSocketStatuses);
 
   const getColor = () => {
-    const iconColors = {
+    const colors = {
       [SocketStatus.authenticated]: OnlineIndicatorColor.green,
       [SocketStatus.connected]: OnlineIndicatorColor.yellow,
       [SocketStatus.disconnected]: OnlineIndicatorColor.gray,
       [SocketStatus.error]: OnlineIndicatorColor.red,
     };
     const socketStatus = socketStatuses[networkId];
-    return iconColors[socketStatus];
+    return colors[socketStatus];
   };
 
   return (
