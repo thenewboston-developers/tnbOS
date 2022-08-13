@@ -7,7 +7,7 @@ const Left: SFC = ({className}) => {
   const renderAppIcons = () => {
     return appRegistrations
       .filter(({isSystemApp}) => !isSystemApp)
-      .map(({appId, icon, iconType}) => <AppIcon appId={appId} key={appId} icon={icon} iconType={iconType} />);
+      .map(({appId, icon, iconType}) => <AppIcon appId={appId} icon={icon} iconType={iconType} key={appId} />);
   };
 
   return <S.Container className={className}>{renderAppIcons()}</S.Container>;

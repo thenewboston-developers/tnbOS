@@ -15,14 +15,14 @@ export const appRegistrations: AppRegistration[] = [
 ];
 
 export const Apps: SFC = () => {
-  const manager = useSelector(getManager);
+  const {activeApp} = useSelector(getManager);
 
   return (
     <>
-      <Chat display={manager.activeApp === ChatRegistration.appId} />
-      <SuppCoins display={manager.activeApp === SuppCoinsRegistration.appId} />
-      <AccountManager display={manager.activeApp === AccountManagerRegistration.appId} />
-      <NetworkManager display={manager.activeApp === NetworkManagerRegistration.appId} />
+      <Chat display={activeApp === ChatRegistration.appId} />
+      <SuppCoins display={activeApp === SuppCoinsRegistration.appId} />
+      <AccountManager display={activeApp === AccountManagerRegistration.appId} />
+      <NetworkManager display={activeApp === NetworkManagerRegistration.appId} />
     </>
   );
 };

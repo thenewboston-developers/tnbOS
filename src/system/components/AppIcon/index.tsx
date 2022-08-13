@@ -21,11 +21,11 @@ const AppIcon: SFC<AppIconProps> = ({appId, className, icon, iconType}) => {
   };
 
   const renderIcon = () => {
-    return iconType === AppIconType.image ? (
-      <img alt={appId} className={className} onClick={handleClick} src={icon} />
-    ) : (
-      <Icon className={className} onClick={handleClick} icon={icon} unfocusable />
-    );
+    const icons = {
+      [AppIconType.image]: <img alt={appId} className={className} onClick={handleClick} src={icon} />,
+      [AppIconType.path]: <Icon className={className} icon={icon} onClick={handleClick} unfocusable />,
+    };
+    return icons[iconType];
   };
 
   return (
