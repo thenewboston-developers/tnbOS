@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
+import {mdiQrcodeScan} from '@mdi/js';
 
-import QrCode from 'system/assets/qr-code.png';
+import Icon from 'system/components/Icon';
 import Modal from 'system/components/Modal';
 import QrCopy from 'system/components/QrCopy';
 import {getSelf} from 'system/selectors/state';
@@ -20,7 +21,7 @@ const WelcomeModal: SFC<WelcomeModalProps> = ({className, close}) => {
       <S.FooterLeft>You can always view your account number by clicking this icon on your toolbar.</S.FooterLeft>
       <S.FooterRight>
         <S.Arrow alt="arrow" src={Arrow} />
-        <S.QrCode alt="logo" src={QrCode} />
+        <Icon icon={mdiQrcodeScan} unfocusable />
       </S.FooterRight>
     </S.Footer>
   );

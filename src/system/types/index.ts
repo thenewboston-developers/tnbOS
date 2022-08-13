@@ -1,5 +1,5 @@
 import {Account, Accounts} from 'system/types/accounts';
-import {AppProps, AppRegistration} from 'system/types/apps';
+import {AppIconType, AppProps, AppRegistration, SystemAppRegistration} from 'system/types/apps';
 import {Balances} from 'system/types/balances';
 import {CoreAccount} from 'system/types/core';
 import {Dict, SFC} from 'system/types/generic';
@@ -22,6 +22,7 @@ export {
   Account,
   Accounts,
   AppDispatch,
+  AppIconType,
   AppProps,
   AppRegistration,
   AuthSocketData,
@@ -42,5 +43,6 @@ export {
   SocketData,
   StandardSocketData,
   StandardSocketDataType,
+  SystemAppRegistration,
   ToastType,
 };

@@ -1,10 +1,12 @@
-import AppIcon from 'apps/NetworkManager/assets/app-icon.png';
-import NetworkManager from 'apps/NetworkManager/containers';
-import {AppRegistration} from 'system/types';
+import {mdiSignal} from '@mdi/js';
 
-const NetworkManagerRegistration: AppRegistration = {
+import NetworkManager from 'apps/NetworkManager/containers';
+import {AppIconType, SystemAppRegistration} from 'system/types';
+
+const NetworkManagerRegistration: SystemAppRegistration = {
   appId: 'NetworkManager',
-  icon: AppIcon,
+  icon: mdiSignal,
+  iconType: AppIconType.path,
 };
 
 export {NetworkManager, NetworkManagerRegistration};

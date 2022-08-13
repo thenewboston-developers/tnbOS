@@ -1,10 +1,12 @@
-import AppIcon from 'apps/AccountManager/assets/app-icon.png';
-import AccountManager from 'apps/AccountManager/containers';
-import {AppRegistration} from 'system/types';
+import {mdiCellphoneLink} from '@mdi/js';
 
-const AccountManagerRegistration: AppRegistration = {
+import AccountManager from 'apps/AccountManager/containers';
+import {AppIconType, SystemAppRegistration} from 'system/types';
+
+const AccountManagerRegistration: SystemAppRegistration = {
   appId: 'AccountManager',
-  icon: AppIcon,
+  icon: mdiCellphoneLink,
+  iconType: AppIconType.path,
 };
 
 export {AccountManager, AccountManagerRegistration};

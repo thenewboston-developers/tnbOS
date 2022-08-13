@@ -1,15 +1,16 @@
-import QrCode from 'system/assets/qr-code.png';
+import {mdiQrcodeScan} from '@mdi/js';
+
+import Icon from 'system/components/Icon';
 import {useToggle} from 'system/hooks';
 import AccountNumberModal from 'system/modals/AccountNumberModal';
 import {SFC} from 'system/types';
-import * as S from './Styles';
 
 const QrIcon: SFC = ({className}) => {
   const [accountNumberModalIsOpen, toggleAccountNumberModal] = useToggle(false);
 
   return (
     <>
-      <S.Img alt="qrCode" className={className} onClick={toggleAccountNumberModal} src={QrCode} />
+      <Icon className={className} onClick={toggleAccountNumberModal} icon={mdiQrcodeScan} unfocusable />
       {accountNumberModalIsOpen ? <AccountNumberModal close={toggleAccountNumberModal} /> : null}
     </>
   );
