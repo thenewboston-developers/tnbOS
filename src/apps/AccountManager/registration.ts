@@ -7,6 +7,7 @@ const AccountManagerRegistration: SystemAppRegistration = {
   appId: 'AccountManager',
   icon: mdiCellphoneLink,
   iconType: AppIconType.path,
+  isSystemApp: true,
 };
 
 export {AccountManager, AccountManagerRegistration};

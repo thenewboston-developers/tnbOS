@@ -10,8 +10,11 @@ export interface AppProps {
 export interface AppRegistration {
   appId: string;
   icon: string;
+  iconType: AppIconType;
+  isSystemApp: boolean;
 }
 
 export interface SystemAppRegistration extends AppRegistration {
   iconType: AppIconType.path;
+  isSystemApp: true;
 }

@@ -5,7 +5,9 @@ import * as S from './Styles';
 
 const Left: SFC = ({className}) => {
   const renderAppIcons = () => {
-    return appRegistrations.map(({appId, icon}) => <AppIcon appId={appId} key={appId} icon={icon} />);
+    return appRegistrations
+      .filter(({isSystemApp}) => !isSystemApp)
+      .map(({appId, icon, iconType}) => <AppIcon appId={appId} key={appId} icon={icon} iconType={iconType} />);
   };
 
   return <S.Container className={className}>{renderAppIcons()}</S.Container>;

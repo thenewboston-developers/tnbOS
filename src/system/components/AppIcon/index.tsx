@@ -9,10 +9,10 @@ import * as S from './Styles';
 export interface AppIconProps {
   appId: string;
   icon: string;
-  iconType?: AppIconType;
+  iconType: AppIconType;
 }
 
-const AppIcon: SFC<AppIconProps> = ({appId, className, icon, iconType = AppIconType.image}) => {
+const AppIcon: SFC<AppIconProps> = ({appId, className, icon, iconType}) => {
   const dispatch = useDispatch<AppDispatch>();
   const manager = useSelector(getManager);
 

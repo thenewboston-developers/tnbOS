@@ -7,6 +7,7 @@ const NetworkManagerRegistration: SystemAppRegistration = {
   appId: 'NetworkManager',
   icon: mdiSignal,
   iconType: AppIconType.path,
+  isSystemApp: true,
 };
 
 export {NetworkManager, NetworkManagerRegistration};

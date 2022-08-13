@@ -1,11 +1,11 @@
 import {mdiDevTo} from '@mdi/js';
 
-import {systemAppRegistrations} from 'apps/registry';
+import {appRegistrations} from 'apps/registry';
 import AppIcon from 'system/components/AppIcon';
 import DropupMenu, {DropupMenuDirection} from 'system/components/DropupMenu';
 import ToolbarItem from 'system/components/ToolbarItem';
 import Divider from 'system/containers/Layout/Toolbar/Divider';
-import {AppIconType, SFC, ToastType} from 'system/types';
+import {SFC, ToastType} from 'system/types';
 import {clearStore} from 'system/utils/ipc';
 import {displayToast} from 'system/utils/toast';
 import Avatar from './Avatar';
@@ -28,9 +28,9 @@ const Right: SFC = ({className}) => {
   ];
 
   const renderAppIcons = () => {
-    return systemAppRegistrations.map(({appId, icon}) => (
-      <AppIcon appId={appId} key={appId} icon={icon} iconType={AppIconType.path} />
-    ));
+    return appRegistrations
+      .filter(({isSystemApp}) => isSystemApp)
+      .map(({appId, icon, iconType}) => <AppIcon appId={appId} key={appId} icon={icon} iconType={iconType} />);
   };
 
   return (
