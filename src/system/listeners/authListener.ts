@@ -1,8 +1,8 @@
 import {fetchAccount} from 'system/core/accounts';
 import store from 'system/store';
 import {setBalance} from 'system/store/balances';
-import {setConnectionStatus} from 'system/store/networks';
-import {AppDispatch, AuthSocketData, NetworkConnectionStatus} from 'system/types';
+import {setSocketStatus} from 'system/store/socketStatuses';
+import {AppDispatch, AuthSocketData, SocketStatus} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 import {authValidator} from 'system/validators/authValidators';
 
@@ -14,7 +14,7 @@ const authListener = (dispatch: AppDispatch, networkId: string, socketData: Auth
       } = store.getState();
 
       await authValidator.validate(socketData);
-      dispatch(setConnectionStatus({connectionStatus: NetworkConnectionStatus.authenticated, networkId}));
+      dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.authenticated}));
 
       try {
         const {balance} = await fetchAccount(self.accountNumber, networkId);
@@ -24,7 +24,7 @@ const authListener = (dispatch: AppDispatch, networkId: string, socketData: Auth
       }
     } catch (error) {
       console.error(error);
-      dispatch(setConnectionStatus({connectionStatus: NetworkConnectionStatus.error, networkId}));
+      dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.error}));
       displayErrorToast('Invalid authentication response received');
     }
   })();

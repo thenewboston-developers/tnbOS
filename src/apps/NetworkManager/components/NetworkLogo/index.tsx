@@ -1,21 +1,27 @@
+import {useSelector} from 'react-redux';
+
 import OnlineIndicator, {OnlineIndicatorColor} from 'system/components/OnlineIndicator';
-import {NetworkConnectionStatus, SFC} from 'system/types';
+import {getSocketStatuses} from 'system/selectors/state';
+import {SFC, SocketStatus} from 'system/types';
 import * as S from './Styles';
 
 export interface NetworkLogoProps {
-  connectionStatus: NetworkConnectionStatus;
   displayImage: string;
+  networkId: string;
 }
 
-const NetworkLogo: SFC<NetworkLogoProps> = ({className, connectionStatus, displayImage}) => {
+const NetworkLogo: SFC<NetworkLogoProps> = ({className, displayImage, networkId}) => {
+  const socketStatuses = useSelector(getSocketStatuses);
+
   const getColor = () => {
     const iconColors = {
-      [NetworkConnectionStatus.authenticated]: OnlineIndicatorColor.green,
-      [NetworkConnectionStatus.connected]: OnlineIndicatorColor.yellow,
-      [NetworkConnectionStatus.disconnected]: OnlineIndicatorColor.gray,
-      [NetworkConnectionStatus.error]: OnlineIndicatorColor.red,
+      [SocketStatus.authenticated]: OnlineIndicatorColor.green,
+      [SocketStatus.connected]: OnlineIndicatorColor.yellow,
+      [SocketStatus.disconnected]: OnlineIndicatorColor.gray,
+      [SocketStatus.error]: OnlineIndicatorColor.red,
     };
-    return iconColors[connectionStatus];
+    const socketStatus = socketStatuses[networkId];
+    return iconColors[socketStatus];
   };
 
   return (
