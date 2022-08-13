@@ -4,8 +4,8 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import rootRouter from 'system/routers/rootRouter';
 import {getSelf} from 'system/selectors/state';
-import {setConnectionStatus} from 'system/store/networks';
-import {AppDispatch, NetworkConnectionStatus, NetworkProtocol, SFC} from 'system/types';
+import {setSocketStatus} from 'system/store/socketStatuses';
+import {AppDispatch, NetworkProtocol, SFC, SocketStatus} from 'system/types';
 import {getSocketAddress} from 'system/utils/addresses';
 import {getAuthToken} from 'system/utils/auth';
 
@@ -24,7 +24,7 @@ const WebSocket: SFC<WebSocketProps> = ({networkId, port, protocol}) => {
     const socket = new ReconnectingWebSocket(`${socketAddress}/ws/accounts/${self.accountNumber}`);
     socket.onmessage = (event) => rootRouter(dispatch, event, networkId);
     socket.onopen = () => {
-      dispatch(setConnectionStatus({connectionStatus: NetworkConnectionStatus.connected, networkId}));
+      dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.connected}));
       const payload = {
         method: 'authenticate',
         token: getAuthToken(self),
