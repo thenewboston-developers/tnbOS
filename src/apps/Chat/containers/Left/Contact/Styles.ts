@@ -1,6 +1,7 @@
 import styled, {css} from 'styled-components';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
+import {colors, fonts} from 'apps/Chat/styles';
 
 export const BottomText = styled.div`
   font-size: 12px;
@@ -12,38 +13,40 @@ export const Container = styled.div<{isActiveChat: boolean}>`
   margin: 0 12px 2px;
   padding: 6px 8px;
 
+  ${Status} {
+    border-color: ${colors.leftBackground};
+  }
+
   ${({isActiveChat}) =>
     isActiveChat &&
     css`
-      background: #42464d;
-      color: white;
+      background: ${colors.hoverLight};
+      color: #fff;
+
+      ${Status} {
+        border-color: ${colors.hoverLight};
+      }
     `}
 
-  ${Status} {
-    border-color: #2e3136;
-    ${({isActiveChat}) => isActiveChat && `border-color: #42464d;`};
-  }
-
   &:hover {
-    background: #3b3f44;
-    color: #dcddde;
+    background: ${colors.hoverDark};
+    color: ${fonts.color.default};
     cursor: pointer;
 
     ${Status} {
-      border-color: #3b3f44;
-      ${({isActiveChat}) => isActiveChat && `border-color: #42464d;`};
+      border-color: ${colors.hoverDark};
     }
   }
 `;
 
 export const Date = styled.div`
   font-size: 10px;
-  font-weight: 300;
+  font-weight: ${fonts.weight.light};
 `;
 
 export const DisplayName = styled.div`
   font-size: 14px;
-  font-weight: 600;
+  font-weight: ${fonts.weight.semiBold};
 `;
 
 export const Right = styled.div`

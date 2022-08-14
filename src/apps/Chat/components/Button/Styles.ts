@@ -1,6 +1,7 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
+import {fonts} from 'apps/Chat/styles';
 import {ButtonColor} from './types';
 
 const dangerMixin = css`
@@ -42,7 +43,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   color: white;
   cursor: pointer;
   display: block;
-  font-family: OpenSans, sans-serif;
+  font-family: ${fonts.family.default};
   height: 34px;
   padding: 2px 16px;
 
@@ -61,10 +62,6 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   ${({hasIcon}) => hasIcon && hasIconMixin}
 `;
 
-export const IconLeft = styled(UIcon)`
+export const Icon = styled(UIcon)`
   margin-right: 6px;
-`;
-
-export const IconRight = styled(UIcon)`
-  margin-left: 6px;
 `;

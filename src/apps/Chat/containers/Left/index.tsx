@@ -18,6 +18,26 @@ const Left: SFC = ({className}) => {
         <Contact isActiveChat={true} />
         <Contact isActiveChat={false} />
         <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
+        <Contact isActiveChat={false} />
       </S.Contacts>
     );
   };
@@ -41,7 +61,7 @@ const Left: SFC = ({className}) => {
         {renderSearchContainer()}
         {renderContactsContainer()}
         <S.ButtonContainer>
-          <S.Button iconLeft={mdiChatPlus} onClick={() => {}} text="New Chat" />
+          <S.Button icon={mdiChatPlus} onClick={() => {}} text="New Chat" />
         </S.ButtonContainer>
       </S.Container>
     </>

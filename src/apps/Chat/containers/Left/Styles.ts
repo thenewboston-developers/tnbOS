@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UButton from 'apps/Chat/components/Button';
+import {colors, fonts} from 'apps/Chat/styles';
 
 export const Button = styled(UButton)`
   flex: 1;
@@ -16,24 +17,11 @@ export const ButtonContainer = styled.div`
 export const Contacts = styled.div`
   flex: auto;
   overflow: auto;
-
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #1f2225;
-    border-radius: 2px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
 `;
 
 export const Container = styled.div`
-  background: #2e3136;
-  color: #96989d;
+  background: ${colors.leftBackground};
+  color: ${fonts.color.light};
   display: flex;
   flex-direction: column;
 `;
@@ -47,11 +35,11 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchInput = styled.input`
-  background: #1f2225;
+  background: ${colors.dark};
   border-radius: 4px;
   border: 1px solid transparent;
-  color: #dcddde;
-  font-family: OpenSans, sans-serif;
+  color: ${fonts.color.default};
+  font-family: ${fonts.family.default};
   height: 30px;
   outline: 0;
   padding: 10px 14px;

@@ -9,8 +9,7 @@ export interface ButtonProps {
   color?: ButtonColor;
   dirty?: boolean;
   disabled?: boolean;
-  iconLeft?: string;
-  iconRight?: string;
+  icon?: string;
   isSubmitting?: boolean;
   isValid?: boolean;
   onClick?(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
@@ -23,8 +22,7 @@ const Button: SFC<ButtonProps> = ({
   className,
   dirty = true,
   disabled = false,
-  iconLeft,
-  iconRight,
+  icon,
   isSubmitting = false,
   isValid = false,
   onClick,
@@ -42,9 +40,8 @@ const Button: SFC<ButtonProps> = ({
 
   const renderButtonContent = () => (
     <>
-      {iconLeft ? <S.IconLeft color="white" path={iconLeft} size="18px" /> : null}
+      {icon ? <S.Icon color="white" path={icon} size="18px" /> : null}
       {text}
-      {iconRight ? <S.IconRight color="white" path={iconRight} size="18px" /> : null}
     </>
   );
 
@@ -53,7 +50,7 @@ const Button: SFC<ButtonProps> = ({
       $color={color}
       className={className}
       disabled={buttonIsDisabled}
-      hasIcon={!!iconLeft || !!iconRight}
+      hasIcon={!!icon}
       onClick={onClick}
       type={type}
     >
