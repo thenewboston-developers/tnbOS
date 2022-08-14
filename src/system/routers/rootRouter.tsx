@@ -1,6 +1,7 @@
 import noop from 'lodash/noop';
 
 import authListener from 'system/listeners/authListener';
+import updateAccountListener from 'system/listeners/updateAccountListener';
 import {AppDispatch, AuthSocketData, SocketData, StandardSocketData, StandardSocketDataType} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
@@ -11,17 +12,15 @@ const handleAuthSocketData = (dispatch: AppDispatch, networkId: string, socketDa
 const handleStandardSocketData = (dispatch: AppDispatch, networkId: string, socketData: StandardSocketData) => {
   const {message, type} = socketData;
 
-  const routers = {
+  const handlers = {
     [StandardSocketDataType.createBlock]: noop,
-    [StandardSocketDataType.updateAccount]: noop,
+    [StandardSocketDataType.updateAccount]: updateAccountListener,
   };
 
-  const router = routers[type];
+  const handler = handlers[type];
 
-  if (router) {
-    // TODO: Remove
-    console.log(networkId);
-    router(message, dispatch);
+  if (handler) {
+    handler(dispatch, message, networkId);
   } else {
     displayErrorToast(`${type} is an unknown type`);
   }

@@ -22,7 +22,15 @@ const WebSocket: SFC<WebSocketProps> = ({networkId, port, protocol}) => {
   useEffect(() => {
     const socketAddress = getSocketAddress(networkId, protocol, port);
     const socket = new ReconnectingWebSocket(`${socketAddress}/ws/accounts/${self.accountNumber}`);
-    socket.onmessage = (event) => rootRouter(dispatch, event, networkId);
+
+    socket.onclose = () => {
+      dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.disconnected}));
+    };
+
+    socket.onmessage = (event) => {
+      rootRouter(dispatch, event, networkId);
+    };
+
     socket.onopen = () => {
       dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.connected}));
       const payload = {
@@ -31,6 +39,7 @@ const WebSocket: SFC<WebSocketProps> = ({networkId, port, protocol}) => {
       };
       socket.send(JSON.stringify(payload));
     };
+
     return () => {
       socket.close();
     };
