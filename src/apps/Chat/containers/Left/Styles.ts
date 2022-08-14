@@ -17,20 +17,17 @@ export const Contacts = styled.div`
   flex: auto;
   overflow: auto;
 
-  /* width */
   ::-webkit-scrollbar {
     width: 4px;
   }
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #1f2225;
     border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
   }
 `;
 
