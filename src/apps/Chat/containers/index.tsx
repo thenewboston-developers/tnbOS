@@ -1,11 +1,15 @@
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
+import 'apps/Chat/styles/fonts.css';
 
 const Chat: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.AppContainer>Chat</S.AppContainer>
+      <S.Container>
+        <S.Left />
+        <S.Right />
+      </S.Container>
     </AppWindow>
   );
 };
