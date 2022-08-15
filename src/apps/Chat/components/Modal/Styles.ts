@@ -1,34 +1,39 @@
 import styled, {keyframes} from 'styled-components';
 
-import {colors, fonts} from 'system/styles';
+import {colors, fonts} from 'apps/Chat/styles';
+import UIcon from 'system/components/Icon';
 
 const addOverlay = keyframes`
   from {
     background: rgba(0, 0, 0, 0);
   }
   to {
-    background: rgba(44, 57, 103, 0.3); // Primary color
+    background: rgba(0, 0, 0, 0.75); // Primary color
   }
 `;
 
-export const Content = styled.div`
-  padding: 0 24px 32px;
-`;
+export const Content = styled.div``;
 
 export const Header = styled.div`
   align-items: center;
-  color: ${colors.palette.gray['500']};
+  color: #fff;
   display: flex;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 600;
   justify-content: space-between;
-  margin-bottom: 46px;
-  padding: 16px 24px 0;
+  padding: 8px 16px;
   position: relative;
 `;
 
+export const Icon = styled(UIcon)`
+  &:hover {
+    background: ${colors.hoverLight};
+  }
+`;
+
 export const Modal = styled.div`
-  background: #fff;
+  background: ${colors.rightBackground};
+  border: 1px solid #303136;
   border-radius: 8px;
   font-family: ${fonts.family.default};
   left: 50%;

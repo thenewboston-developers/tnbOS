@@ -1,6 +1,5 @@
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
-import modalTheme from 'apps/Chat/themes/modal';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -38,7 +37,7 @@ const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
   };
 
   return (
-    <S.Modal className={className} close={close} header="New Chat" theme={modalTheme}>
+    <S.Modal className={className} close={close} header="New Chat">
       <S.AccountCardContainer>{renderAccountCards()}</S.AccountCardContainer>
     </S.Modal>
   );

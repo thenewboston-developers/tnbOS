@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
+import UModal from 'apps/Chat/components/Modal';
 import {colors, fonts} from 'apps/Chat/styles';
-import UModal from 'system/components/Modal';
 
 export const AccountCard = styled.div`
   align-items: center;
