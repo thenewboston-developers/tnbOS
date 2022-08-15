@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
 import UModal from 'apps/Chat/components/Modal';
-import {colors, fonts} from 'apps/Chat/styles';
+import {colors, fonts, scrollStyle} from 'apps/Chat/styles';
 
 export const AccountCard = styled.div`
   align-items: center;
@@ -18,19 +18,7 @@ export const AccountCard = styled.div`
 export const AccountCardContainer = styled.div`
   max-height: 320px;
   overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: ${colors.dark};
-    border-radius: 2px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  ${scrollStyle};
 `;
 
 export const AccountCardText = styled.div`

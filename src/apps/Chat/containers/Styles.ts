@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors, fonts} from 'apps/Chat/styles';
+import {fonts, scrollStyle} from 'apps/Chat/styles';
 import ULeft from './Left';
 import URight from './Right';
 
@@ -15,18 +15,7 @@ export const Container = styled.div`
   width: 90%;
 
   * {
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: ${colors.dark};
-      border-radius: 2px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
+    ${scrollStyle};
   }
 `;
 
