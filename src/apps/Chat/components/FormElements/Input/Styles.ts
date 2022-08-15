@@ -1,22 +1,26 @@
 import {Field as UField} from 'formik';
 import styled from 'styled-components';
 
-import {colors} from 'system/styles';
+import {colors, fonts} from 'apps/Chat/styles';
 
 export const ErrorMessage = styled.div`
-  color: ${colors.palette.red['500']};
+  color: ${colors.error};
   font-size: 10px;
   margin-top: 6px;
 `;
 
 export const Field = styled(UField)`
-  background: ${colors.palette.neutral['075']};
-  border-radius: 3px;
-  border: 1px solid ${({$error}) => ($error ? colors.palette.red['500'] : 'transparent')};
+  background: #40444b;
+  border-radius: 4px;
+  border: 1px solid ${({$error}) => ($error ? colors.error : 'transparent')};
+  color: ${fonts.color.default};
+  font-family: ${fonts.family.default};
+  font-size: 14px;
   display: block;
-  height: 40px;
+  height: 44px;
+  outline: 0;
   padding: 10px 14px;
-  width: 260px;
+  width: 100%;
 
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {
@@ -25,11 +29,6 @@ export const Field = styled(UField)`
   }
 `;
 
-export const Label = styled.div`
-  font-size: 10px;
-  margin-bottom: 8px;
-`;
-
 export const SecondaryContainer = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 `;

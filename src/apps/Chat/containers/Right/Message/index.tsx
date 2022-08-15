@@ -3,13 +3,15 @@ import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} 
 import MdiIcon from '@mdi/react';
 
 import Avatar from 'apps/Chat/components/Avatar';
+import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
+import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const Message: SFC = ({className}) => {
-  // const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
+  const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
 
   const handleMouseOut = () => {
@@ -61,7 +63,7 @@ const Message: SFC = ({className}) => {
     return (
       <S.ToolsContainer>
         <S.Tools $display={toolsVisible}>
-          <S.Tool icon={mdiPencil} onClick={() => {}} size={20} totalSize="unset" unfocusable />
+          <S.Tool icon={mdiPencil} onClick={toggleEditMessageModal} size={20} totalSize="unset" unfocusable />
           <S.Tool icon={mdiDelete} onClick={() => {}} size={20} totalSize="unset" unfocusable />
         </S.Tools>
       </S.ToolsContainer>
@@ -69,23 +71,26 @@ const Message: SFC = ({className}) => {
   };
 
   return (
-    <S.Container className={className} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
-      <S.Right>
-        <S.Header>
-          <S.HeaderLeft>
-            <S.DisplayName>Bob</S.DisplayName>
-            <S.Date>12/28/20</S.Date>
-            {renderEdited()}
-          </S.HeaderLeft>
-          <S.HeaderRight>
-            {renderTools()}
-            {renderDeliveryStatus()}
-          </S.HeaderRight>
-        </S.Header>
-        {renderMessageBody()}
-      </S.Right>
-    </S.Container>
+    <>
+      <S.Container className={className} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+        <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
+        <S.Right>
+          <S.Header>
+            <S.HeaderLeft>
+              <S.DisplayName>Bob</S.DisplayName>
+              <S.Date>12/28/20</S.Date>
+              {renderEdited()}
+            </S.HeaderLeft>
+            <S.HeaderRight>
+              {renderTools()}
+              {renderDeliveryStatus()}
+            </S.HeaderRight>
+          </S.Header>
+          {renderMessageBody()}
+        </S.Right>
+      </S.Container>
+      {editMessageModalIsOpen ? <EditMessageModal close={toggleEditMessageModal} /> : null}
+    </>
   );
 };
 
