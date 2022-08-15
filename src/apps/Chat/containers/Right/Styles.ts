@@ -29,7 +29,7 @@ export const Messages = styled.div`
 
 export const OverviewMessageContainer = styled.div`
   align-items: center;
-  border-bottom: 1px solid green;
+  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.16);
   display: flex;
   padding: 12px;
 
@@ -39,7 +39,8 @@ export const OverviewMessageContainer = styled.div`
 `;
 
 export const OverviewMessageContainerRight = styled.div`
+  color: #fff;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: ${fonts.weight.bold};
   margin-left: 10px;
 `;

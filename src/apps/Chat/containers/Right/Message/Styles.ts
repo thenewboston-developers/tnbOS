@@ -1,44 +1,54 @@
 import styled from 'styled-components';
 
-import Icon from 'renderer/components/Icon';
-import {colors} from 'renderer/styles';
+import {Status} from 'apps/Chat/components/Avatar/Styles';
+import {colors, fonts} from 'apps/Chat/styles';
+import Icon from 'system/components/Icon';
 
 export const Container = styled.div`
   display: flex;
   padding: 8px 12px;
 
+  ${Status} {
+    border-color: ${colors.rightBackground};
+  }
+
   &:hover {
-    background: rgba(0, 0, 0, 0.04);
+    background: ${colors.hoverDark};
+
+    ${Status} {
+      border-color: ${colors.hoverDark};
+    }
   }
 `;
 
 export const Content = styled.div`
+  color: ${fonts.color.default};
   font-size: 14px;
-  margin-top: 6px;
+  margin-top: 1px;
 `;
 
 export const ContentDeleted = styled.div`
-  color: ${colors.palette.gray['300']};
+  color: grey;
   font-size: 13px;
   font-style: italic;
   margin-top: 6px;
 `;
 
 export const Date = styled.div`
-  color: ${colors.palette.gray['400']};
   font-size: 10px;
-  font-weight: 300;
+  font-weight: ${fonts.weight.light};
   margin-right: 4px;
 `;
 
 export const DisplayName = styled.div`
-  font-size: 16px;
-  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+  font-weight: ${fonts.weight.semiBold};
   margin-right: 8px;
 `;
 
 export const Edited = styled.div`
-  color: ${colors.palette.gray['400']};
+  color: grey;
   font-size: 10px;
   font-style: italic;
   font-weight: 300;
@@ -65,13 +75,13 @@ export const Right = styled.div`
 `;
 
 export const Tool = styled(Icon)`
-  background: ${colors.palette.gray['400']};
+  background: grey;
   border-radius: unset;
   color: white;
   padding: 4px;
 
   &:hover {
-    background: ${colors.palette.gray['500']};
+    background: grey;
     cursor: pointer;
   }
 `;

@@ -29,12 +29,12 @@ export const Container = styled.div<{isActiveChat: boolean}>`
     `}
 
   &:hover {
-    background: ${colors.hoverDark};
+    background: ${colors.hoverMedium};
     color: ${fonts.color.default};
     cursor: pointer;
 
     ${Status} {
-      border-color: ${colors.hoverDark};
+      border-color: ${colors.hoverMedium};
     }
   }
 `;

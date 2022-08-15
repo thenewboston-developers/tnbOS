@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 import Avatar from 'apps/Chat/components/Avatar';
 import {SFC} from 'system/types';
 import EmptyState from './EmptyState';
+import Message from './Message';
 import * as S from './Styles';
 
 const Right: SFC = ({className}) => {
@@ -30,7 +31,20 @@ const Right: SFC = ({className}) => {
   );
 
   const renderMessages = () => {
-    const results: any[] = [];
+    const results = [
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+      <Message />,
+    ];
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>
         {renderRecipientOverviewMessage()}
@@ -44,7 +58,7 @@ const Right: SFC = ({className}) => {
     return (
       <S.OverviewMessageContainer>
         <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
-        <S.OverviewMessageContainerRight>Apples</S.OverviewMessageContainerRight>
+        <S.OverviewMessageContainerRight>Bob</S.OverviewMessageContainerRight>
       </S.OverviewMessageContainer>
     );
   };
