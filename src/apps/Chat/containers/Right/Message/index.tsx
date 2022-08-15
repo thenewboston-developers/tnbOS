@@ -61,8 +61,8 @@ const Message: SFC = ({className}) => {
     return (
       <S.ToolsContainer>
         <S.Tools $display={toolsVisible}>
-          <S.Tool icon={mdiPencil} onClick={() => {}} size={18} totalSize="unset" />
-          <S.Tool icon={mdiDelete} onClick={() => {}} size={18} totalSize="unset" />
+          <S.Tool icon={mdiPencil} onClick={() => {}} size={20} totalSize="unset" />
+          <S.Tool icon={mdiDelete} onClick={() => {}} size={20} totalSize="unset" />
         </S.Tools>
       </S.ToolsContainer>
     );

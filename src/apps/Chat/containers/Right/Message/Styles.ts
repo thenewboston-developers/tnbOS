@@ -6,7 +6,7 @@ import Icon from 'system/components/Icon';
 
 export const Container = styled.div`
   display: flex;
-  padding: 8px 12px;
+  padding: 8px 16px;
 
   ${Status} {
     border-color: ${colors.rightBackground};
@@ -75,27 +75,32 @@ export const Right = styled.div`
 `;
 
 export const Tool = styled(Icon)`
-  background: grey;
+  background: ${colors.rightBackground};
   border-radius: unset;
-  color: white;
+  color: #b8bbbe;
   padding: 4px;
 
   &:hover {
-    background: grey;
+    color: ${fonts.color.default};
+    background: #40444a;
     cursor: pointer;
   }
 `;
 
 export const Tools = styled.div<{$display: boolean}>`
   align-items: center;
+  border: 1px solid #303136;
   border-radius: 4px;
-  box-shadow: 2px 2px 4px rgb(0 0 0 / 20%);
   display: ${(props) => (props.$display ? 'flex' : 'none')};
   margin-right: 12px;
   overflow: hidden;
   position: absolute;
   right: 0;
   top: -26px;
+
+  &:hover {
+    box-shadow: 0 2px 4px rgb(0 0 0 / 16%);
+  }
 `;
 
 export const ToolsContainer = styled.div`
