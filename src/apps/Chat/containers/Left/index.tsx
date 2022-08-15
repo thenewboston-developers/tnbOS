@@ -1,11 +1,14 @@
 import {ChangeEvent, useState} from 'react';
 import {mdiChatPlus} from '@mdi/js';
 
+import AddContactModal from 'apps/Chat/modals/AddContactModal';
+import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 import Contact from './Contact';
 import * as S from './Styles';
 
 const Left: SFC = ({className}) => {
+  const [addContactModalIsOpen, toggleAddContactModal] = useToggle(false);
   const [searchText, setSearchText] = useState<string>('');
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,9 +64,10 @@ const Left: SFC = ({className}) => {
         {renderSearchContainer()}
         {renderContactsContainer()}
         <S.ButtonContainer>
-          <S.Button icon={mdiChatPlus} onClick={() => {}} text="New Chat" />
+          <S.Button icon={mdiChatPlus} onClick={toggleAddContactModal} text="New Chat" />
         </S.ButtonContainer>
       </S.Container>
+      {addContactModalIsOpen ? <AddContactModal close={toggleAddContactModal} /> : null}
     </>
   );
 };
