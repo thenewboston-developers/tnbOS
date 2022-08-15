@@ -1,7 +1,5 @@
 import styled, {keyframes} from 'styled-components';
 
-import {colors} from 'system/styles';
-
 const addOverlay = keyframes`
   from {
     background: rgba(0, 0, 0, 0);
@@ -12,23 +10,24 @@ const addOverlay = keyframes`
 `;
 
 export const Content = styled.div`
-  padding: 0 24px 32px;
+  padding: ${({theme}) => theme.padding};
 `;
 
 export const Header = styled.div`
   align-items: center;
-  color: ${colors.palette.gray['500']};
+  color: ${({theme}) => theme.header.color};
   display: flex;
   font-size: ${({theme}) => `${theme.header.fontSize}px`};
   font-weight: ${({theme}) => theme.header.fontWeight};
   justify-content: space-between;
   margin-bottom: ${({theme}) => `${theme.header.marginBottom}px`};
-  padding: 16px 24px 0;
+  padding: ${({theme}) => theme.header.padding};
   position: relative;
 `;
 
 export const Modal = styled.div`
-  background: #fff;
+  background: ${({theme}) => theme.backgroundColor};
+  border: ${({theme}) => theme.border};
   border-radius: ${({theme}) => `${theme.borderRadius}px`};
   font-family: ${({theme}) => theme.fontFamily};
   left: 50%;

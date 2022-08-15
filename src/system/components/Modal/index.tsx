@@ -5,7 +5,7 @@ import {ThemeProvider} from 'styled-components';
 import {mdiClose} from '@mdi/js';
 
 import Icon from 'system/components/Icon';
-import {fonts} from 'system/styles';
+import {colors, fonts} from 'system/styles';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -19,25 +19,35 @@ export interface ModalProps {
 }
 
 export interface ModalTheme {
+  backgroundColor: string;
+  border: string;
   borderRadius: number;
   fontFamily: string;
   header: ModalThemeHeader;
+  padding: string;
 }
 
 interface ModalThemeHeader {
+  color: string;
   fontSize: number;
   fontWeight: number;
   marginBottom: number;
+  padding: string;
 }
 
 const systemTheme: ModalTheme = {
+  backgroundColor: '#fff',
+  border: 'none',
   borderRadius: 8,
   fontFamily: fonts.family.default,
   header: {
+    color: colors.palette.gray['500'],
     fontSize: 12,
     fontWeight: 400,
     marginBottom: 46,
+    padding: '16px 24px 0',
   },
+  padding: '0 24px 32px',
 };
 
 const Modal: SFC<ModalProps> = ({

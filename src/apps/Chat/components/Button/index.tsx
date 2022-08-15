@@ -59,5 +59,5 @@ const Button: SFC<ButtonProps> = ({
   );
 };
 
-export {ButtonType};
+export {ButtonColor, ButtonType};
 export default Button;

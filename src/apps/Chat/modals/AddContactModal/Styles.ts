@@ -1,44 +1,57 @@
 import styled from 'styled-components';
 
+import {Status} from 'apps/Chat/components/Avatar/Styles';
+import {colors, fonts} from 'apps/Chat/styles';
 import UModal from 'system/components/Modal';
 
-export const Logo = styled.img`
-  height: 24px;
-  margin-right: 8px;
-  width: 24px;
+export const AccountCard = styled.div`
+  align-items: center;
+  border-radius: 3px;
+  display: flex;
+  padding: 8px 16px;
+
+  ${Status} {
+    border-color: ${colors.rightBackground};
+  }
+`;
+
+export const AccountCardContainer = styled.div`
+  max-height: 320px;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${colors.dark};
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;
+
+export const AccountCardText = styled.div`
+  color: ${fonts.color.default};
+  flex: 1;
+  margin-left: 10px;
+`;
+
+export const AccountNumber = styled.div`
+  color: ${fonts.color.light};
+  font-size: 12px;
+`;
+
+export const DisplayName = styled.div`
+  font-size: 14px;
+  font-weight: ${fonts.weight.semiBold};
 `;
 
 export const Modal = styled(UModal)`
   display: flex;
   flex-direction: column;
-  min-width: 480px;
-  max-width: 500px;
-`;
-
-export const Name = styled.div`
-  font-size: 13px;
-`;
-
-export const RadioCard = styled.div<{isActive: boolean}>`
-  align-items: center;
-  border-radius: 4px;
-  border: 2px solid ${({isActive}) => (isActive ? '#556ee6' : '#f6f6f6')};
-  display: flex;
-  flex: auto;
-  justify-content: center;
-  margin: 6px;
-  padding: 16px;
-  white-space: nowrap;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const RadioCardContainer = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-bottom: 24px;
+  min-width: 380px;
+  max-width: 400px;
 `;
