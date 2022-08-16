@@ -1,5 +1,5 @@
 import Avatar from 'apps/Chat/components/Avatar';
-import {SFC} from 'system/types';
+import {OnlineStatus, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface ContactProps {
@@ -9,7 +9,7 @@ export interface ContactProps {
 const Contact: SFC<ContactProps> = ({className, isActiveChat}) => {
   return (
     <S.Container className={className} isActiveChat={isActiveChat}>
-      <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
+      <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" onlineStatus={OnlineStatus.online} />
       <S.Right>
         <S.TopText>
           <S.DisplayName className="display-name">Bucky</S.DisplayName>

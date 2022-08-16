@@ -5,24 +5,24 @@ import {colors} from 'system/styles';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-export enum OnlineIndicatorColor {
+export enum StatusIndicatorColor {
   gray = 'gray',
   green = 'green',
   red = 'red',
   yellow = 'yellow',
 }
 
-export interface OnlineIndicatorProps {
-  color: OnlineIndicatorColor;
+export interface StatusIndicatorProps {
+  color: StatusIndicatorColor;
 }
 
-const OnlineIndicator: SFC<OnlineIndicatorProps> = ({color}) => {
+const StatusIndicator: SFC<StatusIndicatorProps> = ({color}) => {
   const getIconColor = () => {
     const iconColors = {
-      [OnlineIndicatorColor.gray]: colors.palette.gray['300'],
-      [OnlineIndicatorColor.green]: colors.palette.green['400'],
-      [OnlineIndicatorColor.red]: colors.palette.red['400'],
-      [OnlineIndicatorColor.yellow]: colors.palette.yellow['300'],
+      [StatusIndicatorColor.gray]: colors.palette.gray['300'],
+      [StatusIndicatorColor.green]: colors.palette.green['400'],
+      [StatusIndicatorColor.red]: colors.palette.red['400'],
+      [StatusIndicatorColor.yellow]: colors.palette.yellow['300'],
     };
     return iconColors[color];
   };
@@ -39,4 +39,4 @@ const OnlineIndicator: SFC<OnlineIndicatorProps> = ({color}) => {
   );
 };
 
-export default OnlineIndicator;
+export default StatusIndicator;

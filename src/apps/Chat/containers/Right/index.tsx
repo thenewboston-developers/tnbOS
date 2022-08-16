@@ -3,7 +3,7 @@ import {Formik, FormikHelpers} from 'formik';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import {ButtonType} from 'apps/Chat/components/Button';
-import {SFC} from 'system/types';
+import {OnlineStatus, SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 import EmptyState from './EmptyState';
 import Message from './Message';
@@ -102,7 +102,10 @@ const Right: SFC = ({className}) => {
   const renderRecipientOverviewMessage = () => {
     return (
       <S.OverviewMessageContainer>
-        <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
+        <Avatar
+          displayImage="https://avatars.githubusercontent.com/u/8547538?v=4"
+          onlineStatus={OnlineStatus.offline}
+        />
         <S.OverviewMessageContainerRight>Bob</S.OverviewMessageContainerRight>
       </S.OverviewMessageContainer>
     );
