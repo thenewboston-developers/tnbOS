@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import UButton from 'apps/Chat/components/Button';
-import {ButtonContainer as UButtonContainer} from 'apps/Chat/components/FormElements';
 import {colors, fonts} from 'apps/Chat/styles';
 
 export const Button = styled(UButton)`
@@ -9,7 +8,10 @@ export const Button = styled(UButton)`
   justify-content: center;
 `;
 
-export const ButtonContainer = styled(UButtonContainer)`
+export const ButtonContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
   padding: 12px 16px;
 `;
 

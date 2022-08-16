@@ -1,7 +1,9 @@
 /* eslint-disable sort-keys */
 
 const colors = {
+  border: '#303136',
   dark: '#1f2225',
+  error: '#ca3b37',
   hoverDark: '#32353a',
   hoverMedium: '#3b3f44',
   hoverLight: '#42464d',

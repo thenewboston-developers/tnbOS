@@ -8,7 +8,7 @@ const addOverlay = keyframes`
     background: rgba(0, 0, 0, 0);
   }
   to {
-    background: rgba(0, 0, 0, 0.75); // Primary color
+    background: rgba(0, 0, 0, 0.75);
   }
 `;
 
@@ -19,7 +19,7 @@ export const Header = styled.div`
   color: #fff;
   display: flex;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: ${fonts.weight.semiBold};
   justify-content: space-between;
   padding: 8px 16px;
   position: relative;
@@ -33,7 +33,7 @@ export const Icon = styled(UIcon)`
 
 export const Modal = styled.div`
   background: ${colors.rightBackground};
-  border: 1px solid #303136;
+  border: 1px solid ${colors.border};
   border-radius: 8px;
   font-family: ${fonts.family.default};
   left: 50%;

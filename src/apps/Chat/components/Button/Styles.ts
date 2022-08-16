@@ -5,10 +5,10 @@ import {colors, fonts} from 'apps/Chat/styles';
 import {ButtonColor} from './types';
 
 const dangerMixin = css`
-  background-color: #f46a6a;
+  background-color: ${colors.palette.red['500']};
 
   &:hover {
-    background: #cf5a5a;
+    background: ${colors.palette.red['400']};
   }
 `;
 

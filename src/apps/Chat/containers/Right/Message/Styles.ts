@@ -51,7 +51,7 @@ export const Edited = styled.div`
   color: grey;
   font-size: 10px;
   font-style: italic;
-  font-weight: 300;
+  font-weight: ${fonts.weight.light};
 `;
 
 export const Header = styled.div`
@@ -89,7 +89,7 @@ export const Tool = styled(Icon)`
 
 export const Tools = styled.div<{$display: boolean}>`
   align-items: center;
-  border: 1px solid #303136;
+  border: 1px solid ${colors.border};
   border-radius: 4px;
   display: ${(props) => (props.$display ? 'flex' : 'none')};
   margin-right: 12px;
