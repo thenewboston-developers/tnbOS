@@ -23,7 +23,7 @@ const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
 
   const renderAccountCards = () => {
     return (
-      <>
+      <S.AccountCardContainer>
         {renderAccountCard()}
         {renderAccountCard()}
         {renderAccountCard()}
@@ -32,13 +32,13 @@ const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
         {renderAccountCard()}
         {renderAccountCard()}
         {renderAccountCard()}
-      </>
+      </S.AccountCardContainer>
     );
   };
 
   return (
     <S.Modal className={className} close={close} header="New Chat">
-      <S.AccountCardContainer>{renderAccountCards()}</S.AccountCardContainer>
+      {renderAccountCards()}
     </S.Modal>
   );
 };
