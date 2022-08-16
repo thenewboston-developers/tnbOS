@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
-import {fonts} from 'apps/Chat/styles';
+import {colors, fonts} from 'apps/Chat/styles';
 import {ButtonColor} from './types';
 
 const dangerMixin = css`
@@ -13,12 +13,12 @@ const dangerMixin = css`
 `;
 
 const disabledMixin = css`
-  background: #556ee6;
+  background: ${colors.palette.blue['600']};
   cursor: not-allowed;
   opacity: 0.65;
 
   &:hover {
-    background: #556ee6;
+    background: ${colors.palette.blue['500']};
   }
 `;
 
@@ -29,15 +29,15 @@ const hasIconMixin = css`
 `;
 
 const successMixin = css`
-  background-color: #34c38f;
+  background: ${colors.palette.green['500']};
 
   &:hover {
-    background: #2ca67a;
+    background: ${colors.palette.green['400']};
   }
 `;
 
 export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
-  background: #556ee6;
+  background: ${colors.palette.blue['500']};
   border-radius: 4px;
   border: 1px solid transparent;
   color: white;
@@ -48,7 +48,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   padding: 2px 16px;
 
   &:hover {
-    background: #485ec4;
+    background: ${colors.palette.blue['400']};
   }
 
   ${({$color}) => {

@@ -1,3 +1,4 @@
+import {colors} from 'apps/Chat/styles';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -9,7 +10,7 @@ const Avatar: SFC<AvatarProps> = ({className, displayImage}) => {
   return (
     <S.Container className={className}>
       <S.Img alt="avatar" src={displayImage} />
-      <S.Status indicatorColor="#3aa55d" />
+      <S.Status indicatorColor={colors.palette.green['300']} />
     </S.Container>
   );
 };

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {colors, fonts} from 'apps/Chat/styles';
 
 export const ErrorMessage = styled.div`
-  color: ${colors.error};
+  color: ${colors.palette.red['300']};
   font-size: 10px;
   margin-top: 6px;
 `;
@@ -12,7 +12,7 @@ export const ErrorMessage = styled.div`
 export const Field = styled(UField)`
   background: #40444b;
   border-radius: 4px;
-  border: 1px solid ${({$error}) => ($error ? colors.error : 'transparent')};
+  border: 1px solid ${({$error}) => ($error ? colors.palette.red['300'] : 'transparent')};
   color: ${fonts.color.default};
   font-family: ${fonts.family.default};
   font-size: 14px;

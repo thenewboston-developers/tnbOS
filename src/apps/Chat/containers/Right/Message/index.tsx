@@ -28,19 +28,19 @@ const Message: SFC = ({className}) => {
 
     const icons = {
       [DeliveryStatus.error]: {
-        color: colors.error,
+        color: colors.palette.red['300'],
         path: mdiAlertCircleOutline,
       },
       [DeliveryStatus.failed]: {
-        color: colors.failed,
+        color: colors.palette.orange['300'],
         path: mdiAlertCircleOutline,
       },
       [DeliveryStatus.pending]: {
-        color: colors.pending,
+        color: colors.palette.gray['300'],
         path: mdiClockOutline,
       },
       [DeliveryStatus.received]: {
-        color: colors.received,
+        color: colors.palette.green['300'],
         path: mdiCheck,
       },
     };
