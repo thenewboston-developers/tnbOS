@@ -15,28 +15,18 @@ const Left: SFC = ({className}) => {
     setSearchText(e.target.value);
   };
 
+  const renderButtonContainer = () => {
+    return (
+      <S.ButtonContainer>
+        <S.Button icon={mdiChatPlus} onClick={toggleAddContactModal} text="New Chat" />
+      </S.ButtonContainer>
+    );
+  };
+
   const renderContacts = () => {
     return (
       <S.Contacts>
         <Contact isActiveChat={true} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
         <Contact isActiveChat={false} />
         <Contact isActiveChat={false} />
         <Contact isActiveChat={false} />
@@ -63,9 +53,7 @@ const Left: SFC = ({className}) => {
       <S.Container className={className}>
         {renderSearchContainer()}
         {renderContactsContainer()}
-        <S.ButtonContainer>
-          <S.Button icon={mdiChatPlus} onClick={toggleAddContactModal} text="New Chat" />
-        </S.ButtonContainer>
+        {renderButtonContainer()}
       </S.Container>
       {addContactModalIsOpen ? <AddContactModal close={toggleAddContactModal} /> : null}
     </>

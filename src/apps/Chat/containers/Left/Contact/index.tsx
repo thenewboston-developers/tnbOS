@@ -12,8 +12,8 @@ const Contact: SFC<ContactProps> = ({className, isActiveChat}) => {
       <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" onlineStatus={OnlineStatus.online} />
       <S.Right>
         <S.TopText>
-          <S.DisplayName className="display-name">Bucky</S.DisplayName>
-          <S.Date className="date">12/28/20</S.Date>
+          <S.DisplayName>Bucky</S.DisplayName>
+          <S.Date>12/28/20</S.Date>
         </S.TopText>
         <S.BottomText>Hey now brown cow...</S.BottomText>
       </S.Right>
