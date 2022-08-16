@@ -54,6 +54,22 @@ const Message: SFC = ({className}) => {
     return <S.Edited>(edited)</S.Edited>;
   };
 
+  const renderHeader = () => {
+    return (
+      <S.Header>
+        <S.HeaderLeft>
+          <S.DisplayName>Bob</S.DisplayName>
+          <S.Date>12/28/20</S.Date>
+          {renderEdited()}
+        </S.HeaderLeft>
+        <S.HeaderRight>
+          {renderTools()}
+          {renderDeliveryStatus()}
+        </S.HeaderRight>
+      </S.Header>
+    );
+  };
+
   const renderMessageBody = () => {
     // if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
     return <S.Content>Hey</S.Content>;
@@ -72,20 +88,10 @@ const Message: SFC = ({className}) => {
 
   return (
     <>
-      <S.Container className={className} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
         <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
         <S.Right>
-          <S.Header>
-            <S.HeaderLeft>
-              <S.DisplayName>Bob</S.DisplayName>
-              <S.Date>12/28/20</S.Date>
-              {renderEdited()}
-            </S.HeaderLeft>
-            <S.HeaderRight>
-              {renderTools()}
-              {renderDeliveryStatus()}
-            </S.HeaderRight>
-          </S.Header>
+          {renderHeader()}
           {renderMessageBody()}
         </S.Right>
       </S.Container>

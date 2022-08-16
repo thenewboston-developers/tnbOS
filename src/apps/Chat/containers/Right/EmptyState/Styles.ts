@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import {fonts} from 'apps/Chat/styles';
+import {colors, fonts} from 'apps/Chat/styles';
 
 export const ActionText = styled.span`
-  color: #00aff4;
+  color: ${colors.palette.blue['200']};
   cursor: pointer;
   font-weight: ${fonts.weight.semiBold};
 `;
@@ -27,8 +27,4 @@ export const H3 = styled.h3`
 
 export const HelperText = styled.span`
   color: ${fonts.color.default};
-`;
-
-export const Img = styled.img`
-  width: 72px;
 `;

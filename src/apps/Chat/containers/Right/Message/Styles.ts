@@ -28,7 +28,7 @@ export const Content = styled.div`
 `;
 
 export const ContentDeleted = styled.div`
-  color: grey;
+  color: ${fonts.weight.light};
   font-size: 13px;
   font-style: italic;
   margin-top: 6px;
@@ -48,7 +48,7 @@ export const DisplayName = styled.div`
 `;
 
 export const Edited = styled.div`
-  color: grey;
+  color: ${fonts.color.light};
   font-size: 10px;
   font-style: italic;
   font-weight: ${fonts.weight.light};
