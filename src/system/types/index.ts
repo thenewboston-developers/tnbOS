@@ -7,6 +7,7 @@ import {IdentificationData} from 'system/types/identification';
 import {Internal} from 'system/types/internal';
 import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
+import {OnlineStatus} from 'system/types/onlineStatuses';
 import {Self} from 'system/types/self';
 import {
   AuthSocketData,
@@ -37,6 +38,7 @@ export {
   Network,
   NetworkProtocol,
   Networks,
+  OnlineStatus,
   RootState,
   SFC,
   Self,

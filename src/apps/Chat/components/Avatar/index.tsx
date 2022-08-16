@@ -1,4 +1,4 @@
-import StatusIndicator, {StatusIndicatorColor} from 'system/components/StatusIndicator';
+import {colors} from 'apps/Chat/styles';
 import {OnlineStatus, SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -8,19 +8,19 @@ export interface AvatarProps {
 }
 
 const Avatar: SFC<AvatarProps> = ({className, displayImage, onlineStatus}) => {
-  const renderStatusIndicator = () => {
+  const renderStatus = () => {
     if (!onlineStatus) return null;
-    const colors = {
-      [OnlineStatus.offline]: StatusIndicatorColor.gray,
-      [OnlineStatus.online]: StatusIndicatorColor.green,
+    const statusColors = {
+      [OnlineStatus.offline]: colors.palette.gray['300'],
+      [OnlineStatus.online]: colors.palette.green['300'],
     };
-    return <StatusIndicator color={colors[onlineStatus]} />;
+    return <S.Status indicatorColor={statusColors[onlineStatus]} />;
   };
 
   return (
     <S.Container className={className}>
       <S.Img alt="avatar" src={displayImage} />
-      {renderStatusIndicator()}
+      {renderStatus()}
     </S.Container>
   );
 };

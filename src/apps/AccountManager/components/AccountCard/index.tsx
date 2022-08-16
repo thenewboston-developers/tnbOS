@@ -5,7 +5,7 @@ import AccountModal from 'apps/AccountManager/modals/AccountModal';
 import PopupMenu from 'system/components/DropdownMenu';
 import {useToggle} from 'system/hooks';
 import {deleteAccount} from 'system/store/accounts';
-import {Account, AppDispatch, SFC} from 'system/types';
+import {Account, AppDispatch, OnlineStatus, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
@@ -30,7 +30,7 @@ const AccountCard: SFC<AccountCardProps> = ({account, className}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.Avatar displayImage={account.displayImage} isOnline={false} />
+          <S.Avatar displayImage={account.displayImage} onlineStatus={OnlineStatus.online} />
           <S.LeftText>
             <S.DisplayName>{account.displayName}</S.DisplayName>
             <S.AccountNumber>{truncate(account.accountNumber, 24)}</S.AccountNumber>
