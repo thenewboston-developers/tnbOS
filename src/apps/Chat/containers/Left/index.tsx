@@ -30,7 +30,7 @@ const Left: SFC = ({className}) => {
     return items.filter(({accountNumber}) => {
       const account = accounts[accountNumber];
       return (
-        account.displayName?.toLowerCase().includes(lowerCaseSearchText) ||
+        account?.displayName?.toLowerCase().includes(lowerCaseSearchText) ||
         accountNumber.toLowerCase().includes(lowerCaseSearchText)
       );
     });
