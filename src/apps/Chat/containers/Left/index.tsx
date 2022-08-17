@@ -1,5 +1,6 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import {mdiChatPlus} from '@mdi/js';
 
@@ -8,7 +9,7 @@ import {getActiveChat, getContacts} from 'apps/Chat/selectors/state';
 import {Contact as TContact} from 'apps/Chat/types';
 import {useToggle} from 'system/hooks';
 import {getAccounts} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {Accounts, SFC} from 'system/types';
 import Contact from './Contact';
 import * as S from './Styles';
 
@@ -38,7 +39,17 @@ const Left: SFC = ({className}) => {
     setSearchText(e.target.value);
   };
 
+  const nonContactAccounts = useMemo((): Accounts => {
+    const contactAccountNumbers = Object.keys(contacts);
+    return Object.values(accounts).reduce((previousValue, account) => {
+      return contactAccountNumbers.includes(account.accountNumber)
+        ? previousValue
+        : {...previousValue, [account.accountNumber]: account};
+    }, {});
+  }, [accounts, contacts]);
+
   const renderButtonContainer = () => {
+    if (isEmpty(nonContactAccounts)) return null;
     return (
       <S.ButtonContainer>
         <S.Button icon={mdiChatPlus} onClick={toggleAddContactModal} text="New Chat" />
@@ -88,7 +99,7 @@ const Left: SFC = ({className}) => {
         {renderContactsContainer()}
         {renderButtonContainer()}
       </S.Container>
-      {addContactModalIsOpen ? <AddContactModal close={toggleAddContactModal} /> : null}
+      {addContactModalIsOpen ? <AddContactModal accounts={nonContactAccounts} close={toggleAddContactModal} /> : null}
     </>
   );
 };

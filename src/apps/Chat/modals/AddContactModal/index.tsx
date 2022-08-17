@@ -1,23 +1,20 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
-import {getContacts} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
-import {getAccounts} from 'system/selectors/state';
-import {AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {Accounts, AppDispatch, OnlineStatus, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 interface AddContactModalProps {
+  accounts: Accounts;
   close(): void;
 }
 
-const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
-  const accounts = useSelector(getAccounts);
-  const contacts = useSelector(getContacts);
+const AddContactModal: SFC<AddContactModalProps> = ({accounts, className, close}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddContact = (accountNumber: string) => {
