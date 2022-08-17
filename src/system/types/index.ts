@@ -2,6 +2,7 @@ import {Account, Accounts} from 'system/types/accounts';
 import {AppIconType, AppProps, AppRegistration, SystemAppRegistration} from 'system/types/apps';
 import {Balances} from 'system/types/balances';
 import {CoreAccount} from 'system/types/core';
+import {SystemElectronStore} from 'system/types/electronStore';
 import {Dict, SFC} from 'system/types/generic';
 import {IdentificationData} from 'system/types/identification';
 import {Internal} from 'system/types/internal';
@@ -48,5 +49,6 @@ export {
   StandardSocketData,
   StandardSocketDataType,
   SystemAppRegistration,
+  SystemElectronStore,
   ToastType,
 };
