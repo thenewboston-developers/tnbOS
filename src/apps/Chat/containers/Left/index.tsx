@@ -10,6 +10,7 @@ import {Contact as TContact} from 'apps/Chat/types';
 import {useToggle} from 'system/hooks';
 import {getAccounts} from 'system/selectors/state';
 import {Accounts, SFC} from 'system/types';
+import {safeDisplayImage, safeDisplayName} from 'system/utils/accounts';
 import Contact from './Contact';
 import * as S from './Styles';
 
@@ -62,12 +63,11 @@ const Left: SFC = ({className}) => {
     items = orderBy(items, ['lastActivityDate'], ['desc']);
 
     const results = items.map(({accountNumber, lastActivityDate, lastMessageId}) => {
-      const {displayImage, displayName} = accounts[accountNumber];
       return (
         <Contact
           accountNumber={accountNumber}
-          displayImage={displayImage}
-          displayName={displayName}
+          displayImage={safeDisplayImage(accountNumber, accounts)}
+          displayName={safeDisplayName(accountNumber, accounts, 10)}
           isActiveChat={activeChat === accountNumber}
           key={accountNumber}
           lastActivityDate={lastActivityDate}
