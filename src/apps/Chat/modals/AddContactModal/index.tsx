@@ -1,6 +1,13 @@
+import {useDispatch, useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
+
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
-import {OnlineStatus, SFC} from 'system/types';
+import {setContact} from 'apps/Chat/store/contacts';
+import {getAccounts} from 'system/selectors/state';
+import {AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 interface AddContactModalProps {
@@ -8,32 +15,35 @@ interface AddContactModalProps {
 }
 
 const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
-  const renderAccountCard = () => {
-    return (
-      <S.AccountCard>
-        <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" onlineStatus={OnlineStatus.online} />
-        <S.AccountCardText>
-          <S.DisplayName>Bob</S.DisplayName>
-          <S.AccountNumber>979338...3fe1c0</S.AccountNumber>
-        </S.AccountCardText>
-        <Button color={ButtonColor.success} onClick={close} text="Add" />
-      </S.AccountCard>
+  const accounts = useSelector(getAccounts);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleAddContact = (accountNumber: string) => {
+    dispatch(
+      setContact({
+        accountNumber,
+        lastActivityDate: currentSystemDate(),
+      }),
     );
+    close();
   };
 
   const renderAccountCards = () => {
-    return (
-      <S.AccountCardContainer>
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-        {renderAccountCard()}
-      </S.AccountCardContainer>
-    );
+    const accountsList = Object.values(accounts);
+    const orderedAccounts = orderBy(accountsList, ['displayName']);
+
+    const accountCards = orderedAccounts.map(({accountNumber, displayImage, displayName}) => (
+      <S.AccountCard key={accountNumber}>
+        <Avatar displayImage={displayImage} onlineStatus={OnlineStatus.online} />
+        <S.AccountCardText>
+          <S.DisplayName>{displayName}</S.DisplayName>
+          <S.AccountNumber>{truncate(accountNumber, 24)}</S.AccountNumber>
+        </S.AccountCardText>
+        <Button color={ButtonColor.success} onClick={() => handleAddContact(accountNumber)} text="Add" />
+      </S.AccountCard>
+    ));
+
+    return <S.AccountCardContainer>{accountCards}</S.AccountCardContainer>;
   };
 
   return (
