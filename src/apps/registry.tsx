@@ -10,7 +10,7 @@ import {AppRegistration, SFC} from 'system/types';
 export type AppsElectronStore = ChatElectronStore;
 
 export const appReducers = {
-  [ChatRegistration.appId]: ChatRegistration.reducer,
+  chat: ChatRegistration.reducer!,
 };
 
 export const appRegistrations: AppRegistration[] = [

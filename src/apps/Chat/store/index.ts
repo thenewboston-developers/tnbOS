@@ -1,9 +1,9 @@
-import {combineReducers, Reducer} from '@reduxjs/toolkit';
+import {combineReducers} from '@reduxjs/toolkit';
 
 import contactsReducer from 'apps/Chat/store/contacts';
 import managerReducer from 'apps/Chat/store/manager';
 
-const chatReducer: Reducer = combineReducers({
+const chatReducer = combineReducers({
   contacts: contactsReducer,
   manager: managerReducer,
 });

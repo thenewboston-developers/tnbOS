@@ -3,6 +3,7 @@ import orderBy from 'lodash/orderBy';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
+import {getContacts} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {getAccounts} from 'system/selectors/state';
 import {AppDispatch, OnlineStatus, SFC} from 'system/types';
@@ -16,6 +17,7 @@ interface AddContactModalProps {
 
 const AddContactModal: SFC<AddContactModalProps> = ({className, close}) => {
   const accounts = useSelector(getAccounts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddContact = (accountNumber: string) => {
