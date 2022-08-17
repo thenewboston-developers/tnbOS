@@ -49,6 +49,11 @@ const Left: SFC = ({className}) => {
     }, {});
   }, [accounts, contacts]);
 
+  const renderAddContactModal = () => {
+    if (!addContactModalIsOpen) return null;
+    return <AddContactModal close={toggleAddContactModal} nonContactAccounts={nonContactAccounts} />;
+  };
+
   const renderButtonContainer = () => {
     if (isEmpty(nonContactAccounts)) return null;
     return (
@@ -99,7 +104,7 @@ const Left: SFC = ({className}) => {
         {renderContactsContainer()}
         {renderButtonContainer()}
       </S.Container>
-      {addContactModalIsOpen ? <AddContactModal accounts={nonContactAccounts} close={toggleAddContactModal} /> : null}
+      {renderAddContactModal()}
     </>
   );
 };

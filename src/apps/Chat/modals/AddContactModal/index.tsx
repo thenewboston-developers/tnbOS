@@ -1,20 +1,23 @@
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
 import {setContact} from 'apps/Chat/store/contacts';
+import {getAccounts} from 'system/selectors/state';
 import {Accounts, AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {safeDisplayImage, safeDisplayName} from 'system/utils/accounts';
 import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 interface AddContactModalProps {
-  accounts: Accounts;
   close(): void;
+  nonContactAccounts: Accounts;
 }
 
-const AddContactModal: SFC<AddContactModalProps> = ({accounts, className, close}) => {
+const AddContactModal: SFC<AddContactModalProps> = ({className, close, nonContactAccounts}) => {
+  const accounts = useSelector(getAccounts);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddContact = (accountNumber: string) => {
@@ -28,14 +31,14 @@ const AddContactModal: SFC<AddContactModalProps> = ({accounts, className, close}
   };
 
   const renderAccountCards = () => {
-    const accountsList = Object.values(accounts);
+    const accountsList = Object.values(nonContactAccounts);
     const orderedAccounts = orderBy(accountsList, ['displayName']);
 
-    const accountCards = orderedAccounts.map(({accountNumber, displayImage, displayName}) => (
+    const accountCards = orderedAccounts.map(({accountNumber}) => (
       <S.AccountCard key={accountNumber}>
-        <Avatar displayImage={displayImage} onlineStatus={OnlineStatus.online} />
+        <Avatar displayImage={safeDisplayImage(accountNumber, accounts)} onlineStatus={OnlineStatus.online} />
         <S.AccountCardText>
-          <S.DisplayName>{displayName}</S.DisplayName>
+          <S.DisplayName>{safeDisplayName(accountNumber, accounts, 16)}</S.DisplayName>
           <S.AccountNumber>{truncate(accountNumber, 24)}</S.AccountNumber>
         </S.AccountCardText>
         <Button color={ButtonColor.success} onClick={() => handleAddContact(accountNumber)} text="Add" />
