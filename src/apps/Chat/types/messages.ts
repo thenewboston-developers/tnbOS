@@ -1,3 +1,5 @@
+import {Dict} from 'system/types/generic';
+
 export enum DeliveryStatus {
   error = 'error',
   failed = 'failed',
@@ -13,3 +15,5 @@ export interface Message {
   recipient: string;
   sender: string;
 }
+
+export type Messages = Dict<Message>;

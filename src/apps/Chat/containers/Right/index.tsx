@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import Avatar from 'apps/Chat/components/Avatar';
-import {getActiveChat} from 'apps/Chat/selectors/state';
+import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {getAccounts} from 'system/selectors/state';
 import {OnlineStatus, SFC} from 'system/types';
 import {safeDisplayImage, safeDisplayName} from 'system/utils/accounts';
@@ -16,13 +16,13 @@ const Right: SFC = ({className}) => {
   const accounts = useSelector(getAccounts);
   const activeChat = useSelector(getActiveChat);
   const bottomMessageRef = useRef<HTMLDivElement>(null);
+  const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  // TODO: Update to be [messages, scrollToBottom]
   useEffect(() => {
     if (!bottomMessageRef.current || !messagesRef.current || !scrollToBottom) return;
     bottomMessageRef.current.scrollIntoView({behavior: 'smooth'});
-  }, [scrollToBottom]);
+  }, [messages, scrollToBottom]);
 
   const handleMessagesScroll = () => {
     if (!bottomMessageRef.current || !messagesRef.current) return;
@@ -61,8 +61,8 @@ const Right: SFC = ({className}) => {
   const renderRecipientOverviewMessage = () => {
     return (
       <S.OverviewMessageContainer>
-        <Avatar displayImage={safeDisplayImage(activeChat, accounts)} onlineStatus={OnlineStatus.offline} />
-        <S.OverviewMessageContainerRight>{safeDisplayName(activeChat, accounts, 10)}</S.OverviewMessageContainerRight>
+        <Avatar displayImage={safeDisplayImage(activeChat!, accounts)} onlineStatus={OnlineStatus.offline} />
+        <S.OverviewMessageContainerRight>{safeDisplayName(activeChat!, accounts, 10)}</S.OverviewMessageContainerRight>
       </S.OverviewMessageContainer>
     );
   };

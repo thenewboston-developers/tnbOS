@@ -21,7 +21,7 @@ const Left: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const contacts = useSelector(getContacts);
 
-  const contactList: TContact[] = Object.values(contacts);
+  const contactList = Object.values(contacts);
 
   const filterBySearchText = (items: TContact[]): TContact[] => {
     if (!searchText) return items;
