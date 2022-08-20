@@ -31,7 +31,7 @@ export const ContentDeleted = styled.div`
   color: ${fonts.weight.light};
   font-size: 13px;
   font-style: italic;
-  margin-top: 6px;
+  margin-top: 2px;
 `;
 
 export const Date = styled.div`
