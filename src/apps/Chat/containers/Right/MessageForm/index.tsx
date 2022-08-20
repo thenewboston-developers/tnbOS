@@ -1,12 +1,23 @@
 import {useMemo} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/Chat/components/Button';
-import {SFC} from 'system/types';
+import {getActiveChat} from 'apps/Chat/selectors/state';
+import {setContact} from 'apps/Chat/store/contacts';
+import {setMessage} from 'apps/Chat/store/messages';
+import {getSelf} from 'system/selectors/state';
+import {AppDispatch, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
+import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const MessageForm: SFC = ({className}) => {
+  const activeChat = useSelector(getActiveChat);
+  const dispatch = useDispatch<AppDispatch>();
+  const self = useSelector(getSelf);
+
   const initialValues = {
     amount: '',
     content: '',
@@ -15,8 +26,35 @@ const MessageForm: SFC = ({className}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
-    console.log(values);
-    console.log(resetForm);
+    try {
+      const content = values.content;
+      const messageId = crypto.randomUUID();
+      const now = currentSystemDate();
+      const recipient = activeChat!;
+
+      dispatch(
+        setContact({
+          accountNumber: recipient,
+          lastActivityDate: now,
+          lastMessageId: messageId,
+        }),
+      );
+
+      dispatch(
+        setMessage({
+          content,
+          createdDate: now,
+          messageId,
+          modifiedDate: now,
+          recipient,
+          sender: self.accountNumber,
+        }),
+      );
+
+      resetForm();
+    } catch (error) {
+      displayErrorToast('Error sending the message');
+    }
   };
 
   const validationSchema = useMemo(() => {

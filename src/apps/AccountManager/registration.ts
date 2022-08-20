@@ -4,7 +4,7 @@ import AccountManager from 'apps/AccountManager/containers';
 import {AppIconType, SystemAppRegistration} from 'system/types';
 
 const AccountManagerRegistration: SystemAppRegistration = {
-  appId: 'AccountManager',
+  appId: 'accountManager',
   icon: mdiCellphoneLink,
   iconType: AppIconType.path,
   isSystemApp: true,

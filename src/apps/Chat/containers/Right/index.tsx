@@ -1,22 +1,25 @@
 import {useEffect, useRef, useState} from 'react';
+import {useSelector} from 'react-redux';
 
-import Avatar from 'apps/Chat/components/Avatar';
-import {OnlineStatus, SFC} from 'system/types';
+import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
+import {SFC} from 'system/types';
 import EmptyState from './EmptyState';
 import Message from './Message';
 import MessageForm from './MessageForm';
+import OverviewMessageContainer from './OverviewMessageContainer';
 import * as S from './Styles';
 
 const Right: SFC = ({className}) => {
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
+  const activeChat = useSelector(getActiveChat);
   const bottomMessageRef = useRef<HTMLDivElement>(null);
+  const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  // TODO: Update to be [messages, scrollToBottom]
   useEffect(() => {
     if (!bottomMessageRef.current || !messagesRef.current || !scrollToBottom) return;
     bottomMessageRef.current.scrollIntoView({behavior: 'smooth'});
-  }, [scrollToBottom]);
+  }, [messages, scrollToBottom]);
 
   const handleMessagesScroll = () => {
     if (!bottomMessageRef.current || !messagesRef.current) return;
@@ -32,39 +35,29 @@ const Right: SFC = ({className}) => {
   );
 
   const renderMessages = () => {
-    const results = [
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-    ];
+    const results = Object.values(messages)
+      .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
+      .map(({content, createdDate, messageId, modifiedDate, sender}) => (
+        <Message
+          content={content}
+          createdDate={createdDate}
+          key={messageId}
+          messageId={messageId}
+          modifiedDate={modifiedDate}
+          sender={sender}
+        />
+      ));
+
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>
-        {renderRecipientOverviewMessage()}
+        <OverviewMessageContainer />
         {results}
         <S.BottomMessage ref={bottomMessageRef} />
       </S.Messages>
     );
   };
 
-  const renderRecipientOverviewMessage = () => {
-    return (
-      <S.OverviewMessageContainer>
-        <Avatar
-          displayImage="https://avatars.githubusercontent.com/u/8547538?v=4"
-          onlineStatus={OnlineStatus.offline}
-        />
-        <S.OverviewMessageContainerRight>Bob</S.OverviewMessageContainerRight>
-      </S.OverviewMessageContainer>
-    );
-  };
-
-  if (false) return renderEmptyState();
+  if (!activeChat) return renderEmptyState();
 
   return (
     <S.Container className={className}>

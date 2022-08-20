@@ -1,5 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 
+import {appReducers} from 'apps/registry';
 import accountsReducer from 'system/store/accounts';
 import balancesReducer from 'system/store/balances';
 import internalReducer from 'system/store/internal';
@@ -20,6 +21,7 @@ const systemReducer = combineReducers({
 
 const store = configureStore({
   reducer: {
+    ...appReducers,
     system: systemReducer,
   },
 });

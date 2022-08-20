@@ -31,7 +31,7 @@ export const ContentDeleted = styled.div`
   color: ${fonts.weight.light};
   font-size: 13px;
   font-style: italic;
-  margin-top: 6px;
+  margin-top: 2px;
 `;
 
 export const Date = styled.div`
@@ -47,13 +47,6 @@ export const DisplayName = styled.div`
   margin-right: 8px;
 `;
 
-export const Edited = styled.div`
-  color: ${fonts.color.light};
-  font-size: 10px;
-  font-style: italic;
-  font-weight: ${fonts.weight.light};
-`;
-
 export const Header = styled.div`
   display: flex;
 `;
@@ -67,6 +60,13 @@ export const HeaderLeft = styled.div`
 export const HeaderRight = styled.div`
   align-items: center;
   display: flex;
+`;
+
+export const ModifiedDetails = styled.div`
+  color: ${fonts.color.light};
+  font-size: 10px;
+  font-style: italic;
+  font-weight: ${fonts.weight.light};
 `;
 
 export const Right = styled.div`

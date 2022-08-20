@@ -1,8 +1,15 @@
 import {ChangeEvent, useState} from 'react';
+import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
+import orderBy from 'lodash/orderBy';
 import {mdiChatPlus} from '@mdi/js';
 
+import {useNonContactAccounts} from 'apps/Chat/hooks';
 import AddContactModal from 'apps/Chat/modals/AddContactModal';
+import {getActiveChat, getContacts} from 'apps/Chat/selectors/state';
+import {Contact as TContact} from 'apps/Chat/types';
 import {useToggle} from 'system/hooks';
+import {getAccounts} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import Contact from './Contact';
 import * as S from './Styles';
@@ -10,12 +17,37 @@ import * as S from './Styles';
 const Left: SFC = ({className}) => {
   const [addContactModalIsOpen, toggleAddContactModal] = useToggle(false);
   const [searchText, setSearchText] = useState<string>('');
+  const accounts = useSelector(getAccounts);
+  const activeChat = useSelector(getActiveChat);
+  const contacts = useSelector(getContacts);
+  const nonContactAccounts = useNonContactAccounts();
+
+  const contactList = Object.values(contacts);
+
+  const filterBySearchText = (items: TContact[]): TContact[] => {
+    if (!searchText) return items;
+    const lowerCaseSearchText = searchText.toLowerCase();
+
+    return items.filter(({accountNumber}) => {
+      const account = accounts[accountNumber];
+      return (
+        account?.displayName?.toLowerCase().includes(lowerCaseSearchText) ||
+        accountNumber.toLowerCase().includes(lowerCaseSearchText)
+      );
+    });
+  };
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
+  const renderAddContactModal = () => {
+    if (!addContactModalIsOpen) return null;
+    return <AddContactModal close={toggleAddContactModal} nonContactAccounts={nonContactAccounts} />;
+  };
+
   const renderButtonContainer = () => {
+    if (isEmpty(nonContactAccounts)) return null;
     return (
       <S.ButtonContainer>
         <S.Button icon={mdiChatPlus} onClick={toggleAddContactModal} text="New Chat" />
@@ -24,19 +56,26 @@ const Left: SFC = ({className}) => {
   };
 
   const renderContacts = () => {
-    return (
-      <S.Contacts>
-        <Contact isActiveChat={true} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-        <Contact isActiveChat={false} />
-      </S.Contacts>
-    );
+    let items = filterBySearchText(contactList);
+    items = orderBy(items, ['lastActivityDate'], ['desc']);
+
+    const results = items.map(({accountNumber, lastActivityDate, lastMessageId}) => {
+      return (
+        <Contact
+          accountNumber={accountNumber}
+          isActiveChat={activeChat === accountNumber}
+          key={accountNumber}
+          lastActivityDate={lastActivityDate}
+          lastMessageId={lastMessageId}
+        />
+      );
+    });
+
+    return <S.Contacts>{results}</S.Contacts>;
   };
 
   const renderContactsContainer = () => {
-    // return <S.EmptyState />;
+    if (!contactList.length) return <S.EmptyState />;
     return renderContacts();
   };
 
@@ -55,7 +94,7 @@ const Left: SFC = ({className}) => {
         {renderContactsContainer()}
         {renderButtonContainer()}
       </S.Container>
-      {addContactModalIsOpen ? <AddContactModal close={toggleAddContactModal} /> : null}
+      {renderAddContactModal()}
     </>
   );
 };

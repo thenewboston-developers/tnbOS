@@ -3,7 +3,7 @@ import SuppCoins from 'apps/SuppCoins/containers';
 import {AppIconType, AppRegistration} from 'system/types';
 
 const SuppCoinsRegistration: AppRegistration = {
-  appId: 'SuppCoins',
+  appId: 'suppCoins',
   icon: AppIcon,
   iconType: AppIconType.image,
   isSystemApp: false,

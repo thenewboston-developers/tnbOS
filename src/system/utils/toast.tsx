@@ -27,3 +27,7 @@ export const displayToast = (message: ReactNode, type: ToastType, className?: st
     </Toast>,
   );
 };
+
+export const loadStoreFailToast = (_: any, errorMessage: string) => {
+  displayErrorToast(`Could not load store data: ${errorMessage}`);
+};

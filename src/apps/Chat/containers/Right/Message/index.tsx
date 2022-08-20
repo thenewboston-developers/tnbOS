@@ -1,30 +1,58 @@
 import {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} from '@mdi/js';
 import MdiIcon from '@mdi/react';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
+import {deleteMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
-import {useToggle} from 'system/hooks';
-import {SFC} from 'system/types';
+import {shortDate} from 'apps/Chat/utils/dates';
+import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
+import {getSelf} from 'system/selectors/state';
+import {AppDispatch, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import * as S from './Styles';
 
-const Message: SFC = ({className}) => {
+export interface MessageProps {
+  content: string;
+  createdDate: string;
+  messageId: string;
+  modifiedDate: string;
+  sender: string;
+}
+
+const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const displayImage = useSafeDisplayImage(sender);
+  const displayName = useSafeDisplayName(sender);
+  const self = useSelector(getSelf);
+
+  const isContentDeleted = !content;
+
+  const handleDeleteClick = async () => {
+    dispatch(
+      deleteMessage({
+        messageId,
+        modifiedDate: currentSystemDate(),
+      }),
+    );
+  };
 
   const handleMouseOut = () => {
     setToolsVisible(false);
   };
 
   const handleMouseOver = () => {
-    // if (sender !== selfAccountNumber || isContentDeleted) return;
+    if (self.accountNumber !== sender || isContentDeleted) return;
     setToolsVisible(true);
   };
 
   const renderDeliveryStatus = () => {
-    // if (selfAccountNumber !== sender || !system) return null;
+    if (self.accountNumber !== sender) return null;
 
     const icons = {
       [DeliveryStatus.error]: {
@@ -49,18 +77,18 @@ const Message: SFC = ({className}) => {
     return <MdiIcon color={color} path={path} size="14px" />;
   };
 
-  const renderEdited = () => {
-    // if (createdDate === modifiedDate) return null;
-    return <S.Edited>(edited)</S.Edited>;
+  const renderEditMessageModal = () => {
+    if (!editMessageModalIsOpen) return null;
+    return <EditMessageModal close={toggleEditMessageModal} content={content} messageId={messageId} />;
   };
 
   const renderHeader = () => {
     return (
       <S.Header>
         <S.HeaderLeft>
-          <S.DisplayName>Bob</S.DisplayName>
-          <S.Date>12/28/20</S.Date>
-          {renderEdited()}
+          <S.DisplayName>{displayName}</S.DisplayName>
+          <S.Date>{shortDate(modifiedDate, true)}</S.Date>
+          {renderModifiedDetails()}
         </S.HeaderLeft>
         <S.HeaderRight>
           {renderTools()}
@@ -71,8 +99,14 @@ const Message: SFC = ({className}) => {
   };
 
   const renderMessageBody = () => {
-    // if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
-    return <S.Content>Hey</S.Content>;
+    if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
+    return <S.Content>{content}</S.Content>;
+  };
+
+  const renderModifiedDetails = () => {
+    if (createdDate === modifiedDate) return null;
+    const verb = isContentDeleted ? 'deleted' : 'edited';
+    return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 
   const renderTools = () => {
@@ -80,7 +114,7 @@ const Message: SFC = ({className}) => {
       <S.ToolsContainer>
         <S.Tools $display={toolsVisible}>
           <S.Tool icon={mdiPencil} onClick={toggleEditMessageModal} size={20} totalSize="unset" unfocusable />
-          <S.Tool icon={mdiDelete} onClick={() => {}} size={20} totalSize="unset" unfocusable />
+          <S.Tool icon={mdiDelete} onClick={handleDeleteClick} size={20} totalSize="unset" unfocusable />
         </S.Tools>
       </S.ToolsContainer>
     );
@@ -89,13 +123,13 @@ const Message: SFC = ({className}) => {
   return (
     <>
       <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
-        <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
+        <Avatar displayImage={displayImage} />
         <S.Right>
           {renderHeader()}
           {renderMessageBody()}
         </S.Right>
       </S.Container>
-      {editMessageModalIsOpen ? <EditMessageModal close={toggleEditMessageModal} /> : null}
+      {renderEditMessageModal()}
     </>
   );
 };

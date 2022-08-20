@@ -12,7 +12,7 @@ const manager = createSlice({
   initialState,
   name: SYSTEM_MANAGER,
   reducers: {
-    setActiveApp: (state, {payload: appId}: PayloadAction<string>) => {
+    setActiveApp: (state: Manager, {payload: appId}: PayloadAction<string>) => {
       state.activeApp = appId === state.activeApp ? null : appId;
     },
     setManager: setLocalAndStateReducer<Manager>(SYSTEM_MANAGER),
