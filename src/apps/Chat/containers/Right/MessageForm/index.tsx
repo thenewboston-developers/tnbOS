@@ -4,6 +4,7 @@ import {Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/Chat/components/Button';
 import {getActiveChat} from 'apps/Chat/selectors/state';
+import {setContact} from 'apps/Chat/store/contacts';
 import {setMessage} from 'apps/Chat/store/messages';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
@@ -27,19 +28,29 @@ const MessageForm: SFC = ({className}) => {
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
       const content = values.content;
+      const messageId = crypto.randomUUID();
       const now = currentSystemDate();
       const recipient = activeChat!;
+
+      dispatch(
+        setContact({
+          accountNumber: recipient,
+          lastActivityDate: now,
+          lastMessageId: messageId,
+        }),
+      );
 
       dispatch(
         setMessage({
           content,
           createdDate: now,
-          messageId: crypto.randomUUID(),
+          messageId,
           modifiedDate: now,
           recipient,
           sender: self.accountNumber,
         }),
       );
+
       resetForm();
     } catch (error) {
       displayErrorToast('Error sending the message');

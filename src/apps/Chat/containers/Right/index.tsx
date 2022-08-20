@@ -38,17 +38,18 @@ const Right: SFC = ({className}) => {
   );
 
   const renderMessages = () => {
-    const results = [
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-      <Message />,
-    ];
+    const results = Object.values(messages)
+      .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
+      .map(({content, createdDate, messageId, modifiedDate, sender}) => (
+        <Message
+          content={content}
+          createdDate={createdDate}
+          key={messageId}
+          messageId={messageId}
+          modifiedDate={modifiedDate}
+          sender={sender}
+        />
+      ));
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>
         {renderRecipientOverviewMessage()}

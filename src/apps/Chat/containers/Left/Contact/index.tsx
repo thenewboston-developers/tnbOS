@@ -1,9 +1,12 @@
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Avatar from 'apps/Chat/components/Avatar';
+import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
 import {shortDate} from 'apps/Chat/utils/dates';
+import {getSelf} from 'system/selectors/state';
 import {AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface ContactProps {
@@ -25,6 +28,16 @@ const Contact: SFC<ContactProps> = ({
   lastMessageId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const messages = useSelector(getMessages);
+  const self = useSelector(getSelf);
+
+  const lastMessage = lastMessageId ? messages[lastMessageId] : null;
+
+  const getSnippet = (): string => {
+    if (!lastMessage?.content) return 'No chat history';
+    const snippet = truncate(lastMessage.content, 32);
+    return self.accountNumber === lastMessage?.sender ? `You: ${snippet}` : snippet;
+  };
 
   const handleClick = () => {
     dispatch(setActiveChat(accountNumber));
@@ -38,7 +51,7 @@ const Contact: SFC<ContactProps> = ({
           <S.DisplayName>{displayName}</S.DisplayName>
           <S.Date>{shortDate(lastActivityDate, false)}</S.Date>
         </S.TopText>
-        <S.BottomText>Hey now brown cow...</S.BottomText>
+        <S.BottomText>{getSnippet()}</S.BottomText>
       </S.Right>
     </S.Container>
   );
