@@ -52,14 +52,14 @@ const Right: SFC = ({className}) => {
       ));
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>
-        {renderRecipientOverviewMessage()}
+        {renderOverviewMessageContainer()}
         {results}
         <S.BottomMessage ref={bottomMessageRef} />
       </S.Messages>
     );
   };
 
-  const renderRecipientOverviewMessage = () => {
+  const renderOverviewMessageContainer = () => {
     return (
       <S.OverviewMessageContainer>
         <Avatar displayImage={activeChatDisplayImage} onlineStatus={OnlineStatus.offline} />

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import UModal from 'apps/Chat/components/Modal';
 import {scrollStyle} from 'apps/Chat/styles';
 
