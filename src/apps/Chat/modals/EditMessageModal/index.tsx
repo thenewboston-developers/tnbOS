@@ -1,25 +1,36 @@
 import {useMemo} from 'react';
+import {useDispatch} from 'react-redux';
 import {Formik} from 'formik';
 
 import Button, {ButtonType} from 'apps/Chat/components/Button';
 import {Input} from 'apps/Chat/components/FormElements';
-import {SFC} from 'system/types';
+import {editMessageContent} from 'apps/Chat/store/messages';
+import {AppDispatch, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
 import * as S from './Styles';
 
-export interface AddContactModalProps {
+export interface EditMessageModalProps {
   close(): void;
+  content: string;
+  messageId: string;
 }
 
-const EditMessageModal: SFC<AddContactModalProps> = ({className, close}) => {
+const EditMessageModal: SFC<EditMessageModalProps> = ({className, close, content, messageId}) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const initialValues = {
-    content: '',
+    content,
   };
 
   type FormValues = typeof initialValues;
 
   const handleSubmit = async (values: FormValues) => {
-    console.log(values);
+    const updatedData = {
+      content: values.content,
+      modifiedDate: currentSystemDate(),
+    };
+    dispatch(editMessageContent({messageId, ...updatedData}));
     close();
   };
 

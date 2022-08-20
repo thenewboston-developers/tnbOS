@@ -1,16 +1,18 @@
 import {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} from '@mdi/js';
 import MdiIcon from '@mdi/react';
 
 import Avatar from 'apps/Chat/components/Avatar';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
+import {deleteMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
 import {shortDate} from 'apps/Chat/utils/dates';
 import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import * as S from './Styles';
 
 export interface MessageProps {
@@ -24,6 +26,7 @@ export interface MessageProps {
 const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(sender);
   const displayName = useSafeDisplayName(sender);
   const self = useSelector(getSelf);
@@ -31,7 +34,12 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
   const isContentDeleted = !content;
 
   const handleDeleteClick = async () => {
-    console.log(messageId);
+    dispatch(
+      deleteMessage({
+        messageId,
+        modifiedDate: currentSystemDate(),
+      }),
+    );
   };
 
   const handleMouseOut = () => {
@@ -69,9 +77,9 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     return <MdiIcon color={color} path={path} size="14px" />;
   };
 
-  const renderEdited = () => {
-    if (createdDate === modifiedDate) return null;
-    return <S.Edited>(edited)</S.Edited>;
+  const renderEditMessageModal = () => {
+    if (!editMessageModalIsOpen) return null;
+    return <EditMessageModal close={toggleEditMessageModal} content={content} messageId={messageId} />;
   };
 
   const renderHeader = () => {
@@ -80,7 +88,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
         <S.HeaderLeft>
           <S.DisplayName>{displayName}</S.DisplayName>
           <S.Date>{shortDate(modifiedDate, true)}</S.Date>
-          {renderEdited()}
+          {renderModifiedDetails()}
         </S.HeaderLeft>
         <S.HeaderRight>
           {renderTools()}
@@ -93,6 +101,12 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
   const renderMessageBody = () => {
     if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
     return <S.Content>{content}</S.Content>;
+  };
+
+  const renderModifiedDetails = () => {
+    if (createdDate === modifiedDate) return null;
+    const verb = isContentDeleted ? 'deleted' : 'edited';
+    return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 
   const renderTools = () => {
@@ -115,7 +129,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
           {renderMessageBody()}
         </S.Right>
       </S.Container>
-      {editMessageModalIsOpen ? <EditMessageModal close={toggleEditMessageModal} /> : null}
+      {renderEditMessageModal()}
     </>
   );
 };
