@@ -4,6 +4,7 @@ import Avatar from 'apps/Chat/components/Avatar';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
 import {shortDate} from 'apps/Chat/utils/dates';
+import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, OnlineStatus, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
@@ -11,23 +12,15 @@ import * as S from './Styles';
 
 export interface ContactProps {
   accountNumber: string;
-  displayImage: string;
-  displayName: string;
   isActiveChat: boolean;
   lastActivityDate: string;
   lastMessageId?: string;
 }
 
-const Contact: SFC<ContactProps> = ({
-  accountNumber,
-  className,
-  displayImage,
-  displayName,
-  isActiveChat,
-  lastActivityDate,
-  lastMessageId,
-}) => {
+const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, lastActivityDate, lastMessageId}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const displayImage = useSafeDisplayImage(accountNumber);
+  const displayName = useSafeDisplayName(accountNumber, 10);
   const messages = useSelector(getMessages);
   const self = useSelector(getSelf);
 

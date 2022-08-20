@@ -8,10 +8,9 @@ import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
 import {shortDate} from 'apps/Chat/utils/dates';
-import {useToggle} from 'system/hooks';
-import {getAccounts, getSelf} from 'system/selectors/state';
+import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
+import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
-import {safeDisplayName} from 'system/utils/accounts';
 import * as S from './Styles';
 
 export interface MessageProps {
@@ -25,7 +24,8 @@ export interface MessageProps {
 const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
-  const accounts = useSelector(getAccounts);
+  const displayImage = useSafeDisplayImage(sender);
+  const displayName = useSafeDisplayName(sender);
   const self = useSelector(getSelf);
 
   const isContentDeleted = !content;
@@ -78,7 +78,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     return (
       <S.Header>
         <S.HeaderLeft>
-          <S.DisplayName>{safeDisplayName(sender, accounts)}</S.DisplayName>
+          <S.DisplayName>{displayName}</S.DisplayName>
           <S.Date>{shortDate(modifiedDate, true)}</S.Date>
           {renderEdited()}
         </S.HeaderLeft>
@@ -109,7 +109,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
   return (
     <>
       <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
-        <Avatar displayImage="https://avatars.githubusercontent.com/u/8547538?v=4" />
+        <Avatar displayImage={displayImage} />
         <S.Right>
           {renderHeader()}
           {renderMessageBody()}
