@@ -4,7 +4,11 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import {getAccounts, getPeerRequestManager} from 'system/selectors/state';
 import {setNetworkCorrelationId} from 'system/store/networkCorrelationIds';
-import {initializeNetworkPeerRequests, setPeerRequestDetails} from 'system/store/peerRequestManager';
+import {
+  deleteNetworkPeerRequests,
+  initializeNetworkPeerRequests,
+  setPeerRequestDetails,
+} from 'system/store/peerRequestManager';
 import {
   AppDispatch,
   GetPeersRequest,
@@ -44,6 +48,12 @@ const NetworkPeerSyncManager: SFC<NetworkPeerSyncManagerProps> = ({networkId, so
     if (!setPeersRequestDetails) return null;
     return setPeersRequestDetails.lastResponseId;
   }, [setPeersRequestDetails]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(deleteNetworkPeerRequests(networkId));
+    };
+  }, [dispatch, networkId]);
 
   useEffect(() => {
     dispatch(initializeNetworkPeerRequests(networkId));

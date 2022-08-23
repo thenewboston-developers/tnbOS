@@ -2,7 +2,8 @@ import store from 'system/store';
 import {setPeerRequestDetails} from 'system/store/peerRequestManager';
 import {AppDispatch, PeerRequestMethod, SocketDataInternal, SocketDataInternalMethod} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
-import {setPeersValidator, validateLastRequestId} from 'system/validators/setPeersValidators';
+import {validateCorrelationIdMatchesLastRequestId} from 'system/validators/common';
+import {setPeersValidator} from 'system/validators/setPeersValidators';
 
 const setPeersListener = (dispatch: AppDispatch, networkId: string, socketData: SocketDataInternal) => {
   (async () => {
@@ -12,7 +13,12 @@ const setPeersListener = (dispatch: AppDispatch, networkId: string, socketData: 
       } = store.getState();
 
       const {correlation_id} = await setPeersValidator.validate(socketData);
-      validateLastRequestId(correlation_id, networkId, peerRequestManager);
+      validateCorrelationIdMatchesLastRequestId(
+        correlation_id,
+        networkId,
+        peerRequestManager,
+        PeerRequestMethod.setPeers,
+      );
 
       dispatch(
         setPeerRequestDetails({

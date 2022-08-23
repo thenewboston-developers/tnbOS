@@ -15,6 +15,9 @@ const peerRequestManager = createSlice({
   initialState,
   name: SYSTEM_PEER_REQUEST_MANAGER,
   reducers: {
+    deleteNetworkPeerRequests: (state: PeerRequestManager, {payload: networkId}: PayloadAction<string>) => {
+      delete state[networkId];
+    },
     initializeNetworkPeerRequests: (state: PeerRequestManager, {payload: networkId}: PayloadAction<string>) => {
       state[networkId] = {
         getPeers: initialPeerRequestDetails,
@@ -39,5 +42,6 @@ const peerRequestManager = createSlice({
   },
 });
 
-export const {initializeNetworkPeerRequests, setPeerRequestDetails} = peerRequestManager.actions;
+export const {deleteNetworkPeerRequests, initializeNetworkPeerRequests, setPeerRequestDetails} =
+  peerRequestManager.actions;
 export default peerRequestManager.reducer;
