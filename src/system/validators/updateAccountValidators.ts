@@ -1,9 +1,13 @@
-import {Self} from 'system/types/self';
+import {Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 
-export const updateAccountValidator = yup.object({
+const messageSchema = yup.object({
   account_number: accountNumberSchema.required(),
-  balance: yup.number().integer().min(0),
+  balance: yup.number().integer().min(0).required(),
+});
+
+export const updateAccountValidator = yup.object({
+  message: messageSchema.required(),
 });
 
 export const validateIsSelfAccountNumber = (accountNumber: string, self: Self) => {

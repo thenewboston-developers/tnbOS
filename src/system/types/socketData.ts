@@ -1,20 +1,4 @@
-export interface AuthSocketData {
-  result: AuthSocketDataResult;
-}
+import {SocketDataInternal} from 'system/types/socketDataInternal';
+import {SocketDataStandard} from 'system/types/socketDataStandard';
 
-export enum AuthSocketDataResult {
-  authenticated = 'authenticated',
-  unauthenticated = 'unauthenticated',
-}
-
-export interface StandardSocketData {
-  message: any;
-  type: StandardSocketDataType;
-}
-
-export enum StandardSocketDataType {
-  createBlock = 'create.block',
-  updateAccount = 'update.account',
-}
-
-export type SocketData = AuthSocketData | StandardSocketData;
+export type SocketData = SocketDataInternal | SocketDataStandard;

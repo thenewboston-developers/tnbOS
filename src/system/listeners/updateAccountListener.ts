@@ -1,21 +1,16 @@
 import store from 'system/store';
 import {setBalance} from 'system/store/balances';
-import {AppDispatch} from 'system/types';
+import {AppDispatch, SocketDataStandard} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 import {updateAccountValidator, validateIsSelfAccountNumber} from 'system/validators/updateAccountValidators';
 
-interface UpdateAccountMessage {
-  account_number: string;
-  balance: number;
-}
-
-const updateAccountListener = (dispatch: AppDispatch, message: UpdateAccountMessage, networkId: string) => {
+const updateAccountListener = (dispatch: AppDispatch, networkId: string, socketData: SocketDataStandard) => {
   (async () => {
     try {
       const {
         system: {self},
       } = store.getState();
-      await updateAccountValidator.validate(message);
+      const {message} = await updateAccountValidator.validate(socketData);
       validateIsSelfAccountNumber(message.account_number, self);
       dispatch(setBalance({balance: message.balance, networkId}));
     } catch (error) {
