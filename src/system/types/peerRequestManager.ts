@@ -12,4 +12,9 @@ export interface PeerRequestDetails {
   lastResponseId: string | null;
 }
 
+export enum PeerRequestMethod {
+  setPeers = 'setPeers',
+  getPeers = 'getPeers',
+}
+
 export type PeerRequestManager = Dict<NetworkPeerRequests>;

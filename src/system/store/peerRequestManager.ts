@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {SYSTEM_PEER_REQUEST_MANAGER} from 'system/store/constants';
-import {PeerRequestDetails, PeerRequestManager} from 'system/types';
+import {PeerRequestDetails, PeerRequestManager, PeerRequestMethod} from 'system/types';
 
 const initialPeerRequestDetails: PeerRequestDetails = {
   lastRequestDate: null,
@@ -22,8 +22,22 @@ const peerRequestManager = createSlice({
         setPeers: initialPeerRequestDetails,
       };
     },
+    setPeerRequestDetails: (
+      state: PeerRequestManager,
+      {
+        payload,
+      }: PayloadAction<{
+        networkId: string;
+        peerRequestDetails: Partial<PeerRequestDetails>;
+        peerRequestMethod: PeerRequestMethod;
+      }>,
+    ) => {
+      const {networkId, peerRequestDetails, peerRequestMethod} = payload;
+      const existingData = state[networkId][peerRequestMethod];
+      state[networkId][peerRequestMethod] = {...existingData, ...peerRequestDetails};
+    },
   },
 });
 
-export const {initializeNetworkPeerRequests} = peerRequestManager.actions;
+export const {initializeNetworkPeerRequests, setPeerRequestDetails} = peerRequestManager.actions;
 export default peerRequestManager.reducer;
