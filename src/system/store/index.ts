@@ -7,6 +7,7 @@ import internalReducer from 'system/store/internal';
 import managerReducer from 'system/store/manager';
 import networkCorrelationIdsReducer from 'system/store/networkCorrelationIds';
 import networksReducer from 'system/store/networks';
+import peerRequestManagerReducer from 'system/store/peerRequestManager';
 import selfReducer from 'system/store/self';
 import socketStatusesReducer from 'system/store/socketStatuses';
 
@@ -17,6 +18,7 @@ const systemReducer = combineReducers({
   manager: managerReducer,
   networkCorrelationIds: networkCorrelationIdsReducer,
   networks: networksReducer,
+  peerRequestManager: peerRequestManagerReducer,
   self: selfReducer,
   socketStatuses: socketStatusesReducer,
 });

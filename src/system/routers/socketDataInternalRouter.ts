@@ -1,6 +1,6 @@
-import noop from 'lodash/noop';
-
 import authenticateListener from 'system/listeners/authenticateListener';
+import getPeersListener from 'system/listeners/getPeersListener';
+import setPeersListener from 'system/listeners/setPeersListener';
 import store from 'system/store';
 import {deleteNetworkCorrelationId} from 'system/store/networkCorrelationIds';
 import {AppDispatch, SocketDataInternal, SocketDataInternalMethod} from 'system/types';
@@ -28,8 +28,8 @@ const socketDataInternalRouter = (dispatch: AppDispatch, networkId: string, sock
 
   const listeners = {
     [SocketDataInternalMethod.authenticate]: authenticateListener,
-    [SocketDataInternalMethod.get_peers]: noop,
-    [SocketDataInternalMethod.set_peers]: noop,
+    [SocketDataInternalMethod.get_peers]: getPeersListener,
+    [SocketDataInternalMethod.set_peers]: setPeersListener,
   };
 
   dispatch(

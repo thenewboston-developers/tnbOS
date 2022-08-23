@@ -10,6 +10,7 @@ import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
 import {OnlineStatus} from 'system/types/onlineStatuses';
 import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
+import {NetworkPeerRequests, PeerRequestDetails, PeerRequestManager} from 'system/types/peerRequestManager';
 import {Self} from 'system/types/self';
 import {SocketData} from 'system/types/socketData';
 import {
@@ -58,10 +59,13 @@ export {
   Manager,
   Network,
   NetworkCorrelationIds,
+  NetworkPeerRequests,
   NetworkProtocol,
   Networks,
   OnlineStatus,
   PeerOnlineStatus,
+  PeerRequestDetails,
+  PeerRequestManager,
   RootState,
   SFC,
   Self,

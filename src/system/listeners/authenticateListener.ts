@@ -2,7 +2,7 @@ import {fetchAccount} from 'system/core/accounts';
 import store from 'system/store';
 import {setBalance} from 'system/store/balances';
 import {setSocketStatus} from 'system/store/socketStatuses';
-import {AppDispatch, SocketDataInternal, SocketStatus} from 'system/types';
+import {AppDispatch, SocketDataInternal, SocketDataInternalMethod, SocketStatus} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 import {authenticateValidator} from 'system/validators/authenticateValidators';
 
@@ -25,7 +25,7 @@ const authenticateListener = (dispatch: AppDispatch, networkId: string, socketDa
     } catch (error) {
       console.error(error);
       dispatch(setSocketStatus({networkId, socketStatus: SocketStatus.error}));
-      displayErrorToast('Invalid authentication response received');
+      displayErrorToast(`Invalid ${SocketDataInternalMethod.authenticate} response received`);
     }
   })();
 };
