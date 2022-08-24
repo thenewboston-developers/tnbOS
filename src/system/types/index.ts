@@ -9,6 +9,7 @@ import {Internal} from 'system/types/internal';
 import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
 import {OnlineStatus} from 'system/types/onlineStatuses';
+import {AccountOnlineStatuses, NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
 import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
 import {
   NetworkPeerRequests,
@@ -44,6 +45,7 @@ import {ToastType} from 'system/types/toast';
 
 export {
   Account,
+  AccountOnlineStatuses,
   Accounts,
   AppDispatch,
   AppIconType,
@@ -63,6 +65,7 @@ export {
   InternalRequestMapping,
   Manager,
   Network,
+  NetworkAccountOnlineStatuses,
   NetworkCorrelationIds,
   NetworkPeerRequests,
   NetworkProtocol,

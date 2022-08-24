@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
 import {getAccounts, getPeerRequestManager} from 'system/selectors/state';
+import {deleteNetworkAccountOnlineStatuses} from 'system/store/networkAccountOnlineStatuses';
 import {setNetworkCorrelationId} from 'system/store/networkCorrelationIds';
 import {
   deleteNetworkPeerRequests,
@@ -50,12 +51,6 @@ const NetworkPeerSyncManager: SFC<NetworkPeerSyncManagerProps> = ({networkId, so
   }, [setPeersRequestDetails]);
 
   useEffect(() => {
-    return () => {
-      dispatch(deleteNetworkPeerRequests(networkId));
-    };
-  }, [dispatch, networkId]);
-
-  useEffect(() => {
     dispatch(initializeNetworkPeerRequests(networkId));
 
     const correlationId = crypto.randomUUID();
@@ -87,6 +82,11 @@ const NetworkPeerSyncManager: SFC<NetworkPeerSyncManagerProps> = ({networkId, so
     );
 
     socket.send(JSON.stringify(payload));
+
+    return () => {
+      dispatch(deleteNetworkAccountOnlineStatuses(networkId));
+      dispatch(deleteNetworkPeerRequests(networkId));
+    };
   }, [accountNumbers, dispatch, networkId, socket]);
 
   useEffect(() => {
