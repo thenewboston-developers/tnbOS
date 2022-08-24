@@ -3,9 +3,9 @@ import {mdiDotsVertical} from '@mdi/js';
 
 import AccountModal from 'apps/AccountManager/modals/AccountModal';
 import PopupMenu from 'system/components/DropdownMenu';
-import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
+import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {deleteAccount} from 'system/store/accounts';
-import {Account, AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {Account, AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
@@ -18,6 +18,7 @@ const AccountCard: SFC<AccountCardProps> = ({account, className}) => {
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(account.accountNumber);
   const displayName = useSafeDisplayName(account.accountNumber, 16);
+  const onlineStatus = useAccountOnlineStatus(account.accountNumber);
 
   const handleDeleteAccount = () => {
     dispatch(deleteAccount(account.accountNumber));
@@ -32,7 +33,7 @@ const AccountCard: SFC<AccountCardProps> = ({account, className}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.Avatar displayImage={displayImage} onlineStatus={OnlineStatus.online} />
+          <S.Avatar displayImage={displayImage} onlineStatus={onlineStatus} />
           <S.LeftText>
             <S.DisplayName>{displayName}</S.DisplayName>
             <S.AccountNumber>{truncate(account.accountNumber, 24)}</S.AccountNumber>

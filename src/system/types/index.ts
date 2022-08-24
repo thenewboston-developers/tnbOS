@@ -1,3 +1,4 @@
+import {AccountOnlineStatuses} from 'system/types/accountOnlineStatuses';
 import {Account, Accounts} from 'system/types/accounts';
 import {AppIconType, AppProps, AppRegistration, SystemAppRegistration} from 'system/types/apps';
 import {Balances} from 'system/types/balances';
@@ -9,7 +10,7 @@ import {Internal} from 'system/types/internal';
 import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
 import {OnlineStatus} from 'system/types/onlineStatuses';
-import {AccountOnlineStatuses, NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
+import {NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
 import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
 import {
   NetworkPeerRequests,

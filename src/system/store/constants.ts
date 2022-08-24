@@ -1,4 +1,5 @@
 export const SYSTEM_ACCOUNTS = 'systemAccounts';
+export const SYSTEM_ACCOUNT_ONLINE_STATUSES = 'systemAccountOnlineStatuses';
 export const SYSTEM_BALANCES = 'systemBalances';
 export const SYSTEM_INTERNAL = 'systemInternal';
 export const SYSTEM_MANAGER = 'systemManager';

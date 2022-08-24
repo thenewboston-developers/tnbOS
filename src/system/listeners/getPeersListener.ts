@@ -5,6 +5,7 @@ import {
   AccountOnlineStatuses,
   AppDispatch,
   Dict,
+  OnlineStatus,
   PeerOnlineStatus,
   PeerRequestMethod,
   SocketDataInternal,
@@ -16,7 +17,7 @@ import {getPeersValidator} from 'system/validators/getPeersValidators';
 
 const getAccountOnlineStatuses = (returnValue: Dict<PeerOnlineStatus>): AccountOnlineStatuses => {
   return Object.entries(returnValue).reduce((acc, [key, value]) => {
-    return {...acc, [key]: value.is_online};
+    return {...acc, [key]: value.is_online ? OnlineStatus.online : OnlineStatus.offline};
   }, {});
 };
 
