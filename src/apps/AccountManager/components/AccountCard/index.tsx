@@ -2,7 +2,7 @@ import {useDispatch} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
 import AccountModal from 'apps/AccountManager/modals/AccountModal';
-import PopupMenu from 'system/components/DropdownMenu';
+import DropdownMenu from 'system/components/DropdownMenu';
 import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {deleteAccount} from 'system/store/accounts';
 import {Account, AppDispatch, SFC} from 'system/types';
@@ -40,7 +40,7 @@ const AccountCard: SFC<AccountCardProps> = ({account, className}) => {
           </S.LeftText>
         </S.Left>
         <S.Right>
-          <PopupMenu icon={mdiDotsVertical} options={menuOptions} />
+          <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />
         </S.Right>
       </S.Container>
       {accountModalIsOpen ? <AccountModal account={account} close={toggleAccountModal} /> : null}
