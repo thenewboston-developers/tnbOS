@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
 import NetworkModal from 'apps/NetworkManager/modals/NetworkModal';
-import PopupMenu from 'system/components/DropdownMenu';
+import DropdownMenu from 'system/components/DropdownMenu';
 import {deleteNetwork} from 'system/dispatchers/networks';
 import {useToggle} from 'system/hooks';
 import {getBalances} from 'system/selectors/state';
@@ -40,7 +40,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
           </S.LeftText>
         </S.Left>
         <S.Right>
-          <PopupMenu icon={mdiDotsVertical} options={menuOptions} />
+          <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />
         </S.Right>
       </S.Container>
       {networkModalIsOpen ? <NetworkModal close={toggleNetworkModal} network={network} /> : null}

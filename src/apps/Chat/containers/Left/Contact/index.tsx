@@ -4,9 +4,9 @@ import Avatar from 'apps/Chat/components/Avatar';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
 import {shortDate} from 'apps/Chat/utils/dates';
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
-import {AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
@@ -22,6 +22,7 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
   const displayImage = useSafeDisplayImage(accountNumber);
   const displayName = useSafeDisplayName(accountNumber, 10);
   const messages = useSelector(getMessages);
+  const onlineStatus = useAccountOnlineStatus(accountNumber);
   const self = useSelector(getSelf);
 
   const lastMessage = lastMessageId ? messages[lastMessageId] : null;
@@ -38,7 +39,7 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
 
   return (
     <S.Container className={className} isActiveChat={isActiveChat} onClick={handleClick}>
-      <Avatar displayImage={displayImage} onlineStatus={OnlineStatus.online} />
+      <Avatar displayImage={displayImage} onlineStatus={onlineStatus} />
       <S.Right>
         <S.TopText>
           <S.DisplayName>{displayName}</S.DisplayName>

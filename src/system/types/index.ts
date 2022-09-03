@@ -1,3 +1,4 @@
+import {AccountOnlineStatuses} from 'system/types/accountOnlineStatuses';
 import {Account, Accounts} from 'system/types/accounts';
 import {AppIconType, AppProps, AppRegistration, SystemAppRegistration} from 'system/types/apps';
 import {Balances} from 'system/types/balances';
@@ -9,46 +10,88 @@ import {Internal} from 'system/types/internal';
 import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
 import {OnlineStatus} from 'system/types/onlineStatuses';
-import {Self} from 'system/types/self';
+import {NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
+import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
 import {
-  AuthSocketData,
-  AuthSocketDataResult,
-  SocketData,
-  StandardSocketData,
-  StandardSocketDataType,
-} from 'system/types/socketData';
+  NetworkPeerRequests,
+  PeerRequestDetails,
+  PeerRequestManager,
+  PeerRequestMethod,
+} from 'system/types/peerRequestManager';
+import {Self} from 'system/types/self';
+import {SocketData} from 'system/types/socketData';
+import {
+  AuthenticateRequest,
+  AuthenticateResponse,
+  CorrelationId,
+  GetPeersRequest,
+  GetPeersResponse,
+  PeerOnlineStatus,
+  SetPeersRequest,
+  SetPeersResponse,
+  SocketDataInternal,
+  SocketDataInternalMethod,
+} from 'system/types/socketDataInternal';
+import {
+  CreateBlockData,
+  SocketDataStandard,
+  SocketDataStandardType,
+  TrackOnlineStatusData,
+  UpdateAccountData,
+  UpdateAccountMessage,
+} from 'system/types/socketDataStandard';
 import {SocketStatus, SocketStatuses} from 'system/types/socketStatuses';
 import {AppDispatch, RootState} from 'system/types/store';
 import {ToastType} from 'system/types/toast';
 
 export {
   Account,
+  AccountOnlineStatuses,
   Accounts,
   AppDispatch,
   AppIconType,
   AppProps,
   AppRegistration,
-  AuthSocketData,
-  AuthSocketDataResult,
+  AuthenticateRequest,
+  AuthenticateResponse,
   Balances,
   CoreAccount,
+  CorrelationId,
+  CreateBlockData,
   Dict,
+  GetPeersRequest,
+  GetPeersResponse,
   IdentificationData,
   Internal,
+  InternalRequestMapping,
   Manager,
   Network,
+  NetworkAccountOnlineStatuses,
+  NetworkCorrelationIds,
+  NetworkPeerRequests,
   NetworkProtocol,
   Networks,
   OnlineStatus,
+  PeerOnlineStatus,
+  PeerRequestDetails,
+  PeerRequestManager,
+  PeerRequestMethod,
   RootState,
   SFC,
   Self,
+  SetPeersRequest,
+  SetPeersResponse,
   SocketData,
+  SocketDataInternal,
+  SocketDataInternalMethod,
+  SocketDataStandard,
+  SocketDataStandardType,
   SocketStatus,
   SocketStatuses,
-  StandardSocketData,
-  StandardSocketDataType,
   SystemAppRegistration,
   SystemElectronStore,
   ToastType,
+  TrackOnlineStatusData,
+  UpdateAccountData,
+  UpdateAccountMessage,
 };

@@ -3,8 +3,8 @@ import {useDispatch} from 'react-redux';
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
 import {setContact} from 'apps/Chat/store/contacts';
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
-import {AppDispatch, OnlineStatus, SFC} from 'system/types';
+import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
@@ -18,6 +18,7 @@ const AccountCard: SFC<AccountCardProps> = ({accountNumber, className, close}) =
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(accountNumber);
   const displayName = useSafeDisplayName(accountNumber, 16);
+  const onlineStatus = useAccountOnlineStatus(accountNumber);
 
   const handleAddContact = () => {
     dispatch(
@@ -31,7 +32,7 @@ const AccountCard: SFC<AccountCardProps> = ({accountNumber, className, close}) =
 
   return (
     <S.Container className={className}>
-      <Avatar displayImage={displayImage} onlineStatus={OnlineStatus.online} />
+      <Avatar displayImage={displayImage} onlineStatus={onlineStatus} />
       <S.TextContainer>
         <S.DisplayName>{displayName}</S.DisplayName>
         <S.AccountNumber>{truncate(accountNumber, 24)}</S.AccountNumber>
