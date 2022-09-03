@@ -1,6 +1,14 @@
 import {AccountOnlineStatuses} from 'system/types/accountOnlineStatuses';
 import {Account, Accounts} from 'system/types/accounts';
-import {AppIconType, AppProps, AppRegistration, SystemAppRegistration} from 'system/types/apps';
+import {
+  AppIconType,
+  AppProps,
+  AppReducers,
+  AppRegistration,
+  AppRouter,
+  AppRouters,
+  SystemAppRegistration,
+} from 'system/types/apps';
 import {Balances} from 'system/types/balances';
 import {CoreAccount} from 'system/types/core';
 import {SystemElectronStore} from 'system/types/electronStore';
@@ -51,7 +59,10 @@ export {
   AppDispatch,
   AppIconType,
   AppProps,
+  AppReducers,
   AppRegistration,
+  AppRouter,
+  AppRouters,
   AuthenticateRequest,
   AuthenticateResponse,
   Balances,

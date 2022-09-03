@@ -1,3 +1,4 @@
+import {appRouters} from 'apps/registry';
 import store from 'system/store';
 import {AppDispatch, SocketDataStandard} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
@@ -13,10 +14,13 @@ const blockRouter = (dispatch: AppDispatch, networkId: string, socketData: Socke
 
       const {message: block} = await blockValidator.validate(socketData);
       validateIsSelfAccountNumber(block.recipient, self);
+      const {payload} = block;
+      const pid = payload?.pid;
 
-      console.log(block);
-      console.log(dispatch);
-      console.log(networkId);
+      if (pid) {
+        const appRouter = appRouters[pid];
+        appRouter(block, dispatch, networkId);
+      }
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

@@ -1,5 +1,7 @@
+import {Block} from 'shared/types';
+
 export interface CreateBlockData {
-  message: any;
+  message: Block;
   type: SocketDataStandardType.createBlock;
 }
 

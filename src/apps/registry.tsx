@@ -5,11 +5,11 @@ import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration'
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
 import {SuppCoins, SuppCoinsRegistration} from 'apps/SuppCoins/registration';
 import {getManager} from 'system/selectors/state';
-import {AppRegistration, SFC} from 'system/types';
+import {AppReducers, AppRegistration, AppRouters, SFC} from 'system/types';
 
 export type AppsElectronStore = ChatElectronStore;
 
-export const appReducers = {
+export const appReducers: AppReducers = {
   chat: ChatRegistration.reducer!,
 };
 
@@ -19,6 +19,10 @@ export const appRegistrations: AppRegistration[] = [
   NetworkManagerRegistration,
   SuppCoinsRegistration,
 ];
+
+export const appRouters: AppRouters = {
+  chat: ChatRegistration.router!,
+};
 
 export const Apps: SFC = () => {
   const {activeApp} = useSelector(getManager);
