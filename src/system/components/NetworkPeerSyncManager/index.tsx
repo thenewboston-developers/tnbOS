@@ -2,7 +2,8 @@ import {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
-import {getAccounts, getPeerRequestManager} from 'system/selectors/state';
+import {useAccountNumbers} from 'system/hooks';
+import {getPeerRequestManager} from 'system/selectors/state';
 import {deleteNetworkAccountOnlineStatuses} from 'system/store/networkAccountOnlineStatuses';
 import {setNetworkCorrelationId} from 'system/store/networkCorrelationIds';
 import {
@@ -27,13 +28,9 @@ interface NetworkPeerSyncManagerProps {
 }
 
 const NetworkPeerSyncManager: SFC<NetworkPeerSyncManagerProps> = ({networkId, socket}) => {
-  const accounts = useSelector(getAccounts);
+  const accountNumbers = useAccountNumbers();
   const dispatch = useDispatch<AppDispatch>();
   const peerRequestManager = useSelector(getPeerRequestManager);
-
-  const accountNumbersString = useMemo(() => Object.keys(accounts).sort().join('-'), [accounts]);
-
-  const accountNumbers = useMemo(() => accountNumbersString.split('-'), [accountNumbersString]);
 
   const setPeersRequestDetails = useMemo((): PeerRequestDetails | null => {
     const networkPeerRequests = peerRequestManager[networkId];

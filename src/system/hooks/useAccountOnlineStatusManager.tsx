@@ -1,18 +1,15 @@
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getAccounts, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
+import {useAccountNumbers} from 'system/hooks';
+import {getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {setAccountOnlineStatuses} from 'system/store/accountOnlineStatuses';
 import {AccountOnlineStatuses, AppDispatch, OnlineStatus} from 'system/types';
 
 const useAccountOnlineStatusManager = () => {
-  const accounts = useSelector(getAccounts);
+  const accountNumbers = useAccountNumbers();
   const dispatch = useDispatch<AppDispatch>();
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
-
-  const accountNumbersString = useMemo(() => Object.keys(accounts).sort().join('-'), [accounts]);
-
-  const accountNumbers = useMemo(() => accountNumbersString.split('-'), [accountNumbersString]);
 
   useEffect(() => {
     const results: AccountOnlineStatuses = {};
