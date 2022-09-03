@@ -1,4 +1,3 @@
-import {Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 
 const messageSchema = yup.object({
@@ -9,7 +8,3 @@ const messageSchema = yup.object({
 export const updateAccountValidator = yup.object({
   message: messageSchema.required(),
 });
-
-export const validateIsSelfAccountNumber = (accountNumber: string, self: Self) => {
-  if (accountNumber !== self.accountNumber) throw new Error('Invalid account number');
-};
