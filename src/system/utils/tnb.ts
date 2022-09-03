@@ -11,3 +11,7 @@ export const generateSignature = (message: string, signingKey: Uint8Array): stri
 export const getKeyPairFromSigningKeyHex = (signingKeyHex: string): KeyPairDetails => {
   return window.electron.tnb.getKeyPairFromSigningKeyHex(signingKeyHex);
 };
+
+export const verifySignedData = (signedData: any): boolean => {
+  return window.electron.tnb.verifySignedData(signedData);
+};
