@@ -8,7 +8,10 @@ const useAccountNumbers = (): string[] => {
 
   const accountNumbersString = useMemo(() => Object.keys(accounts).sort().join('-'), [accounts]);
 
-  return useMemo(() => accountNumbersString.split('-'), [accountNumbersString]);
+  return useMemo(
+    () => accountNumbersString.split('-').filter((accountNumber) => !!accountNumber),
+    [accountNumbersString],
+  );
 };
 
 export default useAccountNumbers;
