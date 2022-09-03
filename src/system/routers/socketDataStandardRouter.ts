@@ -1,5 +1,6 @@
 import noop from 'lodash/noop';
 
+import trackOnlineStatusListener from 'system/listeners/trackOnlineStatusListener';
 import updateAccountListener from 'system/listeners/updateAccountListener';
 import {AppDispatch, SocketDataStandard, SocketDataStandardType} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
@@ -9,7 +10,7 @@ const socketDataStandardRouter = (dispatch: AppDispatch, networkId: string, sock
 
   const handlers = {
     [SocketDataStandardType.createBlock]: noop,
-    [SocketDataStandardType.trackOnlineStatus]: noop,
+    [SocketDataStandardType.trackOnlineStatus]: trackOnlineStatusListener,
     [SocketDataStandardType.updateAccount]: updateAccountListener,
   };
 
