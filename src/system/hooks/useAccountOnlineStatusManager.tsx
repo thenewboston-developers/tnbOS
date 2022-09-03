@@ -12,22 +12,16 @@ const useAccountOnlineStatusManager = () => {
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
 
   useEffect(() => {
-    const results: AccountOnlineStatuses = {};
+    const results: AccountOnlineStatuses = accountNumbers.reduce(
+      (acc, accountNumber) => ({...acc, [accountNumber]: OnlineStatus.offline}),
+      {},
+    );
 
     for (const accountOnlineStatuses of Object.values(networkAccountOnlineStatuses)) {
-      for (const [key, value] of Object.entries(accountOnlineStatuses)) {
-        const accountNumber = key;
-        const onlineStatus = value;
-
+      for (const [accountNumber, onlineStatus] of Object.entries(accountOnlineStatuses)) {
         if (onlineStatus === OnlineStatus.online) {
           results[accountNumber] = onlineStatus;
         }
-      }
-    }
-
-    for (const accountNumber of accountNumbers) {
-      if (!(accountNumber in results)) {
-        results[accountNumber] = OnlineStatus.offline;
       }
     }
 
