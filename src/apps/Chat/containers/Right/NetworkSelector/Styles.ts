@@ -1,0 +1,55 @@
+import styled from 'styled-components';
+
+import {colors, fonts} from 'apps/Chat/styles';
+
+export const IMG_HEIGHT = 36;
+
+export const Img = styled.img`
+  border-radius: 50%;
+  height: ${`${IMG_HEIGHT}px`};
+  width: auto;
+
+  &:active {
+    height: ${`${IMG_HEIGHT - 1}px`};
+  }
+
+  &:hover {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+  }
+`;
+
+export const ImgContainer = styled.div`
+  align-items: center;
+  display: flex;
+  height: ${`${IMG_HEIGHT}px`};
+  justify-content: center;
+  margin-right: 12px;
+  width: ${`${IMG_HEIGHT}px`};
+`;
+
+export const Menu = styled.div`
+  background: #18191c;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+  min-width: 200px;
+  padding: 8px;
+  position: fixed;
+`;
+
+export const Option = styled.div`
+  align-items: center;
+  border-radius: 4px;
+  color: ${fonts.color.light};
+  display: flex;
+  font-weight: ${fonts.weight.semiBold};
+  padding: 8px 12px;
+  transition: background 0.1s;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${colors.hoverMedium};
+    color: ${fonts.color.default};
+    cursor: pointer;
+  }
+`;

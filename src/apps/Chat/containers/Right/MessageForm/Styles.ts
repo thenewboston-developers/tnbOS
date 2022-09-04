@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import UButton from 'apps/Chat/components/Button';
 import {InlineInput} from 'apps/Chat/components/FormElements';
 
+export const AmountInput = styled(InlineInput)`
+  margin-right: 12px;
+  width: 100px;
+`;
+
 export const Button = styled(UButton)`
   display: none;
 `;

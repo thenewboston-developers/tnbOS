@@ -20,7 +20,6 @@ export const Container = styled.div`
 
     &:active {
       height: 29px;
-      width: auto;
     }
   }
 `;

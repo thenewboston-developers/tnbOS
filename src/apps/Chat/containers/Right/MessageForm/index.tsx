@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/Chat/components/Button';
+import NetworkSelector from 'apps/Chat/containers/Right/NetworkSelector';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
@@ -86,6 +87,8 @@ const MessageForm: SFC = ({className}) => {
     >
       {({dirty, errors, isSubmitting, isValid, touched}) => (
         <S.Form className={className}>
+          <NetworkSelector />
+          <S.AmountInput errors={errors} name="amount" placeholder="Amount" touched={touched} />
           <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
           <S.Button
             dirty={dirty}
