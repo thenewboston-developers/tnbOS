@@ -1,5 +1,5 @@
 import {Contact, Contacts} from 'apps/Chat/types/contacts';
-import {DeliveryStatus, DeliveryStatuses} from 'apps/Chat/types/deliveryStatuses';
+import {Deliveries, Delivery, DeliveryStatus} from 'apps/Chat/types/deliveries';
 import {ChatElectronStore} from 'apps/Chat/types/electronStore';
 import {ChatFn} from 'apps/Chat/types/functions';
 import {InputProps} from 'apps/Chat/types/input';
@@ -11,8 +11,9 @@ export {
   ChatFn,
   Contact,
   Contacts,
+  Deliveries,
+  Delivery,
   DeliveryStatus,
-  DeliveryStatuses,
   InputProps,
   Manager,
   Message,

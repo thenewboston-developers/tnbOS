@@ -5,7 +5,7 @@ import {Formik, FormikHelpers} from 'formik';
 import {ButtonType} from 'apps/Chat/components/Button';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
-import {setDeliveryStatus} from 'apps/Chat/store/deliveryStatuses';
+import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus} from 'apps/Chat/types';
 import {getSelf} from 'system/selectors/state';
@@ -56,8 +56,11 @@ const MessageForm: SFC = ({className}) => {
       );
 
       dispatch(
-        setDeliveryStatus({
-          deliveryStatus: DeliveryStatus.pending,
+        setDelivery({
+          delivery: {
+            attempts: 1,
+            status: DeliveryStatus.pending,
+          },
           messageId,
         }),
       );

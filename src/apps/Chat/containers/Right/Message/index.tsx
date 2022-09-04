@@ -7,7 +7,7 @@ import Avatar from 'apps/Chat/components/Avatar';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {getMessages} from 'apps/Chat/selectors/state';
-import {setDeliveryStatus} from 'apps/Chat/store/deliveryStatuses';
+import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
@@ -51,8 +51,11 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     dispatch(setMessage(newMessage));
 
     dispatch(
-      setDeliveryStatus({
-        deliveryStatus: DeliveryStatus.pending,
+      setDelivery({
+        delivery: {
+          attempts: 1,
+          status: DeliveryStatus.pending,
+        },
         messageId,
       }),
     );

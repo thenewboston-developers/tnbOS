@@ -1,13 +1,16 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getDeliveryStatuses} from 'apps/Chat/selectors/state';
+import {getDeliveries} from 'apps/Chat/selectors/state';
 import {DeliveryStatus} from 'apps/Chat/types';
 
 const useDeliveryStatus = (messageId: string): DeliveryStatus | undefined => {
-  const deliveryStatuses = useSelector(getDeliveryStatuses);
+  const deliveries = useSelector(getDeliveries);
 
-  return useMemo(() => deliveryStatuses[messageId], [deliveryStatuses, messageId]);
+  return useMemo(() => {
+    const delivery = deliveries[messageId];
+    return delivery?.status;
+  }, [deliveries, messageId]);
 };
 
 export default useDeliveryStatus;

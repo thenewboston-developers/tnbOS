@@ -5,7 +5,7 @@ import {Formik} from 'formik';
 import Button, {ButtonType} from 'apps/Chat/components/Button';
 import {Input} from 'apps/Chat/components/FormElements';
 import {getMessages} from 'apps/Chat/selectors/state';
-import {setDeliveryStatus} from 'apps/Chat/store/deliveryStatuses';
+import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus} from 'apps/Chat/types';
 import {AppDispatch, SFC} from 'system/types';
@@ -42,8 +42,11 @@ const EditMessageModal: SFC<EditMessageModalProps> = ({className, close, content
     dispatch(setMessage(newMessage));
 
     dispatch(
-      setDeliveryStatus({
-        deliveryStatus: DeliveryStatus.pending,
+      setDelivery({
+        delivery: {
+          attempts: 1,
+          status: DeliveryStatus.pending,
+        },
         messageId,
       }),
     );
