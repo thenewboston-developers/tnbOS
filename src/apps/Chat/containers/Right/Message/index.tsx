@@ -4,8 +4,11 @@ import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} 
 import MdiIcon from '@mdi/react';
 
 import Avatar from 'apps/Chat/components/Avatar';
+import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
-import {deleteMessage} from 'apps/Chat/store/messages';
+import {getMessages} from 'apps/Chat/selectors/state';
+import {setDeliveryStatus} from 'apps/Chat/store/deliveryStatuses';
+import {setMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus} from 'apps/Chat/types';
 import {shortDate} from 'apps/Chat/utils/dates';
@@ -26,18 +29,31 @@ export interface MessageProps {
 const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
+  const deliveryStatus = useDeliveryStatus(messageId);
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(sender);
   const displayName = useSafeDisplayName(sender);
+  const messages = useSelector(getMessages);
   const self = useSelector(getSelf);
 
   const isContentDeleted = !content;
 
   const handleDeleteClick = async () => {
+    const message = messages[messageId];
+    const updatedData = {
+      content: '',
+      modifiedDate: currentSystemDate(),
+    };
+    const newMessage = {...message, ...updatedData};
+
+    // TODO: Send block here
+
+    dispatch(setMessage(newMessage));
+
     dispatch(
-      deleteMessage({
+      setDeliveryStatus({
+        deliveryStatus: DeliveryStatus.pending,
         messageId,
-        modifiedDate: currentSystemDate(),
       }),
     );
   };
@@ -52,7 +68,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
   };
 
   const renderDeliveryStatus = () => {
-    if (self.accountNumber !== sender) return null;
+    if (!deliveryStatus) return null;
 
     const icons = {
       [DeliveryStatus.error]: {
@@ -73,7 +89,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
       },
     };
 
-    const {color, path} = icons[DeliveryStatus.received];
+    const {color, path} = icons[deliveryStatus];
     return <MdiIcon color={color} path={path} size="14px" />;
   };
 

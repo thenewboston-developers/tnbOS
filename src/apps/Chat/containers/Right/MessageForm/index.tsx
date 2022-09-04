@@ -5,7 +5,9 @@ import {Formik, FormikHelpers} from 'formik';
 import {ButtonType} from 'apps/Chat/components/Button';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
+import {setDeliveryStatus} from 'apps/Chat/store/deliveryStatuses';
 import {setMessage} from 'apps/Chat/store/messages';
+import {DeliveryStatus} from 'apps/Chat/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -32,6 +34,8 @@ const MessageForm: SFC = ({className}) => {
       const now = currentSystemDate();
       const recipient = activeChat!;
 
+      // TODO: Send block here
+
       dispatch(
         setContact({
           accountNumber: recipient,
@@ -48,6 +52,13 @@ const MessageForm: SFC = ({className}) => {
           modifiedDate: now,
           recipient,
           sender: self.accountNumber,
+        }),
+      );
+
+      dispatch(
+        setDeliveryStatus({
+          deliveryStatus: DeliveryStatus.pending,
+          messageId,
         }),
       );
 

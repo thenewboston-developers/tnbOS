@@ -1,12 +1,11 @@
 import {AccountOnlineStatuses} from 'system/types/accountOnlineStatuses';
 import {Account, Accounts} from 'system/types/accounts';
 import {
+  AppDataHandler,
+  AppDataHandlers,
   AppIconType,
   AppProps,
-  AppReducers,
   AppRegistration,
-  AppRouter,
-  AppRouters,
   SystemAppRegistration,
 } from 'system/types/apps';
 import {Balances} from 'system/types/balances';
@@ -56,13 +55,12 @@ export {
   Account,
   AccountOnlineStatuses,
   Accounts,
+  AppDataHandler,
+  AppDataHandlers,
   AppDispatch,
   AppIconType,
   AppProps,
-  AppReducers,
   AppRegistration,
-  AppRouter,
-  AppRouters,
   AuthenticateRequest,
   AuthenticateResponse,
   Balances,
