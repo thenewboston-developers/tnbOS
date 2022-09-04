@@ -1,8 +1,11 @@
-import {CSSProperties, useCallback, useRef, useState} from 'react';
+import {CSSProperties, useCallback, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
+import {useSelector} from 'react-redux';
 
+import NetworkOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkOption';
 import {GenericVoidFunction} from 'shared/types';
 import {useEventListener, useToggle} from 'system/hooks';
+import {getNetworks} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -12,6 +15,7 @@ const NetworkSelector: SFC = ({className}) => {
   const [isOpen, toggleIsOpen] = useToggle(false);
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
   const imgRef = useRef<HTMLImageElement>(null);
+  const networks = useSelector(getNetworks);
   const optionsRef = useRef<HTMLDivElement[]>([]);
 
   const handleClick = (e: any): void => {
@@ -40,32 +44,33 @@ const NetworkSelector: SFC = ({className}) => {
     toggleIsOpen();
   }, [toggleIsOpen]);
 
-  const handleOptionClick = (optionOnClick: GenericVoidFunction) => async (): Promise<void> => {
-    await optionOnClick();
-    toggleIsOpen(false);
-  };
-
-  const menuOptions = [
-    {label: 'tnb', onClick: () => {}},
-    {label: 'local', onClick: () => {}},
-  ];
-
-  const renderMenu = () => (
-    <S.Menu style={menuPosition}>
-      {menuOptions.map(({label, onClick: optionOnClick}, index) => (
-        <S.Option
-          key={index}
-          onClick={handleOptionClick(optionOnClick)}
-          ref={(el) => {
-            if (el) optionsRef.current[index] = el;
-          }}
-          role="button"
-        >
-          {label}
-        </S.Option>
-      ))}
-    </S.Menu>
+  const handleOptionClick = useCallback(
+    (optionOnClick: GenericVoidFunction) => async (): Promise<void> => {
+      await optionOnClick();
+      toggleIsOpen(false);
+    },
+    [toggleIsOpen],
   );
+
+  const networkOptions = useMemo(() => {
+    return Object.values(networks).map((network, index) => (
+      <NetworkOption
+        key={index}
+        network={network}
+        onClick={handleOptionClick(() => {
+          console.log(network.networkId);
+        })}
+        ref={(el) => {
+          if (el) optionsRef.current[index] = el;
+        }}
+        role="button"
+      />
+    ));
+  }, [handleOptionClick, networks]);
+
+  const renderMenu = () => {
+    return <S.Menu style={menuPosition}>{networkOptions}</S.Menu>;
+  };
 
   return (
     <>
