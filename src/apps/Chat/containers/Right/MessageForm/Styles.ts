@@ -6,7 +6,7 @@ import {InlineInput} from 'apps/Chat/components/FormElements';
 
 export const AmountInput = styled(InlineInput)`
   margin-right: 12px;
-  width: 100px;
+  width: 80px;
 `;
 
 export const Button = styled(UButton)`

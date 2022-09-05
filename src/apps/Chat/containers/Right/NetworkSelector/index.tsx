@@ -1,12 +1,15 @@
 import {CSSProperties, useCallback, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import NetworkOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkOption';
+import {useActiveNetwork} from 'apps/Chat/hooks';
+import {getActiveNetworkId} from 'apps/Chat/selectors/state';
+import {setActiveNetworkId} from 'apps/Chat/store/manager';
 import {GenericVoidFunction} from 'shared/types';
 import {useEventListener, useToggle} from 'system/hooks';
 import {getNetworks} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const dropupRoot = document.getElementById('dropup-root')!;
@@ -14,6 +17,9 @@ const dropupRoot = document.getElementById('dropup-root')!;
 const NetworkSelector: SFC = ({className}) => {
   const [isOpen, toggleIsOpen] = useToggle(false);
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
+  const activeNetwork = useActiveNetwork();
+  const activeNetworkId = useSelector(getActiveNetworkId);
+  const dispatch = useDispatch<AppDispatch>();
   const imgRef = useRef<HTMLImageElement>(null);
   const networks = useSelector(getNetworks);
   const optionsRef = useRef<HTMLDivElement[]>([]);
@@ -53,20 +59,27 @@ const NetworkSelector: SFC = ({className}) => {
   );
 
   const networkOptions = useMemo(() => {
-    return Object.values(networks).map((network, index) => (
-      <NetworkOption
-        key={index}
-        network={network}
-        onClick={handleOptionClick(() => {
-          console.log(network.networkId);
-        })}
-        ref={(el) => {
-          if (el) optionsRef.current[index] = el;
-        }}
-        role="button"
-      />
-    ));
-  }, [handleOptionClick, networks]);
+    return Object.values(networks)
+      .filter((network) => network.networkId !== activeNetworkId)
+      .map((network, index) => (
+        <NetworkOption
+          key={index}
+          network={network}
+          onClick={handleOptionClick(() => {
+            dispatch(setActiveNetworkId(network.networkId));
+          })}
+          ref={(el) => {
+            if (el) optionsRef.current[index] = el;
+          }}
+          role="button"
+        />
+      ));
+  }, [activeNetworkId, dispatch, handleOptionClick, networks]);
+
+  const renderImage = () => {
+    const src = activeNetwork?.displayImage || 'https://cdn-icons-png.flaticon.com/512/4315/4315609.png';
+    return <S.Img alt="logo" onClick={handleImageClick} ref={imgRef} src={src} />;
+  };
 
   const renderMenu = () => {
     return <S.Menu style={menuPosition}>{networkOptions}</S.Menu>;
@@ -74,14 +87,7 @@ const NetworkSelector: SFC = ({className}) => {
 
   return (
     <>
-      <S.ImgContainer className={className}>
-        <S.Img
-          alt="logo"
-          onClick={handleImageClick}
-          ref={imgRef}
-          src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
-        />
-      </S.ImgContainer>
+      <S.ImgContainer className={className}>{renderImage()}</S.ImgContainer>
       {isOpen && createPortal(renderMenu(), dropupRoot)}
     </>
   );

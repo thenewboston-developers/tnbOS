@@ -7,6 +7,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Manager = {
   activeChat: null,
+  activeNetworkId: null,
 };
 
 const manager = createSlice({
@@ -17,9 +18,13 @@ const manager = createSlice({
       state.activeChat = accountNumber;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_MANAGER, state: current(state)});
     },
+    setActiveNetworkId: (state: Manager, {payload: networkId}: PayloadAction<string | null>) => {
+      state.activeNetworkId = networkId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_MANAGER, state: current(state)});
+    },
     setManager: setLocalAndStateReducer<Manager>(CHAT_MANAGER),
   },
 });
 
-export const {setActiveChat, setManager} = manager.actions;
+export const {setActiveChat, setActiveNetworkId, setManager} = manager.actions;
 export default manager.reducer;
