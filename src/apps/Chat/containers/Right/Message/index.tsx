@@ -38,7 +38,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
   const messages = useSelector(getMessages);
   const self = useSelector(getSelf);
 
-  const isContentDeleted = !content;
+  const isContentDeleted = !content && !transfer;
 
   const handleDeleteClick = async () => {
     const message = messages[messageId];

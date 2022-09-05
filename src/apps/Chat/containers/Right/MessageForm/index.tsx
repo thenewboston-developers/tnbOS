@@ -4,7 +4,7 @@ import {Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/Chat/components/Button';
 import NetworkSelector from 'apps/Chat/containers/Right/NetworkSelector';
-import {useActiveNetwork} from 'apps/Chat/hooks';
+import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
@@ -20,6 +20,7 @@ import * as S from './Styles';
 const MessageForm: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
+  const activeNetworkBalance = useActiveNetworkBalance();
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
@@ -86,9 +87,12 @@ const MessageForm: SFC = ({className}) => {
 
   const validationSchema = useMemo(() => {
     return yup.object().shape({
+      amount: yup.number().test('amount-does-not-exceed-balance', 'Invalid amount', (amount) => {
+        return amount ? activeNetworkBalance >= amount : true;
+      }),
       content: yup.string(),
     });
-  }, []);
+  }, [activeNetworkBalance]);
 
   return (
     <Formik
