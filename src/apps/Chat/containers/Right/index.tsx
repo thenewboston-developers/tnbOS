@@ -37,7 +37,7 @@ const Right: SFC = ({className}) => {
   const renderMessages = () => {
     const results = Object.values(messages)
       .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
-      .map(({content, createdDate, messageId, modifiedDate, sender}) => (
+      .map(({content, createdDate, messageId, modifiedDate, sender, transfer}) => (
         <Message
           content={content}
           createdDate={createdDate}
@@ -45,6 +45,7 @@ const Right: SFC = ({className}) => {
           messageId={messageId}
           modifiedDate={modifiedDate}
           sender={sender}
+          transfer={transfer}
         />
       ));
 

@@ -7,6 +7,12 @@ export interface Message {
   modifiedDate: string;
   recipient: string;
   sender: string;
+  transfer: Transfer | null;
 }
 
 export type Messages = Dict<Message>;
+
+export interface Transfer {
+  amount: number;
+  networkId: string;
+}

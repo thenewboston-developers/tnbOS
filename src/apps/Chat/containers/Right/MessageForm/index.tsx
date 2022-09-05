@@ -9,7 +9,7 @@ import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {DeliveryStatus} from 'apps/Chat/types';
+import {DeliveryStatus, Transfer} from 'apps/Chat/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -30,8 +30,17 @@ const MessageForm: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
+  const getTransfer = (amount: number): Transfer | null => {
+    if (!activeNetwork || amount === 0) return null;
+    return {
+      amount: amount,
+      networkId: activeNetwork.networkId,
+    };
+  };
+
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
     try {
+      const amount = values.amount ? parseInt(values.amount, 10) : 0;
       const content = values.content;
       const messageId = crypto.randomUUID();
       const now = currentSystemDate();
@@ -55,6 +64,7 @@ const MessageForm: SFC = ({className}) => {
           modifiedDate: now,
           recipient,
           sender: self.accountNumber,
+          transfer: getTransfer(amount),
         }),
       );
 

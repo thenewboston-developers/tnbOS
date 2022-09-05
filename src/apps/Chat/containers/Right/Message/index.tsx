@@ -4,13 +4,14 @@ import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} 
 import MdiIcon from '@mdi/react';
 
 import Avatar from 'apps/Chat/components/Avatar';
+import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
-import {DeliveryStatus} from 'apps/Chat/types';
+import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
 import {shortDate} from 'apps/Chat/utils/dates';
 import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
@@ -24,9 +25,10 @@ export interface MessageProps {
   messageId: string;
   modifiedDate: string;
   sender: string;
+  transfer: TTransfer | null;
 }
 
-const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender}) => {
+const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender, transfer}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
   const deliveryStatus = useDeliveryStatus(messageId);
@@ -43,6 +45,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     const updatedData = {
       content: '',
       modifiedDate: currentSystemDate(),
+      transfer: null,
     };
     const newMessage = {...message, ...updatedData};
 
@@ -119,7 +122,12 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
 
   const renderMessageBody = () => {
     if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
-    return <S.Content>{content}</S.Content>;
+    return (
+      <>
+        {content ? <S.Content>{content}</S.Content> : null}
+        {transfer ? <Transfer amount={transfer.amount} networkId={transfer.networkId} /> : null}
+      </>
+    );
   };
 
   const renderModifiedDetails = () => {

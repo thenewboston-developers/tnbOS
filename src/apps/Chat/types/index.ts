@@ -4,7 +4,7 @@ import {ChatElectronStore} from 'apps/Chat/types/electronStore';
 import {ChatFn} from 'apps/Chat/types/functions';
 import {InputProps} from 'apps/Chat/types/input';
 import {Manager} from 'apps/Chat/types/manager';
-import {Message, Messages} from 'apps/Chat/types/messages';
+import {Message, Messages, Transfer} from 'apps/Chat/types/messages';
 
 export {
   ChatElectronStore,
@@ -18,4 +18,5 @@ export {
   Manager,
   Message,
   Messages,
+  Transfer,
 };
