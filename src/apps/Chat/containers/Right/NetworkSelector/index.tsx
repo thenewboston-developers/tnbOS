@@ -2,13 +2,13 @@ import {CSSProperties, useCallback, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
-import NetworkOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkOption';
+import NetworkSelectorOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkSelectorOption';
 import {useActiveNetwork} from 'apps/Chat/hooks';
 import {getActiveNetworkId} from 'apps/Chat/selectors/state';
 import {setActiveNetworkId} from 'apps/Chat/store/manager';
 import {GenericVoidFunction} from 'shared/types';
 import {useEventListener, useToggle} from 'system/hooks';
-import {getNetworks} from 'system/selectors/state';
+import {getBalances, getNetworks} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -19,6 +19,7 @@ const NetworkSelector: SFC = ({className}) => {
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
   const activeNetwork = useActiveNetwork();
   const activeNetworkId = useSelector(getActiveNetworkId);
+  const balances = useSelector(getBalances);
   const dispatch = useDispatch<AppDispatch>();
   const imgRef = useRef<HTMLImageElement>(null);
   const networks = useSelector(getNetworks);
@@ -60,13 +61,15 @@ const NetworkSelector: SFC = ({className}) => {
 
   const networkOptions = useMemo(() => {
     return Object.values(networks)
-      .filter((network) => network.networkId !== activeNetworkId)
-      .map((network, index) => (
-        <NetworkOption
+      .filter(({networkId}) => networkId !== activeNetworkId)
+      .map(({displayImage, displayName, networkId}, index) => (
+        <NetworkSelectorOption
+          balance={balances[networkId]}
           key={index}
-          network={network}
+          displayImage={displayImage}
+          displayName={displayName}
           onClick={handleOptionClick(() => {
-            dispatch(setActiveNetworkId(network.networkId));
+            dispatch(setActiveNetworkId(networkId));
           })}
           ref={(el) => {
             if (el) optionsRef.current[index] = el;
@@ -74,7 +77,7 @@ const NetworkSelector: SFC = ({className}) => {
           role="button"
         />
       ));
-  }, [activeNetworkId, dispatch, handleOptionClick, networks]);
+  }, [activeNetworkId, balances, dispatch, handleOptionClick, networks]);
 
   const renderImage = () => {
     const src = activeNetwork?.displayImage || 'https://cdn-icons-png.flaticon.com/512/4315/4315609.png';
