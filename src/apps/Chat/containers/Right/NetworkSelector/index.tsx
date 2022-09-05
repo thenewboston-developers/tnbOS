@@ -79,13 +79,34 @@ const NetworkSelector: SFC = ({className}) => {
       ));
   }, [activeNetworkId, balances, dispatch, handleOptionClick, networks]);
 
+  const removeOption = useMemo(() => {
+    if (!activeNetwork) return [];
+    const index = networkOptions.length;
+    return [
+      <NetworkSelectorOption
+        balance={null}
+        key={index}
+        displayImage="https://cdn-icons-png.flaticon.com/512/189/189690.png"
+        displayName="Remove"
+        onClick={handleOptionClick(() => {
+          dispatch(setActiveNetworkId(null));
+        })}
+        ref={(el) => {
+          if (el) optionsRef.current[index] = el;
+        }}
+        role="button"
+      />,
+    ];
+  }, [activeNetwork, dispatch, handleOptionClick, networkOptions.length]);
+
   const renderImage = () => {
     const src = activeNetwork?.displayImage || 'https://cdn-icons-png.flaticon.com/512/4315/4315609.png';
     return <S.Img alt="logo" onClick={handleImageClick} ref={imgRef} src={src} />;
   };
 
   const renderMenu = () => {
-    return <S.Menu style={menuPosition}>{networkOptions}</S.Menu>;
+    const options = [...networkOptions, ...removeOption];
+    return <S.Menu style={menuPosition}>{options}</S.Menu>;
   };
 
   return (
