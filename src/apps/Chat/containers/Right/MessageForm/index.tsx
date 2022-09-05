@@ -2,6 +2,7 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
+import {setMessageBlock} from 'apps/Chat/blocks';
 import {ButtonType} from 'apps/Chat/components/Button';
 import NetworkSelector from 'apps/Chat/containers/Right/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
@@ -9,7 +10,7 @@ import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {DeliveryStatus, Transfer} from 'apps/Chat/types';
+import {DeliveryStatus, SetMessageParams, Transfer} from 'apps/Chat/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -31,6 +32,24 @@ const MessageForm: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
+  const getParams = (
+    amount: number,
+    content: string,
+    messageId: string,
+    now: string,
+    recipient: string,
+  ): SetMessageParams => {
+    return {
+      content,
+      createdDate: now,
+      messageId,
+      modifiedDate: now,
+      recipient,
+      sender: self.accountNumber,
+      transfer: getTransfer(amount),
+    };
+  };
+
   const getTransfer = (amount: number): Transfer | null => {
     if (!activeNetwork || amount === 0) return null;
     return {
@@ -47,7 +66,12 @@ const MessageForm: SFC = ({className}) => {
       const now = currentSystemDate();
       const recipient = activeChat!;
 
-      // TODO: Send block here
+      await setMessageBlock({
+        amount,
+        networkId: 'SAMPLE',
+        params: getParams(amount, content, messageId, now, recipient),
+        recipient,
+      });
 
       dispatch(
         setContact({

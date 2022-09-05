@@ -1,7 +1,7 @@
 import {Contact, Contacts} from 'apps/Chat/types/contacts';
 import {Deliveries, Delivery, DeliveryStatus} from 'apps/Chat/types/deliveries';
 import {ChatElectronStore} from 'apps/Chat/types/electronStore';
-import {ChatFn} from 'apps/Chat/types/functions';
+import {ChatFn, SetMessageParams} from 'apps/Chat/types/fns';
 import {InputProps} from 'apps/Chat/types/input';
 import {Manager} from 'apps/Chat/types/manager';
 import {Message, Messages, Transfer} from 'apps/Chat/types/messages';
@@ -18,5 +18,6 @@ export {
   Manager,
   Message,
   Messages,
+  SetMessageParams,
   Transfer,
 };

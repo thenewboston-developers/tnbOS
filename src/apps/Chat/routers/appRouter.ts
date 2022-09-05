@@ -1,6 +1,6 @@
 import noop from 'lodash/noop';
 
-import setMessageListener from 'apps/Chat/listeners/setMessageListener';
+import {setMessageListener} from 'apps/Chat/listeners';
 import {ChatFn} from 'apps/Chat/types';
 import {Block} from 'shared/types';
 import {AppDataHandlers, AppDispatch} from 'system/types';

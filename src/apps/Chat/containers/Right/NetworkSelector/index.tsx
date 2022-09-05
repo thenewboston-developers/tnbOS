@@ -88,7 +88,7 @@ const NetworkSelector: SFC = ({className}) => {
       <NetworkSelectorOption
         balance={null}
         key={index}
-        displayName="Remove"
+        displayName="Default"
         onClick={handleOptionClick(() => {
           dispatch(setActiveNetworkId(null));
         })}

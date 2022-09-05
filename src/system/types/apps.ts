@@ -13,6 +13,12 @@ export enum AppIconType {
   path = 'path',
 }
 
+export interface AppPayload {
+  app: string;
+  fn: string;
+  params: any;
+}
+
 export interface AppProps {
   display: boolean;
 }
