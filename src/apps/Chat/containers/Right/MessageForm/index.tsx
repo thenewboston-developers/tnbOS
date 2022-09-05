@@ -89,7 +89,7 @@ const MessageForm: SFC = ({className}) => {
     >
       {({dirty, errors, isSubmitting, isValid, touched}) => (
         <S.Form className={className}>
-          <NetworkSelector />
+          <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
           {activeNetwork ? (
             <S.AmountInput
               errors={errors}
@@ -98,7 +98,7 @@ const MessageForm: SFC = ({className}) => {
               touched={touched}
             />
           ) : null}
-          <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
+          <NetworkSelector />
           <S.Button
             dirty={dirty}
             disabled={isSubmitting}

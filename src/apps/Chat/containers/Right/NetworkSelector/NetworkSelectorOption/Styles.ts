@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
 
 import {colors, fonts} from 'apps/Chat/styles';
 
@@ -26,11 +27,15 @@ export const DisplayName = styled.div`
   font-weight: ${fonts.weight.semiBold};
 `;
 
+export const Icon = styled(UMdiIcon)`
+  margin-right: 10px;
+`;
+
 export const Img = styled.img`
   border-radius: 50%;
-  height: 32px;
+  height: 26px;
   margin-right: 10px;
-  width: 32px;
+  width: auto;
 `;
 
 export const Right = styled.div``;

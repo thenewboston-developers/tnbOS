@@ -1,17 +1,23 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
 
-import {fonts} from 'apps/Chat/styles';
+import {colors, fonts} from 'apps/Chat/styles';
 
-export const IMG_HEIGHT = 36;
+export const IMG_HEIGHT = 26;
+
+export const Icon = styled(UMdiIcon)`
+  color: ${colors.iconGray};
+
+  &:hover {
+    color: ${fonts.color.default};
+    cursor: pointer;
+  }
+`;
 
 export const Img = styled.img`
   border-radius: 50%;
   height: ${`${IMG_HEIGHT}px`};
-  width: auto;
-
-  &:active {
-    height: ${`${IMG_HEIGHT - 1}px`};
-  }
+  width: ${`${IMG_HEIGHT}px`};
 
   &:hover {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.16);
@@ -24,8 +30,8 @@ export const ImgContainer = styled.div`
   display: flex;
   height: ${`${IMG_HEIGHT}px`};
   justify-content: center;
-  margin-right: 12px;
-  width: ${`${IMG_HEIGHT}px`};
+  margin-left: 12px;
+  width: auto;
 `;
 
 export const Menu = styled.div`

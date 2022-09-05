@@ -1,6 +1,8 @@
 import {CSSProperties, useCallback, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
+import {mdiPlusCircle} from '@mdi/js';
 
 import NetworkSelectorOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkSelectorOption';
 import {useActiveNetwork} from 'apps/Chat/hooks';
@@ -21,7 +23,7 @@ const NetworkSelector: SFC = ({className}) => {
   const activeNetworkId = useSelector(getActiveNetworkId);
   const balances = useSelector(getBalances);
   const dispatch = useDispatch<AppDispatch>();
-  const imgRef = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
   const networks = useSelector(getNetworks);
   const optionsRef = useRef<HTMLDivElement[]>([]);
 
@@ -44,7 +46,7 @@ const NetworkSelector: SFC = ({className}) => {
 
     const position: CSSProperties = {
       bottom: window.innerHeight - iconBottom + iconHeight / 2,
-      left: iconLeft + iconWidth / 2,
+      right: window.innerWidth - iconLeft - iconWidth / 2,
     };
 
     setMenuPosition(position);
@@ -60,7 +62,7 @@ const NetworkSelector: SFC = ({className}) => {
   );
 
   const networkOptions = useMemo(() => {
-    return Object.values(networks)
+    return orderBy(Object.values(networks), ['displayName'])
       .filter(({networkId}) => networkId !== activeNetworkId)
       .map(({displayImage, displayName, networkId}, index) => (
         <NetworkSelectorOption
@@ -86,7 +88,6 @@ const NetworkSelector: SFC = ({className}) => {
       <NetworkSelectorOption
         balance={null}
         key={index}
-        displayImage="https://cdn-icons-png.flaticon.com/512/189/189690.png"
         displayName="Remove"
         onClick={handleOptionClick(() => {
           dispatch(setActiveNetworkId(null));
@@ -100,8 +101,11 @@ const NetworkSelector: SFC = ({className}) => {
   }, [activeNetwork, dispatch, handleOptionClick, networkOptions.length]);
 
   const renderImage = () => {
-    const src = activeNetwork?.displayImage || 'https://cdn-icons-png.flaticon.com/512/4315/4315609.png';
-    return <S.Img alt="logo" onClick={handleImageClick} ref={imgRef} src={src} />;
+    return activeNetwork ? (
+      <S.Img alt="logo" src={activeNetwork.displayImage} />
+    ) : (
+      <S.Icon path={mdiPlusCircle} size="26px" />
+    );
   };
 
   const renderMenu = () => {
@@ -111,7 +115,9 @@ const NetworkSelector: SFC = ({className}) => {
 
   return (
     <>
-      <S.ImgContainer className={className}>{renderImage()}</S.ImgContainer>
+      <S.ImgContainer className={className} onClick={handleImageClick} ref={imgRef}>
+        {renderImage()}
+      </S.ImgContainer>
       {isOpen && createPortal(renderMenu(), dropupRoot)}
     </>
   );
