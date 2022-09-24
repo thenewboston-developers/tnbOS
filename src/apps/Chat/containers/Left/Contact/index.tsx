@@ -28,8 +28,10 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
   const lastMessage = lastMessageId ? messages[lastMessageId] : null;
 
   const getSnippet = (): string => {
-    if (!lastMessage?.content) return 'No chat history';
-    const snippet = truncate(lastMessage.content, 32);
+    const lastMessageAmount = lastMessage?.transfer?.amount;
+    const lastMessageContent = lastMessage?.content;
+    if (!lastMessageAmount && !lastMessageContent) return 'No chat history';
+    const snippet = lastMessageContent ? truncate(lastMessageContent, 32) : `+${lastMessageAmount}`;
     return self.accountNumber === lastMessage?.sender ? `You: ${snippet}` : snippet;
   };
 
