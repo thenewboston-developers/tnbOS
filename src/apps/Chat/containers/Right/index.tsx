@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 
+import {ChatRegistration} from 'apps/Chat/registration';
 import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
+import {getManager} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import EmptyState from './EmptyState';
 import Message from './Message';
@@ -13,8 +15,26 @@ const Right: SFC = ({className}) => {
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
   const activeChat = useSelector(getActiveChat);
   const bottomMessageRef = useRef<HTMLDivElement>(null);
+  const manager = useSelector(getManager);
   const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!bottomMessageRef.current || !messagesRef.current || manager.activeApp !== ChatRegistration.appId) return;
+
+    // As the app becomes visible the refs are initialized before rendering is complete
+    // This delays scrolling until painting is complete
+    const timeout = setTimeout(() => {
+      bottomMessageRef?.current?.scrollIntoView(false);
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, [bottomMessageRef, manager.activeApp, messagesRef]);
+
+  useEffect(() => {
+    if (!bottomMessageRef.current || !messagesRef.current || manager.activeApp !== ChatRegistration.appId) return;
+    bottomMessageRef?.current?.scrollIntoView(false);
+  }, [activeChat, bottomMessageRef, manager.activeApp, messagesRef]);
 
   useEffect(() => {
     if (!bottomMessageRef.current || !messagesRef.current || !scrollToBottom) return;
@@ -51,7 +71,6 @@ const Right: SFC = ({className}) => {
 
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>
-        <OverviewMessageContainer />
         {results}
         <S.BottomMessage ref={bottomMessageRef} />
       </S.Messages>
@@ -62,6 +81,7 @@ const Right: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      <OverviewMessageContainer />
       {renderMessages()}
       <MessageForm />
     </S.Container>

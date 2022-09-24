@@ -11,6 +11,7 @@ import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus, SetMessageParams, Transfer} from 'apps/Chat/types';
+import {useDefaultNetworkId} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -22,6 +23,7 @@ const MessageForm: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
   const activeNetworkBalance = useActiveNetworkBalance();
+  const defaultNetworkId = useDefaultNetworkId(activeChat!);
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
@@ -59,6 +61,13 @@ const MessageForm: SFC = ({className}) => {
   };
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
+    const networkId = activeNetwork?.networkId || defaultNetworkId;
+
+    if (!networkId) {
+      displayErrorToast('Unable to connect to recipient');
+      return;
+    }
+
     try {
       const amount = values.amount ? parseInt(values.amount, 10) : 0;
       const content = values.content;
@@ -68,7 +77,7 @@ const MessageForm: SFC = ({className}) => {
 
       await setMessageBlock({
         amount,
-        networkId: 'SAMPLE',
+        networkId,
         params: getParams(amount, content, messageId, now, recipient),
         recipient,
       });
@@ -105,6 +114,7 @@ const MessageForm: SFC = ({className}) => {
 
       resetForm();
     } catch (error) {
+      console.error(error);
       displayErrorToast('Error sending the message');
     }
   };
