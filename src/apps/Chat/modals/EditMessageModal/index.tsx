@@ -2,15 +2,18 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik} from 'formik';
 
+import {setMessageBlock} from 'apps/Chat/blocks';
 import Button, {ButtonType} from 'apps/Chat/components/Button';
 import {Input} from 'apps/Chat/components/FormElements';
-import {getMessages} from 'apps/Chat/selectors/state';
+import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus} from 'apps/Chat/types';
+import {useRecipientsDefaultNetworkId} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
+import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 export interface EditMessageModalProps {
@@ -20,8 +23,10 @@ export interface EditMessageModalProps {
 }
 
 const EditMessageModal: SFC<EditMessageModalProps> = ({className, close, content, messageId}) => {
+  const activeChat = useSelector(getActiveChat);
   const dispatch = useDispatch<AppDispatch>();
   const messages = useSelector(getMessages);
+  const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
 
   const initialValues = {
     content,
@@ -30,28 +35,42 @@ const EditMessageModal: SFC<EditMessageModalProps> = ({className, close, content
   type FormValues = typeof initialValues;
 
   const handleSubmit = async (values: FormValues) => {
-    const message = messages[messageId];
-    const updatedData = {
-      content: values.content,
-      modifiedDate: currentSystemDate(),
-    };
-    const newMessage = {...message, ...updatedData};
-
-    // TODO: Send block here
-
-    dispatch(setMessage(newMessage));
-
-    dispatch(
-      setDelivery({
-        delivery: {
-          attempts: 1,
-          status: DeliveryStatus.pending,
+    try {
+      const message = messages[messageId];
+      const newMessage = {
+        ...message,
+        ...{
+          content: values.content,
+          modifiedDate: currentSystemDate(),
         },
-        messageId,
-      }),
-    );
+      };
 
-    close();
+      if (recipientsDefaultNetworkId) {
+        await setMessageBlock({
+          amount: 0,
+          networkId: recipientsDefaultNetworkId,
+          params: newMessage,
+          recipient: message.recipient,
+        });
+      }
+
+      dispatch(setMessage(newMessage));
+
+      dispatch(
+        setDelivery({
+          delivery: {
+            attempts: 1,
+            status: DeliveryStatus.pending,
+          },
+          messageId,
+        }),
+      );
+
+      close();
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error editing the message');
+    }
   };
 
   const validationSchema = useMemo(() => {

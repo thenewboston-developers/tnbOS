@@ -10,8 +10,8 @@ import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {DeliveryStatus, SetMessageParams, Transfer} from 'apps/Chat/types';
-import {useDefaultNetworkId} from 'system/hooks';
+import {DeliveryStatus, Transfer} from 'apps/Chat/types';
+import {useRecipientsDefaultNetworkId} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -23,8 +23,8 @@ const MessageForm: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
   const activeNetworkBalance = useActiveNetworkBalance();
-  const defaultNetworkId = useDefaultNetworkId(activeChat!);
   const dispatch = useDispatch<AppDispatch>();
+  const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -33,24 +33,6 @@ const MessageForm: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
-
-  const getParams = (
-    amount: number,
-    content: string,
-    messageId: string,
-    now: string,
-    recipient: string,
-  ): SetMessageParams => {
-    return {
-      content,
-      createdDate: now,
-      messageId,
-      modifiedDate: now,
-      recipient,
-      sender: self.accountNumber,
-      transfer: getTransfer(amount),
-    };
-  };
 
   const getTransfer = (amount: number): Transfer | null => {
     if (!activeNetwork || amount === 0) return null;
@@ -61,44 +43,41 @@ const MessageForm: SFC = ({className}) => {
   };
 
   const handleSubmit = async (values: FormValues, {resetForm}: FormikHelpers<FormValues>): Promise<void> => {
-    const networkId = activeNetwork?.networkId || defaultNetworkId;
-
-    if (!networkId) {
-      displayErrorToast('Unable to connect to recipient');
-      return;
-    }
-
     try {
       const amount = values.amount ? parseInt(values.amount, 10) : 0;
       const content = values.content;
       const messageId = crypto.randomUUID();
+      const networkId = activeNetwork?.networkId || recipientsDefaultNetworkId;
       const now = currentSystemDate();
       const recipient = activeChat!;
+      const transfer = getTransfer(amount);
 
-      await setMessageBlock({
-        amount,
-        networkId,
-        params: getParams(amount, content, messageId, now, recipient),
+      const message = {
+        content,
+        createdDate: now,
+        messageId,
+        modifiedDate: now,
         recipient,
-      });
+        sender: self.accountNumber,
+        transfer,
+      };
+
+      if (networkId) {
+        await setMessageBlock({
+          amount,
+          networkId,
+          params: message,
+          recipient,
+        });
+      }
+
+      dispatch(setMessage(message));
 
       dispatch(
         setContact({
           accountNumber: recipient,
           lastActivityDate: now,
           lastMessageId: messageId,
-        }),
-      );
-
-      dispatch(
-        setMessage({
-          content,
-          createdDate: now,
-          messageId,
-          modifiedDate: now,
-          recipient,
-          sender: self.accountNumber,
-          transfer: getTransfer(amount),
         }),
       );
 

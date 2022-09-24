@@ -3,20 +3,22 @@ import {useDispatch, useSelector} from 'react-redux';
 import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} from '@mdi/js';
 import MdiIcon from '@mdi/react';
 
+import {setMessageBlock} from 'apps/Chat/blocks';
 import Avatar from 'apps/Chat/components/Avatar';
 import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
-import {getMessages} from 'apps/Chat/selectors/state';
+import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
 import {shortDate} from 'apps/Chat/utils/dates';
-import {useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
+import {useRecipientsDefaultNetworkId, useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
+import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 export interface MessageProps {
@@ -31,37 +33,53 @@ export interface MessageProps {
 const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender, transfer}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
+  const activeChat = useSelector(getActiveChat);
   const deliveryStatus = useDeliveryStatus(messageId);
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(sender);
   const displayName = useSafeDisplayName(sender);
   const messages = useSelector(getMessages);
+  const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
   const isContentDeleted = !content && !transfer;
 
   const handleDeleteClick = async () => {
-    const message = messages[messageId];
-    const updatedData = {
-      content: '',
-      modifiedDate: currentSystemDate(),
-      transfer: null,
-    };
-    const newMessage = {...message, ...updatedData};
-
-    // TODO: Send block here
-
-    dispatch(setMessage(newMessage));
-
-    dispatch(
-      setDelivery({
-        delivery: {
-          attempts: 1,
-          status: DeliveryStatus.pending,
+    try {
+      const message = messages[messageId];
+      const newMessage = {
+        ...message,
+        ...{
+          content: '',
+          modifiedDate: currentSystemDate(),
+          transfer: null,
         },
-        messageId,
-      }),
-    );
+      };
+
+      if (recipientsDefaultNetworkId) {
+        await setMessageBlock({
+          amount: 0,
+          networkId: recipientsDefaultNetworkId,
+          params: newMessage,
+          recipient: message.recipient,
+        });
+      }
+
+      dispatch(setMessage(newMessage));
+
+      dispatch(
+        setDelivery({
+          delivery: {
+            attempts: 1,
+            status: DeliveryStatus.pending,
+          },
+          messageId,
+        }),
+      );
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error editing the message');
+    }
   };
 
   const handleMouseOut = () => {

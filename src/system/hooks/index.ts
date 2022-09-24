@@ -4,9 +4,9 @@ import {useIpcEffect} from 'system/hooks/ipc/utils';
 import useAccountNumbers from 'system/hooks/useAccountNumbers';
 import useAccountOnlineStatus from 'system/hooks/useAccountOnlineStatus';
 import useAccountOnlineStatusManager from 'system/hooks/useAccountOnlineStatusManager';
-import useDefaultNetworkId from 'system/hooks/useDefaultNetworkId';
 import useEventListener from 'system/hooks/useEventListener';
 import useNetworkDisplayImage from 'system/hooks/useNetworkDisplayImage';
+import useRecipientsDefaultNetworkId from 'system/hooks/useRecipientsDefaultNetworkId';
 import useSafeDisplayImage from 'system/hooks/useSafeDisplayImage';
 import useSafeDisplayName from 'system/hooks/useSafeDisplayName';
 import useToggle from 'system/hooks/useToggle';
@@ -16,11 +16,11 @@ export {
   useAccountNumbers,
   useAccountOnlineStatus,
   useAccountOnlineStatusManager,
-  useDefaultNetworkId,
   useEventListener,
   useIpcEffect,
   useNetworkDisplayImage,
   useReadIpc,
+  useRecipientsDefaultNetworkId,
   useSafeDisplayImage,
   useSafeDisplayName,
   useToggle,

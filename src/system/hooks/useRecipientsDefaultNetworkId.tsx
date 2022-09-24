@@ -5,7 +5,7 @@ import orderBy from 'lodash/orderBy';
 import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {OnlineStatus} from 'system/types';
 
-const useDefaultNetworkId = (recipient: string): string | null => {
+const useRecipientsDefaultNetworkId = (recipient: string): string | null => {
   const balances = useSelector(getBalances);
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
 
@@ -28,4 +28,4 @@ const useDefaultNetworkId = (recipient: string): string | null => {
   }, [balances, networkAccountOnlineStatuses, recipient]);
 };
 
-export default useDefaultNetworkId;
+export default useRecipientsDefaultNetworkId;

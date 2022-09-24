@@ -28,7 +28,7 @@ const setMessageBlock = async ({amount, networkId, params, recipient}: SetMessag
   };
 
   const block = signData(data, self.signingKey);
-  await createBlock(block, networkId);
+  return createBlock(block, networkId);
 };
 
 export default setMessageBlock;
