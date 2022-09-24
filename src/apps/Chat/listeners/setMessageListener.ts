@@ -10,7 +10,7 @@ import {displayErrorToast} from 'system/utils/toast';
 const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
   (async () => {
     try {
-      const {payload, recipient, sender} = block;
+      const {payload, sender} = block;
       const {params: message} = payload;
       const {
         chat: {messages},
