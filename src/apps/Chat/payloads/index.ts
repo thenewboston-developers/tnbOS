@@ -1,3 +1,4 @@
+import setDeliveryStatusPayload from 'apps/Chat/payloads/setDeliveryStatusPayload';
 import setMessagePayload from 'apps/Chat/payloads/setMessagePayload';
 
-export {setMessagePayload};
+export {setDeliveryStatusPayload, setMessagePayload};

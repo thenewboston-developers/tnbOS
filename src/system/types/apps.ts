@@ -14,9 +14,9 @@ export enum AppIconType {
 }
 
 export interface AppPayload {
-  app: string;
   fn: string;
   params: any;
+  pid: string;
 }
 
 export interface AppProps {

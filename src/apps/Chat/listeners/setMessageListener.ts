@@ -1,5 +1,7 @@
+import {setDeliveryStatusBlock} from 'apps/Chat/blocks';
 import {setContact} from 'apps/Chat/store/contacts';
 import {setMessage} from 'apps/Chat/store/messages';
+import {DeliveryStatus} from 'apps/Chat/types';
 import {
   setMessageValidator,
   validateBlockRecipient,
@@ -49,7 +51,14 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
         );
       }
 
-      // TODO: Send message receipt
+      await setDeliveryStatusBlock({
+        networkId,
+        params: {
+          deliveryStatus: DeliveryStatus.received,
+          messageId: message.messageId,
+        },
+        recipient: sender,
+      });
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

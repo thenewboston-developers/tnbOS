@@ -1,3 +1,4 @@
+import setDeliveryStatusBlock from 'apps/Chat/blocks/setDeliveryStatusBlock';
 import setMessageBlock from 'apps/Chat/blocks/setMessageBlock';
 
-export {setMessageBlock};
+export {setDeliveryStatusBlock, setMessageBlock};
