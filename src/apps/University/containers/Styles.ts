@@ -3,6 +3,6 @@ import styled from 'styled-components';
 import UAppContainer from 'system/components/AppContainer';
 
 export const AppContainer = styled(UAppContainer)`
-  height: 60%;
-  width: 80%;
+  height: 90%;
+  width: 90%;
 `;
