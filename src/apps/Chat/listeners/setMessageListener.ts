@@ -1,6 +1,14 @@
 import {setContact} from 'apps/Chat/store/contacts';
 import {setMessage} from 'apps/Chat/store/messages';
-import {setMessageValidator} from 'apps/Chat/validators/setMessageValidators';
+import {
+  setMessageValidator,
+  validateBlockRecipient,
+  validateBlockSender,
+  validateDates,
+  validateNetworkIdsMatch,
+  validateRecipientIsSelf,
+  validateSendersMatch,
+} from 'apps/Chat/validators/setMessageValidators';
 import {Block} from 'shared/types';
 import store from 'system/store';
 import {AppDispatch} from 'system/types';
@@ -10,15 +18,25 @@ import {displayErrorToast} from 'system/utils/toast';
 const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
   (async () => {
     try {
-      const {payload, sender} = block;
+      const {payload, recipient, sender} = block;
       const {params: message} = payload;
       const {
         chat: {messages},
+        system: {self},
       } = store.getState();
 
       await setMessageValidator.validate(message);
+      validateBlockRecipient(recipient, message.recipient);
+      validateBlockSender(sender, message.sender);
+      validateDates(message.createdDate, message.modifiedDate);
+      validateNetworkIdsMatch(message, networkId);
+      validateRecipientIsSelf(recipient, self);
 
       const existingMessage = messages[message.messageId];
+
+      if (existingMessage) {
+        validateSendersMatch(existingMessage, message);
+      }
 
       if (!existingMessage || new Date(message.modifiedDate) > new Date(existingMessage.modifiedDate)) {
         dispatch(setMessage(message));
@@ -30,8 +48,6 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
           }),
         );
       }
-
-      console.log(networkId);
 
       // Send message receipt
     } catch (error) {
