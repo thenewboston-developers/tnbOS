@@ -1,12 +1,5 @@
 import {Dict} from 'system/types/generic';
 
-export enum DeliveryStatus {
-  error = 'error',
-  failed = 'failed',
-  pending = 'pending',
-  received = 'received',
-}
-
 export interface Message {
   content: string;
   createdDate: string;
@@ -14,6 +7,12 @@ export interface Message {
   modifiedDate: string;
   recipient: string;
   sender: string;
+  transfer: Transfer | null;
 }
 
 export type Messages = Dict<Message>;
+
+export interface Transfer {
+  amount: number;
+  networkId: string;
+}

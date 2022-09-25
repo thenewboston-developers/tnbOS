@@ -11,23 +11,6 @@ const messages = createSlice({
   initialState,
   name: CHAT_MESSAGES,
   reducers: {
-    deleteMessage: (state: Messages, {payload}: PayloadAction<Pick<Message, 'messageId' | 'modifiedDate'>>) => {
-      const {messageId, modifiedDate} = payload;
-      const message = state[messageId];
-      message.content = '';
-      message.modifiedDate = modifiedDate;
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_MESSAGES, state: current(state)});
-    },
-    editMessageContent: (
-      state: Messages,
-      {payload}: PayloadAction<Pick<Message, 'content' | 'messageId' | 'modifiedDate'>>,
-    ) => {
-      const {content, messageId, modifiedDate} = payload;
-      const message = state[messageId];
-      message.content = content;
-      message.modifiedDate = modifiedDate;
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_MESSAGES, state: current(state)});
-    },
     setMessage: (state: Messages, {payload}: PayloadAction<Message>) => {
       const {messageId} = payload;
       state[messageId] = payload;
@@ -37,5 +20,5 @@ const messages = createSlice({
   },
 });
 
-export const {deleteMessage, editMessageContent, setMessage, setMessages} = messages.actions;
+export const {setMessage, setMessages} = messages.actions;
 export default messages.reducer;

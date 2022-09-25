@@ -77,12 +77,12 @@ export const Right = styled.div`
 export const Tool = styled(Icon)`
   background: ${colors.rightBackground};
   border-radius: unset;
-  color: #b8bbbe;
+  color: ${colors.iconGray};
   padding: 4px;
 
   &:hover {
-    color: ${fonts.color.default};
     background: #40444a;
+    color: ${fonts.color.default};
     cursor: pointer;
   }
 `;

@@ -7,6 +7,7 @@ const colors = {
   hoverDark: '#32353a',
   hoverMedium: '#3b3f44',
   hoverLight: '#42464d',
+  iconGray: '#b8bbbe',
   leftBackground: '#2e3136',
   rightBackground: '#36393e',
   palette: {
