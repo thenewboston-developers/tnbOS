@@ -49,7 +49,7 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
         );
       }
 
-      // Send message receipt
+      // TODO: Send message receipt
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

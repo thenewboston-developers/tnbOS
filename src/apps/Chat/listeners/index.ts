@@ -1,3 +1,4 @@
+import setDeliveryStatusListener from 'apps/Chat/listeners/setDeliveryStatusListener';
 import setMessageListener from 'apps/Chat/listeners/setMessageListener';
 
-export {setMessageListener};
+export {setDeliveryStatusListener, setMessageListener};

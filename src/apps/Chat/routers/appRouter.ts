@@ -1,6 +1,4 @@
-import noop from 'lodash/noop';
-
-import {setMessageListener} from 'apps/Chat/listeners';
+import {setDeliveryStatusListener, setMessageListener} from 'apps/Chat/listeners';
 import {ChatFn} from 'apps/Chat/types';
 import {Block} from 'shared/types';
 import {AppDataHandlers, AppDispatch} from 'system/types';
@@ -12,8 +10,8 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
   } = block;
 
   const fnHandlers: AppDataHandlers = {
+    [ChatFn.setDeliveryStatus]: setDeliveryStatusListener,
     [ChatFn.setMessage]: setMessageListener,
-    [ChatFn.setMessageReceipt]: noop,
   };
 
   const fnHandler = fnHandlers[fn];
