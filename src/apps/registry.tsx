@@ -14,10 +14,10 @@ export const appReducers = {
 };
 
 export const appRegistrations: AppRegistration[] = [
-  AccountManagerRegistration,
   ChatRegistration,
-  NetworkManagerRegistration,
   UniversityRegistration,
+  AccountManagerRegistration,
+  NetworkManagerRegistration,
 ];
 
 export const appRouters: AppDataHandlers = {
@@ -29,10 +29,10 @@ export const Apps: SFC = () => {
 
   return (
     <>
-      <Chat display={activeApp === ChatRegistration.appId} />
-      <University display={activeApp === UniversityRegistration.appId} />
       <AccountManager display={activeApp === AccountManagerRegistration.appId} />
+      <Chat display={activeApp === ChatRegistration.appId} />
       <NetworkManager display={activeApp === NetworkManagerRegistration.appId} />
+      <University display={activeApp === UniversityRegistration.appId} />
     </>
   );
 };

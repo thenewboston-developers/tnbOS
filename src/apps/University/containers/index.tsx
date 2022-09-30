@@ -5,7 +5,7 @@ import * as S from './Styles';
 const University: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.AppContainer>University</S.AppContainer>
+      <S.Container>University</S.Container>
     </AppWindow>
   );
 };
