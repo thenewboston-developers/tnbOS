@@ -2,12 +2,12 @@ import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
 
-const SuppCoins: SFC<AppProps> = ({className, display}) => {
+const University: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.AppContainer>SuppCoins</S.AppContainer>
+      <S.Container>University</S.Container>
     </AppWindow>
   );
 };
 
-export default SuppCoins;
+export default University;
