@@ -18,7 +18,7 @@ const ResendPendingMessages: SFC = () => {
 
   const renderResendRecipientsPendingMessages = () => {
     return onlineContactsAccountNumbers.map((accountNumber) => (
-      <ResendRecipientsPendingMessages recipient={accountNumber} />
+      <ResendRecipientsPendingMessages key={accountNumber} recipient={accountNumber} />
     ));
   };
 
