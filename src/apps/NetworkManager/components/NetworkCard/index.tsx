@@ -36,7 +36,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
           <S.LeftText>
             <S.DisplayName>{network.displayName}</S.DisplayName>
             <S.NetworkId>{truncate(network.networkId, 24)}</S.NetworkId>
-            <S.Balance>Balance: {balances[network.networkId]}</S.Balance>
+            <S.Balance>Balance: {balances[network.networkId].toLocaleString()}</S.Balance>
           </S.LeftText>
         </S.Left>
         <S.Right>

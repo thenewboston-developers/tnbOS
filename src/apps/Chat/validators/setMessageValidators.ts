@@ -14,7 +14,7 @@ export const setMessageValidator = yup.object({
   modifiedDate: yup.date().required(),
   recipient: accountNumberSchema.required(),
   sender: accountNumberSchema.required(),
-  transfer: transferSchema.required().defined().nullable(),
+  transfer: transferSchema.defined().nullable(),
 });
 
 export const validateBlockRecipient = (blockRecipient: string, messageRecipient: string) => {
