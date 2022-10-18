@@ -6,14 +6,14 @@ const fonts = {
     light: '#96989d',
   },
   family: {
-    default: 'OpenSans, sans-serif',
+    default: 'Lato, sans-serif',
   },
   weight: {
-    extraBold: '800',
+    extraBold: '900',
     bold: '700',
-    semiBold: '600',
     regular: '400',
     light: '300',
+    thin: '100',
   },
 };
 

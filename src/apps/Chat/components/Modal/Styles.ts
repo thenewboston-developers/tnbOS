@@ -19,7 +19,7 @@ export const Header = styled.div`
   color: #fff;
   display: flex;
   font-size: 16px;
-  font-weight: ${fonts.weight.semiBold};
+  font-weight: ${fonts.weight.bold};
   justify-content: space-between;
   padding: 8px 16px;
   position: relative;

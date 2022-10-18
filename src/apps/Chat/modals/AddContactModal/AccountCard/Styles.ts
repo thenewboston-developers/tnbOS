@@ -21,7 +21,7 @@ export const Container = styled.div`
 
 export const DisplayName = styled.div`
   font-size: 14px;
-  font-weight: ${fonts.weight.semiBold};
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const TextContainer = styled.div`

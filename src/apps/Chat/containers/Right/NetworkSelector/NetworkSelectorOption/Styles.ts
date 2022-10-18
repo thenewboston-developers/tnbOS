@@ -24,7 +24,7 @@ export const Container = styled.div`
 `;
 
 export const DisplayName = styled.div`
-  font-weight: ${fonts.weight.semiBold};
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const Icon = styled(UMdiIcon)`
