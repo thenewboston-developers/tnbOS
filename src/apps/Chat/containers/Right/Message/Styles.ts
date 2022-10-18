@@ -43,7 +43,7 @@ export const Date = styled.div`
 export const DisplayName = styled.div`
   color: #fff;
   font-size: 14px;
-  font-weight: ${fonts.weight.semiBold};
+  font-weight: ${fonts.weight.bold};
   margin-right: 8px;
 `;
 
