@@ -18,7 +18,7 @@ const NetworkSelectorOption = forwardRef<HTMLDivElement, NetworkSelectorOptionPr
         {displayImage ? <S.Img alt="logo" src={displayImage} /> : <S.Icon path={mdiMinusCircle} size="26px" />}
         <S.Right>
           <S.DisplayName>{displayName}</S.DisplayName>
-          {balance !== null ? <S.Balance>Balance: {balance}</S.Balance> : null}
+          {balance !== null ? <S.Balance>Balance: {balance.toLocaleString()}</S.Balance> : null}
         </S.Right>
       </S.Container>
     );
