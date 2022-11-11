@@ -1,3 +1,8 @@
+import ConnectionStatus from 'apps/SpeedTest/containers/ConnectionStatus';
+import History from 'apps/SpeedTest/containers/History';
+import MainButton from 'apps/SpeedTest/containers/MainButton';
+import Timer from 'apps/SpeedTest/containers/Timer';
+import Top from 'apps/SpeedTest/containers/Top';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
@@ -5,7 +10,13 @@ import * as S from './Styles';
 const SpeedTest: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.Container>SpeedTest</S.Container>
+      <S.Container>
+        <Top />
+        <ConnectionStatus />
+        <MainButton />
+        <Timer />
+        <History />
+      </S.Container>
     </AppWindow>
   );
 };
