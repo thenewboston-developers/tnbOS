@@ -15,6 +15,6 @@ export const Container = styled.div`
 
 export const TopText = styled.div`
   color: #f6f6f6;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 200;
 `;

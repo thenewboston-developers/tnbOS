@@ -10,7 +10,7 @@ export const Container = styled.div`
   font-size: 36px;
   font-weight: 300;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 48px;
   transition: all 0.2s;
   width: 40%;
 
