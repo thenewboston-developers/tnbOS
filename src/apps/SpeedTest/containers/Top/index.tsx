@@ -1,5 +1,7 @@
 import {useSelector} from 'react-redux';
+import {mdiPencil} from '@mdi/js';
 
+import AccountIdentification from 'apps/SpeedTest/components/AccountIdentification';
 import SpacedItems from 'apps/SpeedTest/components/SpacedItems';
 import TopCard from 'apps/SpeedTest/components/TopCard';
 import AccountModal from 'apps/SpeedTest/modals/AccountModal';
@@ -14,7 +16,20 @@ const Top: SFC = ({className}) => {
 
   const renderAccountContent = () => {
     if (!activeAccountNumber) return <S.Button onClick={toggleAccountModal}>Select Account</S.Button>;
-    return <SpacedItems />;
+    return renderActiveAccount();
+  };
+
+  const renderActiveAccount = () => {
+    return (
+      <SpacedItems
+        leftContent={<AccountIdentification accountNumber={activeAccountNumber!} />}
+        rightContent={
+          <div onClick={toggleAccountModal}>
+            <S.Icon path={mdiPencil} size="28px" />
+          </div>
+        }
+      />
+    );
   };
 
   const renderAccountModal = () => {
@@ -27,7 +42,7 @@ const Top: SFC = ({className}) => {
       <S.Container className={className}>
         <TopCard heading="Account">{renderAccountContent()}</TopCard>
         <TopCard heading="Network">
-          <SpacedItems />
+          <SpacedItems leftContent={<div>Left</div>} rightContent={<div>Right</div>} />
         </TopCard>
       </S.Container>
       {renderAccountModal()}
