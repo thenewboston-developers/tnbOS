@@ -1,7 +1,8 @@
-import noop from 'lodash/noop';
+import {useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
-import Identification from 'apps/SpeedTest/components/Identification';
-import SelectCard from 'apps/SpeedTest/components/SelectCard';
+import AccountCard from 'apps/SpeedTest/components/AccountCard';
+import {getAccounts} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -10,14 +11,16 @@ interface AccountModalProps {
 }
 
 const AccountModal: SFC<AccountModalProps> = ({className, close}) => {
+  const accounts = useSelector(getAccounts);
+
+  const renderAccountCards = () => {
+    const orderedAccounts = orderBy(Object.values(accounts), ['displayName']);
+    return orderedAccounts.map(({accountNumber}) => <AccountCard accountNumber={accountNumber} key={accountNumber} />);
+  };
+
   return (
     <S.Modal className={className} close={close} header="Select Account">
-      <SelectCard isSelected={false} onClick={noop}>
-        <Identification />
-      </SelectCard>
-      <SelectCard isSelected={true} onClick={noop}>
-        <Identification />
-      </SelectCard>
+      {renderAccountCards()}
     </S.Modal>
   );
 };

@@ -1,13 +1,19 @@
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const Identification: SFC = ({className}) => {
+export interface IdentificationProps {
+  bottomText: string;
+  displayImage: string;
+  topText: string;
+}
+
+const Identification: SFC<IdentificationProps> = ({bottomText, className, displayImage, topText}) => {
   return (
     <S.Container className={className}>
-      <S.Img alt="identification" src="https://avatars.githubusercontent.com/u/12706692?s=200&v=4" />
+      <S.Img alt="identification" src={displayImage} />
       <S.Text>
-        <S.TopText>Top text</S.TopText>
-        <S.BottomText>Bottom text</S.BottomText>
+        <S.TopText>{topText}</S.TopText>
+        <S.BottomText>{bottomText}</S.BottomText>
       </S.Text>
     </S.Container>
   );
