@@ -8,11 +8,11 @@ import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 
-export interface AccountCardProps {
+export interface AccountSelectCardProps {
   accountNumber: string;
 }
 
-const AccountCard: SFC<AccountCardProps> = ({accountNumber, className}) => {
+const AccountSelectCard: SFC<AccountSelectCardProps> = ({accountNumber, className}) => {
   const activeAccountNumber = useSelector(getActiveAccountNumber);
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useSafeDisplayImage(accountNumber);
@@ -33,4 +33,4 @@ const AccountCard: SFC<AccountCardProps> = ({accountNumber, className}) => {
   );
 };
 
-export default AccountCard;
+export default AccountSelectCard;
