@@ -7,10 +7,12 @@ const History: SFC = ({className}) => {
       <S.Heading>History</S.Heading>
       <S.Table>
         <thead>
-          <S.Th>Account</S.Th>
-          <S.Th>Network</S.Th>
-          <S.Th>Date</S.Th>
-          <S.Th>Speed</S.Th>
+          <tr>
+            <S.Th>Account</S.Th>
+            <S.Th>Network</S.Th>
+            <S.Th>Date</S.Th>
+            <S.Th>Speed</S.Th>
+          </tr>
         </thead>
         <tbody>
           <tr>
