@@ -10,7 +10,7 @@ const usePendingRun = (): Run | undefined => {
   const runs = useSelector(getRuns);
 
   return useMemo(() => {
-    const orderedRuns = orderBy(Object.values(runs), ['requestDate']);
+    const orderedRuns = orderBy(Object.values(runs), ['requestDate'], ['desc']);
     return find(orderedRuns, ['status', RunStatus.pending]);
   }, [runs]);
 };
