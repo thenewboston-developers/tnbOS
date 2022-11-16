@@ -25,6 +25,7 @@ export const appRegistrations: AppRegistration[] = [
 
 export const appRouters: AppDataHandlers = {
   chat: ChatRegistration.router!,
+  speedTest: SpeedTestRegistration.router!,
 };
 
 export const Apps: SFC = () => {

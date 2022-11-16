@@ -1,5 +1,6 @@
 import AppIcon from 'apps/SpeedTest/assets/app-icon.png';
 import SpeedTest from 'apps/SpeedTest/containers';
+import appRouter from 'apps/SpeedTest/routers/appRouter';
 import speedTestReducer from 'apps/SpeedTest/store';
 import loadSpeedTestStoreData from 'apps/SpeedTest/store/initializer';
 import {SpeedTestElectronStore} from 'apps/SpeedTest/types';
@@ -12,6 +13,7 @@ const SpeedTestRegistration: AppRegistration = {
   initializer: loadSpeedTestStoreData,
   isSystemApp: false,
   reducer: speedTestReducer,
+  router: appRouter,
 };
 
 export {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration};
