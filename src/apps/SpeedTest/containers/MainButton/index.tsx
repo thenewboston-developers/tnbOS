@@ -1,7 +1,8 @@
+import {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {pingBlock} from 'apps/SpeedTest/blocks';
-import {useIsConnected} from 'apps/SpeedTest/hooks';
+import {useIsConnected, usePendingRun} from 'apps/SpeedTest/hooks';
 import {getActiveAccountNumber, getActiveNetworkId} from 'apps/SpeedTest/selectors/state';
 import {setRun} from 'apps/SpeedTest/store/runs';
 import {RunStatus} from 'apps/SpeedTest/types';
@@ -10,37 +11,48 @@ import {currentSystemDate} from 'system/utils/dates';
 import * as S from './Styles';
 
 const MainButton: SFC = ({className}) => {
+  const [requestPending, setRequestPending] = useState<boolean>(false);
   const activeAccountNumber = useSelector(getActiveAccountNumber);
   const activeNetworkId = useSelector(getActiveNetworkId);
   const dispatch = useDispatch<AppDispatch>();
   const isConnected = useIsConnected();
+  const pendingRun = usePendingRun();
+
+  const enabled = useMemo((): boolean => {
+    return isConnected && !pendingRun && !requestPending;
+  }, [isConnected, pendingRun, requestPending]);
 
   const handleClick = async () => {
-    // TODO: Check for pending block
-    if (!isConnected) return;
+    try {
+      if (!enabled) return;
+      const runId = crypto.randomUUID();
+      setRequestPending(true);
 
-    const runId = crypto.randomUUID();
-
-    await pingBlock({
-      networkId: activeNetworkId!,
-      params: {runId},
-      recipient: activeAccountNumber!,
-    });
-
-    dispatch(
-      setRun({
+      await pingBlock({
         networkId: activeNetworkId!,
+        params: {runId},
         recipient: activeAccountNumber!,
-        requestDate: currentSystemDate(),
-        responseDate: null,
-        runId,
-        status: RunStatus.pending,
-      }),
-    );
+      });
+
+      dispatch(
+        setRun({
+          networkId: activeNetworkId!,
+          recipient: activeAccountNumber!,
+          requestDate: currentSystemDate(),
+          responseDate: null,
+          runId,
+          status: RunStatus.pending,
+        }),
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
+    setRequestPending(false);
   };
 
   return (
-    <S.Container className={className} enabled={isConnected} onClick={handleClick}>
+    <S.Container className={className} enabled={enabled} onClick={handleClick}>
       GO
     </S.Container>
   );
