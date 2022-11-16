@@ -1,6 +1,18 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-export const Container = styled.div`
+const disabledMixin = css`
+  border: 1px solid #74788d;
+  color: #74788d;
+
+  &:hover {
+    background: transparent;
+    border: 1px solid #74788d;
+    color: #74788d;
+    cursor: not-allowed;
+  }
+`;
+
+export const Container = styled.div<{enabled: boolean}>`
   align-items: center;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
@@ -19,4 +31,6 @@ export const Container = styled.div`
     color: #34c38f;
     cursor: pointer;
   }
+
+  ${({enabled}) => !enabled && disabledMixin}
 `;
