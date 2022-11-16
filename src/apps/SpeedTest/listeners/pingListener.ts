@@ -1,4 +1,4 @@
-import {pingBlock} from 'apps/SpeedTest/blocks';
+import {pongBlock} from 'apps/SpeedTest/blocks';
 import {pingValidator} from 'apps/SpeedTest/validators/pingValidators';
 import {Block} from 'shared/types';
 import {AppDispatch} from 'system/types';
@@ -12,7 +12,7 @@ const pingListener = (block: Block, _: AppDispatch, networkId: string) => {
 
       await pingValidator.validate(params);
 
-      await pingBlock({
+      await pongBlock({
         networkId,
         params,
         recipient: sender,
