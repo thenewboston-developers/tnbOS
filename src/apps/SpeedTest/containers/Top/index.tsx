@@ -1,8 +1,6 @@
 import {useSelector} from 'react-redux';
-import {mdiPencil} from '@mdi/js';
 
-import AccountIdentification from 'apps/SpeedTest/components/AccountIdentification';
-import NetworkIdentification from 'apps/SpeedTest/components/NetworkIdentification';
+import EditButton from 'apps/SpeedTest/components/EditButton';
 import SpacedItems from 'apps/SpeedTest/components/SpacedItems';
 import TopCard from 'apps/SpeedTest/components/TopCard';
 import AccountModal from 'apps/SpeedTest/modals/AccountModal';
@@ -31,12 +29,8 @@ const Top: SFC = ({className}) => {
   const renderActiveAccount = () => {
     return (
       <SpacedItems
-        leftContent={<AccountIdentification accountNumber={activeAccountNumber!} />}
-        rightContent={
-          <div onClick={toggleAccountModal}>
-            <S.Icon path={mdiPencil} size="28px" />
-          </div>
-        }
+        leftContent={<S.AccountIdentification accountNumber={activeAccountNumber!} />}
+        rightContent={<EditButton onClick={toggleAccountModal} />}
       />
     );
   };
@@ -44,12 +38,8 @@ const Top: SFC = ({className}) => {
   const renderActiveNetwork = () => {
     return (
       <SpacedItems
-        leftContent={<NetworkIdentification networkId={activeNetworkId!} />}
-        rightContent={
-          <div onClick={toggleNetworkModal}>
-            <S.Icon path={mdiPencil} size="28px" />
-          </div>
-        }
+        leftContent={<S.NetworkIdentification networkId={activeNetworkId!} />}
+        rightContent={<EditButton onClick={toggleNetworkModal} />}
       />
     );
   };

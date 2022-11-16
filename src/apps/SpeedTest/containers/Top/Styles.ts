@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import UMdiIcon from '@mdi/react';
+
+import UAccountIdentification from 'apps/SpeedTest/components/AccountIdentification';
+import UNetworkIdentification from 'apps/SpeedTest/components/NetworkIdentification';
+
+export const AccountIdentification = styled(UAccountIdentification)`
+  margin-right: 10px;
+`;
 
 export const Button = styled.button`
   background: transparent;
@@ -19,21 +25,17 @@ export const Button = styled.button`
 
 export const Container = styled.div`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 16px;
   justify-content: center;
   width: 100%;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    gap: 24px;
+  }
 `;
 
-export const Icon = styled(UMdiIcon)`
-  border-radius: 50%;
-  color: #74788d;
-  margin-right: -4px;
-  padding: 4px;
-  transition: all 0.15s;
-
-  &:hover {
-    background: #31394e;
-    color: #556ee5;
-    cursor: pointer;
-  }
+export const NetworkIdentification = styled(UNetworkIdentification)`
+  margin-right: 10px;
 `;

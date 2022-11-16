@@ -7,14 +7,14 @@ import {LocalElectronStore} from 'shared/types';
 import {AppDispatch} from 'system/types';
 
 const loadChatStoreData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
-  const storeContacts = store?.[CHAT_CONTACTS] || contactsInitialState;
-  const storeDeliveries = store?.[CHAT_DELIVERIES] || deliveriesInitialState;
-  const storeManager = store?.[CHAT_MANAGER] || managerInitialState;
-  const storeMessages = store?.[CHAT_MESSAGES] || messagesInitialState;
-  dispatch(setContacts(storeContacts));
-  dispatch(setDeliveries(storeDeliveries));
-  dispatch(setManager(storeManager));
-  dispatch(setMessages(storeMessages));
+  const contacts = store?.[CHAT_CONTACTS] || contactsInitialState;
+  const deliveries = store?.[CHAT_DELIVERIES] || deliveriesInitialState;
+  const manager = store?.[CHAT_MANAGER] || managerInitialState;
+  const messages = store?.[CHAT_MESSAGES] || messagesInitialState;
+  dispatch(setContacts(contacts));
+  dispatch(setDeliveries(deliveries));
+  dispatch(setManager(manager));
+  dispatch(setMessages(messages));
 };
 
 export default loadChatStoreData;

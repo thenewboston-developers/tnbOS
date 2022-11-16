@@ -5,10 +5,10 @@ import {LocalElectronStore} from 'shared/types';
 import {AppDispatch} from 'system/types';
 
 const loadSpeedTestStoreData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
-  const storeManager = store?.[SPEED_TEST_MANAGER] || managerInitialState;
-  const storeRuns = store?.[SPEED_TEST_RUNS] || runsInitialState;
-  dispatch(setManager(storeManager));
-  dispatch(setRuns(storeRuns));
+  const manager = store?.[SPEED_TEST_MANAGER] || managerInitialState;
+  const runs = store?.[SPEED_TEST_RUNS] || runsInitialState;
+  dispatch(setManager(manager));
+  dispatch(setRuns(runs));
 };
 
 export default loadSpeedTestStoreData;

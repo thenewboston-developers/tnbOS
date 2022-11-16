@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {scrollStyle} from 'apps/SpeedTest/styles';
+
 export const Container = styled.div`
   align-items: center;
   background: #222736;
@@ -8,8 +10,10 @@ export const Container = styled.div`
   color: #a6b0cf;
   display: flex;
   flex-direction: column;
-  height: 80%;
   justify-content: flex-start;
+  overflow-y: auto;
   padding: 24px;
   width: 60%;
+
+  ${scrollStyle};
 `;
