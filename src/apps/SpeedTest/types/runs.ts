@@ -4,7 +4,8 @@ export interface Run {
   networkId: string;
   recipient: string;
   requestDate: string;
-  responseDate: string | null;
+  requestTime: number;
+  responseTime: number | null;
   runId: string;
   status: RunStatus;
 }
@@ -12,6 +13,7 @@ export interface Run {
 export type Runs = Dict<Run>;
 
 export enum RunStatus {
+  error = 'error',
   pending = 'pending',
   success = 'success',
   timeout = 'timeout',

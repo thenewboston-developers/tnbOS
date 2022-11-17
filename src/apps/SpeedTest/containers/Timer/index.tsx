@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {usePendingRun} from 'apps/SpeedTest/hooks';
+import {useLatestRun} from 'apps/SpeedTest/hooks';
 import {getRuns} from 'apps/SpeedTest/selectors/state';
 import {setRun} from 'apps/SpeedTest/store/runs';
 import {RunStatus} from 'apps/SpeedTest/types';
@@ -13,16 +13,14 @@ const TIMEOUT_SECONDS = 10;
 const Timer: SFC = ({className}) => {
   const [time, setTime] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
-  const pendingRun = usePendingRun();
+  const latestRun = useLatestRun();
   const runs = useSelector(getRuns);
 
   useEffect(() => {
-    if (!pendingRun) return;
+    if (latestRun?.status !== RunStatus.pending) return;
 
     const interval = setInterval(() => {
-      const requestDate = new Date(pendingRun.requestDate);
-      const now = new Date();
-      const msDifference = now.getTime() - requestDate.getTime();
+      const msDifference = new Date().getTime() - latestRun.requestTime;
       const seconds = (msDifference % 60000) / 1000;
 
       if (seconds > TIMEOUT_SECONDS) {
@@ -44,7 +42,25 @@ const Timer: SFC = ({className}) => {
     }, 10);
 
     return () => clearInterval(interval);
-  }, [dispatch, pendingRun, runs]);
+  }, [dispatch, latestRun?.requestTime, latestRun?.status, runs]);
+
+  useEffect(() => {
+    if (!latestRun || latestRun.status === RunStatus.pending) return;
+
+    if (latestRun.status === RunStatus.error) {
+      setTime(0);
+      return;
+    }
+
+    if (latestRun.status === RunStatus.timeout) {
+      setTime(TIMEOUT_SECONDS);
+      return;
+    }
+
+    const msDifference = latestRun.responseTime! - latestRun.requestTime;
+    const seconds = (msDifference % 60000) / 1000;
+    setTime(seconds);
+  }, [latestRun]);
 
   return (
     <S.Container className={className}>

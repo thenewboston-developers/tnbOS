@@ -2,6 +2,11 @@ import styled, {css} from 'styled-components';
 
 import {RunStatus} from 'apps/SpeedTest/types';
 
+const errorMixin = css`
+  background-color: hsla(0, 86%, 69%, 0.18);
+  color: #f46a6a;
+`;
+
 const pendingMixin = css`
   background-color: rgba(80, 165, 241, 0.18);
   color: #50a5f1;
@@ -13,8 +18,8 @@ const successMixin = css`
 `;
 
 const timeoutMixin = css`
-  background-color: hsla(0, 86%, 69%, 0.18);
-  color: #f46a6a;
+  background-color: rgba(241, 180, 76, 0.18);
+  color: #f1b44c;
 `;
 
 export const Container = styled.div<{status: RunStatus}>`
@@ -26,6 +31,7 @@ export const Container = styled.div<{status: RunStatus}>`
   width: fit-content;
 
   ${({status}) => {
+    if (status === RunStatus.error) return errorMixin;
     if (status === RunStatus.pending) return pendingMixin;
     if (status === RunStatus.success) return successMixin;
     if (status === RunStatus.timeout) return timeoutMixin;

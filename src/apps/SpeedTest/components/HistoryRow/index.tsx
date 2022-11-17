@@ -19,14 +19,9 @@ const HistoryRow: SFC<HistoryRowProps> = ({className, run}) => {
   const network = networks[run.networkId];
 
   const renderSpeed = () => {
-    if (!run.responseDate) return '-';
-
-    const requestDate = new Date(run.requestDate);
-    const responseDate = new Date(run.responseDate);
-
-    const msDifference = responseDate.getTime() - requestDate.getTime();
+    if (!run.responseTime) return '-';
+    const msDifference = run.responseTime - run.requestTime;
     const seconds = (msDifference % 60000) / 1000;
-
     return `${seconds.toFixed(3)} seconds`;
   };
 

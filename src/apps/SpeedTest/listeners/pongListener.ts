@@ -10,7 +10,6 @@ import {
 import {Block} from 'shared/types';
 import store from 'system/store';
 import {AppDispatch} from 'system/types';
-import {currentSystemDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 
 const pongListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
@@ -34,8 +33,7 @@ const pongListener = (block: Block, dispatch: AppDispatch, networkId: string) =>
       dispatch(
         setRun({
           ...run,
-          responseDate: currentSystemDate(),
-          runId: params.runId,
+          responseTime: new Date().getTime(),
           status: RunStatus.success,
         }),
       );

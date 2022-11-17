@@ -23,29 +23,37 @@ const MainButton: SFC = ({className}) => {
   }, [isConnected, pendingRun, requestPending]);
 
   const handleClick = async () => {
+    if (!enabled) return;
+
+    const run = {
+      networkId: activeNetworkId!,
+      recipient: activeAccountNumber!,
+      requestDate: currentSystemDate(),
+      requestTime: new Date().getTime(),
+      responseTime: null,
+      runId: crypto.randomUUID(),
+      status: RunStatus.pending,
+    };
+
     try {
-      if (!enabled) return;
-      const runId = crypto.randomUUID();
       setRequestPending(true);
+      dispatch(setRun(run));
 
       await pingBlock({
         networkId: activeNetworkId!,
-        params: {runId},
+        params: {
+          runId: run.runId,
+        },
         recipient: activeAccountNumber!,
       });
-
-      dispatch(
-        setRun({
-          networkId: activeNetworkId!,
-          recipient: activeAccountNumber!,
-          requestDate: currentSystemDate(),
-          responseDate: null,
-          runId,
-          status: RunStatus.pending,
-        }),
-      );
     } catch (error) {
       console.error(error);
+      dispatch(
+        setRun({
+          ...run,
+          status: RunStatus.error,
+        }),
+      );
     }
 
     setRequestPending(false);
