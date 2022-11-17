@@ -23,8 +23,9 @@ export const Container = styled.div<{enabled: boolean}>`
   font-weight: 300;
   justify-content: center;
   margin-top: 48px;
+  min-height: 260px;
+  min-width: 260px;
   transition: all 0.2s;
-  width: 40%;
 
   &:hover {
     background: rgba(52, 195, 143, 0.1);

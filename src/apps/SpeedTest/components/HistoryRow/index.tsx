@@ -1,7 +1,9 @@
 import {useSelector} from 'react-redux';
 
+import Badge from 'apps/SpeedTest/components/Badge';
 import * as S from 'apps/SpeedTest/containers/History/Styles';
 import {Run} from 'apps/SpeedTest/types';
+import {formatDate} from 'apps/SpeedTest/utils/dates';
 import {useSafeDisplayName} from 'system/hooks';
 import {getNetworks} from 'system/selectors/state';
 import {SFC} from 'system/types';
@@ -32,9 +34,11 @@ const HistoryRow: SFC<HistoryRowProps> = ({className, run}) => {
     <tr className={className}>
       <S.Td>{displayName}</S.Td>
       <S.Td>{network?.displayName || run.networkId}</S.Td>
-      <S.Td>{run.requestDate}</S.Td>
+      <S.Td>{formatDate(run.requestDate)}</S.Td>
       <S.Td>{renderSpeed()}</S.Td>
-      <S.Td>{run.status}</S.Td>
+      <S.Td>
+        <Badge status={run.status} />
+      </S.Td>
     </tr>
   );
 };
