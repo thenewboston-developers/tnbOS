@@ -11,6 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  max-height: 80%;
   overflow-y: auto;
   padding: 24px;
   width: 60%;
