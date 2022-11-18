@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
 
 const cellStyling = `
   border-bottom: 1px solid #32394e;
@@ -20,11 +21,29 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Heading = styled.h1`
+export const Header = styled.div`
+  align-items: center;
+  display: flex;
+  margin: 0 0 4px 0;
+`;
+
+export const History = styled.span`
   color: #f6f6f6;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  margin: 0 0 8px 0;
+`;
+
+export const Icon = styled(UMdiIcon)`
+  border-radius: 50%;
+  color: #74788d;
+  margin-left: 8px;
+  transition: all 0.15s;
+
+  &:hover {
+    background: #31394e;
+    color: #556ee5;
+    cursor: pointer;
+  }
 `;
 
 export const Table = styled.table`
