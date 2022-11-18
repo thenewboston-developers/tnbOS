@@ -9,7 +9,7 @@ const useLatestRun = (): Run | undefined => {
   const runs = useSelector(getRuns);
 
   return useMemo(() => {
-    const orderedRuns = orderBy(Object.values(runs), ['requestDate'], ['desc']);
+    const orderedRuns = orderBy(Object.values(runs), ['requestTime'], ['desc']);
     return orderedRuns[0];
   }, [runs]);
 };
