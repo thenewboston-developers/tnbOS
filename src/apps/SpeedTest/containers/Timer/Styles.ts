@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {fonts} from 'apps/SpeedTest/styles';
+
 export const BottomText = styled.div`
   color: #a6b0cf;
   font-size: 12px;
@@ -16,5 +18,5 @@ export const Container = styled.div`
 export const TopText = styled.div`
   color: #f6f6f6;
   font-size: 30px;
-  font-weight: 200;
+  font-weight: ${fonts.weight.light};
 `;

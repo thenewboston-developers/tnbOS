@@ -1,5 +1,7 @@
 import styled, {css} from 'styled-components';
 
+import {fonts} from 'apps/SpeedTest/styles';
+
 const disabledMixin = css`
   border: 1px solid #74788d;
   color: #74788d;
@@ -20,7 +22,7 @@ export const Container = styled.div<{enabled: boolean}>`
   color: #34c38f;
   display: flex;
   font-size: 36px;
-  font-weight: 300;
+  font-weight: ${fonts.weight.light};
   justify-content: center;
   margin-top: 48px;
   min-height: 260px;

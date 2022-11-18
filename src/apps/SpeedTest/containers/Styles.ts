@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {scrollStyle} from 'apps/SpeedTest/styles';
+import {fonts, scrollStyle} from 'apps/SpeedTest/styles';
 
 export const Container = styled.div`
   align-items: center;
@@ -10,6 +10,8 @@ export const Container = styled.div`
   color: #a6b0cf;
   display: flex;
   flex-direction: column;
+  font-family: ${fonts.family.default};
+  font-weight: ${fonts.weight.regular};
   justify-content: flex-start;
   max-height: 80%;
   overflow-y: auto;

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import UMdiIcon from '@mdi/react';
 
+import {fonts} from 'apps/SpeedTest/styles';
+
 const cellStyling = `
   border-bottom: 1px solid #32394e;
   padding: 8px 12px;
@@ -30,7 +32,7 @@ export const Header = styled.div`
 export const History = styled.span`
   color: #f6f6f6;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: ${fonts.weight.bold};
 `;
 
 export const Icon = styled(UMdiIcon)`
@@ -58,7 +60,7 @@ export const Td = styled.td`
 `;
 
 export const Th = styled.th`
-  font-weight: 600;
+  font-weight: ${fonts.weight.bold};
   text-align: left;
 
   ${cellStyling}
