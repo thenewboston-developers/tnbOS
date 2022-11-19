@@ -10,7 +10,7 @@ const Top: SFC = ({className}) => {
   return (
     <>
       <AppHeader className={className}>
-        <h2>Devices</h2>
+        <h2>Accounts</h2>
         <S.Button onClick={toggleAccountModal} text="Add Account" />
       </AppHeader>
       {accountModalIsOpen ? <AccountModal close={toggleAccountModal} /> : null}
