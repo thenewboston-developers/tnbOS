@@ -1,5 +1,6 @@
 import styled, {keyframes} from 'styled-components';
 
+import {fonts} from 'apps/SpeedTest/styles';
 import UIcon from 'system/components/Icon';
 
 const addOverlay = keyframes`
@@ -21,7 +22,7 @@ export const Header = styled.div`
   color: #a6b0cf;
   display: flex;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: ${fonts.weight.medium};
   justify-content: space-between;
   padding: 8px 16px;
   position: relative;
@@ -40,6 +41,7 @@ export const Modal = styled.div`
   background: #2a3042;
   border: 1px solid #32394e;
   border-radius: 8px;
+  font-family: ${fonts.family.default};
   left: 50%;
   position: fixed;
   top: 50%;

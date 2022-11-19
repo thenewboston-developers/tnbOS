@@ -6,6 +6,7 @@ import Top from 'apps/SpeedTest/containers/Top';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
+import 'apps/SpeedTest/styles/fonts.css';
 
 const SpeedTest: SFC<AppProps> = ({className, display}) => {
   return (
