@@ -18,10 +18,10 @@ const NetworkIdentification: SFC<NetworkIdentificationProps> = ({className, netw
 
   return (
     <Identification
-      bottomText={truncate(network.networkId, 24)}
+      bottomText={truncate(networkId, 24)}
       className={className}
       displayImage={networkDisplayImage}
-      topText={network.displayName}
+      topText={network?.displayName || '-'}
     />
   );
 };
