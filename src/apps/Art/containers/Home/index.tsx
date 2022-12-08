@@ -1,4 +1,5 @@
 import ArtCard from 'apps/Art/components/ArtCard';
+import ArtCardsContainer from 'apps/Art/components/ArtCardsContainer';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -17,7 +18,7 @@ const Home: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.ArtCards>{renderArtCards()}</S.ArtCards>
+      <ArtCardsContainer>{renderArtCards()}</ArtCardsContainer>
     </S.Container>
   );
 };
