@@ -1,4 +1,5 @@
 import {useDispatch} from 'react-redux';
+
 import {setActivePage} from 'apps/Art/store/manager';
 import {Page} from 'apps/Art/types';
 import {AppDispatch, SFC} from 'system/types';

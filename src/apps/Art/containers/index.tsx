@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 
 import Create from 'apps/Art/containers/Create';
+import Details from 'apps/Art/containers/Details';
 import Home from 'apps/Art/containers/Home';
 import MyCollection from 'apps/Art/containers/MyCollection';
 import TopNav from 'apps/Art/containers/TopNav';
@@ -17,6 +18,7 @@ const Art: SFC<AppProps> = ({className, display}) => {
   const renderPage = () => {
     const pages = {
       [Page.create]: <Create />,
+      [Page.details]: <Details />,
       [Page.home]: <Home />,
       [Page.myCollection]: <MyCollection />,
       [Page.transfers]: <Transfers />,

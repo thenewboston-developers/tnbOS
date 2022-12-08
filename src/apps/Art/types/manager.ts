@@ -4,6 +4,7 @@ export interface Manager {
 
 export enum Page {
   create = 'create',
+  details = 'details',
   home = 'home',
   myCollection = 'myCollection',
   transfers = 'transfers',

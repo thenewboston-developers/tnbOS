@@ -4,7 +4,7 @@ import * as S from './Styles';
 const AccountLabel: SFC = ({className}) => {
   return (
     <S.Container className={className}>
-      <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
+      <S.Img alt="art" src="https://avatars.githubusercontent.com/u/8547538?v=4" />
       <S.Right>
         <S.TopText>Creator</S.TopText>
         <S.BottomText>Bucky</S.BottomText>
