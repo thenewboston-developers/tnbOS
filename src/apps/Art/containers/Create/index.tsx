@@ -1,12 +1,21 @@
 import {Form, Formik} from 'formik';
 import noop from 'lodash/noop';
 
+import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const Create: SFC = ({className}) => {
+  const renderPreviewContainer = () => {
+    return (
+      <S.PreviewContainer>
+        <ArtOverview />
+      </S.PreviewContainer>
+    );
+  };
+
   return (
     <S.Container className={className}>
       <S.Left>
@@ -34,7 +43,7 @@ const Create: SFC = ({className}) => {
           )}
         </Formik>
       </S.Left>
-      <S.Right>Right</S.Right>
+      <S.Right>{renderPreviewContainer()}</S.Right>
     </S.Container>
   );
 };

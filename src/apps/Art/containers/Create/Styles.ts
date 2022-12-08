@@ -13,9 +13,17 @@ export const Left = styled.div`
   width: 260px;
 `;
 
+export const PreviewContainer = styled.div`
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 6%);
+  max-width: 90%;
+  padding: 24px;
+`;
+
 export const Right = styled.div`
   align-items: center;
-  background: #ddd;
+  background: #ebecf0;
   display: flex;
   flex: 1;
   justify-content: center;
