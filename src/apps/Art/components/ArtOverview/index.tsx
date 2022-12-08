@@ -26,19 +26,37 @@ const ArtOverview: SFC = ({className}) => {
     );
   };
 
+  const renderHistory = () => {
+    return (
+      <S.History>
+        <S.H2>History</S.H2>
+        <S.HistoryTable />
+      </S.History>
+    );
+  };
+
+  const renderTop = () => {
+    return (
+      <S.Top>
+        <S.Left>
+          <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
+        </S.Left>
+        <S.Right>
+          <S.Name>Name of Artwork</S.Name>
+          <S.Description>
+            Bacon ipsum dolor amet alcatra drumstick boudin bresaola ham hock tri-tip venison salami.
+          </S.Description>
+          {renderAccounts()}
+          {renderDetails()}
+        </S.Right>
+      </S.Top>
+    );
+  };
+
   return (
     <S.Container className={className}>
-      <S.Left>
-        <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
-      </S.Left>
-      <S.Right>
-        <S.Name>Name of Artwork</S.Name>
-        <S.Description>
-          Bacon ipsum dolor amet alcatra drumstick boudin bresaola ham hock tri-tip venison salami.
-        </S.Description>
-        {renderAccounts()}
-        {renderDetails()}
-      </S.Right>
+      {renderTop()}
+      {renderHistory()}
     </S.Container>
   );
 };

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import UHistoryTable from 'apps/Art/components/HistoryTable';
+
 export const Accounts = styled.div`
   display: flex;
   gap: 32px;
@@ -8,7 +10,7 @@ export const Accounts = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
 `;
 
 export const Description = styled.div`
@@ -19,7 +21,7 @@ export const Description = styled.div`
 export const Details = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 48px;
+  margin-top: 42px;
 `;
 
 export const DetailItems = styled.div`
@@ -32,6 +34,16 @@ export const DetailItems = styled.div`
 export const H2 = styled.h2`
   font-size: 16px;
   font-weight: 700;
+`;
+
+export const History = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 42px;
+`;
+
+export const HistoryTable = styled(UHistoryTable)`
+  margin-top: 16px;
 `;
 
 export const Img = styled.img`
@@ -53,4 +65,9 @@ export const Name = styled.div`
 export const Right = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const Top = styled.div`
+  display: flex;
+  gap: 24px;
 `;
