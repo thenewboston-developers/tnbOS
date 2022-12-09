@@ -1,5 +1,4 @@
 import styled, {css} from 'styled-components';
-import UIcon from '@mdi/react';
 
 import {colors} from 'apps/Art/styles';
 
@@ -30,8 +29,4 @@ export const Button = styled.button`
   }
 
   ${({disabled}) => disabled && disabledMixin}
-`;
-
-export const Icon = styled(UIcon)`
-  margin-right: 6px;
 `;

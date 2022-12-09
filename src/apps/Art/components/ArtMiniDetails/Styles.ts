@@ -13,9 +13,9 @@ export const Description = styled.div`
 export const Img = styled.img`
   border-radius: 4px;
   box-shadow: 0 4px 4px rgb(0 0 0 / 3%);
-  height: 64px;
+  height: 100px;
   margin-right: 10px;
-  width: 64px;
+  width: 100px;
 `;
 
 export const Name = styled.div`

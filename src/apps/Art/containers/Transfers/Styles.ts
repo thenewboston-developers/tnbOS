@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
 export const Container = styled.div`
   padding: 24px;
 `;
@@ -24,7 +29,7 @@ export const Tab = styled.div<{isActive?: boolean}>`
 export const TransferGrid = styled.div`
   column-gap: 32px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2.6fr 1fr 1fr 1fr;
   margin-top: 24px;
   row-gap: 24px;
 `;
