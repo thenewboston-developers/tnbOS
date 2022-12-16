@@ -13,5 +13,6 @@ export interface TnbApi {
   getKeyPairDetails(keyPair: SignKeyPair): KeyPairDetails;
   getKeyPairFromSigningKeyHex(signingKeyHex: string): KeyPairDetails;
   stringToUint8Array(str: string): Uint8Array;
-  verifySignedData(signedData: any): boolean;
+  verifyBlockSignature(block: any): boolean;
+  verifySignature(accountNumber: string, signature: string, unsignedData: any): boolean;
 }

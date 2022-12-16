@@ -1,6 +1,6 @@
 import {appRouters} from 'apps/registry';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
-import {verifySignedData} from 'system/utils/tnb';
+import {verifyBlockSignature} from 'system/utils/tnb';
 
 const blockSchema = yup
   .object({
@@ -26,7 +26,7 @@ const blockSchema = yup
     signature: yup.string().required(),
     transaction_fee: yup.number().required().integer().min(0),
   })
-  .test('is-signature-valid', 'Invalid signature', (block) => verifySignedData(block));
+  .test('is-signature-valid', 'Invalid signature', (block) => verifyBlockSignature(block));
 
 export const blockValidator = yup.object({
   message: blockSchema.required(),

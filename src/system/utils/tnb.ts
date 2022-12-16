@@ -12,6 +12,10 @@ export const getKeyPairFromSigningKeyHex = (signingKeyHex: string): KeyPairDetai
   return window.electron.tnb.getKeyPairFromSigningKeyHex(signingKeyHex);
 };
 
-export const verifySignedData = (signedData: any): boolean => {
-  return window.electron.tnb.verifySignedData(signedData);
+export const verifyBlockSignature = (block: any): boolean => {
+  return window.electron.tnb.verifyBlockSignature(block);
+};
+
+export const verifySignature = (accountNumber: string, signature: string, unsignedData: any): boolean => {
+  return window.electron.tnb.verifySignature(accountNumber, signature, unsignedData);
 };
