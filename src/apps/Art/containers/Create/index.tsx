@@ -5,10 +5,10 @@ import {Form, Formik} from 'formik';
 import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
-import {ArtRegistration} from 'apps/Art/registration';
-import {ArtworkIdBlock, ArtworkIdPayload, UnsignedBlock} from 'apps/Art/types';
+import {ArtworkIdPayload, GenesisBlock, UnsignedGenesisBlock} from 'apps/Art/types';
 import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
 import {signData} from 'system/utils/signing';
 import {verifySignature} from 'system/utils/tnb';
@@ -25,23 +25,44 @@ const Create: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
-  const handleSubmit = async (values: FormValues): Promise<void> => {
-    console.log(values);
+  const generateGenesisBlock = (values: FormValues): GenesisBlock => {
+    const now = currentSystemDate();
 
     const artworkIdPayload: ArtworkIdPayload = {
       currentTime: new Date().getTime(),
-      pid: ArtRegistration.appId,
     };
 
-    const unsignedArtworkIdBlock: UnsignedBlock<ArtworkIdPayload> = {
-      owner: self.accountNumber,
-      payload: artworkIdPayload,
+    const signedArtworkIdPayload = signData(artworkIdPayload, self.signingKey);
+    const artworkId = signedArtworkIdPayload.signature;
+
+    const unsignedGenesisBlock: UnsignedGenesisBlock = {
+      artworkIdPayload,
+      payload: {
+        artworkId,
+        blockId: artworkId,
+        createdDate: now,
+        description: values.description,
+        imageUrl: values.imageUrl,
+        inTransfer: false,
+        modifiedDate: now,
+        name: values.name,
+        owner: self.accountNumber,
+      },
     };
 
-    const artworkIdBlock: ArtworkIdBlock = signData(unsignedArtworkIdBlock, self.signingKey);
+    const signedGenesisBlockPayload = signData(unsignedGenesisBlock.payload, self.signingKey);
+    const genesisBlockSignature = signedGenesisBlockPayload.signature;
 
-    console.log(artworkIdBlock);
-    console.log(verifySignature(artworkIdBlock.owner, artworkIdBlock.signature, unsignedArtworkIdBlock));
+    return {
+      ...unsignedGenesisBlock,
+      signature: genesisBlockSignature,
+    };
+  };
+
+  const handleSubmit = async (values: FormValues): Promise<void> => {
+    const genesisBlock = generateGenesisBlock(values);
+    console.log(genesisBlock);
+    console.log(verifySignature(genesisBlock.payload.owner, genesisBlock.signature, genesisBlock.payload));
   };
 
   const renderPreviewContainer = () => {
