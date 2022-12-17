@@ -6,14 +6,27 @@ import * as S from './Styles';
 
 export interface ArtOverviewProps {
   artOverviewDetails?: ReactNode;
+  creator: string;
+  description: string;
+  imageUrl: string;
+  name: string;
+  owner: string;
 }
 
-const ArtOverview: SFC<ArtOverviewProps> = ({artOverviewDetails, className}) => {
+const ArtOverview: SFC<ArtOverviewProps> = ({
+  artOverviewDetails,
+  className,
+  creator,
+  description,
+  imageUrl,
+  name,
+  owner,
+}) => {
   const renderAccounts = () => {
     return (
       <S.Accounts>
-        <AccountLabel />
-        <AccountLabel />
+        <AccountLabel accountNumber={creator} label="Creator" />
+        <AccountLabel accountNumber={owner} label="Owner" />
       </S.Accounts>
     );
   };
@@ -21,7 +34,7 @@ const ArtOverview: SFC<ArtOverviewProps> = ({artOverviewDetails, className}) => 
   const renderLeft = () => {
     return (
       <S.Left>
-        <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
+        <S.Img alt="Artwork Image" src={imageUrl} />
       </S.Left>
     );
   };
@@ -29,10 +42,8 @@ const ArtOverview: SFC<ArtOverviewProps> = ({artOverviewDetails, className}) => 
   const renderRight = () => {
     return (
       <S.Right>
-        <S.Name>Name of Artwork</S.Name>
-        <S.Description>
-          Bacon ipsum dolor amet alcatra drumstick boudin bresaola ham hock tri-tip venison salami.
-        </S.Description>
+        <S.Name>{name}</S.Name>
+        <S.Description>{description}</S.Description>
         {renderAccounts()}
         {artOverviewDetails}
       </S.Right>

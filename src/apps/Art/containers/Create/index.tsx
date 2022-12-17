@@ -73,10 +73,16 @@ const Create: SFC = ({className}) => {
     dispatch(setQueuedBlock(genesisBlock));
   };
 
-  const renderPreviewContainer = () => {
+  const renderPreviewContainer = (values: FormValues) => {
     return (
       <S.PreviewContainer>
-        <ArtOverview />
+        <ArtOverview
+          creator="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+          description={values.description}
+          imageUrl={values.imageUrl}
+          name={values.name}
+          owner="aaa7484c7c5f41901606631a771fcae7873cae2edac78c5597ba1472a1874dd6"
+        />
       </S.PreviewContainer>
     );
   };
@@ -90,39 +96,41 @@ const Create: SFC = ({className}) => {
   }, []);
 
   return (
-    <S.Container className={className}>
-      <S.Left>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validateOnMount={false}
-          validationSchema={validationSchema}
-        >
-          {({dirty, errors, isSubmitting, touched, isValid}) => (
-            <Form>
-              <Input errors={errors} label="Image URL" name="imageUrl" placeholder="Enter URL" touched={touched} />
-              <Input errors={errors} label="Name" name="name" placeholder="Enter name" touched={touched} />
-              <Input
-                errors={errors}
-                label="Description"
-                name="description"
-                placeholder="Enter description"
-                touched={touched}
-              />
-              <Button
-                dirty={dirty}
-                disabled={isSubmitting}
-                isSubmitting={isSubmitting}
-                isValid={isValid}
-                text="Submit"
-                type={ButtonType.submit}
-              />
-            </Form>
-          )}
-        </Formik>
-      </S.Left>
-      <S.Right>{renderPreviewContainer()}</S.Right>
-    </S.Container>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validateOnMount={false}
+      validationSchema={validationSchema}
+    >
+      {({dirty, errors, isSubmitting, isValid, touched, values}) => {
+        return (
+          <S.Container className={className}>
+            <S.Left>
+              <Form>
+                <Input errors={errors} label="Image URL" name="imageUrl" placeholder="Enter URL" touched={touched} />
+                <Input errors={errors} label="Name" name="name" placeholder="Enter name" touched={touched} />
+                <Input
+                  errors={errors}
+                  label="Description"
+                  name="description"
+                  placeholder="Enter description"
+                  touched={touched}
+                />
+                <Button
+                  dirty={dirty}
+                  disabled={isSubmitting}
+                  isSubmitting={isSubmitting}
+                  isValid={isValid}
+                  text="Submit"
+                  type={ButtonType.submit}
+                />
+              </Form>
+            </S.Left>
+            <S.Right>{renderPreviewContainer(values)}</S.Right>
+          </S.Container>
+        );
+      }}
+    </Formik>
   );
 };
 

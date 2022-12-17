@@ -18,8 +18,11 @@ const ArtCard: SFC = ({className}) => {
       <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
       <S.Bottom>
         <S.Name>Name of Artwork</S.Name>
-        <AccountLabel />
-        <AccountLabel />
+        <AccountLabel
+          accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+          label="Creator"
+        />
+        <AccountLabel accountNumber="aaa7484c7c5f41901606631a771fcae7873cae2edac78c5597ba1472a1874dd6" label="Owner" />
       </S.Bottom>
     </S.Container>
   );

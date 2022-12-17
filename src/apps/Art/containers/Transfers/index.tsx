@@ -19,10 +19,16 @@ const Transfers: SFC = ({className}) => {
       <S.TransferGrid>
         <ArtMiniDetails />
         <div>
-          <AccountLabel />
+          <AccountLabel
+            accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+            label="Creator"
+          />
         </div>
         <div>
-          <AccountLabel />
+          <AccountLabel
+            accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+            label="Creator"
+          />
         </div>
         <S.ButtonContainer>
           <OutlineButton color={ButtonColor.danger} onClick={() => {}} text="Decline" />
@@ -31,10 +37,16 @@ const Transfers: SFC = ({className}) => {
 
         <ArtMiniDetails />
         <div>
-          <AccountLabel />
+          <AccountLabel
+            accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+            label="Creator"
+          />
         </div>
         <div>
-          <AccountLabel />
+          <AccountLabel
+            accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+            label="Creator"
+          />
         </div>
         <S.ButtonContainer>
           <OutlineButton color={ButtonColor.danger} onClick={() => {}} text="Decline" />
