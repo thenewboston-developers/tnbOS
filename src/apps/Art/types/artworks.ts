@@ -1,4 +1,4 @@
-import {GenesisBlock} from 'apps/Art/types/blocks';
+import {GenesisBlock} from 'apps/Art/types/genesisBlocks';
 import {QueuedBlock} from 'apps/Art/types/queuedBlocks';
 import {Dict} from 'system/types/generic';
 

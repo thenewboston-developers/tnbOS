@@ -1,5 +1,5 @@
 import {ArtworkAttributes} from 'apps/Art/types/artworks';
-import {GenesisBlock} from 'apps/Art/types/blocks';
+import {GenesisBlock} from 'apps/Art/types/genesisBlocks';
 
 export type QueuedBlock = GenesisBlock;
 

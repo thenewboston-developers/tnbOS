@@ -66,6 +66,9 @@ const useBlockQueueProcessor = () => {
   };
 
   const validateStandardBlock = (artwork: Artwork, queuedBlock: QueuedBlock) => {
+    // TODO: Check no non-mutable values are being updated (artworkId, createdDate, etc...)
+    // TODO: Check valid inTransfer transitions
+    // TODO: Check owner as well
     return;
   };
 
