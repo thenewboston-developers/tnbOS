@@ -1,27 +1,23 @@
-import {ReactNode} from 'react';
+import {useSelector} from 'react-redux';
 
 import AccountLabel from 'apps/Art/components/AccountLabel';
+import ArtOverviewDetails from 'apps/Art/components/ArtOverviewDetails';
+import {getActivePage} from 'apps/Art/selectors/state';
+import {Page} from 'apps/Art/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface ArtOverviewProps {
-  artOverviewDetails?: ReactNode;
-  creator: string;
-  description: string;
-  imageUrl: string;
-  name: string;
-  owner: string;
+  creator?: string;
+  description?: string;
+  imageUrl?: string;
+  name?: string;
+  owner?: string;
 }
 
-const ArtOverview: SFC<ArtOverviewProps> = ({
-  artOverviewDetails,
-  className,
-  creator,
-  description,
-  imageUrl,
-  name,
-  owner,
-}) => {
+const ArtOverview: SFC<ArtOverviewProps> = ({className, creator, description, imageUrl, name, owner}) => {
+  const activePage = useSelector(getActivePage);
+
   const renderAccounts = () => {
     return (
       <S.Accounts>
@@ -29,6 +25,11 @@ const ArtOverview: SFC<ArtOverviewProps> = ({
         <AccountLabel accountNumber={owner} label="Owner" />
       </S.Accounts>
     );
+  };
+
+  const renderArtOverviewDetails = () => {
+    if (activePage !== Page.details) return null;
+    return <ArtOverviewDetails />;
   };
 
   const renderLeft = () => {
@@ -42,10 +43,10 @@ const ArtOverview: SFC<ArtOverviewProps> = ({
   const renderRight = () => {
     return (
       <S.Right>
-        <S.Name>{name}</S.Name>
-        <S.Description>{description}</S.Description>
+        <S.Name>{name || '-'}</S.Name>
+        <S.Description>{description || '-'}</S.Description>
         {renderAccounts()}
-        {artOverviewDetails}
+        {renderArtOverviewDetails()}
       </S.Right>
     );
   };

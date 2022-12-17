@@ -1,5 +1,7 @@
 export interface Manager {
   activePage: Page;
+  detailsPageArtworkId: string | null;
+  editPageArtworkId: string | null;
 }
 
 export enum Page {

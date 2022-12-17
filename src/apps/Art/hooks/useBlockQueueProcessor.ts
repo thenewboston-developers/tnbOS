@@ -11,6 +11,7 @@ import {
   validateBlockChainIsEmpty,
   validateBlockIsNotInTransfer,
   validateCreatedDateMatchesModifiedDate,
+  validateCreatorMatchesOwner,
   validateGenesisBlockSignature,
 } from 'apps/Art/validators/genesisBlockValidators';
 import {AppDispatch} from 'system/types';
@@ -61,6 +62,7 @@ const useBlockQueueProcessor = () => {
     validateArtworkIdPayloadSignature(queuedBlock);
     validateArtworkIdMatchesBlockId(queuedBlock);
     validateCreatedDateMatchesModifiedDate(queuedBlock);
+    validateCreatorMatchesOwner(queuedBlock);
     validateBlockIsNotInTransfer(queuedBlock);
     validateGenesisBlockSignature(queuedBlock);
   };

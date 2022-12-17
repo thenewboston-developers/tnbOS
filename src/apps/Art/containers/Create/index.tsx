@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
@@ -6,7 +6,9 @@ import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
 import {setQueuedBlock} from 'apps/Art/store/artworks';
-import {ArtworkIdPayload, GenesisBlock, UnsignedGenesisBlock} from 'apps/Art/types';
+import {setActivePage, setDetailsPageArtworkId} from 'apps/Art/store/manager';
+import {getArtworks} from 'apps/Art/selectors/state';
+import {ArtworkIdPayload, GenesisBlock, Page, UnsignedGenesisBlock} from 'apps/Art/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -16,6 +18,8 @@ import {verifySignature} from 'system/utils/tnb';
 import * as S from './Styles';
 
 const Create: SFC = ({className}) => {
+  const [submittedArtworkId, setSubmittedArtworkId] = useState<string>('');
+  const artworks = useSelector(getArtworks);
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
@@ -26,6 +30,17 @@ const Create: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  useEffect(() => {
+    if (!submittedArtworkId) return;
+
+    const artwork = artworks[submittedArtworkId];
+
+    if (artwork && artwork.headBlockSignature) {
+      dispatch(setDetailsPageArtworkId(submittedArtworkId));
+      dispatch(setActivePage(Page.details));
+    }
+  }, [artworks, dispatch, submittedArtworkId]);
 
   const generateGenesisBlock = (values: FormValues): GenesisBlock => {
     const now = currentSystemDate();
@@ -43,6 +58,7 @@ const Create: SFC = ({className}) => {
         artworkId,
         blockId: artworkId,
         createdDate: now,
+        creator: self.accountNumber,
         description: values.description,
         imageUrl: values.imageUrl,
         inTransfer: false,
@@ -71,17 +87,23 @@ const Create: SFC = ({className}) => {
     });
 
     dispatch(setQueuedBlock(genesisBlock));
+
+    const {
+      payload: {artworkId},
+    } = genesisBlock;
+
+    setSubmittedArtworkId(artworkId);
   };
 
   const renderPreviewContainer = (values: FormValues) => {
     return (
       <S.PreviewContainer>
         <ArtOverview
-          creator="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0"
+          creator={self.accountNumber}
           description={values.description}
           imageUrl={values.imageUrl}
           name={values.name}
-          owner="aaa7484c7c5f41901606631a771fcae7873cae2edac78c5597ba1472a1874dd6"
+          owner={self.accountNumber}
         />
       </S.PreviewContainer>
     );

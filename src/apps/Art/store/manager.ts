@@ -5,6 +5,8 @@ import {Manager, Page} from 'apps/Art/types';
 
 export const initialState: Manager = {
   activePage: Page.home,
+  detailsPageArtworkId: null,
+  editPageArtworkId: null,
 };
 
 const manager = createSlice({
@@ -14,8 +16,14 @@ const manager = createSlice({
     setActivePage: (state: Manager, {payload: page}: PayloadAction<Page>) => {
       state.activePage = page;
     },
+    setDetailsPageArtworkId: (state: Manager, {payload: artworkId}: PayloadAction<string | null>) => {
+      state.detailsPageArtworkId = artworkId;
+    },
+    setEditPageArtworkId: (state: Manager, {payload: artworkId}: PayloadAction<string | null>) => {
+      state.editPageArtworkId = artworkId;
+    },
   },
 });
 
-export const {setActivePage} = manager.actions;
+export const {setActivePage, setDetailsPageArtworkId, setEditPageArtworkId} = manager.actions;
 export default manager.reducer;

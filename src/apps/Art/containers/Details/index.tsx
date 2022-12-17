@@ -1,9 +1,11 @@
 import ArtOverview from 'apps/Art/components/ArtOverview';
-import ArtOverviewDetails from 'apps/Art/components/ArtOverviewDetails';
+import {useDetailsPageArtwork} from 'apps/Art/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const Details: SFC = ({className}) => {
+  const detailsPageArtwork = useDetailsPageArtwork();
+
   const renderHistory = () => {
     return (
       <S.History>
@@ -15,7 +17,13 @@ const Details: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <ArtOverview artOverviewDetails={<ArtOverviewDetails />} />
+      <ArtOverview
+        creator={detailsPageArtwork.attributes.owner}
+        description={detailsPageArtwork.attributes.description}
+        imageUrl={detailsPageArtwork.attributes.imageUrl}
+        name={detailsPageArtwork.attributes.name}
+        owner={detailsPageArtwork.attributes.owner}
+      />
       {renderHistory()}
     </S.Container>
   );

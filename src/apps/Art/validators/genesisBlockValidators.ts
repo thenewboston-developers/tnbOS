@@ -57,6 +57,12 @@ export const validateCreatedDateMatchesModifiedDate = (queuedBlock: QueuedBlock)
   }
 };
 
+export const validateCreatorMatchesOwner = (queuedBlock: QueuedBlock) => {
+  if (queuedBlock.payload.creator !== queuedBlock.payload.owner) {
+    throw new Error('Genesis blocks creator must match the owner');
+  }
+};
+
 export const validateGenesisBlockSignature = (queuedBlock: QueuedBlock) => {
   if (
     !verifySignature({

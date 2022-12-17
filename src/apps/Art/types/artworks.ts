@@ -14,6 +14,7 @@ export interface ArtworkAttributes {
   artworkId: string;
   blockId?: string;
   createdDate: string;
+  creator: string;
   description: string;
   imageUrl: string;
   inTransfer: boolean;

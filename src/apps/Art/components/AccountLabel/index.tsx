@@ -3,11 +3,11 @@ import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface AccountLabelProps {
-  accountNumber: string;
+  accountNumber?: string;
   label: string;
 }
 
-const AccountLabel: SFC<AccountLabelProps> = ({accountNumber, className, label}) => {
+const AccountLabel: SFC<AccountLabelProps> = ({accountNumber = '-', className, label}) => {
   const displayImage = useSafeDisplayImage(accountNumber);
   const displayName = useSafeDisplayName(accountNumber, 16);
 
