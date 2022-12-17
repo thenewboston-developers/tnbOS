@@ -2,6 +2,7 @@ import {useSelector} from 'react-redux';
 
 import AccountLabel from 'apps/Art/components/AccountLabel';
 import ArtOverviewDetails from 'apps/Art/components/ArtOverviewDetails';
+import OwnerMenu from 'apps/Art/components/OwnerMenu';
 import {getActivePage} from 'apps/Art/selectors/state';
 import {Page} from 'apps/Art/types';
 import {SFC} from 'system/types';
@@ -36,8 +37,14 @@ const ArtOverview: SFC<ArtOverviewProps> = ({className, creator, description, im
     return (
       <S.Left>
         <S.Img alt="Artwork Image" src={imageUrl} />
+        {renderOwnerMenu()}
       </S.Left>
     );
+  };
+
+  const renderOwnerMenu = () => {
+    if (activePage !== Page.details) return null;
+    return <OwnerMenu />;
   };
 
   const renderRight = () => {

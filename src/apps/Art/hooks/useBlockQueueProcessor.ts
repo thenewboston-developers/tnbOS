@@ -32,20 +32,20 @@ const useBlockQueueProcessor = () => {
     const {blockQueue, headBlockSignature} = artwork;
 
     if (headBlockSignature === null) {
-      return Object.values(blockQueue).find((queuedBlock) => !!queuedBlock.artworkIdPayload);
+      return Object.values(blockQueue).find((queuedBlock) => queuedBlock.hasOwnProperty('artworkIdPayload'));
     }
 
     return blockQueue[headBlockSignature];
   };
 
   const isValidNextBlock = useCallback(async (artwork: Artwork, queuedBlock: QueuedBlock): Promise<boolean> => {
-    const isGenesisBlock = !!queuedBlock.artworkIdPayload;
+    const isGenesisBlock = queuedBlock.hasOwnProperty('artworkIdPayload');
 
     try {
       if (isGenesisBlock) {
         await validateGenesisBlock(artwork, queuedBlock);
       } else {
-        validateStandardBlock(artwork, queuedBlock);
+        await validateStandardBlock(artwork, queuedBlock);
       }
 
       return true;
@@ -67,10 +67,13 @@ const useBlockQueueProcessor = () => {
     validateGenesisBlockSignature(queuedBlock);
   };
 
-  const validateStandardBlock = (artwork: Artwork, queuedBlock: QueuedBlock) => {
+  const validateStandardBlock = async (artwork: Artwork, queuedBlock: QueuedBlock) => {
     // TODO: Check no non-mutable values are being updated (artworkId, createdDate, etc...)
     // TODO: Check valid inTransfer transitions
     // TODO: Check owner as well
+    console.log('validating standard block...');
+    console.log(artwork);
+    console.log(queuedBlock);
     return;
   };
 

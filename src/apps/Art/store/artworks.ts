@@ -55,6 +55,7 @@ const artworks = createSlice({
       }
 
       state[artworkId].blockQueue[blockId] = block;
+      state[artworkId].blockQueueNeedsProcessing = true;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
     },
   },

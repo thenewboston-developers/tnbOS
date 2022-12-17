@@ -5,10 +5,11 @@ import {Form, Formik} from 'formik';
 import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
+import {useEditPageArtworkAttributes} from 'apps/Art/hooks';
 import {setQueuedBlock} from 'apps/Art/store/artworks';
 import {setActivePage, setDetailsPageArtworkId} from 'apps/Art/store/manager';
 import {getArtworks} from 'apps/Art/selectors/state';
-import {ArtworkIdPayload, GenesisBlock, Page, UnsignedGenesisBlock} from 'apps/Art/types';
+import {ArtworkIdPayload, GenesisBlock, Page, UnsignedGenesisBlock, UnsignedStandardBlock} from 'apps/Art/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -21,12 +22,13 @@ const Create: SFC = ({className}) => {
   const [submittedArtworkId, setSubmittedArtworkId] = useState<string>('');
   const artworks = useSelector(getArtworks);
   const dispatch = useDispatch<AppDispatch>();
+  const editPageArtworkAttributes = useEditPageArtworkAttributes();
   const self = useSelector(getSelf);
 
   const initialValues = {
-    description: '',
-    imageUrl: '',
-    name: '',
+    description: editPageArtworkAttributes?.description || '',
+    imageUrl: editPageArtworkAttributes?.imageUrl || '',
+    name: editPageArtworkAttributes?.name || '',
   };
 
   type FormValues = typeof initialValues;
@@ -77,20 +79,47 @@ const Create: SFC = ({className}) => {
     };
   };
 
+  const generateStandardBlock = (values: FormValues) => {
+    const {artworkId} = editPageArtworkAttributes!;
+    const artwork = artworks[artworkId!];
+
+    const updatedValues = Object.entries(values).reduce((previousValue, [key, value]) => {
+      return (editPageArtworkAttributes as any)[key] !== value ? {...previousValue, [key]: value} : previousValue;
+    }, {});
+
+    const unsignedStandardBlock: UnsignedStandardBlock = {
+      payload: {
+        artworkId: artworkId!,
+        blockId: artwork.headBlockSignature!,
+        modifiedDate: currentSystemDate(),
+        owner: self.accountNumber,
+        ...updatedValues,
+      },
+    };
+
+    const signedStandardBlockPayload = signData(unsignedStandardBlock.payload, self.signingKey);
+    const standardBlockSignature = signedStandardBlockPayload.signature;
+
+    return {
+      ...unsignedStandardBlock,
+      signature: standardBlockSignature,
+    };
+  };
+
   const handleSubmit = async (values: FormValues): Promise<void> => {
-    const genesisBlock = generateGenesisBlock(values);
+    const block = editPageArtworkAttributes ? generateStandardBlock(values) : generateGenesisBlock(values);
 
     verifySignature({
-      accountNumber: genesisBlock.payload.owner,
-      signature: genesisBlock.signature,
-      unsignedData: genesisBlock.payload,
+      accountNumber: block.payload.owner,
+      signature: block.signature,
+      unsignedData: block.payload,
     });
 
-    dispatch(setQueuedBlock(genesisBlock));
+    dispatch(setQueuedBlock(block));
 
     const {
       payload: {artworkId},
-    } = genesisBlock;
+    } = block;
 
     setSubmittedArtworkId(artworkId);
   };
@@ -99,7 +128,7 @@ const Create: SFC = ({className}) => {
     return (
       <S.PreviewContainer>
         <ArtOverview
-          creator={self.accountNumber}
+          creator={editPageArtworkAttributes?.creator || self.accountNumber}
           description={values.description}
           imageUrl={values.imageUrl}
           name={values.name}
