@@ -6,6 +6,7 @@ import Home from 'apps/Art/containers/Home';
 import MyCollection from 'apps/Art/containers/MyCollection';
 import TopNav from 'apps/Art/containers/TopNav';
 import Transfers from 'apps/Art/containers/Transfers';
+import {useBlockQueueProcessor} from 'apps/Art/hooks';
 import {getActivePage} from 'apps/Art/selectors/state';
 import {Page} from 'apps/Art/types';
 import AppWindow from 'system/components/AppWindow';
@@ -14,6 +15,7 @@ import * as S from './Styles';
 
 const Art: SFC<AppProps> = ({className, display}) => {
   const activePage = useSelector(getActivePage);
+  useBlockQueueProcessor();
 
   const renderPage = () => {
     const pages = {

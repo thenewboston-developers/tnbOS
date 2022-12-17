@@ -1,7 +1,7 @@
 import {Buffer} from 'buffer';
 import {sign, SignKeyPair} from 'tweetnacl';
 
-import {KeyPairDetails, TnbApi, UnsignedBlock} from '../../shared/types';
+import {KeyPairDetails, TnbApi, UnsignedBlock, VerifySignatureParams} from '../../shared/types';
 
 export const generateAccount = (): KeyPairDetails => {
   const keyPair = sign.keyPair();
@@ -52,10 +52,14 @@ const verifyBlockSignature = (block: any): boolean => {
     transaction_fee: block.transaction_fee,
   };
 
-  return verifySignature(block.sender, signature, unsignedBlock);
+  return verifySignature({
+    accountNumber: block.sender,
+    signature,
+    unsignedData: unsignedBlock,
+  });
 };
 
-const verifySignature = (accountNumber: string, signature: string, unsignedData: any): boolean => {
+const verifySignature = ({accountNumber, signature, unsignedData}: VerifySignatureParams): boolean => {
   const strMessage: string = JSON.stringify(unsignedData);
   const dataUint8Array = stringToUint8Array(strMessage);
   const signatureUint8Array = Uint8Array.from(Buffer.from(signature, 'hex'));

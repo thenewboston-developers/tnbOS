@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 
 import {AccountManager, AccountManagerRegistration} from 'apps/AccountManager/registration';
-import {Art, ArtRegistration} from 'apps/Art/registration';
+import {Art, ArtElectronStore, ArtRegistration} from 'apps/Art/registration';
 import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration';
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
 import {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
@@ -9,7 +9,7 @@ import {University, UniversityRegistration} from 'apps/University/registration';
 import {getManager} from 'system/selectors/state';
 import {AppDataHandlers, AppRegistration, SFC} from 'system/types';
 
-export interface AppsElectronStore extends ChatElectronStore, SpeedTestElectronStore {}
+export interface AppsElectronStore extends ArtElectronStore, ChatElectronStore, SpeedTestElectronStore {}
 
 export const appReducers = {
   art: ArtRegistration.reducer!,

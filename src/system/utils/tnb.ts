@@ -1,4 +1,4 @@
-import {KeyPairDetails} from 'shared/types';
+import {KeyPairDetails, VerifySignatureParams} from 'shared/types';
 
 export const generateAccount = (): KeyPairDetails => {
   return window.electron.tnb.generateAccount();
@@ -16,6 +16,6 @@ export const verifyBlockSignature = (block: any): boolean => {
   return window.electron.tnb.verifyBlockSignature(block);
 };
 
-export const verifySignature = (accountNumber: string, signature: string, unsignedData: any): boolean => {
-  return window.electron.tnb.verifySignature(accountNumber, signature, unsignedData);
+export const verifySignature = ({accountNumber, signature, unsignedData}: VerifySignatureParams): boolean => {
+  return window.electron.tnb.verifySignature({accountNumber, signature, unsignedData});
 };

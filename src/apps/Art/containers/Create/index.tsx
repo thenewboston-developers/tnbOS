@@ -1,13 +1,14 @@
 import {useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
 import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
+import {setQueuedBlock} from 'apps/Art/store/artworks';
 import {ArtworkIdPayload, GenesisBlock, UnsignedGenesisBlock} from 'apps/Art/types';
 import {getSelf} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
 import {signData} from 'system/utils/signing';
@@ -15,6 +16,7 @@ import {verifySignature} from 'system/utils/tnb';
 import * as S from './Styles';
 
 const Create: SFC = ({className}) => {
+  const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -43,7 +45,7 @@ const Create: SFC = ({className}) => {
         createdDate: now,
         description: values.description,
         imageUrl: values.imageUrl,
-        inTransfer: false,
+        inTransfer: true,
         modifiedDate: now,
         name: values.name,
         owner: self.accountNumber,
@@ -61,8 +63,14 @@ const Create: SFC = ({className}) => {
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
     const genesisBlock = generateGenesisBlock(values);
-    console.log(genesisBlock);
-    console.log(verifySignature(genesisBlock.payload.owner, genesisBlock.signature, genesisBlock.payload));
+
+    verifySignature({
+      accountNumber: genesisBlock.payload.owner,
+      signature: genesisBlock.signature,
+      unsignedData: genesisBlock.payload,
+    });
+
+    dispatch(setQueuedBlock(genesisBlock));
   };
 
   const renderPreviewContainer = () => {

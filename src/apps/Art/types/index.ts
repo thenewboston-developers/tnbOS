@@ -1,4 +1,20 @@
+import {Artwork, ArtworkAttributes, Artworks} from 'apps/Art/types/artworks';
 import {ArtworkIdPayload, GenesisBlock, GenesisBlockPayload, UnsignedGenesisBlock} from 'apps/Art/types/blocks';
+import {ArtElectronStore} from 'apps/Art/types/electronStore';
 import {Manager, Page} from 'apps/Art/types/manager';
+import {QueuedBlock, QueuedBlockPayload} from 'apps/Art/types/queuedBlocks';
 
-export {ArtworkIdPayload, GenesisBlock, GenesisBlockPayload, Manager, Page, UnsignedGenesisBlock};
+export {
+  ArtElectronStore,
+  Artwork,
+  ArtworkAttributes,
+  ArtworkIdPayload,
+  Artworks,
+  GenesisBlock,
+  GenesisBlockPayload,
+  Manager,
+  Page,
+  QueuedBlock,
+  QueuedBlockPayload,
+  UnsignedGenesisBlock,
+};
