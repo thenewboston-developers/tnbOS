@@ -2,7 +2,7 @@ import {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getArtworks} from 'apps/Art/selectors/state';
-import {deleteQueuedBlock, setBlockQueueNeedsProcessing} from 'apps/Art/store/artworks';
+import {deleteQueuedBlock, processQueuedBlock, setBlockQueueNeedsProcessing} from 'apps/Art/store/artworks';
 import {Artwork, QueuedBlock} from 'apps/Art/types';
 import {
   genesisBlockValidator,
@@ -14,6 +14,7 @@ import {
   validateGenesisBlockSignature,
 } from 'apps/Art/validators/genesisBlockValidators';
 import {AppDispatch} from 'system/types';
+import {displayErrorToast} from 'system/utils/toast';
 
 const useBlockQueueProcessor = () => {
   const artworks = useSelector(getArtworks);
@@ -36,19 +37,20 @@ const useBlockQueueProcessor = () => {
     return blockQueue[headBlockSignature];
   };
 
-  const isValidNextBlock = useCallback(async (artwork: Artwork, block: QueuedBlock): Promise<boolean> => {
-    const isGenesisBlock = !!block.artworkIdPayload;
+  const isValidNextBlock = useCallback(async (artwork: Artwork, queuedBlock: QueuedBlock): Promise<boolean> => {
+    const isGenesisBlock = !!queuedBlock.artworkIdPayload;
 
     try {
       if (isGenesisBlock) {
-        await validateGenesisBlock(artwork, block);
+        await validateGenesisBlock(artwork, queuedBlock);
       } else {
-        validateStandardBlock(artwork, block);
+        validateStandardBlock(artwork, queuedBlock);
       }
 
       return true;
     } catch (error) {
       console.error(error);
+      displayErrorToast('Invalid queued block');
       return false;
     }
   }, []);
@@ -63,7 +65,7 @@ const useBlockQueueProcessor = () => {
     validateGenesisBlockSignature(queuedBlock);
   };
 
-  const validateStandardBlock = (artwork: Artwork, block: QueuedBlock) => {
+  const validateStandardBlock = (artwork: Artwork, queuedBlock: QueuedBlock) => {
     return;
   };
 
@@ -88,9 +90,7 @@ const useBlockQueueProcessor = () => {
       const isValid = await isValidNextBlock(artwork, queuedBlock);
 
       if (isValid) {
-        console.log('valid');
-        console.log(artwork);
-        console.log(queuedBlock);
+        dispatch(processQueuedBlock(queuedBlock));
       } else {
         dispatch(deleteQueuedBlock(queuedBlock));
       }

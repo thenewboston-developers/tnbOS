@@ -12,6 +12,7 @@ export interface Artwork {
 
 export interface ArtworkAttributes {
   artworkId: string;
+  blockId?: string;
   createdDate: string;
   description: string;
   imageUrl: string;

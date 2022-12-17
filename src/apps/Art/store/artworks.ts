@@ -17,6 +17,20 @@ const artworks = createSlice({
       delete state[artworkId].blockQueue[blockId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
     },
+    processQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
+      const {payload: blockPayload} = block;
+      const {artworkId, blockId} = blockPayload;
+
+      state[artworkId].attributes = {
+        ...state[artworkId].attributes,
+        ...blockPayload,
+      };
+      state[artworkId].blockChain[blockId] = block;
+      delete state[artworkId].blockQueue[blockId];
+      state[artworkId].headBlockSignature = block.signature;
+
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
+    },
     setArtworks: setLocalAndStateReducer<Artworks>(ART_ARTWORKS),
     setBlockQueueNeedsProcessing: (
       state: Artworks,
@@ -27,8 +41,8 @@ const artworks = createSlice({
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
     },
     setQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
-      const {payload} = block;
-      const {artworkId, blockId} = payload;
+      const {payload: blockPayload} = block;
+      const {artworkId, blockId} = blockPayload;
 
       if (!state[artworkId]) {
         state[artworkId] = {
@@ -40,12 +54,12 @@ const artworks = createSlice({
         };
       }
 
-      const blockQueue = state[artworkId].blockQueue;
-      blockQueue[blockId] = block;
+      state[artworkId].blockQueue[blockId] = block;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
     },
   },
 });
 
-export const {deleteQueuedBlock, setArtworks, setBlockQueueNeedsProcessing, setQueuedBlock} = artworks.actions;
+export const {deleteQueuedBlock, processQueuedBlock, setArtworks, setBlockQueueNeedsProcessing, setQueuedBlock} =
+  artworks.actions;
 export default artworks.reducer;

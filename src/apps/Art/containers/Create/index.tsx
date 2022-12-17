@@ -45,7 +45,7 @@ const Create: SFC = ({className}) => {
         createdDate: now,
         description: values.description,
         imageUrl: values.imageUrl,
-        inTransfer: true,
+        inTransfer: false,
         modifiedDate: now,
         name: values.name,
         owner: self.accountNumber,
