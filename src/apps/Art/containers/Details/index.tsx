@@ -22,7 +22,7 @@ const Details: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <ArtOverview
-        creator={detailsPageArtwork.attributes.owner}
+        creator={detailsPageArtwork.attributes.creator}
         description={detailsPageArtwork.attributes.description}
         imageUrl={detailsPageArtwork.attributes.imageUrl}
         name={detailsPageArtwork.attributes.name}

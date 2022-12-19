@@ -18,22 +18,22 @@ const OwnerMenu: SFC = ({className}) => {
   const artworkId = detailsPageArtwork.attributes.artworkId;
 
   const handleDeleteClick = () => {
-    if (!artworkId) return;
     dispatch(setActivePage(Page.myCollection));
-    dispatch(deleteArtwork(artworkId));
+    dispatch(deleteArtwork(artworkId!));
     displayToast('Artwork deleted', ToastType.success);
   };
 
   const handleEditClick = () => {
-    if (!artworkId) return;
-    dispatch(setEditPageArtworkId(artworkId));
+    dispatch(setEditPageArtworkId(artworkId!));
     dispatch(setActivePage(Page.create));
   };
 
   const renderTransferModal = () => {
     if (!transferModalIsOpen) return null;
-    return <TransferModal close={toggleTransferModal} />;
+    return <TransferModal artwork={detailsPageArtwork} close={toggleTransferModal} />;
   };
+
+  if (!artworkId) return null;
 
   return (
     <>

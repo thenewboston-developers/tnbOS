@@ -5,6 +5,7 @@ import ArtOverviewDetails from 'apps/Art/components/ArtOverviewDetails';
 import OwnerMenu from 'apps/Art/components/OwnerMenu';
 import {getActivePage} from 'apps/Art/selectors/state';
 import {Page} from 'apps/Art/types';
+import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -18,6 +19,7 @@ export interface ArtOverviewProps {
 
 const ArtOverview: SFC<ArtOverviewProps> = ({className, creator, description, imageUrl, name, owner}) => {
   const activePage = useSelector(getActivePage);
+  const self = useSelector(getSelf);
 
   const renderAccounts = () => {
     return (
@@ -43,7 +45,7 @@ const ArtOverview: SFC<ArtOverviewProps> = ({className, creator, description, im
   };
 
   const renderOwnerMenu = () => {
-    if (activePage !== Page.details) return null;
+    if (activePage !== Page.details || owner !== self.accountNumber) return null;
     return <OwnerMenu />;
   };
 

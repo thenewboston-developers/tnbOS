@@ -76,5 +76,8 @@ export const validateOutgoingTransfer = (artwork: Artwork, standardBlock: Standa
 export const validateOwner = (artwork: Artwork, standardBlock: StandardBlock) => {
   const {attributes} = artwork;
   const {payload} = standardBlock;
-  if (attributes.owner !== payload.owner) throw new Error('Only the owner can make updates');
+
+  if (attributes.inTransfer === payload.inTransfer && attributes.owner !== payload.owner) {
+    throw new Error('Only the owner can make updates');
+  }
 };

@@ -76,7 +76,7 @@ const useBlockQueueProcessor = () => {
     validateCreatedDateMatchesModifiedDate(genesisBlock);
     validateCreatorMatchesOwner(genesisBlock);
     validateBlockIsNotInTransfer(genesisBlock);
-    validateQueuedBlockSignature(genesisBlock);
+    validateQueuedBlockSignature(artwork, genesisBlock);
   };
 
   const validateStandardBlock = async (artwork: Artwork, standardBlock: StandardBlock) => {
@@ -86,7 +86,7 @@ const useBlockQueueProcessor = () => {
     validateNonMutableValues(artwork, standardBlock);
     validateOutgoingTransfer(artwork, standardBlock);
     validateOwner(artwork, standardBlock);
-    validateQueuedBlockSignature(standardBlock);
+    validateQueuedBlockSignature(artwork, standardBlock);
   };
 
   useEffect(() => {
