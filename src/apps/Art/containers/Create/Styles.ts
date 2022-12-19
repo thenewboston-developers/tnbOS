@@ -1,4 +1,23 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
+
+export const BackIcon = styled(UMdiIcon)`
+  margin-right: 8px;
+`;
+
+export const Back = styled.div`
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  font-weight: 400;
+  justify-content: center;
+  transition: all 0.15s;
+
+  &:hover {
+    color: white;
+    cursor: pointer;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -9,6 +28,7 @@ export const Left = styled.div`
   background: #252627;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 20px 24px;
   width: 260px;
 `;

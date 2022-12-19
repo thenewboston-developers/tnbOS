@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
+import {mdiArrowLeft} from '@mdi/js';
 
 import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
@@ -106,6 +107,12 @@ const Create: SFC = ({className}) => {
     };
   };
 
+  const handleBackClick = () => {
+    const {artworkId} = editPageArtworkAttributes!;
+    dispatch(setDetailsPageArtworkId(artworkId!));
+    dispatch(setActivePage(Page.details));
+  };
+
   const handleSubmit = async (values: FormValues): Promise<void> => {
     const block = editPageArtworkAttributes ? generateStandardBlock(values) : generateGenesisBlock(values);
 
@@ -122,6 +129,17 @@ const Create: SFC = ({className}) => {
     } = block;
 
     setSubmittedArtworkId(artworkId);
+  };
+
+  const renderBack = () => {
+    if (!editPageArtworkAttributes) return;
+
+    return (
+      <S.Back onClick={handleBackClick}>
+        <S.BackIcon path={mdiArrowLeft} size="20px" />
+        <span>Back to Artwork</span>
+      </S.Back>
+    );
   };
 
   const renderPreviewContainer = (values: FormValues) => {
@@ -176,6 +194,7 @@ const Create: SFC = ({className}) => {
                   type={ButtonType.submit}
                 />
               </Form>
+              {renderBack()}
             </S.Left>
             <S.Right>{renderPreviewContainer(values)}</S.Right>
           </S.Container>
