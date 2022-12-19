@@ -11,6 +11,10 @@ const artworks = createSlice({
   initialState,
   name: ART_ARTWORKS,
   reducers: {
+    deleteArtwork: (state: Artworks, {payload: artworkId}: PayloadAction<string>) => {
+      delete state[artworkId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
+    },
     deleteQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
       const {payload} = block;
       const {artworkId, blockId} = payload;
@@ -61,6 +65,12 @@ const artworks = createSlice({
   },
 });
 
-export const {deleteQueuedBlock, processQueuedBlock, setArtworks, setBlockQueueNeedsProcessing, setQueuedBlock} =
-  artworks.actions;
+export const {
+  deleteArtwork,
+  deleteQueuedBlock,
+  processQueuedBlock,
+  setArtworks,
+  setBlockQueueNeedsProcessing,
+  setQueuedBlock,
+} = artworks.actions;
 export default artworks.reducer;
