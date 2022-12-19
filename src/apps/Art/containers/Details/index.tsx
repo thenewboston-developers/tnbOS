@@ -7,10 +7,14 @@ const Details: SFC = ({className}) => {
   const detailsPageArtwork = useDetailsPageArtwork();
 
   const renderHistory = () => {
+    const {artworkId} = detailsPageArtwork.attributes;
+
+    if (!artworkId) return;
+
     return (
       <S.History>
-        <S.H2>History</S.H2>
-        <S.HistoryTable />
+        <S.H2>Block History</S.H2>
+        <S.HistoryTable artworkId={artworkId} />
       </S.History>
     );
   };

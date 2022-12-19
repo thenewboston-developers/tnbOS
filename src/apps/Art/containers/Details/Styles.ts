@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import UHistoryTable from 'apps/Art/components/HistoryTable';
+import UHistoryTable from 'apps/Art/containers/Details/HistoryTable';
 
 export const Container = styled.div`
   overflow-y: auto;
@@ -15,7 +15,7 @@ export const H2 = styled.h2`
 export const History = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 42px;
+  margin-top: 48px;
 `;
 
 export const HistoryTable = styled(UHistoryTable)`
