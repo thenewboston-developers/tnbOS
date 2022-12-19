@@ -1,4 +1,4 @@
-import {Artwork, QueuedBlock} from 'apps/Art/types';
+import {Artwork, GenesisBlock} from 'apps/Art/types';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 import {verifySignature} from 'system/utils/tnb';
 
@@ -24,19 +24,19 @@ export const genesisBlockValidator = yup.object({
   signature: yup.string().required(),
 });
 
-export const validateArtworkIdMatchesBlockId = (queuedBlock: QueuedBlock) => {
-  if (queuedBlock.payload.artworkId !== queuedBlock.payload.blockId) {
+export const validateArtworkIdMatchesBlockId = (genesisBlock: GenesisBlock) => {
+  if (genesisBlock.payload.artworkId !== genesisBlock.payload.blockId) {
     throw new Error('Genesis blocks artworkId must match the blockId');
   }
 };
 
-export const validateArtworkIdPayloadSignature = (queuedBlock: QueuedBlock) => {
+export const validateArtworkIdPayloadSignature = (genesisBlock: GenesisBlock) => {
   // The signedArtworkIdPayload.signature is used as the artworkId
   if (
     !verifySignature({
-      accountNumber: queuedBlock.payload.owner,
-      signature: queuedBlock.payload.artworkId,
-      unsignedData: queuedBlock.artworkIdPayload,
+      accountNumber: genesisBlock.payload.owner,
+      signature: genesisBlock.payload.artworkId,
+      unsignedData: genesisBlock.artworkIdPayload,
     })
   ) {
     throw new Error('Genesis blocks artworkIdPayload has been incorrectly signed');
@@ -47,30 +47,18 @@ export const validateBlockChainIsEmpty = (artwork: Artwork) => {
   if (!!artwork.headBlockSignature) throw new Error('Blockchain already has blocks');
 };
 
-export const validateBlockIsNotInTransfer = (queuedBlock: QueuedBlock) => {
-  if (queuedBlock.payload.inTransfer) throw new Error('Genesis block can not be inTransfer');
+export const validateBlockIsNotInTransfer = (genesisBlock: GenesisBlock) => {
+  if (genesisBlock.payload.inTransfer) throw new Error('Genesis block can not be inTransfer');
 };
 
-export const validateCreatedDateMatchesModifiedDate = (queuedBlock: QueuedBlock) => {
-  if (queuedBlock.payload.createdDate !== queuedBlock.payload.modifiedDate) {
+export const validateCreatedDateMatchesModifiedDate = (genesisBlock: GenesisBlock) => {
+  if (genesisBlock.payload.createdDate !== genesisBlock.payload.modifiedDate) {
     throw new Error('Genesis blocks createdDate must match the modifiedDate');
   }
 };
 
-export const validateCreatorMatchesOwner = (queuedBlock: QueuedBlock) => {
-  if (queuedBlock.payload.creator !== queuedBlock.payload.owner) {
+export const validateCreatorMatchesOwner = (genesisBlock: GenesisBlock) => {
+  if (genesisBlock.payload.creator !== genesisBlock.payload.owner) {
     throw new Error('Genesis blocks creator must match the owner');
-  }
-};
-
-export const validateGenesisBlockSignature = (queuedBlock: QueuedBlock) => {
-  if (
-    !verifySignature({
-      accountNumber: queuedBlock.payload.owner,
-      signature: queuedBlock.signature,
-      unsignedData: queuedBlock.payload,
-    })
-  ) {
-    throw new Error('Genesis block has been incorrectly signed');
   }
 };

@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {getArtworks} from 'apps/Art/selectors/state';
 import {deleteQueuedBlock, processQueuedBlock, setBlockQueueNeedsProcessing} from 'apps/Art/store/artworks';
-import {Artwork, QueuedBlock} from 'apps/Art/types';
+import {Artwork, GenesisBlock, QueuedBlock, StandardBlock} from 'apps/Art/types';
+import {validateQueuedBlockSignature} from 'apps/Art/validators/common';
 import {
   genesisBlockValidator,
   validateArtworkIdMatchesBlockId,
@@ -12,8 +13,15 @@ import {
   validateBlockIsNotInTransfer,
   validateCreatedDateMatchesModifiedDate,
   validateCreatorMatchesOwner,
-  validateGenesisBlockSignature,
 } from 'apps/Art/validators/genesisBlockValidators';
+import {
+  standardBlockValidator,
+  validateBlockChainIsNotEmpty,
+  validateIncomingTransfer,
+  validateNonMutableValues,
+  validateOutgoingTransfer,
+  validateOwner,
+} from 'apps/Art/validators/standardBlockValidators';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
@@ -43,38 +51,42 @@ const useBlockQueueProcessor = () => {
 
     try {
       if (isGenesisBlock) {
-        await validateGenesisBlock(artwork, queuedBlock);
+        await validateGenesisBlock(artwork, queuedBlock as GenesisBlock);
       } else {
-        await validateStandardBlock(artwork, queuedBlock);
+        await validateStandardBlock(artwork, queuedBlock as StandardBlock);
       }
 
       return true;
     } catch (error) {
-      console.error(error);
-      displayErrorToast('Invalid queued block');
+      if (typeof error === 'object' && error !== null && error.hasOwnProperty('message')) {
+        displayErrorToast((error as any).message);
+      } else {
+        displayErrorToast('Invalid queued block');
+      }
+
       return false;
     }
   }, []);
 
-  const validateGenesisBlock = async (artwork: Artwork, queuedBlock: QueuedBlock) => {
-    await genesisBlockValidator.validate(queuedBlock);
+  const validateGenesisBlock = async (artwork: Artwork, genesisBlock: GenesisBlock) => {
+    await genesisBlockValidator.validate(genesisBlock);
     validateBlockChainIsEmpty(artwork);
-    validateArtworkIdPayloadSignature(queuedBlock);
-    validateArtworkIdMatchesBlockId(queuedBlock);
-    validateCreatedDateMatchesModifiedDate(queuedBlock);
-    validateCreatorMatchesOwner(queuedBlock);
-    validateBlockIsNotInTransfer(queuedBlock);
-    validateGenesisBlockSignature(queuedBlock);
+    validateArtworkIdPayloadSignature(genesisBlock);
+    validateArtworkIdMatchesBlockId(genesisBlock);
+    validateCreatedDateMatchesModifiedDate(genesisBlock);
+    validateCreatorMatchesOwner(genesisBlock);
+    validateBlockIsNotInTransfer(genesisBlock);
+    validateQueuedBlockSignature(genesisBlock);
   };
 
-  const validateStandardBlock = async (artwork: Artwork, queuedBlock: QueuedBlock) => {
-    // TODO: Check no non-mutable values are being updated (artworkId, createdDate, etc...)
-    // TODO: Check valid inTransfer transitions
-    // TODO: Check owner as well
-    console.log('validating standard block...');
-    console.log(artwork);
-    console.log(queuedBlock);
-    return;
+  const validateStandardBlock = async (artwork: Artwork, standardBlock: StandardBlock) => {
+    await standardBlockValidator.validate(standardBlock);
+    validateBlockChainIsNotEmpty(artwork);
+    validateIncomingTransfer(artwork, standardBlock);
+    validateNonMutableValues(artwork, standardBlock);
+    validateOutgoingTransfer(artwork, standardBlock);
+    validateOwner(artwork, standardBlock);
+    validateQueuedBlockSignature(standardBlock);
   };
 
   useEffect(() => {

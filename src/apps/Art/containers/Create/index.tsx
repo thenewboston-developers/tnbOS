@@ -12,15 +12,17 @@ import {setActivePage, setDetailsPageArtworkId} from 'apps/Art/store/manager';
 import {getArtworks} from 'apps/Art/selectors/state';
 import {ArtworkIdPayload, GenesisBlock, Page, UnsignedGenesisBlock, UnsignedStandardBlock} from 'apps/Art/types';
 import {getSelf} from 'system/selectors/state';
-import {AppDispatch, SFC} from 'system/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
 import {signData} from 'system/utils/signing';
 import {verifySignature} from 'system/utils/tnb';
+import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const Create: SFC = ({className}) => {
   const [submittedArtworkId, setSubmittedArtworkId] = useState<string>('');
+  const [submittedBlockId, setSubmittedBlockId] = useState<string>('');
   const artworks = useSelector(getArtworks);
   const dispatch = useDispatch<AppDispatch>();
   const editPageArtworkAttributes = useEditPageArtworkAttributes();
@@ -35,15 +37,23 @@ const Create: SFC = ({className}) => {
   type FormValues = typeof initialValues;
 
   useEffect(() => {
-    if (!submittedArtworkId) return;
+    if (!submittedArtworkId || !submittedBlockId) return;
 
     const artwork = artworks[submittedArtworkId];
+    const blockChain = artwork.blockChain;
+    const block = blockChain[submittedBlockId];
 
-    if (artwork && artwork.headBlockSignature) {
-      dispatch(setDetailsPageArtworkId(submittedArtworkId));
-      dispatch(setActivePage(Page.details));
+    if (!block) return;
+
+    if (editPageArtworkAttributes) {
+      displayToast('Artwork updated', ToastType.success);
+    } else {
+      displayToast('Artwork created', ToastType.success);
     }
-  }, [artworks, dispatch, submittedArtworkId]);
+
+    dispatch(setDetailsPageArtworkId(submittedArtworkId));
+    dispatch(setActivePage(Page.details));
+  }, [artworks, dispatch, editPageArtworkAttributes, submittedArtworkId, submittedBlockId]);
 
   const generateGenesisBlock = (values: FormValues): GenesisBlock => {
     const now = currentSystemDate();
@@ -125,10 +135,11 @@ const Create: SFC = ({className}) => {
     dispatch(setQueuedBlock(block));
 
     const {
-      payload: {artworkId},
+      payload: {artworkId, blockId},
     } = block;
 
     setSubmittedArtworkId(artworkId);
+    setSubmittedBlockId(blockId);
   };
 
   const renderBack = () => {
