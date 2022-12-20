@@ -1,15 +1,20 @@
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const ArtMiniDetails: SFC = ({className}) => {
+export interface ArtMiniDetailsProps {
+  artworkId: string;
+  description?: string;
+  imageUrl?: string;
+  name?: string;
+}
+
+const ArtMiniDetails: SFC<ArtMiniDetailsProps> = ({className, description, imageUrl, name}) => {
   return (
     <S.Container className={className}>
-      <S.Img alt="art" src="https://i.pinimg.com/474x/a9/e5/60/a9e56077c22bfd00ca63a5e7cacded85.jpg" />
+      <S.Img alt="art" src={imageUrl} />
       <S.Right>
-        <S.Name>Summer Day</S.Name>
-        <S.Description>
-          Bacon ipsum dolor amet alcatra drumstick boudin bresaola ham hock tri-tip venison salami.
-        </S.Description>
+        <S.Name>{name}</S.Name>
+        <S.Description>{description}</S.Description>
       </S.Right>
     </S.Container>
   );

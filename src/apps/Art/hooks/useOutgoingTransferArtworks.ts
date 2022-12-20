@@ -1,22 +1,15 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import find from 'lodash/find';
 
 import {getArtworks} from 'apps/Art/selectors/state';
-import {Artwork, GenesisBlock, StandardBlock} from 'apps/Art/types';
+import {Artwork} from 'apps/Art/types';
+import {findBlockBySignature} from 'apps/Art/utils/blocks';
 import {getSelf} from 'system/selectors/state';
 import {Dict} from 'system/types/generic';
 
 const useOutgoingTransferArtworks = (): Dict<Artwork> => {
   const artworks = useSelector(getArtworks);
   const self = useSelector(getSelf);
-
-  const findBlockBySignature = (
-    blockChain: Dict<GenesisBlock | StandardBlock>,
-    signature: string | undefined,
-  ): GenesisBlock | StandardBlock | undefined => {
-    return find(Object.values(blockChain), ['signature', signature]);
-  };
 
   return useMemo(() => {
     return Object.entries(artworks).reduce((previousValue, [artworkId, artwork]) => {

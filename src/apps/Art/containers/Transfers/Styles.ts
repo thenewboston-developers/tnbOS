@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 
+import UAccountLabel from 'apps/Art/components/AccountLabel';
+
+export const AccountLabel = styled(UAccountLabel)`
+  align-items: flex-start;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 12px;
 `;
 
 export const Container = styled.div`
+  height: 100%;
   padding: 24px;
 `;
 
