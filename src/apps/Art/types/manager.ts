@@ -1,11 +1,11 @@
 export interface Manager {
   activePage: Page;
+  canvasArtworkId: string | null;
   detailsPageArtworkId: string | null;
-  editPageArtworkId: string | null;
 }
 
 export enum Page {
-  create = 'create',
+  canvas = 'canvas',
   details = 'details',
   home = 'home',
   myCollection = 'myCollection',

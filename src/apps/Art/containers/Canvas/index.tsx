@@ -6,7 +6,7 @@ import {mdiArrowLeft} from '@mdi/js';
 import ArtOverview from 'apps/Art/components/ArtOverview';
 import Button, {ButtonType} from 'apps/Art/components/Button';
 import {Input} from 'apps/Art/components/FormElements';
-import {useEditPageArtworkAttributes} from 'apps/Art/hooks';
+import {useCanvasArtworkAttributes} from 'apps/Art/hooks';
 import {setQueuedBlock} from 'apps/Art/store/artworks';
 import {setActivePage, setDetailsPageArtworkId} from 'apps/Art/store/manager';
 import {getArtworks} from 'apps/Art/selectors/state';
@@ -20,18 +20,18 @@ import {verifySignature} from 'system/utils/tnb';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
-const Create: SFC = ({className}) => {
+const Canvas: SFC = ({className}) => {
   const [submittedArtworkId, setSubmittedArtworkId] = useState<string>('');
   const [submittedBlockId, setSubmittedBlockId] = useState<string>('');
   const artworks = useSelector(getArtworks);
+  const canvasArtworkAttributes = useCanvasArtworkAttributes();
   const dispatch = useDispatch<AppDispatch>();
-  const editPageArtworkAttributes = useEditPageArtworkAttributes();
   const self = useSelector(getSelf);
 
   const initialValues = {
-    description: editPageArtworkAttributes?.description || '',
-    imageUrl: editPageArtworkAttributes?.imageUrl || '',
-    name: editPageArtworkAttributes?.name || '',
+    description: canvasArtworkAttributes?.description || '',
+    imageUrl: canvasArtworkAttributes?.imageUrl || '',
+    name: canvasArtworkAttributes?.name || '',
   };
 
   type FormValues = typeof initialValues;
@@ -45,7 +45,7 @@ const Create: SFC = ({className}) => {
 
     if (!block) return;
 
-    if (editPageArtworkAttributes) {
+    if (canvasArtworkAttributes) {
       displayToast('Artwork updated', ToastType.success);
     } else {
       displayToast('Artwork created', ToastType.success);
@@ -53,7 +53,7 @@ const Create: SFC = ({className}) => {
 
     dispatch(setDetailsPageArtworkId(submittedArtworkId));
     dispatch(setActivePage(Page.details));
-  }, [artworks, dispatch, editPageArtworkAttributes, submittedArtworkId, submittedBlockId]);
+  }, [artworks, canvasArtworkAttributes, dispatch, submittedArtworkId, submittedBlockId]);
 
   const generateGenesisBlock = (values: FormValues): GenesisBlock => {
     const now = currentSystemDate();
@@ -91,11 +91,11 @@ const Create: SFC = ({className}) => {
   };
 
   const generateStandardBlock = (values: FormValues) => {
-    const {artworkId} = editPageArtworkAttributes!;
+    const {artworkId} = canvasArtworkAttributes!;
     const artwork = artworks[artworkId!];
 
     const updatedValues = Object.entries(values).reduce((previousValue, [key, value]) => {
-      return (editPageArtworkAttributes as any)[key] !== value ? {...previousValue, [key]: value} : previousValue;
+      return (canvasArtworkAttributes as any)[key] !== value ? {...previousValue, [key]: value} : previousValue;
     }, {});
 
     const unsignedStandardBlock: UnsignedStandardBlock = {
@@ -118,13 +118,13 @@ const Create: SFC = ({className}) => {
   };
 
   const handleBackClick = () => {
-    const {artworkId} = editPageArtworkAttributes!;
+    const {artworkId} = canvasArtworkAttributes!;
     dispatch(setDetailsPageArtworkId(artworkId!));
     dispatch(setActivePage(Page.details));
   };
 
   const handleSubmit = async (values: FormValues): Promise<void> => {
-    const block = editPageArtworkAttributes ? generateStandardBlock(values) : generateGenesisBlock(values);
+    const block = canvasArtworkAttributes ? generateStandardBlock(values) : generateGenesisBlock(values);
 
     verifySignature({
       accountNumber: block.payload.owner,
@@ -143,7 +143,7 @@ const Create: SFC = ({className}) => {
   };
 
   const renderBack = () => {
-    if (!editPageArtworkAttributes) return;
+    if (!canvasArtworkAttributes) return;
 
     return (
       <S.Back onClick={handleBackClick}>
@@ -157,7 +157,7 @@ const Create: SFC = ({className}) => {
     return (
       <S.PreviewContainer>
         <ArtOverview
-          creator={editPageArtworkAttributes?.creator || self.accountNumber}
+          creator={canvasArtworkAttributes?.creator || self.accountNumber}
           description={values.description}
           imageUrl={values.imageUrl}
           name={values.name}
@@ -215,4 +215,4 @@ const Create: SFC = ({className}) => {
   );
 };
 
-export default Create;
+export default Canvas;

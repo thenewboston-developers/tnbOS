@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 
-import Create from 'apps/Art/containers/Create';
+import Canvas from 'apps/Art/containers/Canvas';
 import Details from 'apps/Art/containers/Details';
 import Home from 'apps/Art/containers/Home';
 import MyCollection from 'apps/Art/containers/MyCollection';
@@ -20,7 +20,7 @@ const Art: SFC<AppProps> = ({className, display}) => {
 
   const renderPage = () => {
     const pages = {
-      [Page.create]: <Create />,
+      [Page.canvas]: <Canvas />,
       [Page.details]: <Details />,
       [Page.home]: <Home />,
       [Page.myCollection]: <MyCollection />,

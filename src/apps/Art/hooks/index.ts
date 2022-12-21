@@ -1,6 +1,6 @@
 import useBlockQueueProcessor from 'apps/Art/hooks/useBlockQueueProcessor';
+import useCanvasArtworkAttributes from 'apps/Art/hooks/useCanvasArtworkAttributes';
 import useDetailsPageArtwork from 'apps/Art/hooks/useDetailsPageArtwork';
-import useEditPageArtworkAttributes from 'apps/Art/hooks/useEditPageArtworkAttributes';
 import useIncomingTransferArtworks from 'apps/Art/hooks/useIncomingTransferArtworks';
 import useNewlyOnlineAccounts from 'apps/Art/hooks/useNewlyOnlineAccounts';
 import useOrderedBlockChain from 'apps/Art/hooks/useOrderedBlockChain';
@@ -9,8 +9,8 @@ import useValidArtworkAttributes from 'apps/Art/hooks/useValidArtworkAttributes'
 
 export {
   useBlockQueueProcessor,
+  useCanvasArtworkAttributes,
   useDetailsPageArtwork,
-  useEditPageArtworkAttributes,
   useIncomingTransferArtworks,
   useNewlyOnlineAccounts,
   useOrderedBlockChain,

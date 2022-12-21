@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import ArtCard from 'apps/Art/components/ArtCard';
 import ArtCardsContainer from 'apps/Art/components/ArtCardsContainer';
 import {useValidArtworkAttributes} from 'apps/Art/hooks';
-import {setActivePage, setEditPageArtworkId} from 'apps/Art/store/manager';
-import {getEditPageArtworkId} from 'apps/Art/selectors/state';
+import {setActivePage, setCanvasArtworkId} from 'apps/Art/store/manager';
+import {getCanvasArtworkId} from 'apps/Art/selectors/state';
 import {Page} from 'apps/Art/types';
 import NetworksEmptyStateGraphic from 'apps/NetworkManager/assets/networks-empty-state.png';
 import EmptyPage from 'system/components/EmptyPage';
@@ -14,17 +14,17 @@ import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const MyCollection: SFC = ({className}) => {
+  const canvasArtworkId = useSelector(getCanvasArtworkId);
   const dispatch = useDispatch<AppDispatch>();
-  const editPageArtworkId = useSelector(getEditPageArtworkId);
   const self = useSelector(getSelf);
   const validArtworkAttributes = useValidArtworkAttributes();
 
   const handleCreateArtworkClick = () => {
-    if (editPageArtworkId) {
-      dispatch(setEditPageArtworkId(null));
+    if (canvasArtworkId) {
+      dispatch(setCanvasArtworkId(null));
     }
 
-    dispatch(setActivePage(Page.create));
+    dispatch(setActivePage(Page.canvas));
   };
 
   const myArtworkAttributes = useMemo(() => {
