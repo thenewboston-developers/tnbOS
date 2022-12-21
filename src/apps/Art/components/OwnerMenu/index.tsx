@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {useDetailsPageArtwork} from 'apps/Art/hooks';
 import TransferModal from 'apps/Art/modals/TransferModal';
 import {deleteArtwork} from 'apps/Art/store/artworks';
-import {setActivePage, setEditPageArtworkId} from 'apps/Art/store/manager';
+import {setActivePage, setCanvasArtworkId} from 'apps/Art/store/manager';
 import {Page} from 'apps/Art/types';
 import {useToggle} from 'system/hooks';
 import {AppDispatch, SFC, ToastType} from 'system/types';
@@ -24,8 +24,8 @@ const OwnerMenu: SFC = ({className}) => {
   };
 
   const handleEditClick = () => {
-    dispatch(setEditPageArtworkId(artworkId!));
-    dispatch(setActivePage(Page.create));
+    dispatch(setCanvasArtworkId(artworkId!));
+    dispatch(setActivePage(Page.canvas));
   };
 
   const renderTransferModal = () => {

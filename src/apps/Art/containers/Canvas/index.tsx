@@ -10,7 +10,15 @@ import {useCanvasArtworkAttributes} from 'apps/Art/hooks';
 import {setQueuedBlock} from 'apps/Art/store/artworks';
 import {setActivePage, setDetailsPageArtworkId} from 'apps/Art/store/manager';
 import {getArtworks} from 'apps/Art/selectors/state';
-import {ArtworkIdPayload, GenesisBlock, Page, UnsignedGenesisBlock, UnsignedStandardBlock} from 'apps/Art/types';
+import {
+  ArtworkIdPayload,
+  GenesisBlock,
+  Page,
+  QueuedBlockPayload,
+  UnsignedGenesisBlock,
+  UnsignedStandardBlock,
+} from 'apps/Art/types';
+import {sortAttributesAlphabetically} from 'apps/Art/utils/attributes';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -98,14 +106,18 @@ const Canvas: SFC = ({className}) => {
       return (canvasArtworkAttributes as any)[key] !== value ? {...previousValue, [key]: value} : previousValue;
     }, {});
 
+    const queuedBlockPayload: QueuedBlockPayload = {
+      artworkId: artworkId!,
+      blockId: artwork.headBlockSignature!,
+      modifiedDate: currentSystemDate(),
+      owner: self.accountNumber,
+      ...updatedValues,
+    };
+
+    const sortedQueuedBlockPayload: any = sortAttributesAlphabetically(queuedBlockPayload);
+
     const unsignedStandardBlock: UnsignedStandardBlock = {
-      payload: {
-        artworkId: artworkId!,
-        blockId: artwork.headBlockSignature!,
-        modifiedDate: currentSystemDate(),
-        owner: self.accountNumber,
-        ...updatedValues,
-      },
+      payload: sortedQueuedBlockPayload,
     };
 
     const signedStandardBlockPayload = signData(unsignedStandardBlock.payload, self.signingKey);

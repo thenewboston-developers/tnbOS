@@ -57,6 +57,7 @@ const useBlockQueueProcessor = () => {
           });
         } catch (error) {
           console.error(error);
+          displayErrorToast('Error broadcasting block');
         }
       }
     },
