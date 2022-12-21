@@ -26,19 +26,7 @@ export const validateIncomingTransfer = (artwork: Artwork, standardBlock: Standa
   const {payload} = standardBlock;
 
   if (!(attributes.inTransfer === true && payload.inTransfer === false)) return;
-
-  const payloadKeys: string[] = Object.keys(payload);
-  const validPayloadKeys: (keyof ArtworkAttributes)[] = ['artworkId', 'blockId', 'inTransfer', 'modifiedDate'];
-
-  for (const payloadKey of payloadKeys) {
-    if (!validPayloadKeys.includes(payloadKey as keyof ArtworkAttributes)) {
-      throw new Error(`Can not update ${payloadKey} during a transfer`);
-    }
-  }
-
-  if (payloadKeys.length !== validPayloadKeys.length) {
-    throw new Error('Transfer blocks can not include any non-transfer related attribute updates');
-  }
+  if (attributes.owner !== payload.owner) throw new Error('Owner can not be updated during an incoming transfer');
 };
 
 export const validateNonMutableValues = (artwork: Artwork, standardBlock: StandardBlock) => {
@@ -57,7 +45,23 @@ export const validateOutgoingTransfer = (artwork: Artwork, standardBlock: Standa
   const {payload} = standardBlock;
 
   if (!(attributes.inTransfer === false && payload.inTransfer === true)) return;
-  if (attributes.owner === payload.owner) throw new Error('Owner must be updated during a transfer');
+  if (attributes.owner === payload.owner) throw new Error('Owner must be updated during an outgoing transfer');
+};
+
+export const validateOwner = (artwork: Artwork, standardBlock: StandardBlock) => {
+  const {attributes} = artwork;
+  const {payload} = standardBlock;
+
+  if (attributes.inTransfer === payload.inTransfer && attributes.owner !== payload.owner) {
+    throw new Error('Only the owner can make updates');
+  }
+};
+
+export const validateTransferPayload = (artwork: Artwork, standardBlock: StandardBlock) => {
+  const {attributes} = artwork;
+  const {payload} = standardBlock;
+
+  if (!attributes.inTransfer && !payload.inTransfer) return;
 
   const payloadKeys: string[] = Object.keys(payload);
   const validPayloadKeys: (keyof ArtworkAttributes)[] = ['artworkId', 'blockId', 'inTransfer', 'modifiedDate', 'owner'];
@@ -70,14 +74,5 @@ export const validateOutgoingTransfer = (artwork: Artwork, standardBlock: Standa
 
   if (payloadKeys.length !== validPayloadKeys.length) {
     throw new Error('Transfer blocks can not include any non-transfer related attribute updates');
-  }
-};
-
-export const validateOwner = (artwork: Artwork, standardBlock: StandardBlock) => {
-  const {attributes} = artwork;
-  const {payload} = standardBlock;
-
-  if (attributes.inTransfer === payload.inTransfer && attributes.owner !== payload.owner) {
-    throw new Error('Only the owner can make updates');
   }
 };

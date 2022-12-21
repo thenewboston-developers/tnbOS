@@ -23,6 +23,7 @@ import {
   validateNonMutableValues,
   validateOutgoingTransfer,
   validateOwner,
+  validateTransferPayload,
 } from 'apps/Art/validators/standardBlockValidators';
 import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {AppDispatch} from 'system/types';
@@ -121,6 +122,7 @@ const useBlockQueueProcessor = () => {
     validateNonMutableValues(artwork, standardBlock);
     validateOutgoingTransfer(artwork, standardBlock);
     validateOwner(artwork, standardBlock);
+    validateTransferPayload(artwork, standardBlock);
     validateQueuedBlockSignature(artwork, standardBlock);
   };
 
