@@ -1,15 +1,20 @@
 import React, {useMemo, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import ArtMiniDetails from 'apps/Art/components/ArtMiniDetails';
 import OutlineButton, {ButtonColor} from 'apps/Art/components/OutlineButton';
 import {useIncomingTransferArtworks, useOutgoingTransferArtworks} from 'apps/Art/hooks';
-import {deleteArtwork} from 'apps/Art/store/artworks';
+import {deleteArtwork, setQueuedBlock} from 'apps/Art/store/artworks';
+import {UnsignedStandardBlock} from 'apps/Art/types';
 import {getSecondToLastBlock} from 'apps/Art/utils/blocks';
 import NetworksEmptyStateGraphic from 'apps/NetworkManager/assets/networks-empty-state.png';
 import EmptyPage from 'system/components/EmptyPage';
+import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
+import {signData} from 'system/utils/signing';
+import {verifySignature} from 'system/utils/tnb';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
@@ -23,10 +28,41 @@ const Transfers: SFC = ({className}) => {
   const dispatch = useDispatch<AppDispatch>();
   const incomingTransferArtworks = useIncomingTransferArtworks();
   const outgoingTransferArtworks = useOutgoingTransferArtworks();
+  const self = useSelector(getSelf);
 
   const artworks = useMemo(() => {
     return activeTab === Tab.incoming ? incomingTransferArtworks : outgoingTransferArtworks;
   }, [activeTab, incomingTransferArtworks, outgoingTransferArtworks]);
+
+  const handleAcceptClick = (artworkId: string) => {
+    const artwork = artworks[artworkId!];
+
+    const unsignedStandardBlock: UnsignedStandardBlock = {
+      payload: {
+        artworkId: artworkId!,
+        blockId: artwork.headBlockSignature!,
+        inTransfer: false,
+        modifiedDate: currentSystemDate(),
+        owner: self.accountNumber,
+      },
+    };
+
+    const signedStandardBlockPayload = signData(unsignedStandardBlock.payload, self.signingKey);
+    const standardBlockSignature = signedStandardBlockPayload.signature;
+
+    const block = {
+      ...unsignedStandardBlock,
+      signature: standardBlockSignature,
+    };
+
+    verifySignature({
+      accountNumber: self.accountNumber,
+      signature: block.signature,
+      unsignedData: block.payload,
+    });
+
+    dispatch(setQueuedBlock(block));
+  };
 
   const handleDeleteClick = (artworkId: string) => {
     dispatch(deleteArtwork(artworkId));
@@ -38,7 +74,7 @@ const Transfers: SFC = ({className}) => {
       return (
         <>
           <OutlineButton color={ButtonColor.danger} onClick={() => {}} text="Decline" />
-          <OutlineButton color={ButtonColor.success} onClick={() => {}} text="Accept" />
+          <OutlineButton color={ButtonColor.success} onClick={() => handleAcceptClick(artworkId)} text="Accept" />
         </>
       );
     } else {
