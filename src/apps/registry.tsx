@@ -27,6 +27,7 @@ export const appRegistrations: AppRegistration[] = [
 ];
 
 export const appRouters: AppDataHandlers = {
+  art: ArtRegistration.router!,
   chat: ChatRegistration.router!,
   speedTest: SpeedTestRegistration.router!,
 };
