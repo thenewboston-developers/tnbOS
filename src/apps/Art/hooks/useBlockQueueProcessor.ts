@@ -1,6 +1,8 @@
 import {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
+import {setQueuedBlocksBlock} from 'apps/Art/blocks';
+import {useOnlineAccountNumbers} from 'apps/Art/hooks';
 import {getArtworks} from 'apps/Art/selectors/state';
 import {deleteQueuedBlock, processQueuedBlock, setBlockQueueNeedsProcessing} from 'apps/Art/store/artworks';
 import {Artwork, GenesisBlock, QueuedBlock, StandardBlock} from 'apps/Art/types';
@@ -22,12 +24,44 @@ import {
   validateOutgoingTransfer,
   validateOwner,
 } from 'apps/Art/validators/standardBlockValidators';
+import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {AppDispatch} from 'system/types';
+import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {displayErrorToast} from 'system/utils/toast';
 
 const useBlockQueueProcessor = () => {
   const artworks = useSelector(getArtworks);
+  const balances = useSelector(getBalances);
   const dispatch = useDispatch<AppDispatch>();
+  const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
+  const onlineAccountNumbers = useOnlineAccountNumbers();
+
+  const broadcastQueuedBlock = useCallback(
+    async (queuedBlock: QueuedBlock) => {
+      for (const onlineAccountNumber of onlineAccountNumbers) {
+        const recipient = onlineAccountNumber;
+
+        const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+          balances,
+          networkAccountOnlineStatuses,
+          recipient,
+        });
+
+        if (!recipientsDefaultNetworkId) continue;
+
+        try {
+          await setQueuedBlocksBlock({
+            networkId: recipientsDefaultNetworkId,
+            params: [queuedBlock],
+            recipient,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+    [balances, networkAccountOnlineStatuses, onlineAccountNumbers],
+  );
 
   const findArtworkNeedingProcessing = useCallback((): string | null => {
     for (const [artworkId, artwork] of Object.entries(artworks)) {
@@ -111,11 +145,12 @@ const useBlockQueueProcessor = () => {
 
       if (isValid) {
         dispatch(processQueuedBlock(queuedBlock));
+        await broadcastQueuedBlock(queuedBlock);
       } else {
         dispatch(deleteQueuedBlock(queuedBlock));
       }
     })();
-  }, [artworks, dispatch, findArtworkNeedingProcessing, isValidNextBlock]);
+  }, [artworks, broadcastQueuedBlock, dispatch, findArtworkNeedingProcessing, isValidNextBlock]);
 };
 
 export default useBlockQueueProcessor;

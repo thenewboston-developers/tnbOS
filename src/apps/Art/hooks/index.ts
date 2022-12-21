@@ -3,6 +3,7 @@ import useCanvasArtworkAttributes from 'apps/Art/hooks/useCanvasArtworkAttribute
 import useDetailsPageArtwork from 'apps/Art/hooks/useDetailsPageArtwork';
 import useIncomingTransferArtworks from 'apps/Art/hooks/useIncomingTransferArtworks';
 import useNewlyOnlineAccounts from 'apps/Art/hooks/useNewlyOnlineAccounts';
+import useOnlineAccountNumbers from 'apps/Art/hooks/useOnlineAccountNumbers';
 import useOrderedBlockChain from 'apps/Art/hooks/useOrderedBlockChain';
 import useOutgoingTransferArtworks from 'apps/Art/hooks/useOutgoingTransferArtworks';
 import useValidArtworkAttributes from 'apps/Art/hooks/useValidArtworkAttributes';
@@ -13,6 +14,7 @@ export {
   useDetailsPageArtwork,
   useIncomingTransferArtworks,
   useNewlyOnlineAccounts,
+  useOnlineAccountNumbers,
   useOrderedBlockChain,
   useOutgoingTransferArtworks,
   useValidArtworkAttributes,

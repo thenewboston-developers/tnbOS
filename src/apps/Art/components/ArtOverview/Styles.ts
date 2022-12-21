@@ -16,9 +16,7 @@ export const Description = styled.div`
   margin-top: 16px;
 `;
 
-export const Img = styled.img`
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
+export const Img = styled.img``;
 
 export const Left = styled.div`
   display: flex;
