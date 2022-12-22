@@ -1,11 +1,9 @@
-import {GenesisBlock} from 'apps/Art/types/genesisBlocks';
 import {QueuedBlock} from 'apps/Art/types/queuedBlocks';
-import {StandardBlock} from 'apps/Art/types/standardBlocks';
 import {Dict} from 'system/types/generic';
 
 export interface Artwork {
   attributes: Partial<ArtworkAttributes>;
-  blockChain: Dict<GenesisBlock | StandardBlock>;
+  blockChain: Dict<QueuedBlock>;
   blockQueue: Dict<QueuedBlock>;
   blockQueueNeedsProcessing: boolean;
   headBlockSignature: string | null;
