@@ -7,9 +7,10 @@ import {ButtonType} from 'apps/Art/components/Button';
 import {setQueuedBlock} from 'apps/Art/store/artworks';
 import {Artwork, UnsignedStandardBlock} from 'apps/Art/types';
 import {getAccounts, getSelf} from 'system/selectors/state';
-import {AppDispatch, SFC} from 'system/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {signData} from 'system/utils/signing';
+import {displayToast} from 'system/utils/toast';
 import {verifySignature} from 'system/utils/tnb';
 import * as S from './Styles';
 
@@ -59,6 +60,7 @@ const TransferModal: SFC<TransferModalProps> = ({artwork, className, close}) => 
     });
 
     dispatch(setQueuedBlock(block));
+    displayToast('Transfer now in progress', ToastType.success);
   };
 
   const renderAccountSelectCards = () => {
