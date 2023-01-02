@@ -5,6 +5,7 @@ import {Art, ArtElectronStore, ArtRegistration} from 'apps/Art/registration';
 import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration';
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
 import {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
+import {Trade, TradeRegistration} from 'apps/Trade/registration';
 import {University, UniversityRegistration} from 'apps/University/registration';
 import {getManager} from 'system/selectors/state';
 import {AppDataHandlers, AppRegistration, SFC} from 'system/types';
@@ -19,8 +20,9 @@ export const appReducers = {
 
 export const appRegistrations: AppRegistration[] = [
   ChatRegistration,
-  SpeedTestRegistration,
+  TradeRegistration,
   ArtRegistration,
+  SpeedTestRegistration,
   UniversityRegistration,
   AccountManagerRegistration,
   NetworkManagerRegistration,
@@ -40,8 +42,9 @@ export const Apps: SFC = () => {
       <AccountManager display={activeApp === AccountManagerRegistration.appId} />
       <Art display={activeApp === ArtRegistration.appId} />
       <Chat display={activeApp === ChatRegistration.appId} />
-      <SpeedTest display={activeApp === SpeedTestRegistration.appId} />
       <NetworkManager display={activeApp === NetworkManagerRegistration.appId} />
+      <SpeedTest display={activeApp === SpeedTestRegistration.appId} />
+      <Trade display={activeApp === TradeRegistration.appId} />
       <University display={activeApp === UniversityRegistration.appId} />
     </>
   );
