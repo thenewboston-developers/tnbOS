@@ -1,7 +1,7 @@
 import {Buffer} from 'buffer';
 import {sign, SignKeyPair} from 'tweetnacl';
 
-import {KeyPairDetails, TnbApi, UnsignedBlock} from '../../shared/types';
+import {KeyPairDetails, TnbApi, UnsignedBlock, VerifySignatureParams} from '../../shared/types';
 
 export const generateAccount = (): KeyPairDetails => {
   const keyPair = sign.keyPair();
@@ -38,24 +38,32 @@ const stringToUint8Array = (str: string): Uint8Array => {
   return encoder.encode(str);
 };
 
-const verifySignedData = (signedData: any): boolean => {
-  const signature = signedData.signature;
+const verifyBlockSignature = (block: any): boolean => {
+  const signature = block.signature;
   if (!signature) return false;
 
   // Block must be recreated to ensure keys are ordered
-  const block: UnsignedBlock = {
-    amount: signedData.amount,
-    id: signedData.id,
-    payload: signedData.payload,
-    recipient: signedData.recipient,
-    sender: signedData.sender,
-    transaction_fee: signedData.transaction_fee,
+  const unsignedBlock: UnsignedBlock = {
+    amount: block.amount,
+    id: block.id,
+    payload: block.payload,
+    recipient: block.recipient,
+    sender: block.sender,
+    transaction_fee: block.transaction_fee,
   };
 
-  const strMessage: string = JSON.stringify(block);
+  return verifySignature({
+    accountNumber: block.sender,
+    signature,
+    unsignedData: unsignedBlock,
+  });
+};
+
+const verifySignature = ({accountNumber, signature, unsignedData}: VerifySignatureParams): boolean => {
+  const strMessage: string = JSON.stringify(unsignedData);
   const dataUint8Array = stringToUint8Array(strMessage);
   const signatureUint8Array = Uint8Array.from(Buffer.from(signature, 'hex'));
-  const publicKeyUint8Array = Uint8Array.from(Buffer.from(signedData.sender, 'hex'));
+  const publicKeyUint8Array = Uint8Array.from(Buffer.from(accountNumber, 'hex'));
 
   return sign.detached.verify(dataUint8Array, signatureUint8Array, publicKeyUint8Array);
 };
@@ -66,5 +74,6 @@ export const tnbApi: TnbApi = {
   getKeyPairDetails,
   getKeyPairFromSigningKeyHex,
   stringToUint8Array,
-  verifySignedData,
+  verifyBlockSignature,
+  verifySignature,
 };

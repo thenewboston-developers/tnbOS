@@ -1,5 +1,7 @@
 import {SignKeyPair} from 'tweetnacl';
 
+import {VerifySignatureParams} from './signing';
+
 export interface KeyPairDetails {
   publicKey: Uint8Array;
   publicKeyHex: string;
@@ -13,5 +15,6 @@ export interface TnbApi {
   getKeyPairDetails(keyPair: SignKeyPair): KeyPairDetails;
   getKeyPairFromSigningKeyHex(signingKeyHex: string): KeyPairDetails;
   stringToUint8Array(str: string): Uint8Array;
-  verifySignedData(signedData: any): boolean;
+  verifyBlockSignature(block: any): boolean;
+  verifySignature({accountNumber, signature, unsignedData}: VerifySignatureParams): boolean;
 }
