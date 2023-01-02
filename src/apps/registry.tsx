@@ -16,6 +16,7 @@ export const appReducers = {
   art: ArtRegistration.reducer!,
   chat: ChatRegistration.reducer!,
   speedTest: SpeedTestRegistration.reducer!,
+  trade: TradeRegistration.reducer!,
 };
 
 export const appRegistrations: AppRegistration[] = [

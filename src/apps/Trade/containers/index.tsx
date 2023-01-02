@@ -6,7 +6,10 @@ import 'apps/Trade/styles/fonts.css';
 const Trade: SFC<AppProps> = ({className, display}) => {
   return (
     <AppWindow className={className} display={display}>
-      <S.Container>Trade</S.Container>
+      <S.Container>
+        <S.LeftMenu />
+        <S.Right />
+      </S.Container>
     </AppWindow>
   );
 };
