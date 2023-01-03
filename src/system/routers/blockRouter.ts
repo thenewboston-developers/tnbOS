@@ -2,6 +2,7 @@ import {appRouters} from 'apps/registry';
 import store from 'system/store';
 import {setNetworkBlock} from 'system/store/networkBlocks';
 import {AppDispatch, SocketDataStandard} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 import {blockValidator} from 'system/validators/blockValidators';
 import {validateIsSelfAccountNumber} from 'system/validators/common';
@@ -25,7 +26,10 @@ const blockRouter = (dispatch: AppDispatch, networkId: string, socketData: Socke
 
       store.dispatch(
         setNetworkBlock({
-          block,
+          networkBlock: {
+            ...block,
+            date: currentSystemDate(),
+          },
           networkId,
         }),
       );

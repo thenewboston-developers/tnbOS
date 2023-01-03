@@ -1,27 +1,27 @@
-import {useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {mdiArrowDownCircleOutline, mdiArrowUpCircleOutline} from '@mdi/js';
 
 import Table from 'apps/Trade/components/Table';
-import {Transaction as TTransaction, TransactionPerspective, TransactionStatus} from 'apps/Trade/types';
+import {TransactionPerspective, TransactionStatus} from 'apps/Trade/types';
 import {useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {Dict, NetworkBlock, SFC} from 'system/types';
 import {shortDate} from 'system/utils/dates';
 import {camelToTitle} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface TransactionProps {
-  transaction: TTransaction;
+  networkBlock: NetworkBlock;
 }
 
-const Transaction: SFC<TransactionProps> = ({className, transaction}) => {
+const Transaction: SFC<TransactionProps> = ({className, networkBlock}) => {
   const [expanded, toggleExpanded] = useToggle(false);
   const self = useSelector(getSelf);
 
   const perspective = useMemo((): TransactionPerspective => {
-    return self.accountNumber === transaction.sender ? TransactionPerspective.sender : TransactionPerspective.receiver;
-  }, [self.accountNumber, transaction.sender]);
+    return networkBlock.sender === self.accountNumber ? TransactionPerspective.sender : TransactionPerspective.receiver;
+  }, [networkBlock.sender, self.accountNumber]);
 
   const transactionStatus = useMemo((): TransactionStatus => {
     return perspective === TransactionPerspective.receiver ? TransactionStatus.received : TransactionStatus.sent;
@@ -38,18 +38,41 @@ const Transaction: SFC<TransactionProps> = ({className, transaction}) => {
     return (
       <S.Details>
         <S.DetailsTopText>{action} BACON</S.DetailsTopText>
-        <S.BottomText>{shortDate(transaction.createdDate, true)}</S.BottomText>
+        <S.BottomText>{shortDate(networkBlock.date, true)}</S.BottomText>
       </S.Details>
     );
   };
 
   const renderExpandedDetails = () => {
-    const rows = Object.entries(transaction).map(([key, value]) => {
-      return {
-        key: camelToTitle(key),
-        value,
-      };
-    });
+    const keyOverrides: Dict<string> = {
+      id: 'Block ID',
+      transaction_fee: 'Transaction Fee',
+    };
+
+    const valueOverrides: {[key: string]: (value?: any) => ReactNode} = {
+      payload: (value) => JSON.stringify(value, null, 4),
+    };
+
+    /* eslint-disable sort-keys */
+    const orderedNetworkBlock: NetworkBlock = {
+      id: networkBlock.id,
+      amount: networkBlock.amount,
+      transaction_fee: networkBlock.transaction_fee,
+      sender: networkBlock.sender,
+      recipient: networkBlock.recipient,
+      signature: networkBlock.signature,
+      payload: networkBlock.payload,
+      date: networkBlock.date,
+    };
+    /* eslint-enable sort-keys */
+
+    const rows = Object.entries(orderedNetworkBlock)
+      .filter(([key]) => key !== 'date')
+      .map(([key, value]) => ({
+        key: keyOverrides[key] || camelToTitle(key),
+        value: valueOverrides[key] ? valueOverrides[key](value) : value,
+      }));
+
     return (
       <S.ExpandedDetails>
         <Table rows={rows} />
@@ -80,7 +103,7 @@ const Transaction: SFC<TransactionProps> = ({className, transaction}) => {
       <S.ValueContainer>
         <S.Value transactionStatus={transactionStatus}>
           {sign}
-          {transaction.amount}
+          {networkBlock.amount}
         </S.Value>
       </S.ValueContainer>
     );

@@ -4,6 +4,7 @@ import {Block} from 'shared/types';
 import store from 'system/store';
 import {setNetworkBlock} from 'system/store/networkBlocks';
 import {getAddress} from 'system/utils/addresses';
+import {currentSystemDate} from 'system/utils/dates';
 
 export const createBlock = async (block: Block, networkId: string) => {
   const address = getAddress(networkId);
@@ -11,7 +12,10 @@ export const createBlock = async (block: Block, networkId: string) => {
 
   store.dispatch(
     setNetworkBlock({
-      block,
+      networkBlock: {
+        ...block,
+        date: currentSystemDate(),
+      },
       networkId,
     }),
   );

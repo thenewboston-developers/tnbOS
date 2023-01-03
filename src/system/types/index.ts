@@ -19,7 +19,7 @@ import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
 import {OnlineStatus} from 'system/types/onlineStatuses';
 import {NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
-import {NetworkBlocks} from 'system/types/networkBlocks';
+import {NetworkBlock, NetworkBlocks} from 'system/types/networkBlocks';
 import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
 import {
   NetworkPeerRequests,
@@ -79,6 +79,7 @@ export {
   Manager,
   Network,
   NetworkAccountOnlineStatuses,
+  NetworkBlock,
   NetworkBlocks,
   NetworkCorrelationIds,
   NetworkPeerRequests,

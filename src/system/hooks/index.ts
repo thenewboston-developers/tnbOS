@@ -5,6 +5,7 @@ import useAccountNumbers from 'system/hooks/useAccountNumbers';
 import useAccountOnlineStatus from 'system/hooks/useAccountOnlineStatus';
 import useAccountOnlineStatusManager from 'system/hooks/useAccountOnlineStatusManager';
 import useEventListener from 'system/hooks/useEventListener';
+import useNetworkBlocks from 'system/hooks/useNetworkBlocks';
 import useNetworkDisplayImage from 'system/hooks/useNetworkDisplayImage';
 import useRecipientsDefaultNetworkId from 'system/hooks/useRecipientsDefaultNetworkId';
 import useSafeDisplayImage from 'system/hooks/useSafeDisplayImage';
@@ -19,6 +20,7 @@ export {
   useAccountOnlineStatusManager,
   useEventListener,
   useIpcEffect,
+  useNetworkBlocks,
   useNetworkDisplayImage,
   useReadIpc,
   useRecipientsDefaultNetworkId,

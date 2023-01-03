@@ -14,6 +14,7 @@ export const Table = styled.table`
   }
 
   td {
+    white-space: pre-wrap;
     word-break: break-all;
   }
 
