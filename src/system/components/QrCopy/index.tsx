@@ -7,16 +7,17 @@ import * as S from './Styles';
 
 export interface QrCopyProps {
   accountNumber: string;
+  width?: number;
 }
 
-const QrCopy: SFC<QrCopyProps> = ({accountNumber, className}) => {
+const QrCopy: SFC<QrCopyProps> = ({accountNumber, className, width = 120}) => {
   const handleCopy = (): void => {
     displayToast('Account Number copied to the clipboard', ToastType.success);
   };
 
   return (
     <S.Container className={className}>
-      <Qr text={accountNumber} width={120} />
+      <Qr text={accountNumber} width={width} />
       <S.CopyContainer>
         <S.AccountNumber>{accountNumber}</S.AccountNumber>
         <CopyToClipboard text={accountNumber} onCopy={handleCopy}>

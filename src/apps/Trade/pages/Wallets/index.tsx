@@ -8,6 +8,7 @@ import {useActiveWalletNetwork} from 'apps/Trade/hooks';
 import PageHeader from 'apps/Trade/pages/PageHeader';
 import NetworkMenuItem from 'apps/Trade/pages/Wallets/NetworkMenuItem';
 import WalletHome from 'apps/Trade/pages/Wallets/WalletHome';
+import WalletReceive from 'apps/Trade/pages/Wallets/WalletReceive';
 import {getActiveWalletTab} from 'apps/Trade/selectors/state';
 import {setActiveWalletNetworkId, setActiveWalletTab} from 'apps/Trade/store/manager';
 import {WalletTab} from 'apps/Trade/types';
@@ -65,7 +66,7 @@ const Wallets: SFC = ({className}) => {
     const tabContent = {
       [WalletTab.home]: <WalletHome />,
       [WalletTab.send]: <div>Wallet send</div>,
-      [WalletTab.receive]: <div>Wallet receive</div>,
+      [WalletTab.receive]: <WalletReceive />,
     };
     return tabContent[activeWalletTab];
   };
