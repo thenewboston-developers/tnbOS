@@ -8,7 +8,7 @@ export const ContentWrapper = styled.div`
   display: flex;
 `;
 
-export const NetworkList = styled(Card)`
+export const NetworkMenu = styled(Card)`
   height: fit-content;
   margin-right: 24px;
   white-space: nowrap;

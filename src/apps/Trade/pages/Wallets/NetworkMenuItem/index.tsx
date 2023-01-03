@@ -1,24 +1,25 @@
 import {useSelector} from 'react-redux';
 
+import {getActiveWalletNetworkId} from 'apps/Trade/selectors/state';
 import {GenericVoidFunction} from 'shared/types';
 import {getBalances} from 'system/selectors/state';
 import {Network, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
-export interface NetworkListItemProps {
-  activeNetworkId: string | null;
+export interface NetworkMenuItemProps {
   network: Network;
   onClick: GenericVoidFunction;
 }
 
-const NetworkListItem: SFC<NetworkListItemProps> = ({activeNetworkId, className, network, onClick}) => {
+const NetworkMenuItem: SFC<NetworkMenuItemProps> = ({className, network, onClick}) => {
+  const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
   const balances = useSelector(getBalances);
 
   return (
     <S.Container
       className={className}
-      isActive={activeNetworkId === network.networkId}
+      isActive={activeWalletNetworkId === network.networkId}
       onClick={() => onClick(network.networkId)}
     >
       <S.NetworkLogo networkId={network.networkId} />
@@ -31,4 +32,4 @@ const NetworkListItem: SFC<NetworkListItemProps> = ({activeNetworkId, className,
   );
 };
 
-export default NetworkListItem;
+export default NetworkMenuItem;

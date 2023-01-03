@@ -5,6 +5,7 @@ import {Manager, Page, WalletTab} from 'apps/Trade/types';
 
 export const initialState: Manager = {
   activePage: Page.buy,
+  activeWalletNetworkId: null,
   activeWalletTab: WalletTab.home,
 };
 
@@ -15,11 +16,14 @@ const manager = createSlice({
     setActivePage: (state: Manager, {payload: page}: PayloadAction<Page>) => {
       state.activePage = page;
     },
-    setActiveWalletTab: (state: Manager, {payload: walletTab}: PayloadAction<WalletTab>) => {
-      state.activeWalletTab = walletTab;
+    setActiveWalletNetworkId: (state: Manager, {payload: activeWalletNetworkId}: PayloadAction<string | null>) => {
+      state.activeWalletNetworkId = activeWalletNetworkId;
+    },
+    setActiveWalletTab: (state: Manager, {payload: activeWalletTab}: PayloadAction<WalletTab>) => {
+      state.activeWalletTab = activeWalletTab;
     },
   },
 });
 
-export const {setActivePage, setActiveWalletTab} = manager.actions;
+export const {setActivePage, setActiveWalletNetworkId, setActiveWalletTab} = manager.actions;
 export default manager.reducer;

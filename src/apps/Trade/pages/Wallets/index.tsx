@@ -1,45 +1,38 @@
-import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import Tab from 'apps/Trade/components/Tab';
 import Tabs from 'apps/Trade/components/Tabs';
 import PageHeader from 'apps/Trade/pages/PageHeader';
-import NetworkListItem from 'apps/Trade/pages/Wallets/NetworkListItem';
+import NetworkMenuItem from 'apps/Trade/pages/Wallets/NetworkMenuItem';
 import {getActiveWalletTab} from 'apps/Trade/selectors/state';
-import {setActiveWalletTab} from 'apps/Trade/store/manager';
+import {setActiveWalletNetworkId, setActiveWalletTab} from 'apps/Trade/store/manager';
 import {WalletTab} from 'apps/Trade/types';
 import {getNetworks} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const Wallets: SFC = ({className}) => {
-  const [activeNetworkId, setActiveNetworkId] = useState<string | null>(null);
   const activeWalletTab = useSelector(getActiveWalletTab);
   const dispatch = useDispatch<AppDispatch>();
   const networks = useSelector(getNetworks);
 
-  const handleNetworkListItemClick = (networkId: string) => {
-    setActiveNetworkId(networkId);
+  const handleNetworkMenuItemClick = (networkId: string) => {
+    dispatch(setActiveWalletNetworkId(networkId));
   };
 
   const handleTabClick = (walletTab: WalletTab) => {
     dispatch(setActiveWalletTab(walletTab));
   };
 
-  const renderNetworkList = () => {
-    return <S.NetworkList padding={8}>{renderNetworkListItems()}</S.NetworkList>;
+  const renderNetworkMenu = () => {
+    return <S.NetworkMenu padding={8}>{renderNetworkMenuItems()}</S.NetworkMenu>;
   };
 
-  const renderNetworkListItems = () => {
+  const renderNetworkMenuItems = () => {
     const orderedNetworks = orderBy(Object.values(networks), ['networkId']);
     return orderedNetworks.map((network) => (
-      <NetworkListItem
-        activeNetworkId={activeNetworkId}
-        key={network.networkId}
-        network={network}
-        onClick={handleNetworkListItemClick}
-      />
+      <NetworkMenuItem key={network.networkId} network={network} onClick={handleNetworkMenuItemClick} />
     ));
   };
 
@@ -77,7 +70,7 @@ const Wallets: SFC = ({className}) => {
     <S.Container className={className}>
       <PageHeader title="Wallets" />
       <S.ContentWrapper>
-        {renderNetworkList()}
+        {renderNetworkMenu()}
         {renderRight()}
       </S.ContentWrapper>
     </S.Container>
