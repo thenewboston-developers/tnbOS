@@ -5,12 +5,16 @@ import {Art, ArtElectronStore, ArtRegistration} from 'apps/Art/registration';
 import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration';
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
 import {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
-import {Trade, TradeRegistration} from 'apps/Trade/registration';
+import {Trade, TradeElectronStore, TradeRegistration} from 'apps/Trade/registration';
 import {University, UniversityRegistration} from 'apps/University/registration';
 import {getManager} from 'system/selectors/state';
 import {AppDataHandlers, AppRegistration, SFC} from 'system/types';
 
-export interface AppsElectronStore extends ArtElectronStore, ChatElectronStore, SpeedTestElectronStore {}
+export interface AppsElectronStore
+  extends ArtElectronStore,
+    ChatElectronStore,
+    SpeedTestElectronStore,
+    TradeElectronStore {}
 
 export const appReducers = {
   art: ArtRegistration.reducer!,

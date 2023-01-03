@@ -5,6 +5,7 @@ import orderBy from 'lodash/orderBy';
 import CardLabel from 'apps/Trade/components/CardLabel';
 import EmptyState from 'apps/Trade/components/EmptyState';
 import Transaction from 'apps/Trade/components/Transaction';
+import {useActiveWalletNetwork} from 'apps/Trade/hooks';
 import {getActiveWalletNetworkId} from 'apps/Trade/selectors/state';
 import {useNetworkBlocks} from 'system/hooks';
 import {NetworkBlock, SFC} from 'system/types';
@@ -12,6 +13,7 @@ import TransactionsEmptyStateGraphic from './assets/transactions-empty-state.png
 import * as S from './Styles';
 
 const Transactions: SFC = ({className}) => {
+  const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
   const networkBlocks = useNetworkBlocks(activeWalletNetworkId!);
 
@@ -22,7 +24,11 @@ const Transactions: SFC = ({className}) => {
   const renderTransactions = () => {
     if (!filteredNetworkBlocks.length) return renderTransactionsEmptyState();
     return filteredNetworkBlocks.map((networkBlock) => (
-      <Transaction key={networkBlock.signature} networkBlock={networkBlock} />
+      <Transaction
+        key={networkBlock.signature}
+        networkBlock={networkBlock}
+        networkDisplayName={activeWalletNetwork!.displayName}
+      />
     ));
   };
 

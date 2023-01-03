@@ -1,16 +1,15 @@
 import {useSelector} from 'react-redux';
 
 import CardLabel from 'apps/Trade/components/CardLabel';
-import {useActiveWalletNetwork} from 'apps/Trade/hooks';
+import {useActiveWalletNetwork, useTradeBalances} from 'apps/Trade/hooks';
 import {getActiveWalletNetworkId} from 'apps/Trade/selectors/state';
-import {getBalances} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const WalletHome: SFC = ({className}) => {
   const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
-  const balances = useSelector(getBalances);
+  const {available, onHold, total} = useTradeBalances(activeWalletNetworkId!);
 
   const renderBalance = () => (
     <S.Balance>
@@ -23,7 +22,7 @@ const WalletHome: SFC = ({className}) => {
     <S.BalanceLeft>
       <CardLabel>Available Balance</CardLabel>
       <S.BalanceValue>
-        {balances[activeWalletNetworkId!].toLocaleString()} {activeWalletNetwork!.displayName}
+        {available.toLocaleString()} {activeWalletNetwork!.displayName}
       </S.BalanceValue>
     </S.BalanceLeft>
   );
@@ -32,15 +31,15 @@ const WalletHome: SFC = ({className}) => {
     const rows = [
       {
         key: 'Total Balance',
-        value: 4000,
+        value: total,
       },
       {
         key: 'On Hold',
-        value: 5000,
+        value: onHold,
       },
       {
         key: 'Available Balance',
-        value: 6000,
+        value: available,
       },
     ];
 

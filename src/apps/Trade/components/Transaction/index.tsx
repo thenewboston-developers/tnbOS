@@ -13,9 +13,10 @@ import * as S from './Styles';
 
 export interface TransactionProps {
   networkBlock: NetworkBlock;
+  networkDisplayName: string;
 }
 
-const Transaction: SFC<TransactionProps> = ({className, networkBlock}) => {
+const Transaction: SFC<TransactionProps> = ({className, networkBlock, networkDisplayName}) => {
   const [expanded, toggleExpanded] = useToggle(false);
   const self = useSelector(getSelf);
 
@@ -37,7 +38,9 @@ const Transaction: SFC<TransactionProps> = ({className, networkBlock}) => {
 
     return (
       <S.Details>
-        <S.DetailsTopText>{action} BACON</S.DetailsTopText>
+        <S.DetailsTopText>
+          {action} {networkDisplayName}
+        </S.DetailsTopText>
         <S.BottomText>{shortDate(networkBlock.date, true)}</S.BottomText>
       </S.Details>
     );
