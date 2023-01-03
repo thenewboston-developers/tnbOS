@@ -13,11 +13,10 @@ import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
-import {shortDate} from 'apps/Chat/utils/dates';
 import {useRecipientsDefaultNetworkId, useSafeDisplayImage, useSafeDisplayName, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
-import {currentSystemDate} from 'system/utils/dates';
+import {currentSystemDate, shortDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 

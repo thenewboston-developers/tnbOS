@@ -1,18 +1,23 @@
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
+import EmptyState from 'apps/Trade/components/EmptyState';
 import Tab from 'apps/Trade/components/Tab';
 import Tabs from 'apps/Trade/components/Tabs';
+import {useActiveWalletNetwork} from 'apps/Trade/hooks';
 import PageHeader from 'apps/Trade/pages/PageHeader';
 import NetworkMenuItem from 'apps/Trade/pages/Wallets/NetworkMenuItem';
+import WalletHome from 'apps/Trade/pages/Wallets/WalletHome';
 import {getActiveWalletTab} from 'apps/Trade/selectors/state';
 import {setActiveWalletNetworkId, setActiveWalletTab} from 'apps/Trade/store/manager';
 import {WalletTab} from 'apps/Trade/types';
 import {getNetworks} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
+import RightEmptyStateGraphic from './assets/transactions-empty-state.png';
 import * as S from './Styles';
 
 const Wallets: SFC = ({className}) => {
+  const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletTab = useSelector(getActiveWalletTab);
   const dispatch = useDispatch<AppDispatch>();
   const networks = useSelector(getNetworks);
@@ -36,16 +41,31 @@ const Wallets: SFC = ({className}) => {
     ));
   };
 
-  const renderRight = () => (
-    <S.Right>
+  const renderRight = () => {
+    if (!activeWalletNetwork) return renderRightEmptyState();
+    return renderRightContent();
+  };
+
+  const renderRightContent = () => (
+    <S.RightContentContainer>
       {renderTabs()}
       {renderTabContent()}
-    </S.Right>
+    </S.RightContentContainer>
+  );
+
+  const renderRightEmptyState = () => (
+    <S.RightEmptyStateContainer>
+      <EmptyState
+        bottomText="Select a network to view wallet details."
+        graphic={RightEmptyStateGraphic}
+        topText="Nothing here!"
+      />
+    </S.RightEmptyStateContainer>
   );
 
   const renderTabContent = () => {
     const tabContent = {
-      [WalletTab.home]: <div>Wallet home</div>,
+      [WalletTab.home]: <WalletHome />,
       [WalletTab.send]: <div>Wallet send</div>,
       [WalletTab.receive]: <div>Wallet receive</div>,
     };

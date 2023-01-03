@@ -3,10 +3,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import Avatar from 'apps/Chat/components/Avatar';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
-import {shortDate} from 'apps/Chat/utils/dates';
 import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
+import {shortDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
