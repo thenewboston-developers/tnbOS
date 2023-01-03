@@ -1,19 +1,20 @@
-import {colors} from 'apps/Chat/styles';
+import {useAccountOnlineStatus, useSafeDisplayImage} from 'system/hooks';
+import {colors} from 'system/styles';
 import {OnlineStatus, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface AvatarProps {
-  displayImage: string;
-  onlineStatus?: OnlineStatus;
+  accountNumber: string;
 }
 
-const Avatar: SFC<AvatarProps> = ({className, displayImage, onlineStatus}) => {
-  const renderStatus = () => {
-    if (!onlineStatus) return null;
+const Avatar: SFC<AvatarProps> = ({accountNumber, className}) => {
+  const displayImage = useSafeDisplayImage(accountNumber);
+  const onlineStatus = useAccountOnlineStatus(accountNumber);
 
+  const renderStatus = () => {
     const indicatorColors = {
       [OnlineStatus.offline]: colors.palette.gray['300'],
-      [OnlineStatus.online]: colors.palette.green['300'],
+      [OnlineStatus.online]: colors.palette.green['400'],
     };
 
     return <S.Status indicatorColor={indicatorColors[onlineStatus]} />;

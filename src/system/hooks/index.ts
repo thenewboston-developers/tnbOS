@@ -9,6 +9,7 @@ import useNetworkDisplayImage from 'system/hooks/useNetworkDisplayImage';
 import useRecipientsDefaultNetworkId from 'system/hooks/useRecipientsDefaultNetworkId';
 import useSafeDisplayImage from 'system/hooks/useSafeDisplayImage';
 import useSafeDisplayName from 'system/hooks/useSafeDisplayName';
+import useSocketStatus from 'system/hooks/useSocketStatus';
 import useToggle from 'system/hooks/useToggle';
 import useUsersNetworkAccountOnlineStatuses from 'system/hooks/useUsersNetworkAccountOnlineStatuses';
 
@@ -23,6 +24,7 @@ export {
   useRecipientsDefaultNetworkId,
   useSafeDisplayImage,
   useSafeDisplayName,
+  useSocketStatus,
   useToggle,
   useUsersNetworkAccountOnlineStatuses,
   useWriteIpc,

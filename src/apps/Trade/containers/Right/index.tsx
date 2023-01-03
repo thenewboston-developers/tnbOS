@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 
+import Wallets from 'apps/Trade/pages/Wallets';
 import {getActivePage} from 'apps/Trade/selectors/state';
 import {Page} from 'apps/Trade/types';
 import {SFC} from 'system/types';
@@ -19,7 +20,7 @@ const Right: SFC = ({className}) => {
       [Page.offers]: <div>Offers</div>,
       [Page.orders]: <div>Orders</div>,
       [Page.sell]: <div>Sell</div>,
-      [Page.wallets]: <div>Wallets</div>,
+      [Page.wallets]: <Wallets />,
     };
 
     return pages[activePage];

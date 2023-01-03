@@ -32,7 +32,7 @@ const NetworkCard: SFC<NetworkCardProps> = ({className, network}) => {
     <>
       <S.Container className={className}>
         <S.Left>
-          <S.NetworkLogo displayImage={network.displayImage} networkId={network.networkId} />
+          <S.NetworkLogo networkId={network.networkId} />
           <S.LeftText>
             <S.DisplayName>{network.displayName}</S.DisplayName>
             <S.NetworkId>{truncate(network.networkId, 24)}</S.NetworkId>
