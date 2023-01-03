@@ -7,6 +7,7 @@ import balancesReducer from 'system/store/balances';
 import internalReducer from 'system/store/internal';
 import managerReducer from 'system/store/manager';
 import networkAccountOnlineStatusesReducer from 'system/store/networkAccountOnlineStatuses';
+import networkBlocksReducer from 'system/store/networkBlocks';
 import networkCorrelationIdsReducer from 'system/store/networkCorrelationIds';
 import networksReducer from 'system/store/networks';
 import peerRequestManagerReducer from 'system/store/peerRequestManager';
@@ -20,6 +21,7 @@ const systemReducer = combineReducers({
   internal: internalReducer,
   manager: managerReducer,
   networkAccountOnlineStatuses: networkAccountOnlineStatusesReducer,
+  networkBlocks: networkBlocksReducer,
   networkCorrelationIds: networkCorrelationIdsReducer,
   networks: networksReducer,
   peerRequestManager: peerRequestManagerReducer,

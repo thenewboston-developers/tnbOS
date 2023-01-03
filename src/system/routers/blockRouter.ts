@@ -1,5 +1,6 @@
 import {appRouters} from 'apps/registry';
 import store from 'system/store';
+import {setNetworkBlock} from 'system/store/networkBlocks';
 import {AppDispatch, SocketDataStandard} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 import {blockValidator} from 'system/validators/blockValidators';
@@ -21,6 +22,13 @@ const blockRouter = (dispatch: AppDispatch, networkId: string, socketData: Socke
         const appRouter = appRouters[pid];
         appRouter(block, dispatch, networkId);
       }
+
+      store.dispatch(
+        setNetworkBlock({
+          block,
+          networkId,
+        }),
+      );
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');
