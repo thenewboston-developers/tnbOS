@@ -42,25 +42,23 @@ const Wallets: SFC = ({className}) => {
   };
 
   const renderRight = () => {
-    if (!activeWalletNetwork) return renderRightEmptyState();
-    return renderRightContent();
+    const content = activeWalletNetwork ? renderRightContent() : renderRightEmptyState();
+    return <S.Right>{content}</S.Right>;
   };
 
   const renderRightContent = () => (
-    <S.RightContentContainer>
+    <>
       {renderTabs()}
       {renderTabContent()}
-    </S.RightContentContainer>
+    </>
   );
 
   const renderRightEmptyState = () => (
-    <S.RightEmptyStateContainer>
-      <EmptyState
-        bottomText="Select a network to view wallet details."
-        graphic={RightEmptyStateGraphic}
-        topText="Nothing here!"
-      />
-    </S.RightEmptyStateContainer>
+    <EmptyState
+      bottomText="Select a network to view wallet details."
+      graphic={RightEmptyStateGraphic}
+      topText="Nothing here!"
+    />
   );
 
   const renderTabContent = () => {

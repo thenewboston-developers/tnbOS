@@ -15,14 +15,7 @@ export const NetworkMenu = styled(Card)`
   width: fit-content;
 `;
 
-export const RightContentContainer = styled.div`
-  display: flex;
-  flex: auto;
-  flex-direction: column;
-  height: fit-content;
-`;
-
-export const RightEmptyStateContainer = styled.div`
+export const Right = styled.div`
   display: flex;
   flex: auto;
   flex-direction: column;

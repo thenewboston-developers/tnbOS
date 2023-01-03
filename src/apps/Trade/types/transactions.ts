@@ -1,8 +1,7 @@
 export interface Transaction {
   amount: number;
   createdDate: string;
-  isConfirmed: boolean;
-  orderId?: string;
+  orderId: string | null;
   recipient: string;
   sender: string;
   signature: string;
@@ -17,7 +16,5 @@ export enum TransactionPerspective {
 
 export enum TransactionStatus {
   received = 'received',
-  receiving = 'receiving',
-  sending = 'sending',
   sent = 'sent',
 }
