@@ -1,3 +1,4 @@
+import ButtonContainer from './ButtonContainer';
 import Input from './Input';
 
-export {Input};
+export {ButtonContainer, Input};
