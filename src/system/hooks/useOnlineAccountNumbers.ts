@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {getAccountOnlineStatuses} from 'system/selectors/state';
 import {OnlineStatus} from 'system/types';
 
-const useOnlineAccountNumbers = () => {
+const useOnlineAccountNumbers = (): string[] => {
   const accountOnlineStatuses = useSelector(getAccountOnlineStatuses);
 
   return useMemo(() => {

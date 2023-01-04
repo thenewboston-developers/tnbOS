@@ -1,4 +1,5 @@
 import {TradeElectronStore} from 'apps/Trade/types/electronStore';
+import {TradeFn, SetOffersParams} from 'apps/Trade/types/fns';
 import {Manager, WalletTab} from 'apps/Trade/types/manager';
 import {Offer, Terms} from 'apps/Trade/types/offers';
 import {OffersSync, SyncRecipient} from 'apps/Trade/types/offersSync';
@@ -11,10 +12,12 @@ export {
   Offer,
   OffersSync,
   Page,
+  SetOffersParams,
   SyncRecipient,
   Terms,
   TradeBalances,
   TradeElectronStore,
+  TradeFn,
   TransactionPerspective,
   TransactionStatus,
   WalletTab,
