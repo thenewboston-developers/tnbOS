@@ -6,6 +6,7 @@ import Button from 'apps/Trade/components/Button';
 import EmptyPage from 'apps/Trade/components/EmptyPage';
 import PageHeader from 'apps/Trade/components/PageHeader';
 import {useAvailableClientAssets} from 'apps/Trade/hooks';
+import OfferModal from 'apps/Trade/modals/OfferModal';
 import SelectNetworkModal from 'apps/Trade/modals/SelectNetworkModal';
 import {getActiveNetworkId, getOffers} from 'apps/Trade/selectors/state';
 import {useToggle} from 'system/hooks';
@@ -70,7 +71,7 @@ const Offers: SFC = ({className}) => {
           handleSelectNetworkModalSubmit={handleSelectNetworkModalSubmit}
         />
       ) : null}
-      {/*{selectedNetworkId ? <OfferModal close={handleOfferModalClose} networkId={selectedNetworkId} /> : null}*/}
+      {selectedNetworkId ? <OfferModal clientAsset={selectedNetworkId} close={handleOfferModalClose} /> : null}
     </>
   );
 };

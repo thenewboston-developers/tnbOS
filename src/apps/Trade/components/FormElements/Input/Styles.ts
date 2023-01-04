@@ -34,6 +34,7 @@ export const Label = styled.div`
 `;
 
 export const Logo = styled.img`
+  border-radius: 50%;
   height: 20px;
   margin-left: 12px;
   width: 20px;
