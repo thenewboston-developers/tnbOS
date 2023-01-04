@@ -89,6 +89,7 @@ const OfferCard: SFC<OfferCardProps> = ({className, offer}) => {
         ),
       },
     ];
+
     return (
       <S.Section>
         <S.SectionHeading>Purchase Terms</S.SectionHeading>
@@ -131,6 +132,7 @@ const OfferCard: SFC<OfferCardProps> = ({className, offer}) => {
         ),
       },
     ];
+
     return (
       <S.Section>
         <S.SectionHeading>Sale Terms</S.SectionHeading>
