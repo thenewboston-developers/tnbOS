@@ -1,11 +1,13 @@
 import {useDispatch, useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 
+import EmptyPage from 'apps/Trade/components/EmptyPage';
 import EmptyState from 'apps/Trade/components/EmptyState';
+import PageHeader from 'apps/Trade/components/PageHeader';
 import Tab from 'apps/Trade/components/Tab';
 import Tabs from 'apps/Trade/components/Tabs';
 import {useActiveWalletNetwork} from 'apps/Trade/hooks';
-import PageHeader from 'apps/Trade/pages/PageHeader';
 import NetworkMenuItem from 'apps/Trade/pages/Wallets/NetworkMenuItem';
 import WalletHome from 'apps/Trade/pages/Wallets/WalletHome';
 import WalletReceive from 'apps/Trade/pages/Wallets/WalletReceive';
@@ -15,7 +17,7 @@ import {setActiveWalletNetworkId, setActiveWalletTab} from 'apps/Trade/store/man
 import {WalletTab} from 'apps/Trade/types';
 import {getNetworks} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
-import RightEmptyStateGraphic from './assets/transactions-empty-state.png';
+import TransactionsEmptyStateGraphic from './assets/transactions-empty-state.png';
 import * as S from './Styles';
 
 const Wallets: SFC = ({className}) => {
@@ -32,15 +34,39 @@ const Wallets: SFC = ({className}) => {
     dispatch(setActiveWalletTab(walletTab));
   };
 
+  const renderEmptyPage = () => {
+    return (
+      <EmptyPage
+        bottomText="Add a network to begin trading."
+        graphic={TransactionsEmptyStateGraphic}
+        topText="Nothing here!"
+      />
+    );
+  };
+
   const renderNetworkMenu = () => {
     return <S.NetworkMenu padding={8}>{renderNetworkMenuItems()}</S.NetworkMenu>;
   };
 
   const renderNetworkMenuItems = () => {
-    const orderedNetworks = orderBy(Object.values(networks), ['networkId']);
+    const orderedNetworks = orderBy(Object.values(networks), ['displayName', 'networkId']);
     return orderedNetworks.map((network) => (
       <NetworkMenuItem key={network.networkId} network={network} onClick={handleNetworkMenuItemClick} />
     ));
+  };
+
+  const renderPageContent = () => {
+    if (isEmpty(networks)) return renderEmptyPage();
+
+    return (
+      <S.Container className={className}>
+        <PageHeader title="Wallets" />
+        <S.ContentWrapper>
+          {renderNetworkMenu()}
+          {renderRight()}
+        </S.ContentWrapper>
+      </S.Container>
+    );
   };
 
   const renderRight = () => {
@@ -58,7 +84,7 @@ const Wallets: SFC = ({className}) => {
   const renderRightEmptyState = () => (
     <EmptyState
       bottomText="Select a network to view wallet details."
-      graphic={RightEmptyStateGraphic}
+      graphic={TransactionsEmptyStateGraphic}
       topText="Nothing here!"
     />
   );
@@ -86,15 +112,7 @@ const Wallets: SFC = ({className}) => {
     </Tabs>
   );
 
-  return (
-    <S.Container className={className}>
-      <PageHeader title="Wallets" />
-      <S.ContentWrapper>
-        {renderNetworkMenu()}
-        {renderRight()}
-      </S.ContentWrapper>
-    </S.Container>
-  );
+  return renderPageContent();
 };
 
 export default Wallets;

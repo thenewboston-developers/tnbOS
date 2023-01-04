@@ -6,6 +6,7 @@ import {IpcChannel} from 'shared/types';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Manager = {
+  activeNetworkId: null,
   activePage: Page.buy,
   activeWalletNetworkId: null,
   activeWalletTab: WalletTab.home,
@@ -15,6 +16,10 @@ const manager = createSlice({
   initialState,
   name: TRADE_MANAGER,
   reducers: {
+    setActiveNetworkId: (state: Manager, {payload: activeNetworkId}: PayloadAction<string | null>) => {
+      state.activeNetworkId = activeNetworkId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_MANAGER, state: current(state)});
+    },
     setActivePage: (state: Manager, {payload: page}: PayloadAction<Page>) => {
       state.activePage = page;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_MANAGER, state: current(state)});
@@ -31,5 +36,6 @@ const manager = createSlice({
   },
 });
 
-export const {setActivePage, setActiveWalletNetworkId, setActiveWalletTab, setManager} = manager.actions;
+export const {setActiveNetworkId, setActivePage, setActiveWalletNetworkId, setActiveWalletTab, setManager} =
+  manager.actions;
 export default manager.reducer;

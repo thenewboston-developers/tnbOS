@@ -10,7 +10,7 @@ const MainArea: SFC = ({className}) => {
   const networks = useSelector(getNetworks);
 
   const renderNetworkCards = () => {
-    const orderedNetworks = orderBy(Object.values(networks), ['networkId']);
+    const orderedNetworks = orderBy(Object.values(networks), ['displayName', 'networkId']);
     return orderedNetworks.map((network) => <NetworkCard key={network.networkId} network={network} />);
   };
 
