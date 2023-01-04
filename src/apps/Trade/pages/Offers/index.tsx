@@ -1,9 +1,11 @@
 import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
+import sortBy from 'lodash/sortBy';
 import {mdiPlus} from '@mdi/js';
 
 import Button from 'apps/Trade/components/Button';
 import EmptyPage from 'apps/Trade/components/EmptyPage';
+import OfferCard from 'apps/Trade/components/OfferCard';
 import PageHeader from 'apps/Trade/components/PageHeader';
 import {useAvailableClientAssets} from 'apps/Trade/hooks';
 import OfferModal from 'apps/Trade/modals/OfferModal';
@@ -46,13 +48,18 @@ const Offers: SFC = ({className}) => {
     );
   };
 
+  const renderOfferCards = () => {
+    const sortedOffers = sortBy(activeNetworksOffers, ['asset']);
+    return sortedOffers.map((offer) => <OfferCard key={offer.clientAsset} offer={offer} />);
+  };
+
   const renderPageContent = () => {
     if (!activeNetworksOffers.length) return renderEmptyPage();
 
     return (
       <S.Container className={className}>
         <PageHeader rightContent={renderRightHeaderContent()} title="Offers" />
-        {/*{renderOfferCards()}*/}
+        {renderOfferCards()}
       </S.Container>
     );
   };

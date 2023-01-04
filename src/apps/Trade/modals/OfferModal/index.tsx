@@ -6,6 +6,7 @@ import AssetLogo from 'apps/Trade/components/AssetLogo';
 import Button, {ButtonType} from 'apps/Trade/components/Button';
 import {ButtonContainer, Input} from 'apps/Trade/components/FormElements';
 import {getActiveNetworkId} from 'apps/Trade/selectors/state';
+import {setOffer} from 'apps/Trade/store/offers';
 import {Offer} from 'apps/Trade/types';
 import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
@@ -70,9 +71,7 @@ const OfferModal: SFC<OfferModalProps> = ({className, clientAsset, close, offer}
         },
       };
 
-      // TODO: Update
-      console.log(offerData);
-      // dispatch(setOffer(offerData));
+      dispatch(setOffer(offerData));
       displayToast(`${clientAssetDisplayName} terms saved`, ToastType.success);
       close();
     } catch (error) {
