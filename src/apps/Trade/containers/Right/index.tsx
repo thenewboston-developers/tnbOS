@@ -2,7 +2,10 @@ import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 
 import ActiveNetworkBar from 'apps/Trade/containers/ActiveNetworkBar';
+import Buy from 'apps/Trade/pages/Buy';
 import Offers from 'apps/Trade/pages/Offers';
+import Orders from 'apps/Trade/pages/Orders';
+import Sell from 'apps/Trade/pages/Sell';
 import Wallets from 'apps/Trade/pages/Wallets';
 import {getActiveNetworkId, getActivePage} from 'apps/Trade/selectors/state';
 import {Page} from 'apps/Trade/types';
@@ -19,10 +22,10 @@ const Right: SFC = ({className}) => {
 
   const renderActivePage = () => {
     const pages: PageDict = {
-      [Page.buy]: <div>Buy</div>,
+      [Page.buy]: <Buy />,
       [Page.offers]: <Offers />,
-      [Page.orders]: <div>Orders</div>,
-      [Page.sell]: <div>Sell</div>,
+      [Page.orders]: <Orders />,
+      [Page.sell]: <Sell />,
       [Page.wallets]: <Wallets />,
     };
 
