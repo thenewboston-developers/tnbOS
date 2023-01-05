@@ -1,3 +1,5 @@
+import {Dict} from 'system/types';
+
 export enum ApprovalStatus {
   approved = 'approved',
   error = 'error',
@@ -36,6 +38,8 @@ export interface OrderParticipant {
   outgoingAmount: number;
   outgoingAsset: string;
 }
+
+export type Orders = Dict<Order>;
 
 export enum PaymentStatus {
   complete = 'complete',

@@ -1,5 +1,12 @@
 import {TradeElectronStore} from 'apps/Trade/types/electronStore';
-import {SetOffersParams, SetOffersReceiptParams, TradeFn} from 'apps/Trade/types/fns';
+import {
+  ApproveOrderParams,
+  SetFillStatusParams,
+  SetOffersParams,
+  SetOffersReceiptParams,
+  SetPaymentStatusParams,
+  TradeFn,
+} from 'apps/Trade/types/fns';
 import {Manager, WalletTab} from 'apps/Trade/types/manager';
 import {Offer, Terms} from 'apps/Trade/types/offers';
 import {OffersSync, SyncRecipient} from 'apps/Trade/types/offersSync';
@@ -10,15 +17,17 @@ import {
   OrderClient,
   OrderHost,
   OrderParticipant,
+  Orders,
   PaymentStatus,
 } from 'apps/Trade/types/orders';
 import {Page} from 'apps/Trade/types/pages';
 import {TradeBalances} from 'apps/Trade/types/protocol';
-import {ReceivingAccount} from 'apps/Trade/types/receivingAccounts';
+import {ReceivingAccount, ReceivingAccounts} from 'apps/Trade/types/receivingAccounts';
 import {TransactionPerspective, TransactionStatus} from 'apps/Trade/types/transactions';
 
 export {
   ApprovalStatus,
+  ApproveOrderParams,
   FillStatus,
   Manager,
   Offer,
@@ -27,11 +36,15 @@ export {
   OrderClient,
   OrderHost,
   OrderParticipant,
+  Orders,
   Page,
   PaymentStatus,
   ReceivingAccount,
+  ReceivingAccounts,
+  SetFillStatusParams,
   SetOffersParams,
   SetOffersReceiptParams,
+  SetPaymentStatusParams,
   SyncRecipient,
   Terms,
   TradeBalances,

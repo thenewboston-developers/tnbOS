@@ -10,6 +10,8 @@ import OrderFormLayout from 'apps/Trade/components/OrderFormLayout';
 import {APPROVAL_WINDOW_SECONDS, PAYMENT_WINDOW_SECONDS} from 'apps/Trade/constants/protocol';
 import {useActiveNetworkBalance} from 'apps/Trade/hooks';
 import {setActivePage} from 'apps/Trade/store/manager';
+import {setOrder} from 'apps/Trade/store/orders';
+import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
 import {ApprovalStatus, FillStatus, Offer, Order, Page, PaymentStatus} from 'apps/Trade/types';
 import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
@@ -54,7 +56,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
     const assetQuantity = parseFloat(assetQuantityStr);
     if (isNaN(assetQuantity)) return '';
     const price = offer.saleTerms.price;
-    const total = Math.ceil(assetQuantity * price);
+    const total = assetQuantity * price;
     return total.toString();
   };
 
@@ -80,7 +82,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
         fillStatus: FillStatus.none,
         host: {
           accountNumber: offer.host,
-          outgoingAmount: parseFloat(values.buyersIncomingAssetQuantity),
+          outgoingAmount: parseInt(values.buyersIncomingAssetQuantity, 10),
           outgoingAsset: buyersIncomingAsset,
           receivingAddress: null,
         },
@@ -89,10 +91,16 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
         paymentStatus: PaymentStatus.none,
       };
 
-      console.log(order);
+      const receivingAccount = {
+        accountNumber: keypair.publicKeyHex,
+        fundsTransferredOut: false,
+        orderId,
+        signingKey: keypair.signingKeyHex,
+      };
+
+      dispatch(setOrder(order));
+      dispatch(setReceivingAccount(receivingAccount));
       // await createOrderBlock(address, offer, order, self);
-      // dispatch(setOrder(order));
-      // createReceivingAccount(dispatch, keypair, orderId, hostOutgoingCrypto);
       dispatch(setActivePage(Page.orders));
     } catch (error) {
       console.error(error);
@@ -104,6 +112,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
       buyersIncomingAssetQuantity: yup
         .number()
         .required('Purchase amount is a required field')
+        .integer('Purchase amount must be an integer')
         .max(offer.saleTerms.orderMax, `Maximum purchase amount is ${offer.saleTerms.orderMax}`)
         .min(offer.saleTerms.orderMin, `Minimum purchase amount is ${offer.saleTerms.orderMin}`),
       total: yup

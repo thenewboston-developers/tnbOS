@@ -1,8 +1,14 @@
 import {Offer} from 'apps/Trade/types/offers';
+import {FillStatus, PaymentStatus} from 'apps/Trade/types/orders';
 
-export enum TradeFn {
-  setOffers = 'setOffers',
-  setOffersReceipt = 'setOffersReceipt',
+export interface ApproveOrderParams {
+  hostReceivingAddress: string;
+  orderId: string;
+}
+
+export interface SetFillStatusParams {
+  fillStatus: FillStatus;
+  orderId: string;
 }
 
 export interface SetOffersParams {
@@ -12,4 +18,14 @@ export interface SetOffersParams {
 
 export interface SetOffersReceiptParams {
   modifiedDate: string;
+}
+
+export interface SetPaymentStatusParams {
+  orderId: string;
+  paymentStatus: PaymentStatus;
+}
+
+export enum TradeFn {
+  setOffers = 'setOffers',
+  setOffersReceipt = 'setOffersReceipt',
 }
