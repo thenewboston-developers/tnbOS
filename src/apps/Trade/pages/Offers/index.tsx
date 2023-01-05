@@ -39,6 +39,7 @@ const Offers: SFC = ({className}) => {
 
   const renderEmptyPage = () => {
     if (!activeNetworkId) return <EmptyActiveNetworkPage />;
+
     return (
       <EmptyPage
         actionText="Add offer terms."

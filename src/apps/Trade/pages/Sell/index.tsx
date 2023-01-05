@@ -25,6 +25,7 @@ const Sell: SFC = ({className}) => {
 
   const renderEmptyPage = () => {
     if (!activeNetworkId) return <EmptyActiveNetworkPage />;
+
     return (
       <EmptyPage
         bottomText="Sell offers from contacts will appear here."
