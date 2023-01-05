@@ -1,3 +1,4 @@
 import setOffersBlock from 'apps/Trade/blocks/setOffersBlock';
+import setOffersReceiptBlock from 'apps/Trade/blocks/setOffersReceiptBlock';
 
-export {setOffersBlock};
+export {setOffersBlock, setOffersReceiptBlock};

@@ -1,4 +1,4 @@
-import {setOffersListener} from 'apps/Trade/listeners';
+import {setOffersListener, setOffersReceiptListener} from 'apps/Trade/listeners';
 import {TradeFn} from 'apps/Trade/types';
 import {Block} from 'shared/types';
 import {AppDataHandlers, AppDispatch} from 'system/types';
@@ -11,6 +11,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
 
   const fnHandlers: AppDataHandlers = {
     [TradeFn.setOffers]: setOffersListener,
+    [TradeFn.setOffersReceipt]: setOffersReceiptListener,
   };
 
   const fnHandler = fnHandlers[fn];
