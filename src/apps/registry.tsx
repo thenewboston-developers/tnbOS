@@ -37,6 +37,7 @@ export const appRouters: AppDataHandlers = {
   art: ArtRegistration.router!,
   chat: ChatRegistration.router!,
   speedTest: SpeedTestRegistration.router!,
+  trade: TradeRegistration.router!,
 };
 
 export const Apps: SFC = () => {

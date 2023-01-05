@@ -1,5 +1,6 @@
 import AppIcon from 'apps/Trade/assets/app-icon.png';
 import Trade from 'apps/Trade/containers';
+import appRouter from 'apps/Trade/routers/appRouter';
 import tradeReducer from 'apps/Trade/store';
 import loadAppData from 'apps/Trade/store/initializer';
 import {TradeElectronStore} from 'apps/Trade/types';
@@ -12,6 +13,7 @@ const TradeRegistration: AppRegistration = {
   initializer: loadAppData,
   isSystemApp: false,
   reducer: tradeReducer,
+  router: appRouter,
 };
 
 export {Trade, TradeElectronStore, TradeRegistration};
