@@ -7,3 +7,4 @@ export const getActiveWalletNetworkId = (state: RootState): string | null => sta
 export const getActiveWalletTab = (state: RootState): WalletTab => state.trade.manager.activeWalletTab;
 export const getOffers = (state: RootState): Offer[] => state.trade.offers;
 export const getOffersSync = (state: RootState): OffersSync => state.trade.offersSync;
+export const getRemoteOffers = (state: RootState): Offer[] => state.trade.remoteOffers;
