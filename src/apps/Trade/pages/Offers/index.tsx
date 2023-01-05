@@ -1,9 +1,10 @@
 import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import sortBy from 'lodash/sortBy';
-import {mdiPlus} from '@mdi/js';
+import {mdiChevronRight, mdiPlus} from '@mdi/js';
 
 import Button from 'apps/Trade/components/Button';
+import EmptyActiveNetworkPage from 'apps/Trade/components/EmptyActiveNetworkPage';
 import EmptyPage from 'apps/Trade/components/EmptyPage';
 import OfferCard from 'apps/Trade/components/OfferCard';
 import PageHeader from 'apps/Trade/components/PageHeader';
@@ -37,6 +38,7 @@ const Offers: SFC = ({className}) => {
   };
 
   const renderEmptyPage = () => {
+    if (!activeNetworkId) return <EmptyActiveNetworkPage />;
     return (
       <EmptyPage
         actionText="Add offer terms."
@@ -74,8 +76,12 @@ const Offers: SFC = ({className}) => {
       {renderPageContent()}
       {selectNetworkModalIsOpen ? (
         <SelectNetworkModal
+          buttonText="Next"
           close={toggleSelectNetworkModal}
           handleSelectNetworkModalSubmit={handleSelectNetworkModalSubmit}
+          header="Add Offer Terms"
+          iconRight={mdiChevronRight}
+          networkIds={availableClientAssets}
         />
       ) : null}
       {selectedNetworkId ? <OfferModal clientAsset={selectedNetworkId} close={handleOfferModalClose} /> : null}
