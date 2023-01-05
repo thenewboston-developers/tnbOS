@@ -2,6 +2,7 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
+import {createOrderBlock} from 'apps/Trade/blocks';
 import Amount from 'apps/Trade/components/Amount';
 import Button, {ButtonType} from 'apps/Trade/components/Button';
 import {ButtonContainer, FormBody, Input} from 'apps/Trade/components/FormElements';
@@ -14,11 +15,13 @@ import {setOrder} from 'apps/Trade/store/orders';
 import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
 import {ApprovalStatus, FillStatus, Offer, Order, Page, PaymentStatus} from 'apps/Trade/types';
 import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
+import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {systemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
+import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {generateAccount} from 'system/utils/tnb';
+import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 interface BuyModalProps {
@@ -31,10 +34,12 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
   const buyersOutgoingAsset = offer.hostAsset;
 
   const activeNetworkBalance = useActiveNetworkBalance();
+  const balances = useSelector(getBalances);
   const buyersIncomingAssetDisplayName = useNetworkDisplayName(buyersIncomingAsset, 16);
   const buyersIncomingAssetLogo = useNetworkDisplayImage(buyersIncomingAsset);
   const buyersOutgoingAssetLogo = useNetworkDisplayImage(buyersOutgoingAsset);
   const dispatch = useDispatch<AppDispatch>();
+  const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -98,9 +103,26 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
         signingKey: keypair.signingKeyHex,
       };
 
+      const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+        balances,
+        networkAccountOnlineStatuses,
+        recipient: offer.host,
+      });
+
+      if (!recipientsDefaultNetworkId) {
+        displayErrorToast('Unable to connect to host');
+        return;
+      }
+
       dispatch(setOrder(order));
       dispatch(setReceivingAccount(receivingAccount));
-      // await createOrderBlock(address, offer, order, self);
+
+      await createOrderBlock({
+        networkId: recipientsDefaultNetworkId,
+        params: order,
+        recipient: offer.host,
+      });
+
       dispatch(setActivePage(Page.orders));
     } catch (error) {
       console.error(error);
