@@ -1,8 +1,7 @@
 import {appRouters} from 'apps/registry';
 import store from 'system/store';
-import {setNetworkBlock} from 'system/store/networkBlocks';
 import {AppDispatch, SocketDataStandard} from 'system/types';
-import {currentSystemDate} from 'system/utils/dates';
+import {logNetworkBlock} from 'system/utils/networkBlocks';
 import {displayErrorToast} from 'system/utils/toast';
 import {blockValidator} from 'system/validators/blockValidators';
 import {validateIsSelfAccountNumber} from 'system/validators/common';
@@ -24,15 +23,7 @@ const blockRouter = (dispatch: AppDispatch, networkId: string, socketData: Socke
         appRouter(block, dispatch, networkId);
       }
 
-      store.dispatch(
-        setNetworkBlock({
-          networkBlock: {
-            ...block,
-            date: currentSystemDate(),
-          },
-          networkId,
-        }),
-      );
+      logNetworkBlock(block, networkId);
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.img`
+  border-radius: 50%;
   height: 36px;
   margin-right: 8px;
   width: 36px;
