@@ -17,6 +17,12 @@ import {getBalanceDetails} from 'apps/Trade/utils/balances';
 import {Balances, Dict, Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 
+interface TradeDetails {
+  isUserBuyingClientAsset: boolean;
+  isUserSellingClientAsset: boolean;
+  offer: Offer;
+}
+
 export const createOrderValidator = yup.object({
   approvalExpirationDate: yup.date().required(),
   approvalStatus: yup
@@ -99,10 +105,34 @@ export const validateHostIsSelf = (host: OrderHost, self: Self) => {
   if (host.accountNumber !== self.accountNumber) throw new Error('Host account number must match block recipient');
 };
 
-export const validateOfferExists = (clientAsset: string, hostAsset: string, offers: Offer[]): Offer => {
-  const offer = offers.find((_offer) => _offer.clientAsset === clientAsset && _offer.hostAsset === hostAsset);
-  if (!offer) throw new Error('Offer does not exist for the requested order');
-  return offer;
+export const validateOfferExists = (offers: Offer[], order: Order): TradeDetails => {
+  let offer;
+
+  offer = offers.find(
+    (_offer) => order.client.outgoingAsset === _offer.hostAsset && order.host.outgoingAsset === _offer.clientAsset,
+  );
+
+  if (offer) {
+    return {
+      isUserBuyingClientAsset: true,
+      isUserSellingClientAsset: false,
+      offer,
+    };
+  }
+
+  offer = offers.find(
+    (_offer) => order.client.outgoingAsset === _offer.clientAsset && order.host.outgoingAsset === _offer.hostAsset,
+  );
+
+  if (offer) {
+    return {
+      isUserBuyingClientAsset: false,
+      isUserSellingClientAsset: true,
+      offer,
+    };
+  }
+
+  throw new Error('Offer does not exist for the requested order');
 };
 
 export const validateOrderIdIsUnique = (id: string, orders: Dict<Order>) => {
@@ -110,73 +140,9 @@ export const validateOrderIdIsUnique = (id: string, orders: Dict<Order>) => {
   if (orderIds.includes(id)) throw new Error('Order ID must be unique');
 };
 
-export const validateOrderParticipants = (client: OrderClient, host: OrderHost, offer: Offer) => {
-  const clientOutgoingAmount = client.outgoingAmount;
-  const clientOutgoingAsset = client.outgoingAsset;
-  const hostOutgoingAmount = host.outgoingAmount;
-  const hostOutgoingAsset = host.outgoingAsset;
-
-  if (!clientOutgoingAmount || !hostOutgoingAmount) {
-    throw new Error('Must include both client.outgoingAmount and host.outgoingAmount');
-  }
-
-  const isClientBuyingHostAsset = clientOutgoingAsset === offer.clientAsset;
-  const isClientSellingHostAsset = clientOutgoingAsset === offer.hostAsset;
-
-  if (!isClientBuyingHostAsset && !isClientSellingHostAsset) {
-    throw new Error('client.outgoingAsset must match either asset or networkId');
-  }
-
-  // Client is buying offer host asset
-  if (isClientBuyingHostAsset) {
-    if (hostOutgoingAsset !== offer.hostAsset) {
-      throw new Error(
-        'When the client is buying the offer.hostAsset the host.outgoingAsset must match the offer.hostAsset',
-      );
-    }
-
-    const terms = offer.saleTerms;
-
-    if (!terms.enabled) throw new Error('Buying is not allowed for this asset');
-
-    if (hostOutgoingAmount < terms.orderMin || hostOutgoingAmount > terms.orderMax) {
-      throw new Error('host.outgoingAmount is not within order limits');
-    }
-
-    const assetAmount = hostOutgoingAmount;
-    const assetPrice = terms.price;
-    const expectedTotal = assetAmount * assetPrice;
-
-    if (clientOutgoingAmount !== expectedTotal) {
-      throw new Error(
-        `client.outgoingAmount of ${clientOutgoingAmount} does not match expected value of ${expectedTotal}`,
-      );
-    }
-  }
-
-  // Client is selling offer host asset
-  if (isClientSellingHostAsset) {
-    if (hostOutgoingAsset !== offer.clientAsset) {
-      throw new Error(
-        'When the client is selling the offer.hostAsset the host.outgoingAsset must match the offer.clientAsset',
-      );
-    }
-
-    const terms = offer.purchaseTerms;
-
-    if (!terms.enabled) throw new Error('Selling is not allowed for this asset');
-
-    if (clientOutgoingAmount < terms.orderMin || clientOutgoingAmount > terms.orderMax) {
-      throw new Error('client.outgoingAmount is not within order limits');
-    }
-
-    const assetAmount = clientOutgoingAmount;
-    const assetPrice = terms.price;
-    const expectedTotal = Math.ceil(assetAmount * assetPrice);
-
-    if (hostOutgoingAmount !== expectedTotal) {
-      throw new Error(`host.outgoingAmount of ${hostOutgoingAmount} does not match expected value of ${expectedTotal}`);
-    }
+export const validateOutgoingAmounts = (order: Order) => {
+  if (!order.client.outgoingAmount || !order.host.outgoingAmount) {
+    throw new Error('Order must include both client.outgoingAmount and host.outgoingAmount');
   }
 };
 
@@ -193,6 +159,42 @@ export const validatePaymentExpirationDateIsCorrectValue = (createdDate: string,
   if ((paymentExpirationTime - createdTime) / 1000 !== PAYMENT_WINDOW_SECONDS) {
     throw new Error(
       `Payment expiration date must be exactly ${PAYMENT_WINDOW_SECONDS} seconds greater than created date`,
+    );
+  }
+};
+
+export const validateUserBuyingClientAsset = (offer: Offer, order: Order) => {
+  const terms = offer.saleTerms;
+
+  if (!terms.enabled) throw new Error('Buying is not allowed for this asset');
+
+  if (order.host.outgoingAmount < terms.orderMin || order.host.outgoingAmount > terms.orderMax) {
+    throw new Error('host.outgoingAmount is not within order limits');
+  }
+
+  const expectedTotal = Math.ceil(order.host.outgoingAmount * terms.price);
+
+  if (order.client.outgoingAmount !== expectedTotal) {
+    throw new Error(
+      `client.outgoingAmount of ${order.client.outgoingAmount} does not match expected value of ${expectedTotal}`,
+    );
+  }
+};
+
+export const validateUserSellingClientAsset = (offer: Offer, order: Order) => {
+  const terms = offer.purchaseTerms;
+
+  if (!terms.enabled) throw new Error('Selling is not allowed for this asset');
+
+  if (order.client.outgoingAmount < terms.orderMin || order.client.outgoingAmount > terms.orderMax) {
+    throw new Error('client.outgoingAmount is not within order limits');
+  }
+
+  const expectedTotal = Math.ceil(order.client.outgoingAmount * terms.price);
+
+  if (order.host.outgoingAmount !== expectedTotal) {
+    throw new Error(
+      `host.outgoingAmount of ${order.host.outgoingAmount} does not match expected value of ${expectedTotal}`,
     );
   }
 };

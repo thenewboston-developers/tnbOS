@@ -11,9 +11,11 @@ import {
   validateHostIsSelf,
   validateOfferExists,
   validateOrderIdIsUnique,
-  validateOrderParticipants,
+  validateOutgoingAmounts,
   validateOutgoingAssetBalance,
   validatePaymentExpirationDateIsCorrectValue,
+  validateUserBuyingClientAsset,
+  validateUserSellingClientAsset,
 } from 'apps/Trade/validators/createOrderValidators';
 import {Block} from 'shared/types';
 import store from 'system/store';
@@ -36,19 +38,24 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       const order: Order = params;
       const {approvalExpirationDate, client, createdDate, host, orderId, paymentExpirationDate} = order;
 
-      const offer = validateOfferExists(client.outgoingAsset, host.outgoingAsset, offers);
+      const {isUserBuyingClientAsset, isUserSellingClientAsset, offer} = validateOfferExists(offers, order);
+      if (isUserBuyingClientAsset) validateUserBuyingClientAsset(offer, order);
+      if (isUserSellingClientAsset) validateUserSellingClientAsset(offer, order);
+
       validateApprovalExpirationDateIsCorrectValue(approvalExpirationDate, createdDate);
       validateBlockSenderIsOrderClient(blockSender, client);
       validateClientIsNotHost(client, host);
       validateHostIsSelf(host, self);
       validateOrderIdIsUnique(orderId, orders);
-      validateOrderParticipants(client, host, offer);
+      validateOutgoingAmounts(order);
       validateOutgoingAssetBalance(balances, holdingAccounts, host);
       validatePaymentExpirationDateIsCorrectValue(createdDate, paymentExpirationDate);
       validateReceivingAddressIsUnique(orders, client.receivingAddress);
 
       const keypair = generateAccount();
+
       await placeHoldOnCrypto(host.outgoingAmount, orderId, host.outgoingAsset);
+
       dispatch(setOrder(order));
       dispatch(
         setReceivingAccount({
@@ -64,6 +71,7 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
         orderId,
       };
       dispatch(approveOrder(approveOrderParams));
+
       await approveOrderBlock({
         networkId,
         params: approveOrderParams,
