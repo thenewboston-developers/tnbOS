@@ -120,15 +120,15 @@ export const validateOrderParticipants = (client: OrderClient, host: OrderHost, 
     throw new Error('Must include both client.outgoingAmount and host.outgoingAmount');
   }
 
-  const isClientBuyingOfferHostAsset = clientOutgoingAsset === offer.clientAsset;
-  const isClientSellingOfferHostAsset = clientOutgoingAsset === offer.hostAsset;
+  const isClientBuyingHostAsset = clientOutgoingAsset === offer.clientAsset;
+  const isClientSellingHostAsset = clientOutgoingAsset === offer.hostAsset;
 
-  if (!isClientBuyingOfferHostAsset && !isClientSellingOfferHostAsset) {
+  if (!isClientBuyingHostAsset && !isClientSellingHostAsset) {
     throw new Error('client.outgoingAsset must match either asset or networkId');
   }
 
   // Client is buying offer host asset
-  if (isClientBuyingOfferHostAsset) {
+  if (isClientBuyingHostAsset) {
     if (hostOutgoingAsset !== offer.hostAsset) {
       throw new Error(
         'When the client is buying the offer.hostAsset the host.outgoingAsset must match the offer.hostAsset',
@@ -155,7 +155,7 @@ export const validateOrderParticipants = (client: OrderClient, host: OrderHost, 
   }
 
   // Client is selling offer host asset
-  if (isClientSellingOfferHostAsset) {
+  if (isClientSellingHostAsset) {
     if (hostOutgoingAsset !== offer.clientAsset) {
       throw new Error(
         'When the client is selling the offer.hostAsset the host.outgoingAsset must match the offer.clientAsset',
