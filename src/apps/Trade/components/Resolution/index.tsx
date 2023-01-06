@@ -11,7 +11,6 @@ import {removeHold} from 'apps/Trade/utils/holds';
 import {handleOrderError} from 'apps/Trade/utils/orderErrors';
 import {handleOrderFulfillment} from 'apps/Trade/utils/orderProcessing';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {displayErrorToast, displayToast} from 'system/utils/toast';
 import * as S from './Styles';
@@ -25,7 +24,6 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
   const holdingAccounts = useSelector(getHoldingAccounts);
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(order.client.accountNumber);
   const resolutions = useSelector(getResolutions);
-  const self = useSelector(getSelf);
 
   const orderResolution = useMemo(() => {
     return resolutions[order.orderId];
@@ -42,7 +40,11 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
           resolutionStatus,
         }),
       );
-      await removeHold(dispatch, holdingAccounts, order, false, self);
+      await removeHold({
+        holdingAccounts,
+        order,
+        orderFilled: false,
+      });
       displayToast('Order cancelled', ToastType.success);
     } catch (error) {
       console.error(error);
@@ -58,8 +60,13 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
   };
 
   const handleFillOrderClick = async () => {
+    if (!recipientsDefaultNetworkId) {
+      displayErrorToast('Error filling the order, unable to determine connection with recipient');
+      return;
+    }
+
     try {
-      await handleOrderFulfillment(dispatch, holdingAccounts, order, self);
+      await handleOrderFulfillment(holdingAccounts, recipientsDefaultNetworkId, order);
       dispatch(
         setResolution({
           orderId: order.orderId,
@@ -70,7 +77,6 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
     } catch (error) {
       console.error(error);
       displayErrorToast('Error filling the order');
-      if (!recipientsDefaultNetworkId) return;
       handleOrderError({
         err: error,
         networkId: recipientsDefaultNetworkId,

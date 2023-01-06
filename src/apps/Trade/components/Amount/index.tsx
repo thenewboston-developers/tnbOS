@@ -18,7 +18,7 @@ const Amount: SFC<AmountProps> = ({amount, amountLabel, bottomText, className, l
   return (
     <S.Container leftAlign={leftAlign}>
       <S.AmountContainer className={className}>
-        <S.Price>{`${amountLabelText}${amount}`}</S.Price>
+        <S.Price>{`${amountLabelText}${amount.toLocaleString()}`}</S.Price>
         <S.Logo src={networkDisplayImage} />
       </S.AmountContainer>
       {bottomText ? <S.BottomText>{bottomText}</S.BottomText> : null}

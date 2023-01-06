@@ -1,5 +1,6 @@
 import {ReactNode, useCallback, useMemo} from 'react';
 import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 
 import Badge, {BadgeStyle} from 'apps/Trade/components/Badge';
@@ -31,7 +32,11 @@ const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
   const {approvalStatus, client, createdDate, host, orderId, paymentExpirationDate, paymentStatus} = order;
 
   const paymentTransactions = useMemo((): TTransaction[] => {
-    return Object.values(transactions[orderId][client.outgoingAsset]);
+    const orderTransactions = transactions[orderId];
+    if (!orderTransactions) return [];
+    const clientTransactions = orderTransactions[client.outgoingAsset];
+    if (!clientTransactions || isEmpty(clientTransactions)) return [];
+    return Object.values(clientTransactions);
   }, [client.outgoingAsset, orderId, transactions]);
 
   const remaining = useMemo(() => {
@@ -100,7 +105,7 @@ const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
         value: remaining,
       },
     ];
-  }, [client.outgoingAmount, client.outgoingAsset, remaining]);
+  }, [client.outgoingAmount, remaining]);
 
   const sortedTransactions = useMemo(() => {
     return orderBy(paymentTransactions, ['date'], ['desc']).map((transaction) => (

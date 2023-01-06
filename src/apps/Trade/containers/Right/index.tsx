@@ -34,7 +34,7 @@ const Right: SFC = ({className}) => {
 
   const renderActiveNetworkBar = () => {
     if (!activeNetworkId) return null;
-    if (![Page.buy, Page.offers, Page.sell].includes(activePage)) return null;
+    if (![Page.buy, Page.offers, Page.orders, Page.sell].includes(activePage)) return null;
     return <ActiveNetworkBar />;
   };
 

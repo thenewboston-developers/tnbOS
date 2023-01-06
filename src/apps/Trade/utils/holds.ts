@@ -4,24 +4,31 @@ import {fundHoldingAccount} from 'apps/Trade/utils/holdingAccounts';
 import {UnsignedBlock} from 'shared/types';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import {createBlock} from 'system/core/blocks';
-import {AppDispatch, Self} from 'system/types';
+import store from 'system/store';
+import {Self} from 'system/types';
 import {signData} from 'system/utils/signing';
+
+// TODO: Create interfaces for the rest of these
 
 export const placeHoldOnCrypto = async (amount: number, orderId: string, networkId: string) => {
   return fundHoldingAccount(amount, networkId, orderId);
 };
 
-export const removeHold = async (
-  dispatch: AppDispatch,
-  holdingAccounts: HoldingAccounts,
-  order: Order,
-  orderFilled: boolean,
-  self: Self,
-) => {
+interface RemoveHold {
+  holdingAccounts: HoldingAccounts;
+  order: Order;
+  orderFilled: boolean;
+}
+
+export const removeHold = async ({holdingAccounts, order, orderFilled}: RemoveHold) => {
+  const {
+    system: {self},
+  } = store.getState();
+
   const networkId = order.host.outgoingAsset;
   const holdingAccount = holdingAccounts[order.orderId];
   if (!orderFilled) await returnHoldingAccountFunds(holdingAccount, networkId, self);
-  dispatch(unsetHoldingAccount(holdingAccount));
+  store.dispatch(unsetHoldingAccount(holdingAccount));
   return;
 };
 

@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {mdiChevronDown} from '@mdi/js';
 
@@ -7,8 +7,9 @@ import OrderCardBottom from 'apps/Trade/components/OrderCardBottom';
 import {getActiveNetworkId, getOrderErrors, getResolutions} from 'apps/Trade/selectors/state';
 import {ApprovalStatus, FillStatus, Order, PaymentStatus, ResolutionStatus} from 'apps/Trade/types';
 import {useToggle} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
+import {getNetworks, getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 interface OrderCardProps {
@@ -25,6 +26,7 @@ enum OrderType {
 const OrderCard: SFC<OrderCardProps> = ({className, order}) => {
   const [expanded, toggleExpanded] = useToggle(false);
   const activeNetworkId = useSelector(getActiveNetworkId);
+  const networks = useSelector(getNetworks);
   const orderErrors = useSelector(getOrderErrors);
   const resolutions = useSelector(getResolutions);
   const self = useSelector(getSelf);
@@ -54,6 +56,15 @@ const OrderCard: SFC<OrderCardProps> = ({className, order}) => {
     return [OrderType.clientPurchase, OrderType.hostPurchase].includes(orderType);
   }, [orderType]);
 
+  const getNetworkDisplayName = useCallback(
+    (networkId: string) => {
+      const network = networks[networkId];
+      const results = network?.displayName || networkId;
+      return truncate(results, 16);
+    },
+    [networks],
+  );
+
   const getDisplayDate = () => {
     const date = new Date(createdDate);
     return date.toLocaleDateString(undefined, {dateStyle: 'long'});
@@ -75,8 +86,15 @@ const OrderCard: SFC<OrderCardProps> = ({className, order}) => {
     const isClientBuyingAsset = client.outgoingAsset === activeNetworkId;
     const amount = isClientBuyingAsset ? host.outgoingAmount : client.outgoingAmount;
     const networkId = isClientBuyingAsset ? host.outgoingAsset : client.outgoingAsset;
+    const networkDisplayName = getNetworkDisplayName(networkId);
     const topText = `${isClient ? 'Client' : 'Host'} ${isPurchase ? 'Purchase' : 'Sale'}`;
-    return <S.AssetLogo bottomText={`${amount} ${networkId}`} networkId={networkId} topText={topText} />;
+    return (
+      <S.AssetLogo
+        bottomText={`${amount.toLocaleString()} ${networkDisplayName}`}
+        networkId={networkId}
+        topText={topText}
+      />
+    );
   };
 
   const renderBottom = () => {

@@ -6,6 +6,10 @@ export const getReceivingAccountOutgoingTransactions = (
   transactions: Transactions,
 ): Transaction[] => {
   const {orderId} = receivingAccount;
-  const transactionsList = Object.values(transactions[orderId][networkId]);
+
+  const orderTransactions = transactions[orderId];
+  if (!orderTransactions) return [];
+
+  const transactionsList = Object.values(orderTransactions[networkId]);
   return transactionsList.filter(({sender}) => sender === receivingAccount.accountNumber);
 };

@@ -12,6 +12,7 @@ export const Amount = styled(UAmount)`
 `;
 
 export const AssetLogo = styled(UAssetLogo)`
+  align-items: flex-start;
   flex-basis: 20%;
 `;
 
@@ -65,5 +66,6 @@ export const Top = styled.div`
 `;
 
 export const User = styled(UUser)`
+  align-items: flex-start;
   flex-basis: 20%;
 `;

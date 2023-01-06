@@ -5,8 +5,10 @@ import {FillStatus, HoldingAccounts, Order, PaymentStatus} from 'apps/Trade/type
 import {removeHold} from 'apps/Trade/utils/holds';
 import {createTransaction} from 'apps/Trade/utils/transactions';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
+import store from 'system/store';
 import {displayErrorToast} from 'system/utils/toast';
-import {AppDispatch, Self} from 'system/types';
+
+// TODO: Create interfaces for all of these
 
 const fillOrder = async (holdingAccounts: HoldingAccounts, order: Order) => {
   const clientReceivingAddress = order.client.receivingAddress;
@@ -24,41 +26,45 @@ const fillOrder = async (holdingAccounts: HoldingAccounts, order: Order) => {
   });
 };
 
-export const handleOrderFulfillment = async (
-  dispatch: AppDispatch,
-  holdingAccounts: HoldingAccounts,
-  order: Order,
-  self: Self,
-) => {
+export const handleOrderFulfillment = async (holdingAccounts: HoldingAccounts, networkId: string, order: Order) => {
   try {
     await fillOrder(holdingAccounts, order);
+
     const setFillStatusParams = {
       fillStatus: FillStatus.complete,
       orderId: order.orderId,
     };
-    dispatch(setFillStatus(setFillStatusParams));
-    await setFillStatusBlock(order.client.accountNumber, self, setFillStatusParams);
-    await removeHold(dispatch, holdingAccounts, order, true, self);
+    store.dispatch(setFillStatus(setFillStatusParams));
+
+    await setFillStatusBlock({
+      networkId,
+      params: setFillStatusParams,
+      recipient: order.client.accountNumber,
+    });
+    await removeHold({
+      holdingAccounts,
+      order,
+      orderFilled: true,
+    });
   } catch (error) {
     console.error(error);
     displayErrorToast('Error filling the order');
   }
 };
 
-export const handleOrderPayment = async (
-  dispatch: AppDispatch,
-  hostReceivingAddress: string,
-  order: Order,
-  self: Self,
-) => {
+export const handleOrderPayment = async (hostReceivingAddress: string, networkId: string, order: Order) => {
   try {
-    await payForOrder(order, hostReceivingAddress, self);
+    await payForOrder(order, hostReceivingAddress);
     const setPaymentStatusParams = {
       orderId: order.orderId,
       paymentStatus: PaymentStatus.complete,
     };
-    dispatch(setPaymentStatus(setPaymentStatusParams));
-    await setPaymentStatusBlock(order.host.accountNumber, self, setPaymentStatusParams);
+    store.dispatch(setPaymentStatus(setPaymentStatusParams));
+    await setPaymentStatusBlock({
+      networkId,
+      params: setPaymentStatusParams,
+      recipient: order.host.accountNumber,
+    });
   } catch (error) {
     console.error(error);
     displayErrorToast('Error handling order payment');
@@ -66,12 +72,20 @@ export const handleOrderPayment = async (
       orderId: order.orderId,
       paymentStatus: PaymentStatus.error,
     };
-    dispatch(setPaymentStatus(setPaymentStatusParams));
-    await setPaymentStatusBlock(order.host.accountNumber, self, setPaymentStatusParams);
+    store.dispatch(setPaymentStatus(setPaymentStatusParams));
+    await setPaymentStatusBlock({
+      networkId,
+      params: setPaymentStatusParams,
+      recipient: order.host.accountNumber,
+    });
   }
 };
 
-const payForOrder = async (order: Order, recipient: string, self: Self) => {
+const payForOrder = async (order: Order, recipient: string) => {
+  const {
+    system: {self},
+  } = store.getState();
+
   const clientOutgoingAmount = order.client.outgoingAmount.toString();
   const clientOutgoingAsset = order.client.outgoingAsset;
 

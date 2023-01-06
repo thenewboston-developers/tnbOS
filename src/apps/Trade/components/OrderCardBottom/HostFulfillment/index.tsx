@@ -1,5 +1,6 @@
 import {ReactNode, useCallback, useMemo} from 'react';
 import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 
 import Badge, {BadgeStyle} from 'apps/Trade/components/Badge';
@@ -27,7 +28,11 @@ const HostFulfillment: SFC<HostFulfillmentProps> = ({className, order}) => {
   const {client, fillStatus, host, orderId} = order;
 
   const fulfillmentTransactions = useMemo((): TTransaction[] => {
-    return Object.values(transactions[orderId][host.outgoingAsset]);
+    const orderTransactions = transactions[orderId];
+    if (!orderTransactions) return [];
+    const hostTransactions = orderTransactions[host.outgoingAsset];
+    if (!hostTransactions || isEmpty(hostTransactions)) return [];
+    return Object.values(hostTransactions);
   }, [host.outgoingAsset, orderId, transactions]);
 
   const remaining = useMemo(() => {
