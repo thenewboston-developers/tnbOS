@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Card from 'apps/Trade/components/Card';
 import UTickerTable from 'apps/Trade/components/TickerTable';
-import UTransactions from 'apps/Trade/pages/Wallets/WalletHome/Transactions';
+import UNetworkBlocks from 'apps/Trade/pages/Wallets/WalletHome/NetworkBlocks';
 
 export const Balance = styled(Card)`
   display: flex;
@@ -20,10 +20,10 @@ export const BalanceValue = styled.div`
 
 export const Container = styled.div``;
 
-export const TickerTable = styled(UTickerTable)`
-  width: fit-content;
+export const NetworkBlocks = styled(UNetworkBlocks)`
+  margin-top: 24px;
 `;
 
-export const Transactions = styled(UTransactions)`
-  margin-top: 24px;
+export const TickerTable = styled(UTickerTable)`
+  width: fit-content;
 `;

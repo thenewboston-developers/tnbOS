@@ -53,7 +53,7 @@ const WalletHome: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       {renderBalance()}
-      <S.Transactions />
+      <S.NetworkBlocks />
     </S.Container>
   );
 };

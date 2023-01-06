@@ -4,27 +4,27 @@ import orderBy from 'lodash/orderBy';
 
 import CardLabel from 'apps/Trade/components/CardLabel';
 import EmptyState from 'apps/Trade/components/EmptyState';
-import Transaction from 'apps/Trade/components/Transaction';
+import NetworkBlock from 'apps/Trade/components/NetworkBlock';
 import {useActiveWalletNetwork} from 'apps/Trade/hooks';
 import {getActiveWalletNetworkId} from 'apps/Trade/selectors/state';
 import {useNetworkBlocks} from 'system/hooks';
-import {NetworkBlock, SFC} from 'system/types';
+import {NetworkBlock as TNetworkBlock, SFC} from 'system/types';
 import TransactionsEmptyStateGraphic from './assets/transactions-empty-state.png';
 import * as S from './Styles';
 
-const Transactions: SFC = ({className}) => {
+const NetworkBlocks: SFC = ({className}) => {
   const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
   const networkBlocks = useNetworkBlocks(activeWalletNetworkId!);
 
-  const filteredNetworkBlocks = useMemo((): NetworkBlock[] => {
+  const filteredNetworkBlocks = useMemo((): TNetworkBlock[] => {
     return orderBy(Object.values(networkBlocks), ['date'], ['desc']).filter(({amount}) => amount > 0);
   }, [networkBlocks]);
 
-  const renderTransactions = () => {
+  const renderNetworkBlock = () => {
     if (!filteredNetworkBlocks.length) return renderTransactionsEmptyState();
     return filteredNetworkBlocks.map((networkBlock) => (
-      <Transaction
+      <NetworkBlock
         key={networkBlock.signature}
         networkBlock={networkBlock}
         networkDisplayName={activeWalletNetwork!.displayName}
@@ -43,9 +43,9 @@ const Transactions: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <CardLabel>Transactions</CardLabel>
-      {renderTransactions()}
+      {renderNetworkBlock()}
     </S.Container>
   );
 };
 
-export default Transactions;
+export default NetworkBlocks;

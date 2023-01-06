@@ -11,6 +11,13 @@ export const isToday = (date: Date): boolean => {
   );
 };
 
+export const longDate = (date: number | string | Date): string => {
+  const customDate = new Date(date);
+  const dateStr = customDate.toLocaleDateString(undefined, {dateStyle: 'long'});
+  const timeStr = customDate.toLocaleTimeString(undefined, {timeStyle: 'long'});
+  return `${dateStr} at ${timeStr}`;
+};
+
 export const shortDate = (date: Date | number | string, includeTodayAt: boolean): string => {
   const _date = new Date(date);
   const dateStr = _date.toLocaleDateString(undefined, {dateStyle: 'short'});
