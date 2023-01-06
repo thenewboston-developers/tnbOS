@@ -29,4 +29,5 @@ export enum TradeFn {
   createOrder = 'createOrder',
   setOffers = 'setOffers',
   setOffersReceipt = 'setOffersReceipt',
+  setOrderError = 'setOrderError',
 }

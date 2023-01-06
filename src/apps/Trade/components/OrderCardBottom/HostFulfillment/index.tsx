@@ -5,15 +5,12 @@ import orderBy from 'lodash/orderBy';
 import Badge, {BadgeStyle} from 'apps/Trade/components/Badge';
 import OrderCardBottomContent from 'apps/Trade/components/OrderCardBottomContent';
 import OrderCardHeader from 'apps/Trade/components/OrderCardHeader';
-import {TickerTableRow} from 'apps/Trade/components/TickerTable';
 import Transaction from 'apps/Trade/components/Transaction';
 import TransferDetails from 'apps/Trade/components/TransferDetails';
 import {getTransactions} from 'apps/Trade/selectors/state';
-import {FillStatus, Order, TransactionPerspective} from 'apps/Trade/types';
-import {getOrderTransactions, getTotalAmount, getTotalConfirmed, getTotalUnconfirmed} from 'apps/Trade/utils/orders';
-import {isNetworkTicker} from 'apps/Trade/utils/tickers';
-import {useSelfAccountNumber} from 'renderer/hooks';
-import {SFC} from 'types';
+import {FillStatus, Order, Transaction as TTransaction} from 'apps/Trade/types';
+import {getTotalAmount} from 'apps/Trade/utils/orders';
+import {SFC} from 'system/types';
 import * as S from './Styles';
 
 type FillStatusBadgeDict = {
@@ -25,24 +22,18 @@ interface HostFulfillmentProps {
 }
 
 const HostFulfillment: SFC<HostFulfillmentProps> = ({className, order}) => {
-  const selfAccountNumber = useSelfAccountNumber();
   const transactions = useSelector(getTransactions);
 
-  const {client, fillStatus, host} = order;
+  const {client, fillStatus, host, orderId} = order;
 
-  const orderTransactions = useMemo(() => {
-    return getOrderTransactions(order.id, host.outgoingCrypto, transactions);
-  }, [host.outgoingCrypto, order.id, transactions]);
-
-  const perspective = useMemo((): TransactionPerspective => {
-    const isClient = client.accountNumber === selfAccountNumber;
-    return isClient ? TransactionPerspective.receiver : TransactionPerspective.sender;
-  }, [client.accountNumber, selfAccountNumber]);
+  const fulfillmentTransactions = useMemo((): TTransaction[] => {
+    return Object.values(transactions[orderId][host.outgoingAsset]);
+  }, [host.outgoingAsset, orderId, transactions]);
 
   const remaining = useMemo(() => {
     if (fillStatus === FillStatus.complete) return 0;
-    return Math.max(host.outgoingAmount - getTotalAmount(orderTransactions), 0);
-  }, [fillStatus, host.outgoingAmount, orderTransactions]);
+    return Math.max(host.outgoingAmount - getTotalAmount(fulfillmentTransactions), 0);
+  }, [fillStatus, host.outgoingAmount, fulfillmentTransactions]);
 
   const renderFillStatusBadge = useCallback(() => {
     const fillStatusBadges: FillStatusBadgeDict = {
@@ -67,55 +58,32 @@ const HostFulfillment: SFC<HostFulfillmentProps> = ({className, order}) => {
   }, [client.receivingAddress, renderFillStatusBadge]);
 
   const transferDetailsRows = useMemo(() => {
-    let confirmationRows: TickerTableRow[] = [];
-
-    if (!isNetworkTicker(host.outgoingCrypto)) {
-      confirmationRows = [
-        {
-          key: 'Confirmed',
-          ticker: host.outgoingCrypto,
-          value: getTotalConfirmed(orderTransactions),
-        },
-        {
-          key: 'Unconfirmed',
-          ticker: host.outgoingCrypto,
-          value: getTotalUnconfirmed(orderTransactions),
-        },
-      ];
-    }
-
     return [
       {
         key: 'Total Amount',
-        ticker: host.outgoingCrypto,
+        ticker: host.outgoingAsset,
         value: host.outgoingAmount,
       },
-      ...confirmationRows,
       {
         key: 'Remaining',
-        ticker: host.outgoingCrypto,
+        ticker: host.outgoingAsset,
         value: remaining,
       },
     ];
-  }, [host.outgoingAmount, host.outgoingCrypto, orderTransactions, remaining]);
+  }, [host.outgoingAmount, host.outgoingAsset, remaining]);
 
   const sortedTransactions = useMemo(() => {
-    return orderBy(orderTransactions, ['createdDate'], ['desc']).map((transaction) => (
-      <Transaction
-        key={transaction.id}
-        perspective={perspective}
-        ticker={host.outgoingCrypto}
-        transaction={transaction}
-      />
+    return orderBy(fulfillmentTransactions, ['date'], ['desc']).map((transaction) => (
+      <Transaction key={transaction.id} transaction={transaction} />
     ));
-  }, [host.outgoingCrypto, orderTransactions, perspective]);
+  }, [fulfillmentTransactions]);
 
   return (
     <S.Container className={className}>
       <OrderCardHeader number={4} text="Host Fulfillment" />
       <OrderCardBottomContent>
         <S.Table rows={tableRows} />
-        <TransferDetails rows={transferDetailsRows} transactions={sortedTransactions} />
+        <TransferDetails networkId={host.outgoingAsset} rows={transferDetailsRows} transactions={sortedTransactions} />
       </OrderCardBottomContent>
     </S.Container>
   );

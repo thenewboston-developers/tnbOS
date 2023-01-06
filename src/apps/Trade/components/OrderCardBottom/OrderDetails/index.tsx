@@ -3,8 +3,8 @@ import {useMemo} from 'react';
 import OrderCardBottomContent from 'apps/Trade/components/OrderCardBottomContent';
 import OrderCardHeader from 'apps/Trade/components/OrderCardHeader';
 import {Order} from 'apps/Trade/types';
-import {fullDate} from 'renderer/utils/dates';
-import {SFC} from 'types';
+import {longDate} from 'system/utils/dates';
+import {SFC} from 'system/types';
 import * as S from './Styles';
 
 interface OrderDetailsProps {
@@ -12,20 +12,20 @@ interface OrderDetailsProps {
 }
 
 const OrderDetails: SFC<OrderDetailsProps> = ({className, order}) => {
-  const {createdDate, id} = order;
+  const {createdDate, orderId} = order;
 
   const tableRows = useMemo(() => {
     return [
       {
         key: 'Order ID',
-        value: id,
+        value: orderId,
       },
       {
         key: 'Created Date',
-        value: fullDate(createdDate),
+        value: longDate(createdDate),
       },
     ];
-  }, [createdDate, id]);
+  }, [createdDate, orderId]);
 
   return (
     <S.Container className={className}>

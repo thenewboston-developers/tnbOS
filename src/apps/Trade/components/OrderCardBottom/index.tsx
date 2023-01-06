@@ -6,7 +6,7 @@ import OrderDetails from 'apps/Trade/components/OrderCardBottom/OrderDetails';
 import OrderErrors from 'apps/Trade/components/OrderCardBottom/OrderErrors';
 import Resolution from 'apps/Trade/components/Resolution';
 import {Order} from 'apps/Trade/types';
-import {SFC} from 'types';
+import {SFC} from 'system/types';
 import * as S from './Styles';
 
 interface OrderCardBottomProps {
