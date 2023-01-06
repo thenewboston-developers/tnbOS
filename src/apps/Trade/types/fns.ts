@@ -26,6 +26,7 @@ export interface SetPaymentStatusParams {
 }
 
 export enum TradeFn {
+  approveOrder = 'approveOrder',
   createOrder = 'createOrder',
   setFillStatus = 'setFillStatus',
   setOffers = 'setOffers',
