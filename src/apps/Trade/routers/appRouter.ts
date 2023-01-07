@@ -1,6 +1,7 @@
 import {
   approveOrderListener,
   createOrderListener,
+  setFillStatusListener,
   setOffersListener,
   setOffersReceiptListener,
   setPaymentStatusListener,
@@ -18,6 +19,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
   const fnHandlers: AppDataHandlers = {
     [TradeFn.approveOrder]: approveOrderListener,
     [TradeFn.createOrder]: createOrderListener,
+    [TradeFn.setFillStatus]: setFillStatusListener,
     [TradeFn.setOffers]: setOffersListener,
     [TradeFn.setOffersReceipt]: setOffersReceiptListener,
     [TradeFn.setPaymentStatus]: setPaymentStatusListener,
