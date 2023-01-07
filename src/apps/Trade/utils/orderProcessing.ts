@@ -11,16 +11,13 @@ import {displayErrorToast} from 'system/utils/toast';
 // TODO: Create interfaces for all of these
 
 const fillOrder = async (holdingAccounts: HoldingAccounts, order: Order) => {
-  const clientReceivingAddress = order.client.receivingAddress;
-  const hostOutgoingAmount = order.host.outgoingAmount;
-  const hostOutgoingAsset = order.host.outgoingAsset;
-  const holdingAccount = holdingAccounts[order.orderId];
+  const holdingAccount = holdingAccounts[order.host.outgoingAsset][order.orderId];
 
   await createTransaction({
-    amountStr: (hostOutgoingAmount - CORE_TRANSACTION_FEE).toString(),
-    networkId: hostOutgoingAsset,
+    amount: order.host.outgoingAmount - CORE_TRANSACTION_FEE,
+    networkId: order.host.outgoingAsset,
     orderId: order.orderId,
-    recipientAccountNumber: clientReceivingAddress,
+    recipientAccountNumber: order.client.receivingAddress,
     senderAccountNumber: holdingAccount.accountNumber,
     senderSigningKey: holdingAccount.signingKey,
   });
@@ -55,11 +52,13 @@ export const handleOrderFulfillment = async (holdingAccounts: HoldingAccounts, n
 export const handleOrderPayment = async (hostReceivingAddress: string, networkId: string, order: Order) => {
   try {
     await payForOrder(order, hostReceivingAddress);
+
     const setPaymentStatusParams = {
       orderId: order.orderId,
       paymentStatus: PaymentStatus.complete,
     };
     store.dispatch(setPaymentStatus(setPaymentStatusParams));
+
     await setPaymentStatusBlock({
       networkId,
       params: setPaymentStatusParams,
@@ -68,11 +67,13 @@ export const handleOrderPayment = async (hostReceivingAddress: string, networkId
   } catch (error) {
     console.error(error);
     displayErrorToast('Error handling order payment');
+
     const setPaymentStatusParams = {
       orderId: order.orderId,
       paymentStatus: PaymentStatus.error,
     };
     store.dispatch(setPaymentStatus(setPaymentStatusParams));
+
     await setPaymentStatusBlock({
       networkId,
       params: setPaymentStatusParams,
@@ -86,12 +87,9 @@ const payForOrder = async (order: Order, recipient: string) => {
     system: {self},
   } = store.getState();
 
-  const clientOutgoingAmount = order.client.outgoingAmount.toString();
-  const clientOutgoingAsset = order.client.outgoingAsset;
-
   await createTransaction({
-    amountStr: clientOutgoingAmount,
-    networkId: clientOutgoingAsset,
+    amount: order.client.outgoingAmount,
+    networkId: order.client.outgoingAsset,
     orderId: order.orderId,
     recipientAccountNumber: recipient,
     senderAccountNumber: self.accountNumber,

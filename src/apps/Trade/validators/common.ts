@@ -10,8 +10,8 @@ export const validateBlockSenderIsOrderHost = (blockSender: string, orderHost: O
   if (blockSender !== orderHost.accountNumber) throw new Error('Block sender must match order host account number');
 };
 
-export const validateOrderExists = (id: string, orders: Dict<Order>): Order => {
-  const order = orders[id];
+export const validateOrderExists = (orderId: string, orders: Dict<Order>): Order => {
+  const order = orders[orderId];
   if (!order) throw new Error('Order does not exist');
   return order;
 };

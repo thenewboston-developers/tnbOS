@@ -7,7 +7,7 @@ import {currentSystemDate} from 'system/utils/dates';
 import {signData} from 'system/utils/signing';
 
 interface CreateTransactionParams {
-  amountStr: string;
+  amount: number;
   networkId: string;
   orderId: string;
   recipientAccountNumber: string;
@@ -16,7 +16,7 @@ interface CreateTransactionParams {
 }
 
 export const createTransaction = async ({
-  amountStr,
+  amount,
   networkId,
   orderId,
   recipientAccountNumber,
@@ -24,7 +24,7 @@ export const createTransaction = async ({
   senderSigningKey,
 }: CreateTransactionParams) => {
   const data: UnsignedBlock = {
-    amount: parseInt(amountStr, 10),
+    amount,
     id: crypto.randomUUID(),
     payload: {},
     recipient: recipientAccountNumber,
