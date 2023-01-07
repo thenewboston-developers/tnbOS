@@ -20,10 +20,10 @@ export const validatePayment = async (order: Order, newPaymentStatus: PaymentSta
   if (newPaymentStatus === PaymentStatus.error) return;
 
   const clientOutgoingAmount = order.client.outgoingAmount;
-  const clientOutgoingCrypto = order.client.outgoingAsset;
+  const clientOutgoingAsset = order.client.outgoingAsset;
   const hostReceivingAddress = order.host.receivingAddress!;
 
-  const balance = await getLiveBalance(hostReceivingAddress, clientOutgoingCrypto);
+  const balance = await getLiveBalance(hostReceivingAddress, clientOutgoingAsset);
 
   if (newPaymentStatus === PaymentStatus.partial) {
     const isValid = balance > 0 && balance < clientOutgoingAmount;

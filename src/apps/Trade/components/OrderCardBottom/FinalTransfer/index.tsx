@@ -35,7 +35,7 @@ const FinalTransfer: SFC<FinalTransferProps> = ({className, order}) => {
     if (!networkReceivingAccounts) return [];
     const receivingAccount = networkReceivingAccounts[orderId];
     if (!receivingAccount) return [];
-    return getReceivingAccountOutgoingTransactions(receivingAccount, networkId, transactions);
+    return getReceivingAccountOutgoingTransactions(receivingAccount, transactions);
   }, [networkId, orderId, receivingAccounts, transactions]);
 
   const transferDetailsRows = useMemo((): TickerTableRow[] => {

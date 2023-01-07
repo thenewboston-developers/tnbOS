@@ -3,10 +3,9 @@ import isEmpty from 'lodash/isEmpty';
 
 export const getReceivingAccountOutgoingTransactions = (
   receivingAccount: ReceivingAccount,
-  networkId: string,
   transactions: Transactions,
 ): Transaction[] => {
-  const {orderId} = receivingAccount;
+  const {networkId, orderId} = receivingAccount;
 
   const orderTransactions = transactions[orderId];
   if (!orderTransactions || isEmpty(orderTransactions)) return [];

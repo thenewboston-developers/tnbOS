@@ -1,4 +1,4 @@
-import {useOfferSyncListener, useOfferSyncTask} from 'apps/Trade/hooks';
+import {useOfferSyncListener, useOfferSyncTask, useReceivingAccountTransferTask} from 'apps/Trade/hooks';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
@@ -7,6 +7,7 @@ import 'apps/Trade/styles/fonts.css';
 const Trade: SFC<AppProps> = ({className, display}) => {
   useOfferSyncListener();
   useOfferSyncTask();
+  useReceivingAccountTransferTask();
 
   return (
     <AppWindow className={className} display={display}>

@@ -5,6 +5,7 @@ import useAvailableClientAssets from 'apps/Trade/hooks/useAvailableClientAssets'
 import useHoldAmount from 'apps/Trade/hooks/useHoldAmount';
 import useOfferSyncListener from 'apps/Trade/hooks/useOfferSyncListener';
 import useOfferSyncTask from 'apps/Trade/hooks/useOfferSyncTask';
+import useReceivingAccountTransferTask from 'apps/Trade/hooks/useReceivingAccountTransferTask';
 import useTradeBalances from 'apps/Trade/hooks/useTradeBalances';
 
 export {
@@ -15,5 +16,6 @@ export {
   useHoldAmount,
   useOfferSyncListener,
   useOfferSyncTask,
+  useReceivingAccountTransferTask,
   useTradeBalances,
 };
