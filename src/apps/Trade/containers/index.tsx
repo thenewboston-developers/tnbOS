@@ -3,6 +3,7 @@ import {
   useOfferSyncTask,
   useNewlyOnlineAccounts,
   useOrderApprovalStatusTask,
+  useOrderPaymentStatusTask,
   useReceivingAccountTransferTask,
 } from 'apps/Trade/hooks';
 import AppWindow from 'system/components/AppWindow';
@@ -15,6 +16,7 @@ const Trade: SFC<AppProps> = ({className, display}) => {
   useOfferSyncTask();
   useNewlyOnlineAccounts();
   useOrderApprovalStatusTask();
+  useOrderPaymentStatusTask();
   useReceivingAccountTransferTask();
 
   return (
