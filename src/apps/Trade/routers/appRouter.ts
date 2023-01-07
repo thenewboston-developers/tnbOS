@@ -4,6 +4,7 @@ import {
   setFillStatusListener,
   setOffersListener,
   setOffersReceiptListener,
+  setOrderErrorListener,
   setPaymentStatusListener,
 } from 'apps/Trade/listeners';
 import {TradeFn} from 'apps/Trade/types';
@@ -22,6 +23,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
     [TradeFn.setFillStatus]: setFillStatusListener,
     [TradeFn.setOffers]: setOffersListener,
     [TradeFn.setOffersReceipt]: setOffersReceiptListener,
+    [TradeFn.setOrderError]: setOrderErrorListener,
     [TradeFn.setPaymentStatus]: setPaymentStatusListener,
   };
 
