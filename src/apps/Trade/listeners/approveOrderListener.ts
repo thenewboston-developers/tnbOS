@@ -31,7 +31,12 @@ const approveOrderListener = (block: Block, dispatch: AppDispatch, networkId: st
       validateReceivingAddressIsUnique(orders, hostReceivingAddress);
 
       dispatch(approveOrder({hostReceivingAddress, orderId}));
-      await handleOrderPayment(hostReceivingAddress, networkId, order);
+
+      await handleOrderPayment({
+        hostReceivingAddress,
+        networkId,
+        order,
+      });
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

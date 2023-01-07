@@ -8,9 +8,12 @@ import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import store from 'system/store';
 import {displayErrorToast} from 'system/utils/toast';
 
-// TODO: Create interfaces for all of these
+interface FillOrder {
+  holdingAccounts: HoldingAccounts;
+  order: Order;
+}
 
-const fillOrder = async (holdingAccounts: HoldingAccounts, order: Order) => {
+const fillOrder = async ({holdingAccounts, order}: FillOrder) => {
   const holdingAccount = holdingAccounts[order.host.outgoingAsset][order.orderId];
 
   await createTransaction({
@@ -23,9 +26,15 @@ const fillOrder = async (holdingAccounts: HoldingAccounts, order: Order) => {
   });
 };
 
-export const handleOrderFulfillment = async (holdingAccounts: HoldingAccounts, networkId: string, order: Order) => {
+interface HandleOrderFulfillment {
+  holdingAccounts: HoldingAccounts;
+  networkId: string;
+  order: Order;
+}
+
+export const handleOrderFulfillment = async ({holdingAccounts, networkId, order}: HandleOrderFulfillment) => {
   try {
-    await fillOrder(holdingAccounts, order);
+    await fillOrder({holdingAccounts, order});
 
     const setFillStatusParams = {
       fillStatus: FillStatus.complete,
@@ -49,9 +58,18 @@ export const handleOrderFulfillment = async (holdingAccounts: HoldingAccounts, n
   }
 };
 
-export const handleOrderPayment = async (hostReceivingAddress: string, networkId: string, order: Order) => {
+interface HandleOrderPayment {
+  hostReceivingAddress: string;
+  networkId: string;
+  order: Order;
+}
+
+export const handleOrderPayment = async ({hostReceivingAddress, networkId, order}: HandleOrderPayment) => {
   try {
-    await payForOrder(order, hostReceivingAddress);
+    await payForOrder({
+      order,
+      recipient: hostReceivingAddress,
+    });
 
     const setPaymentStatusParams = {
       orderId: order.orderId,
@@ -82,7 +100,12 @@ export const handleOrderPayment = async (hostReceivingAddress: string, networkId
   }
 };
 
-const payForOrder = async (order: Order, recipient: string) => {
+interface PayForOrder {
+  order: Order;
+  recipient: string;
+}
+
+const payForOrder = async ({order, recipient}: PayForOrder) => {
   const {
     system: {self},
   } = store.getState();

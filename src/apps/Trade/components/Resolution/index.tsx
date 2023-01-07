@@ -66,7 +66,11 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
     }
 
     try {
-      await handleOrderFulfillment(holdingAccounts, recipientsDefaultNetworkId, order);
+      await handleOrderFulfillment({
+        holdingAccounts,
+        networkId: recipientsDefaultNetworkId,
+        order,
+      });
       dispatch(
         setResolution({
           orderId: order.orderId,
