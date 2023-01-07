@@ -58,7 +58,7 @@ const FinalTransfer: SFC<FinalTransferProps> = ({className, order}) => {
     <S.Container className={className}>
       <OrderCardHeader number={5} text="Final Transfer" />
       <OrderCardBottomContent>
-        <TransferDetails networkId={host.outgoingAsset} rows={transferDetailsRows} transactions={sortedTransactions} />
+        <TransferDetails networkId={networkId} rows={transferDetailsRows} transactions={sortedTransactions} />
       </OrderCardBottomContent>
     </S.Container>
   );
