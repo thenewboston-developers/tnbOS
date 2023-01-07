@@ -14,6 +14,7 @@ const transactions = createSlice({
     setTransaction: (state: Transactions, {payload: transaction}: PayloadAction<Transaction>) => {
       const {id: blockId, orderId, networkId} = transaction;
       if (!state[orderId]) state[orderId] = {};
+      if (!state[orderId][networkId]) state[orderId][networkId] = {};
       state[orderId][networkId][blockId] = transaction;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_TRANSACTIONS, state: current(state)});
     },
