@@ -2,7 +2,7 @@ import approveOrderBlock from 'apps/Trade/blocks/approveOrderBlock';
 import {approveOrder, setOrder} from 'apps/Trade/store/orders';
 import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
 import {Order} from 'apps/Trade/types';
-import {placeHoldOnCrypto} from 'apps/Trade/utils/holds';
+import {fundHoldingAccount} from 'apps/Trade/utils/holdingAccounts';
 import {validateBlockSenderIsOrderClient, validateReceivingAddressIsUnique} from 'apps/Trade/validators/common';
 import {
   createOrderValidator,
@@ -54,7 +54,11 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
 
       const keypair = generateAccount();
 
-      await placeHoldOnCrypto(host.outgoingAmount, orderId, host.outgoingAsset);
+      await fundHoldingAccount({
+        amount: host.outgoingAmount,
+        networkId: host.outgoingAsset,
+        orderId,
+      });
 
       dispatch(setOrder(order));
       dispatch(

@@ -6,7 +6,13 @@ import store from 'system/store';
 import {signData} from 'system/utils/signing';
 import {generateAccount} from 'system/utils/tnb';
 
-export const fundHoldingAccount = async (amount: number, networkId: string, orderId: string) => {
+interface FundHoldingAccount {
+  amount: number;
+  networkId: string;
+  orderId: string;
+}
+
+export const fundHoldingAccount = async ({amount, networkId, orderId}: FundHoldingAccount) => {
   const {
     system: {self},
   } = store.getState();
@@ -27,6 +33,7 @@ export const fundHoldingAccount = async (amount: number, networkId: string, orde
   const holdingAccount = {
     accountNumber: keypair.publicKeyHex,
     balance: amount,
+    networkId,
     orderId,
     signingKey: keypair.signingKeyHex,
   };
