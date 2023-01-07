@@ -3,6 +3,7 @@ import {
   createOrderListener,
   setOffersListener,
   setOffersReceiptListener,
+  setPaymentStatusListener,
 } from 'apps/Trade/listeners';
 import {TradeFn} from 'apps/Trade/types';
 import {Block} from 'shared/types';
@@ -19,6 +20,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
     [TradeFn.createOrder]: createOrderListener,
     [TradeFn.setOffers]: setOffersListener,
     [TradeFn.setOffersReceipt]: setOffersReceiptListener,
+    [TradeFn.setPaymentStatus]: setPaymentStatusListener,
   };
 
   const fnHandler = fnHandlers[fn];
