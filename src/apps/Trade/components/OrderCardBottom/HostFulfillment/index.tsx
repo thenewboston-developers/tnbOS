@@ -30,10 +30,12 @@ const HostFulfillment: SFC<HostFulfillmentProps> = ({className, order}) => {
   const fulfillmentTransactions = useMemo((): TTransaction[] => {
     const orderTransactions = transactions[orderId];
     if (!orderTransactions) return [];
+
     const hostTransactions = orderTransactions[host.outgoingAsset];
     if (!hostTransactions || isEmpty(hostTransactions)) return [];
-    return Object.values(hostTransactions);
-  }, [host.outgoingAsset, orderId, transactions]);
+
+    return Object.values(hostTransactions).filter(({recipient}) => recipient === client.receivingAddress);
+  }, [client.receivingAddress, host.outgoingAsset, orderId, transactions]);
 
   const remaining = useMemo(() => {
     if (fillStatus === FillStatus.complete) return 0;

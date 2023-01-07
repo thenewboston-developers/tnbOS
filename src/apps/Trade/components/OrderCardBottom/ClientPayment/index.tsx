@@ -34,10 +34,12 @@ const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
   const paymentTransactions = useMemo((): TTransaction[] => {
     const orderTransactions = transactions[orderId];
     if (!orderTransactions) return [];
+
     const clientTransactions = orderTransactions[client.outgoingAsset];
     if (!clientTransactions || isEmpty(clientTransactions)) return [];
-    return Object.values(clientTransactions);
-  }, [client.outgoingAsset, orderId, transactions]);
+
+    return Object.values(clientTransactions).filter(({recipient}) => recipient === host.receivingAddress);
+  }, [client.outgoingAsset, host.receivingAddress, orderId, transactions]);
 
   const remaining = useMemo(() => {
     if (paymentStatus === PaymentStatus.complete) return 0;
