@@ -10,7 +10,7 @@ export const setFillStatusValidator = yup.object({
       const validFillStatuses = [FillStatus.complete, FillStatus.partial];
       return validFillStatuses.includes(fillStatus);
     }),
-  id: yup.string().required().uuid(),
+  orderId: yup.string().required().uuid(),
 });
 
 export const validateChangeInFillStatus = (currentFillStatus: FillStatus, newFillStatus: FillStatus) => {
