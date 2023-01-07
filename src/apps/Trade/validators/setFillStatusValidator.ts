@@ -1,5 +1,6 @@
 import {FillStatus, Order} from 'apps/Trade/types';
 import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
+import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import yup from 'system/utils/forms/yup';
 
 export const setFillStatusValidator = yup.object({
@@ -19,7 +20,7 @@ export const validateChangeInFillStatus = (currentFillStatus: FillStatus, newFil
 
 export const validateFill = async (order: Order, newFillStatus: FillStatus) => {
   const clientReceivingAddress = order.client.receivingAddress;
-  const hostOutgoingAmount = order.host.outgoingAmount;
+  const hostOutgoingAmount = order.host.outgoingAmount - CORE_TRANSACTION_FEE;
   const hostOutgoingAsset = order.host.outgoingAsset;
 
   const balance = await getLiveBalance(clientReceivingAddress, hostOutgoingAsset);
