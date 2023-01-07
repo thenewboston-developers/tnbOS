@@ -7,7 +7,7 @@ import {ButtonColor} from 'apps/Trade/components/Button/types';
 import {getHoldingAccounts, getResolutions} from 'apps/Trade/selectors/state';
 import {setResolution} from 'apps/Trade/store/resolutions';
 import {Order, ResolutionStatus} from 'apps/Trade/types';
-import {removeHold} from 'apps/Trade/utils/holds';
+import {removeHold} from 'apps/Trade/utils/holdingAccounts';
 import {handleOrderError} from 'apps/Trade/utils/orderErrors';
 import {handleOrderFulfillment} from 'apps/Trade/utils/orderProcessing';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';

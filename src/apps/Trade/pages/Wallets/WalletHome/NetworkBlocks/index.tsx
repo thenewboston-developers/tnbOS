@@ -8,6 +8,7 @@ import NetworkBlock from 'apps/Trade/components/NetworkBlock';
 import {useActiveWalletNetwork} from 'apps/Trade/hooks';
 import {getActiveWalletNetworkId} from 'apps/Trade/selectors/state';
 import {useNetworkBlocks} from 'system/hooks';
+import {getSelf} from 'system/selectors/state';
 import {NetworkBlock as TNetworkBlock, SFC} from 'system/types';
 import TransactionsEmptyStateGraphic from './assets/transactions-empty-state.png';
 import * as S from './Styles';
@@ -16,10 +17,13 @@ const NetworkBlocks: SFC = ({className}) => {
   const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
   const networkBlocks = useNetworkBlocks(activeWalletNetworkId!);
+  const self = useSelector(getSelf);
 
   const filteredNetworkBlocks = useMemo((): TNetworkBlock[] => {
-    return orderBy(Object.values(networkBlocks), ['date'], ['desc']).filter(({amount}) => amount > 0);
-  }, [networkBlocks]);
+    return orderBy(Object.values(networkBlocks), ['date'], ['desc'])
+      .filter(({recipient, sender}) => [recipient, sender].includes(self.accountNumber))
+      .filter(({amount}) => amount > 0);
+  }, [networkBlocks, self.accountNumber]);
 
   const renderNetworkBlock = () => {
     if (!filteredNetworkBlocks.length) return renderTransactionsEmptyState();

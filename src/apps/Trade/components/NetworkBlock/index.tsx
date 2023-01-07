@@ -1,9 +1,11 @@
 import {ReactNode, useMemo} from 'react';
 import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import {mdiArrowDownCircleOutline, mdiArrowUpCircleOutline} from '@mdi/js';
 
 import Table from 'apps/Trade/components/Table';
-import {TransactionPerspective, TransactionStatus} from 'apps/Trade/types';
+import {getHoldingAccounts} from 'apps/Trade/selectors/state';
+import {Transaction, TransactionPerspective, TransactionStatus} from 'apps/Trade/types';
 import {useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {Dict, NetworkBlock as TNetworkBlock, SFC} from 'system/types';
@@ -12,17 +14,31 @@ import {camelToTitle} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface NetworkBlockProps {
-  networkBlock: TNetworkBlock;
+  networkBlock: TNetworkBlock | Transaction;
   networkDisplayName: string;
 }
 
 const NetworkBlock: SFC<NetworkBlockProps> = ({className, networkBlock, networkDisplayName}) => {
   const [expanded, toggleExpanded] = useToggle(false);
+  const holdingAccounts = useSelector(getHoldingAccounts);
   const self = useSelector(getSelf);
 
   const perspective = useMemo((): TransactionPerspective => {
-    return networkBlock.sender === self.accountNumber ? TransactionPerspective.sender : TransactionPerspective.receiver;
-  }, [networkBlock.sender, self.accountNumber]);
+    let accountNumbers = [self.accountNumber];
+
+    if ('networkId' in networkBlock) {
+      const networkHoldingAccounts = holdingAccounts[networkBlock.networkId];
+
+      if (networkHoldingAccounts && !isEmpty(networkHoldingAccounts)) {
+        const holdingAccountNumbers = Object.values(networkHoldingAccounts).map(({accountNumber}) => accountNumber);
+        accountNumbers = [...accountNumbers, ...holdingAccountNumbers];
+      }
+    }
+
+    return accountNumbers.includes(networkBlock.sender)
+      ? TransactionPerspective.sender
+      : TransactionPerspective.receiver;
+  }, [holdingAccounts, networkBlock, self.accountNumber]);
 
   const transactionStatus = useMemo((): TransactionStatus => {
     return perspective === TransactionPerspective.receiver ? TransactionStatus.received : TransactionStatus.sent;

@@ -11,9 +11,9 @@ const useHoldAmount = (order: Order): number => {
 
   return useMemo(() => {
     if (order.host.accountNumber !== self.accountNumber) return 0;
-    const holdingAccount = holdingAccounts[order.orderId];
+    const holdingAccount = holdingAccounts[order.host.outgoingAsset][order.orderId];
     return holdingAccount ? holdingAccount.balance : 0;
-  }, [holdingAccounts, order.host.accountNumber, order.orderId, self.accountNumber]);
+  }, [holdingAccounts, order.host.accountNumber, order.host.outgoingAsset, order.orderId, self.accountNumber]);
 };
 
 export default useHoldAmount;

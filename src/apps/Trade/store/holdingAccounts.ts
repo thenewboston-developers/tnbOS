@@ -18,13 +18,8 @@ const holdingAccounts = createSlice({
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_HOLDING_ACCOUNTS, state: current(state)});
     },
     setHoldingAccounts: setLocalAndStateReducer<HoldingAccounts>(TRADE_HOLDING_ACCOUNTS),
-    unsetHoldingAccount: (state: HoldingAccounts, {payload: holdingAccount}: PayloadAction<HoldingAccount>) => {
-      const {networkId, orderId} = holdingAccount;
-      delete state[networkId][orderId];
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_HOLDING_ACCOUNTS, state: current(state)});
-    },
   },
 });
 
-export const {setHoldingAccount, setHoldingAccounts, unsetHoldingAccount} = holdingAccounts.actions;
+export const {setHoldingAccount, setHoldingAccounts} = holdingAccounts.actions;
 export default holdingAccounts.reducer;

@@ -2,7 +2,7 @@ import setFillStatusBlock from 'apps/Trade/blocks/setFillStatusBlock';
 import setPaymentStatusBlock from 'apps/Trade/blocks/setPaymentStatusBlock';
 import {setFillStatus, setPaymentStatus} from 'apps/Trade/store/orders';
 import {FillStatus, HoldingAccounts, Order, PaymentStatus} from 'apps/Trade/types';
-import {removeHold} from 'apps/Trade/utils/holds';
+import {removeHold} from 'apps/Trade/utils/holdingAccounts';
 import {createTransaction} from 'apps/Trade/utils/transactions';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import store from 'system/store';
