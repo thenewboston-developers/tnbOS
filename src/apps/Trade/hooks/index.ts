@@ -6,6 +6,7 @@ import useHoldAmount from 'apps/Trade/hooks/useHoldAmount';
 import useNewlyOnlineAccounts from 'apps/Trade/hooks/useNewlyOnlineAccounts';
 import useOfferSyncListener from 'apps/Trade/hooks/useOfferSyncListener';
 import useOfferSyncTask from 'apps/Trade/hooks/useOfferSyncTask';
+import useOrderApprovalStatusTask from 'apps/Trade/hooks/useOrderApprovalStatusTask';
 import useReceivingAccountTransferTask from 'apps/Trade/hooks/useReceivingAccountTransferTask';
 import useTradeBalances from 'apps/Trade/hooks/useTradeBalances';
 
@@ -18,6 +19,7 @@ export {
   useNewlyOnlineAccounts,
   useOfferSyncListener,
   useOfferSyncTask,
+  useOrderApprovalStatusTask,
   useReceivingAccountTransferTask,
   useTradeBalances,
 };
