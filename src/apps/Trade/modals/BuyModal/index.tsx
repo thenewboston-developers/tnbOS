@@ -99,6 +99,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
       const receivingAccount = {
         accountNumber: keypair.publicKeyHex,
         fundsTransferredOut: false,
+        networkId: buyersIncomingAsset,
         orderId,
         signingKey: keypair.signingKeyHex,
       };

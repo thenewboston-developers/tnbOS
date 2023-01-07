@@ -12,8 +12,9 @@ const receivingAccounts = createSlice({
   name: TRADE_RECEIVING_ACCOUNTS,
   reducers: {
     setReceivingAccount: (state: ReceivingAccounts, {payload: receivingAccount}: PayloadAction<ReceivingAccount>) => {
-      const {orderId} = receivingAccount;
-      state[orderId] = receivingAccount;
+      const {networkId, orderId} = receivingAccount;
+      if (!state[networkId]) state[networkId] = {};
+      state[networkId][orderId] = receivingAccount;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: TRADE_RECEIVING_ACCOUNTS, state: current(state)});
     },
     setReceivingAccounts: setLocalAndStateReducer<ReceivingAccounts>(TRADE_RECEIVING_ACCOUNTS),

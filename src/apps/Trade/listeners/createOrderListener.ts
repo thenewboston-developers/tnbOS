@@ -65,6 +65,7 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
         setReceivingAccount({
           accountNumber: keypair.publicKeyHex,
           fundsTransferredOut: false,
+          networkId: client.outgoingAsset,
           orderId,
           signingKey: keypair.signingKeyHex,
         }),
