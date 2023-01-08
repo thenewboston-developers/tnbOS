@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {getAccounts, getSelf} from 'system/selectors/state';
 import {truncate} from 'system/utils/strings';
 
-const useSafeDisplayName = (accountNumber: string, maxLength?: number) => {
+const useAccountDisplayName = (accountNumber: string, maxLength?: number) => {
   const accounts = useSelector(getAccounts);
   const self = useSelector(getSelf);
 
@@ -13,4 +13,4 @@ const useSafeDisplayName = (accountNumber: string, maxLength?: number) => {
   return maxLength ? truncate(results, maxLength) : results;
 };
 
-export default useSafeDisplayName;
+export default useAccountDisplayName;

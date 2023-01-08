@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Avatar from 'apps/Chat/components/Avatar';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
-import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName, useAccountOnlineStatus} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {shortDate} from 'system/utils/dates';
@@ -19,8 +19,8 @@ export interface ContactProps {
 
 const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, lastActivityDate, lastMessageId}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 10);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 10);
   const messages = useSelector(getMessages);
   const onlineStatus = useAccountOnlineStatus(accountNumber);
   const self = useSelector(getSelf);

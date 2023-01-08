@@ -3,7 +3,7 @@ import {mdiDotsVertical} from '@mdi/js';
 
 import AccountModal from 'apps/AccountManager/modals/AccountModal';
 import DropdownMenu from 'system/components/DropdownMenu';
-import {useSafeDisplayName, useToggle} from 'system/hooks';
+import {useAccountDisplayName, useToggle} from 'system/hooks';
 import {deleteAccount} from 'system/store/accounts';
 import {Account, AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
@@ -16,7 +16,7 @@ export interface AccountCardProps {
 const AccountCard: SFC<AccountCardProps> = ({account, className}) => {
   const [accountModalIsOpen, toggleAccountModal] = useToggle(false);
   const dispatch = useDispatch<AppDispatch>();
-  const displayName = useSafeDisplayName(account.accountNumber, 16);
+  const displayName = useAccountDisplayName(account.accountNumber, 16);
 
   const handleDeleteAccount = () => {
     dispatch(deleteAccount(account.accountNumber));

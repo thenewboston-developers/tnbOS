@@ -4,7 +4,7 @@ import Identification from 'apps/SpeedTest/components/Identification';
 import SelectCard from 'apps/SpeedTest/components/SelectCard';
 import {getActiveAccountNumber} from 'apps/SpeedTest/selectors/state';
 import {setActiveAccountNumber} from 'apps/SpeedTest/store/manager';
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 
@@ -15,8 +15,8 @@ export interface AccountSelectCardProps {
 const AccountSelectCard: SFC<AccountSelectCardProps> = ({accountNumber, className}) => {
   const activeAccountNumber = useSelector(getActiveAccountNumber);
   const dispatch = useDispatch<AppDispatch>();
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 16);
 
   const handleClick = () => {
     if (accountNumber === activeAccountNumber) {

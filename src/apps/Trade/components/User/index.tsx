@@ -1,4 +1,4 @@
-import {useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayName} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -8,7 +8,7 @@ export interface UserProps {
 }
 
 const User: SFC<UserProps> = ({accountNumber, className, description}) => {
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayName = useAccountDisplayName(accountNumber, 16);
 
   return (
     <S.Container className={className}>

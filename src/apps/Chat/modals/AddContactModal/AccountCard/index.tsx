@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import Avatar from 'apps/Chat/components/Avatar';
 import Button, {ButtonColor} from 'apps/Chat/components/Button';
 import {setContact} from 'apps/Chat/store/contacts';
-import {useAccountOnlineStatus, useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName, useAccountOnlineStatus} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
@@ -16,8 +16,8 @@ interface AccountCardProps {
 
 const AccountCard: SFC<AccountCardProps> = ({accountNumber, className, close}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 16);
   const onlineStatus = useAccountOnlineStatus(accountNumber);
 
   const handleAddContact = () => {

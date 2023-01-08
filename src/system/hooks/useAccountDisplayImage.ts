@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import DefaultAvatar from 'system/assets/default-avatar.png';
 import {getAccounts, getSelf} from 'system/selectors/state';
 
-const useSafeDisplayImage = (accountNumber: string) => {
+const useAccountDisplayImage = (accountNumber: string) => {
   const accounts = useSelector(getAccounts);
   const self = useSelector(getSelf);
 
@@ -12,4 +12,4 @@ const useSafeDisplayImage = (accountNumber: string) => {
   return account?.displayImage || DefaultAvatar;
 };
 
-export default useSafeDisplayImage;
+export default useAccountDisplayImage;

@@ -1,4 +1,4 @@
-import {useAccountOnlineStatus, useSafeDisplayImage} from 'system/hooks';
+import {useAccountDisplayImage, useAccountOnlineStatus} from 'system/hooks';
 import {colors} from 'system/styles';
 import {OnlineStatus, SFC} from 'system/types';
 import * as S from './Styles';
@@ -8,7 +8,7 @@ export interface AvatarProps {
 }
 
 const Avatar: SFC<AvatarProps> = ({accountNumber, className}) => {
-  const displayImage = useSafeDisplayImage(accountNumber);
+  const displayImage = useAccountDisplayImage(accountNumber);
   const onlineStatus = useAccountOnlineStatus(accountNumber);
 
   const renderStatus = () => {

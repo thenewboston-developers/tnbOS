@@ -1,6 +1,6 @@
 import Identification from 'apps/Art/components/Identification';
 import {GenericVoidFunction} from 'shared/types';
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
 import {SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
@@ -12,8 +12,8 @@ export interface AccountSelectCardProps {
 }
 
 const AccountSelectCard: SFC<AccountSelectCardProps> = ({accountNumber, className, isSelected, onClick}) => {
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 16);
 
   return (
     <S.Container className={className} isSelected={isSelected} onClick={onClick}>
