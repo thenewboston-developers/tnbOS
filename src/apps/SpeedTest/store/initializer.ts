@@ -4,11 +4,11 @@ import {initialState as runsInitialState, setRuns} from 'apps/SpeedTest/store/ru
 import {LocalElectronStore} from 'shared/types';
 import {AppDispatch} from 'system/types';
 
-const loadSpeedTestStoreData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
+const loadAppData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
   const manager = store?.[SPEED_TEST_MANAGER] || managerInitialState;
   const runs = store?.[SPEED_TEST_RUNS] || runsInitialState;
   dispatch(setManager(manager));
   dispatch(setRuns(runs));
 };
 
-export default loadSpeedTestStoreData;
+export default loadAppData;

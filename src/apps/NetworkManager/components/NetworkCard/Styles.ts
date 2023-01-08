@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-import UNetworkLogo from 'apps/NetworkManager/components/NetworkLogo';
+import UNetworkLogo from 'system/components/NetworkLogo';
+import {Status} from 'system/components/NetworkLogo/Styles';
+import {colors} from 'system/styles';
 
 export const Balance = styled.div`
   font-size: 12px;
@@ -32,6 +34,10 @@ export const NetworkId = styled.div`
 
 export const NetworkLogo = styled(UNetworkLogo)`
   margin-right: 10px;
+
+  ${Status} {
+    border-color: ${colors.palette.neutral['050']};
+  }
 `;
 
 export const Right = styled.div``;

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-import UAvatar from 'apps/AccountManager/components/Avatar';
+import UAvatar from 'system/components/Avatar';
+import {Status} from 'system/components/Avatar/Styles';
+import {colors} from 'system/styles';
 
 export const AccountNumber = styled.div`
   font-size: 12px;
@@ -8,6 +10,10 @@ export const AccountNumber = styled.div`
 
 export const Avatar = styled(UAvatar)`
   margin-right: 10px;
+
+  ${Status} {
+    border-color: ${colors.palette.neutral['050']};
+  }
 `;
 
 export const Container = styled.div`

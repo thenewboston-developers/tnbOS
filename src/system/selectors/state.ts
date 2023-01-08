@@ -5,6 +5,7 @@ export const getAccounts = (state: RootState) => state.system.accounts;
 export const getBalances = (state: RootState) => state.system.balances;
 export const getManager = (state: RootState) => state.system.manager;
 export const getNetworkAccountOnlineStatuses = (state: RootState) => state.system.networkAccountOnlineStatuses;
+export const getNetworkBlocks = (state: RootState) => state.system.networkBlocks;
 export const getNetworks = (state: RootState) => state.system.networks;
 export const getPeerRequestManager = (state: RootState) => state.system.peerRequestManager;
 export const getSelf = (state: RootState) => state.system.self;

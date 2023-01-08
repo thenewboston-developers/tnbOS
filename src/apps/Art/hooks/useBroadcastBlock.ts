@@ -2,8 +2,8 @@ import {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
 import {setQueuedBlocksBlock} from 'apps/Art/blocks';
-import {useOnlineAccountNumbers} from 'apps/Art/hooks';
 import {QueuedBlock} from 'apps/Art/types';
+import {useOnlineAccountNumbers} from 'system/hooks';
 import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {displayErrorToast} from 'system/utils/toast';

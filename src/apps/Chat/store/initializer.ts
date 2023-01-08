@@ -6,7 +6,7 @@ import {initialState as messagesInitialState, setMessages} from 'apps/Chat/store
 import {LocalElectronStore} from 'shared/types';
 import {AppDispatch} from 'system/types';
 
-const loadChatStoreData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
+const loadAppData = (dispatch: AppDispatch, store: LocalElectronStore): void => {
   const contacts = store?.[CHAT_CONTACTS] || contactsInitialState;
   const deliveries = store?.[CHAT_DELIVERIES] || deliveriesInitialState;
   const manager = store?.[CHAT_MANAGER] || managerInitialState;
@@ -17,4 +17,4 @@ const loadChatStoreData = (dispatch: AppDispatch, store: LocalElectronStore): vo
   dispatch(setMessages(messages));
 };
 
-export default loadChatStoreData;
+export default loadAppData;
