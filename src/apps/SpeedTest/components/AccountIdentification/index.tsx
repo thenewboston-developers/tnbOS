@@ -1,5 +1,5 @@
 import Identification from 'apps/SpeedTest/components/Identification';
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
 import {SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 
@@ -8,8 +8,8 @@ export interface AccountIdentificationProps {
 }
 
 const AccountIdentification: SFC<AccountIdentificationProps> = ({accountNumber, className}) => {
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 16);
 
   return (
     <Identification

@@ -1,4 +1,4 @@
-import {useSafeDisplayImage, useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -8,8 +8,8 @@ export interface AccountLabelProps {
 }
 
 const AccountLabel: SFC<AccountLabelProps> = ({accountNumber = '-', className, label}) => {
-  const displayImage = useSafeDisplayImage(accountNumber);
-  const displayName = useSafeDisplayName(accountNumber, 16);
+  const displayImage = useAccountDisplayImage(accountNumber);
+  const displayName = useAccountDisplayName(accountNumber, 16);
 
   return (
     <S.Container className={className}>

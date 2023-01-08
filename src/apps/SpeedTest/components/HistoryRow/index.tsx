@@ -4,7 +4,7 @@ import Badge from 'apps/SpeedTest/components/Badge';
 import * as S from 'apps/SpeedTest/containers/History/Styles';
 import {Run} from 'apps/SpeedTest/types';
 import {formatDate} from 'apps/SpeedTest/utils/dates';
-import {useSafeDisplayName} from 'system/hooks';
+import {useAccountDisplayName} from 'system/hooks';
 import {getNetworks} from 'system/selectors/state';
 import {SFC} from 'system/types';
 
@@ -13,7 +13,7 @@ export interface HistoryRowProps {
 }
 
 const HistoryRow: SFC<HistoryRowProps> = ({className, run}) => {
-  const displayName = useSafeDisplayName(run.recipient, 16);
+  const displayName = useAccountDisplayName(run.recipient, 16);
   const networks = useSelector(getNetworks);
 
   const network = networks[run.networkId];
