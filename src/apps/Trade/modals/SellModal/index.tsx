@@ -9,7 +9,7 @@ import {ButtonContainer, FormBody, Input} from 'apps/Trade/components/FormElemen
 import Modal from 'apps/Trade/components/Modal';
 import OrderFormLayout from 'apps/Trade/components/OrderFormLayout';
 import {APPROVAL_WINDOW_SECONDS, PAYMENT_WINDOW_SECONDS} from 'apps/Trade/constants/protocol';
-import {useActiveNetworkBalance} from 'apps/Trade/hooks';
+import {useTradeBalances} from 'apps/Trade/hooks';
 import {setActivePage} from 'apps/Trade/store/manager';
 import {setOrder} from 'apps/Trade/store/orders';
 import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
@@ -24,26 +24,26 @@ import {generateAccount} from 'system/utils/tnb';
 import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
-interface BuyModalProps {
+interface SellModalProps {
   close(): void;
   offer: Offer;
 }
 
-const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
-  const buyersIncomingAsset = offer.clientAsset;
-  const buyersOutgoingAsset = offer.hostAsset;
+const SellModal: SFC<SellModalProps> = ({className, close, offer}) => {
+  const sellersIncomingAsset = offer.hostAsset;
+  const sellersOutgoingAsset = offer.clientAsset;
 
-  const activeNetworkBalance = useActiveNetworkBalance();
   const balances = useSelector(getBalances);
-  const buyersIncomingAssetDisplayName = useNetworkDisplayName(buyersIncomingAsset, 16);
-  const buyersIncomingAssetLogo = useNetworkDisplayImage(buyersIncomingAsset);
-  const buyersOutgoingAssetLogo = useNetworkDisplayImage(buyersOutgoingAsset);
   const dispatch = useDispatch<AppDispatch>();
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
   const self = useSelector(getSelf);
+  const sellersOutgoingAssetBalances = useTradeBalances(sellersOutgoingAsset);
+  const sellersIncomingAssetLogo = useNetworkDisplayImage(sellersIncomingAsset);
+  const sellersOutgoingAssetDisplayName = useNetworkDisplayName(sellersOutgoingAsset, 16);
+  const sellersOutgoingAssetLogo = useNetworkDisplayImage(sellersOutgoingAsset);
 
   const initialValues = {
-    buyersIncomingAssetQuantity: '',
+    sellersOutgoingAssetQuantity: '',
     total: '',
   };
 
@@ -52,7 +52,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
   const calculateAssetQuantity = (totalStr: string): string => {
     const total = parseFloat(totalStr);
     if (isNaN(total)) return '';
-    const price = offer.saleTerms.price;
+    const price = offer.purchaseTerms.price;
     const assetQuantity = total / price;
     return assetQuantity.toString();
   };
@@ -60,7 +60,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
   const calculateTotal = (assetQuantityStr: string): string => {
     const assetQuantity = parseFloat(assetQuantityStr);
     if (isNaN(assetQuantity)) return '';
-    const price = offer.saleTerms.price;
+    const price = offer.purchaseTerms.price;
     const total = assetQuantity * price;
     return total.toString();
   };
@@ -79,16 +79,16 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
         approvalStatus: ApprovalStatus.pending,
         client: {
           accountNumber: self.accountNumber,
-          outgoingAmount: parseInt(values.total, 10),
-          outgoingAsset: buyersOutgoingAsset,
+          outgoingAmount: parseInt(values.sellersOutgoingAssetQuantity, 10),
+          outgoingAsset: sellersOutgoingAsset,
           receivingAddress: keypair.publicKeyHex,
         },
         createdDate: systemDate(now),
         fillStatus: FillStatus.none,
         host: {
           accountNumber: offer.host,
-          outgoingAmount: parseInt(values.buyersIncomingAssetQuantity, 10),
-          outgoingAsset: buyersIncomingAsset,
+          outgoingAmount: parseInt(values.total, 10),
+          outgoingAsset: sellersIncomingAsset,
           receivingAddress: null,
         },
         orderId,
@@ -99,7 +99,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
       const receivingAccount = {
         accountNumber: keypair.publicKeyHex,
         fundsTransferredOut: false,
-        networkId: buyersIncomingAsset,
+        networkId: sellersIncomingAsset,
         orderId,
         signingKey: keypair.signingKeyHex,
       };
@@ -131,31 +131,28 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
   };
 
   const validationSchema = useMemo(() => {
+    const {available} = sellersOutgoingAssetBalances;
     return yup.object().shape({
-      buyersIncomingAssetQuantity: yup
+      sellersOutgoingAssetQuantity: yup
         .number()
-        .required('Purchase amount is a required field')
-        .integer('Purchase amount must be an integer')
-        .max(offer.saleTerms.orderMax, `Maximum purchase amount is ${offer.saleTerms.orderMax}`)
-        .min(offer.saleTerms.orderMin, `Minimum purchase amount is ${offer.saleTerms.orderMin}`),
-      total: yup
-        .number()
-        .required('Total cost is a required field')
-        .integer('Total cost must be an integer')
-        .min(0)
+        .required('Sale amount is a required field')
+        .integer('Sale amount must be an integer')
+        .max(offer.purchaseTerms.orderMax, `Maximum sale amount is ${offer.purchaseTerms.orderMax}`)
+        .min(offer.purchaseTerms.orderMin, `Minimum sale amount is ${offer.purchaseTerms.orderMin}`)
         .test(
           'total-does-not-exceed-balance',
-          `Total cost exceeds account balance of ${activeNetworkBalance.toLocaleString()}`,
+          `Total cost exceeds available balance of ${available.toLocaleString()}`,
           (total) => {
             if (!total) return true;
-            return total <= activeNetworkBalance;
+            return total <= available;
           },
         ),
+      total: yup.number().required('Total price is a required field').integer('Total price must be an integer').min(0),
     });
-  }, [activeNetworkBalance, offer.saleTerms.orderMax, offer.saleTerms.orderMin]);
+  }, [offer.purchaseTerms.orderMax, offer.purchaseTerms.orderMin, sellersOutgoingAssetBalances]);
 
   return (
-    <Modal className={className} close={close} header={`Buy ${buyersIncomingAssetDisplayName}`}>
+    <Modal className={className} close={close} header={`Sell ${sellersOutgoingAssetDisplayName}`}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -167,13 +164,13 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
             <OrderFormLayout
               left={
                 <>
-                  <S.User accountNumber={offer.host} description="Seller" />
+                  <S.User accountNumber={offer.host} description="Buyer" />
                   <Amount
-                    amount={offer.saleTerms.price}
+                    amount={offer.purchaseTerms.price}
                     amountLabel="Price"
-                    bottomText={`Limits: ${offer.saleTerms.orderMin.toLocaleString()} - ${offer.saleTerms.orderMax.toLocaleString()} ${buyersIncomingAssetDisplayName}`}
+                    bottomText={`Limits: ${offer.purchaseTerms.orderMin.toLocaleString()} - ${offer.purchaseTerms.orderMax.toLocaleString()} ${sellersOutgoingAssetDisplayName}`}
                     leftAlign={true}
-                    networkId={buyersOutgoingAsset}
+                    networkId={sellersIncomingAsset}
                   />
                 </>
               }
@@ -182,9 +179,9 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
                   <FormBody>
                     <Input
                       errors={errors}
-                      label="Purchase Amount"
-                      logo={buyersIncomingAssetLogo}
-                      name="buyersIncomingAssetQuantity"
+                      label="Sale Amount"
+                      logo={sellersOutgoingAssetLogo}
+                      name="sellersOutgoingAssetQuantity"
                       onChange={(e) => {
                         handleChange(e);
                         values.total = calculateTotal(e.target.value);
@@ -194,12 +191,12 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
                     />
                     <Input
                       errors={errors}
-                      label="Total Cost"
-                      logo={buyersOutgoingAssetLogo}
+                      label="Total Price"
+                      logo={sellersIncomingAssetLogo}
                       name="total"
                       onChange={(e) => {
                         handleChange(e);
-                        values.buyersIncomingAssetQuantity = calculateAssetQuantity(e.target.value);
+                        values.sellersOutgoingAssetQuantity = calculateAssetQuantity(e.target.value);
                       }}
                       touched={touched}
                       type="number"
@@ -214,7 +211,7 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
                 disabled={isSubmitting}
                 isSubmitting={isSubmitting}
                 isValid={isValid}
-                text="Place Purchase Order"
+                text="Place Sale Order"
                 type={ButtonType.submit}
               />
             </ButtonContainer>
@@ -225,4 +222,4 @@ const BuyModal: SFC<BuyModalProps> = ({className, close, offer}) => {
   );
 };
 
-export default BuyModal;
+export default SellModal;
