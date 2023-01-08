@@ -61,7 +61,7 @@ const OfferCard: SFC<OfferCardProps> = ({className, offer}) => {
 
   const renderAmount = (amount: number, src: string) => (
     <S.AmountContainer>
-      {amount}
+      {amount.toLocaleString()}
       <S.Logo src={src} />
     </S.AmountContainer>
   );
