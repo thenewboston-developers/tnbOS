@@ -8,6 +8,7 @@ import OrderCardHeader from 'apps/Trade/components/OrderCardHeader';
 import {TableRow} from 'apps/Trade/components/Table';
 import {useHoldAmount} from 'apps/Trade/hooks';
 import {ApprovalStatus, Order} from 'apps/Trade/types';
+import {useNetworkDisplayName} from 'system/hooks';
 import {longDate} from 'system/utils/dates';
 import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
@@ -23,6 +24,7 @@ interface HostApprovalProps {
 
 const HostApproval: SFC<HostApprovalProps> = ({className, order}) => {
   const holdAmount = useHoldAmount(order);
+  const hostOutgoingAssetDisplayName = useNetworkDisplayName(order.host.outgoingAsset, 16);
   const self = useSelector(getSelf);
 
   const {approvalExpirationDate, approvalStatus, createdDate} = order;
@@ -45,7 +47,7 @@ const HostApproval: SFC<HostApprovalProps> = ({className, order}) => {
       amountOnHoldRow = [
         {
           key: 'Amount On Hold',
-          value: `${holdAmount} ${order.host.outgoingAsset}`,
+          value: `${holdAmount} ${hostOutgoingAssetDisplayName}`,
         },
       ];
     }
@@ -76,8 +78,8 @@ const HostApproval: SFC<HostApprovalProps> = ({className, order}) => {
     approvalStatus,
     createdDate,
     holdAmount,
+    hostOutgoingAssetDisplayName,
     order.host.accountNumber,
-    order.host.outgoingAsset,
     renderApprovalStatusBadge,
     self.accountNumber,
   ]);

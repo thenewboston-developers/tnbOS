@@ -37,7 +37,7 @@ const RemoteOfferCard: SFC<RemoteOfferCardProps> = ({className, offer, offerType
       <Amount
         amount={terms.price}
         amountLabel="Price"
-        bottomText={`Limits: ${terms.orderMin} - ${terms.orderMax} ${clientAssetDisplayName}`}
+        bottomText={`Limits: ${terms.orderMin.toLocaleString()} - ${terms.orderMax.toLocaleString()} ${clientAssetDisplayName}`}
         networkId={offer.hostAsset}
       />
       <Button onClick={onButtonClick} text={getButtonText()} />
