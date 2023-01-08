@@ -11,9 +11,11 @@ export const getBalanceDetails = (
   let onHold = 0;
 
   if (networkHoldingAccounts) {
-    onHold = Object.values(networkHoldingAccounts).reduce((acc: number, holdingAccount) => {
-      return acc + holdingAccount.balance;
-    }, 0);
+    onHold = Object.values(networkHoldingAccounts)
+      .filter(({fundsTransferredOut}) => !fundsTransferredOut)
+      .reduce((acc: number, holdingAccount) => {
+        return acc + holdingAccount.balance;
+      }, 0);
   }
 
   return {

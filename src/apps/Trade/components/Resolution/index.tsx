@@ -7,7 +7,7 @@ import {ButtonColor} from 'apps/Trade/components/Button/types';
 import {getHoldingAccounts, getResolutions} from 'apps/Trade/selectors/state';
 import {setResolution} from 'apps/Trade/store/resolutions';
 import {Order, ResolutionStatus} from 'apps/Trade/types';
-import {removeHold} from 'apps/Trade/utils/holdingAccounts';
+import {returnHoldingAccountFunds} from 'apps/Trade/utils/holdingAccounts';
 import {handleOrderError} from 'apps/Trade/utils/orderErrors';
 import {handleOrderFulfillment} from 'apps/Trade/utils/orderProcessing';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';
@@ -40,11 +40,9 @@ const Resolution: SFC<ResolutionProps> = ({className, order}) => {
           resolutionStatus,
         }),
       );
-      await removeHold({
-        holdingAccounts,
-        order,
-        orderFilled: false,
-      });
+      const networkId = order.host.outgoingAsset;
+      const holdingAccount = holdingAccounts[networkId][order.orderId];
+      await returnHoldingAccountFunds({holdingAccount, networkId});
       displayToast('Order cancelled', ToastType.success);
     } catch (error) {
       console.error(error);

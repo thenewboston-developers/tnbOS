@@ -1,8 +1,8 @@
 import setFillStatusBlock from 'apps/Trade/blocks/setFillStatusBlock';
 import setPaymentStatusBlock from 'apps/Trade/blocks/setPaymentStatusBlock';
+import {setHoldingAccount} from 'apps/Trade/store/holdingAccounts';
 import {setFillStatus, setPaymentStatus} from 'apps/Trade/store/orders';
 import {FillStatus, HoldingAccounts, Order, PaymentStatus} from 'apps/Trade/types';
-import {removeHold} from 'apps/Trade/utils/holdingAccounts';
 import {createTransaction} from 'apps/Trade/utils/transactions';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import store from 'system/store';
@@ -24,6 +24,8 @@ const fillOrder = async ({holdingAccounts, order}: FillOrder) => {
     senderAccountNumber: holdingAccount.accountNumber,
     senderSigningKey: holdingAccount.signingKey,
   });
+
+  store.dispatch(setHoldingAccount({...holdingAccount, fundsTransferredOut: true}));
 };
 
 interface HandleOrderFulfillment {
@@ -46,11 +48,6 @@ export const handleOrderFulfillment = async ({holdingAccounts, networkId, order}
       networkId,
       params: setFillStatusParams,
       recipient: order.client.accountNumber,
-    });
-    await removeHold({
-      holdingAccounts,
-      order,
-      orderFilled: true,
     });
   } catch (error) {
     console.error(error);
