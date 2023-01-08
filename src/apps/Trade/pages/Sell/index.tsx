@@ -8,20 +8,22 @@ import PageHeader from 'apps/Trade/components/PageHeader';
 import RemoteOfferCard, {OfferType} from 'apps/Trade/components/RemoteOfferCard';
 import {getActiveNetworkId, getRemoteOffers} from 'apps/Trade/selectors/state';
 import {getOfferKey} from 'apps/Trade/utils/offers';
+import {useOnlineAccountNumbers} from 'system/hooks';
 import {SFC} from 'system/types';
 import SellEmptyStateGraphic from './assets/sell-empty-state.png';
 import * as S from './Styles';
 
 const Sell: SFC = ({className}) => {
   const activeNetworkId = useSelector(getActiveNetworkId);
+  const onlineAccountNumbers = useOnlineAccountNumbers();
   const remoteOffers = useSelector(getRemoteOffers);
 
   const offers = useMemo(() => {
-    // TODO: Host must be online
     return remoteOffers
+      .filter(({host}) => onlineAccountNumbers.includes(host))
       .filter(({hostAsset}) => hostAsset === activeNetworkId)
       .filter(({purchaseTerms}) => purchaseTerms.enabled);
-  }, [activeNetworkId, remoteOffers]);
+  }, [activeNetworkId, onlineAccountNumbers, remoteOffers]);
 
   const renderEmptyPage = () => {
     if (!activeNetworkId) return <EmptyActiveNetworkPage />;

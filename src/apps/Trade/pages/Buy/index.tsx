@@ -10,6 +10,7 @@ import BuyModal from 'apps/Trade/modals/BuyModal';
 import {getActiveNetworkId, getRemoteOffers} from 'apps/Trade/selectors/state';
 import {Offer} from 'apps/Trade/types';
 import {getOfferKey} from 'apps/Trade/utils/offers';
+import {useOnlineAccountNumbers} from 'system/hooks';
 import {SFC} from 'system/types';
 import BuyEmptyStateGraphic from './assets/buy-empty-state.png';
 import * as S from './Styles';
@@ -17,14 +18,15 @@ import * as S from './Styles';
 const Buy: SFC = ({className}) => {
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const activeNetworkId = useSelector(getActiveNetworkId);
+  const onlineAccountNumbers = useOnlineAccountNumbers();
   const remoteOffers = useSelector(getRemoteOffers);
 
   const offers = useMemo(() => {
-    // TODO: Host must be online
     return remoteOffers
+      .filter(({host}) => onlineAccountNumbers.includes(host))
       .filter(({hostAsset}) => hostAsset === activeNetworkId)
       .filter(({saleTerms}) => saleTerms.enabled);
-  }, [activeNetworkId, remoteOffers]);
+  }, [activeNetworkId, onlineAccountNumbers, remoteOffers]);
 
   const handleBuyModalClose = () => {
     setSelectedOffer(null);
