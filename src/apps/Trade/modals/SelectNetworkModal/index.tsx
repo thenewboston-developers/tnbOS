@@ -50,7 +50,12 @@ const SelectNetworkModal: SFC<SelectNetworkModalProps> = ({
     <S.Modal className={className} close={close} header={header}>
       <S.RadioCardContainer>{renderRadioCards()}</S.RadioCardContainer>
       <ButtonContainer>
-        <Button disabled={!selectedNetworkId} iconRight={iconRight || undefined} onClick={handleSubmit} text={buttonText} />
+        <Button
+          disabled={!selectedNetworkId}
+          iconRight={iconRight || undefined}
+          onClick={handleSubmit}
+          text={buttonText}
+        />
       </ButtonContainer>
     </S.Modal>
   );

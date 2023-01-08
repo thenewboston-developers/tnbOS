@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
@@ -13,21 +13,26 @@ import {NetworkBlock as TNetworkBlock, SFC} from 'system/types';
 import TransactionsEmptyStateGraphic from './assets/transactions-empty-state.png';
 import * as S from './Styles';
 
+const PAGINATION_SIZE = 10;
+
 const NetworkBlocks: SFC = ({className}) => {
+  const [maxLength, setMaxLength] = useState<number>(PAGINATION_SIZE);
   const activeWalletNetwork = useActiveWalletNetwork();
   const activeWalletNetworkId = useSelector(getActiveWalletNetworkId);
   const networkBlocks = useNetworkBlocks(activeWalletNetworkId!);
   const self = useSelector(getSelf);
 
-  const filteredNetworkBlocks = useMemo((): TNetworkBlock[] => {
+  const networkBlockList = useMemo((): TNetworkBlock[] => {
     return orderBy(Object.values(networkBlocks), ['date'], ['desc'])
       .filter(({recipient, sender}) => [recipient, sender].includes(self.accountNumber))
       .filter(({amount}) => amount > 0);
   }, [networkBlocks, self.accountNumber]);
 
   const renderNetworkBlock = () => {
-    if (!filteredNetworkBlocks.length) return renderTransactionsEmptyState();
-    return filteredNetworkBlocks.map((networkBlock) => (
+    if (!networkBlockList.length) return renderTransactionsEmptyState();
+    const length = Math.min(networkBlockList.length, maxLength);
+    const results = networkBlockList.slice(0, length);
+    return results.map((networkBlock) => (
       <NetworkBlock
         key={networkBlock.signature}
         networkBlock={networkBlock}
@@ -44,10 +49,16 @@ const NetworkBlocks: SFC = ({className}) => {
     />
   );
 
+  const renderViewMore = () => {
+    if (maxLength >= networkBlockList.length) return null;
+    return <S.ViewMore onClick={() => setMaxLength(maxLength + PAGINATION_SIZE)} />;
+  };
+
   return (
     <S.Container className={className}>
       <CardLabel>Transactions</CardLabel>
       {renderNetworkBlock()}
+      {renderViewMore()}
     </S.Container>
   );
 };
