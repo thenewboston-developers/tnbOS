@@ -1,5 +1,5 @@
 import {SpeedTestRegistration} from 'apps/SpeedTest/registration';
-import {SpeedTestFn, PongParams} from 'apps/SpeedTest/types';
+import {PongParams, SpeedTestFn} from 'apps/SpeedTest/types';
 import {AppPayload} from 'system/types';
 
 const pongPayload = (params: PongParams): AppPayload => {

@@ -1,7 +1,7 @@
 import {
+  useNewlyOnlineAccounts,
   useOfferSyncListener,
   useOfferSyncTask,
-  useNewlyOnlineAccounts,
   useOrderApprovalStatusTask,
   useOrderFillStatusTask,
   useOrderPaymentStatusTask,
