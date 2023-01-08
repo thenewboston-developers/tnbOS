@@ -29,6 +29,8 @@ const useNewlyOnlineAccounts = () => {
   const prevOnlineAccountNumbers = getOnlineAccountNumbers(previousAccountOnlineStatuses);
 
   (async () => {
+    if (offersSync.modifiedDate === null) return;
+
     for (const accountNumber of difference(onlineAccountNumbers, prevOnlineAccountNumbers)) {
       const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
         balances,
@@ -36,7 +38,7 @@ const useNewlyOnlineAccounts = () => {
         recipient: accountNumber,
       });
 
-      if (offersSync.modifiedDate === null || !recipientsDefaultNetworkId) continue;
+      if (!recipientsDefaultNetworkId) continue;
 
       await setOffersBlock({
         networkId: recipientsDefaultNetworkId,
