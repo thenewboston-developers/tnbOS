@@ -1,13 +1,10 @@
 import {SFC} from 'system/types';
 
+import Breadcrumbs from './Breadcrumbs';
 import Navigation from './Navigation';
 import * as S from './Styles';
 
 const Learn: SFC = ({className}) => {
-  const renderBreadcrumbs = () => {
-    return <div>Breadcrumbs</div>;
-  };
-
   const renderMainContent = () => {
     return (
       <S.MainContent>
@@ -25,7 +22,7 @@ const Learn: SFC = ({className}) => {
   return (
     <S.Container className={className}>
       <Navigation />
-      {renderBreadcrumbs()}
+      <Breadcrumbs />
       {renderMainContent()}
     </S.Container>
   );

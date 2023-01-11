@@ -7,14 +7,6 @@ const receivedMixin = css`
   color: #34c38f;
 `;
 
-const receivingMixin = css`
-  color: #50a5f1;
-`;
-
-const sendingMixin = css`
-  color: #f1b44c;
-`;
-
 const sentMixin = css`
   color: #74788d;
 `;
@@ -65,8 +57,6 @@ export const Value = styled.div<{transactionStatus: TransactionStatus}>`
 
   ${({transactionStatus}) => {
     if (transactionStatus === TransactionStatus.received) return receivedMixin;
-    if (transactionStatus === TransactionStatus.receiving) return receivingMixin;
-    if (transactionStatus === TransactionStatus.sending) return sendingMixin;
     if (transactionStatus === TransactionStatus.sent) return sentMixin;
     return;
   }}
