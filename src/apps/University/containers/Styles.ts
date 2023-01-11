@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  align-items: center;
-  background: #f7fafc;
+  background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 3%);
   display: flex;
+  flex-direction: column;
   height: 90%;
-  justify-content: center;
+  overflow: hidden;
   width: 90%;
 `;
