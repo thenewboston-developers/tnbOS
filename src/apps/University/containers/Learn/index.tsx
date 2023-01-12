@@ -1,6 +1,8 @@
 import {SFC} from 'system/types';
 
 import Breadcrumbs from './Breadcrumbs';
+import CourseHome from './CourseHome';
+import CourseLecture from './CourseLecture';
 import Navigation from './Navigation';
 import * as S from './Styles';
 
@@ -8,13 +10,8 @@ const Learn: SFC = ({className}) => {
   const renderMainContent = () => {
     return (
       <S.MainContent>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
-        <h1>Main content</h1>
+        <CourseHome />
+        <CourseLecture />
       </S.MainContent>
     );
   };
