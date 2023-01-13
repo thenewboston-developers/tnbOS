@@ -1,3 +1,4 @@
+import Breadcrumbs from 'apps/University/components/Breadcrumbs';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -30,6 +31,7 @@ const CourseLecture: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      <Breadcrumbs />
       {renderVideoPlayer()}
       {renderLectureTitle()}
       {renderLectureDescription()}
