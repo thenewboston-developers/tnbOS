@@ -1,10 +1,8 @@
-import {useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import orderBy from 'lodash/orderBy';
+import {useDispatch} from 'react-redux';
 
 import CourseCard from 'apps/University/components/CourseCard';
 import CourseCardsContainer from 'apps/University/components/CourseCardsContainer';
-import {getCourses} from 'apps/University/selectors/state';
+import {useEnrolledCourses} from 'apps/University/hooks';
 import {setActiveLearnCourseId, setActiveLearnPage} from 'apps/University/store/manager';
 import {LearnPage} from 'apps/University/types';
 import EmptyPage from 'system/components/EmptyPage';
@@ -14,13 +12,8 @@ import MyCoursesEmptyStateGraphic from './assets/my-courses-empty-state.png';
 import * as S from './Styles';
 
 const MyCourses: SFC = ({className}) => {
-  const courses = useSelector(getCourses);
   const dispatch = useDispatch<AppDispatch>();
-
-  const courseList = useMemo(() => {
-    // TODO: Fix
-    return orderBy(Object.values(courses), ['courseId']);
-  }, [courses]);
+  const enrolledCourses = useEnrolledCourses();
 
   const handleClick = (courseId: string) => {
     dispatch(setActiveLearnCourseId(courseId));
@@ -28,13 +21,13 @@ const MyCourses: SFC = ({className}) => {
   };
 
   const renderCourseCards = () => {
-    return courseList.map((course) => (
+    return enrolledCourses.map((course) => (
       <CourseCard course={course} key={course.courseId} onClick={() => handleClick(course.courseId)} />
     ));
   };
 
   const renderPageContent = () => {
-    if (!!courseList.length) {
+    if (!!enrolledCourses.length) {
       return <CourseCardsContainer>{renderCourseCards()}</CourseCardsContainer>;
     }
 
