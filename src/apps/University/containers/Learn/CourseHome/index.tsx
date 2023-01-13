@@ -2,10 +2,6 @@ import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const CourseHome: SFC = ({className}) => {
-  const renderInstructor = () => {
-    return <S.Instructor>Bucky Roberts</S.Instructor>;
-  };
-
   const renderLectureDescription = () => {
     return (
       <S.LectureDescription>
@@ -28,7 +24,7 @@ const CourseHome: SFC = ({className}) => {
     <S.Container className={className}>
       <div>
         {renderLectureTitle()}
-        {renderInstructor()}
+        <S.Instructor accountNumber="f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0" />
         {renderLectureDescription()}
       </div>
       <div>

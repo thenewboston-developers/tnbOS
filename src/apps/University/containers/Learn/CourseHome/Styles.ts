@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
+import UInstructor from 'apps/University/components/Instructor';
+
 export const Container = styled.div`
   display: grid;
   grid-template-columns: auto 320px;
   padding: 12px;
 `;
 
-export const Instructor = styled.div``;
+export const Instructor = styled(UInstructor)`
+  margin-top: 12px;
+`;
 
 export const LectureDescription = styled.div`
-  margin-top: 6px;
+  margin-top: 16px;
 `;
 
 export const LectureTitle = styled.div`
