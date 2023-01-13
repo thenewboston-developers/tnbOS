@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import UIcon from '@mdi/react';
 
 export const Container = styled.div`
   align-items: center;
@@ -7,8 +6,6 @@ export const Container = styled.div`
   margin-top: 8px;
   padding-left: 24px;
 `;
-
-export const Icon = styled(UIcon)``;
 
 export const Item = styled.div<{isActive?: boolean}>`
   color: ${({isActive}) => (isActive ? '#006699' : '#777')};

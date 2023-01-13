@@ -6,7 +6,7 @@ import UPlaylist from 'apps/University/components/Playlist';
 export const Container = styled.div`
   display: grid;
   gap: 24px;
-  grid-template-columns: auto 320px;
+  grid-template-columns: auto 360px;
   padding: 16px 24px;
 `;
 

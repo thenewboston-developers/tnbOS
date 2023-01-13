@@ -1,4 +1,4 @@
-import Breadcrumbs from 'apps/University/components/Breadcrumbs';
+import LearnBreadcrumbs from 'apps/University/components/LearnBreadcrumbs';
 import Playlist from 'apps/University/components/Playlist';
 import {useActiveLearnLecture} from 'apps/University/hooks';
 import {SFC} from 'system/types';
@@ -24,7 +24,7 @@ const CourseLecture: SFC = ({className}) => {
 
   return (
     <>
-      <Breadcrumbs />
+      <LearnBreadcrumbs />
       <S.Container className={className}>
         <S.Left>
           {renderVideoPlayer()}
