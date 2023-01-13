@@ -1,13 +1,14 @@
 import {PublicationStatus} from 'apps/University/types/publicationStatus';
 import {Dict} from 'system/types';
 
-export interface Course {
+export interface Lecture {
   courseId: string;
   description: string;
-  instructor: string;
+  lectureId: string;
   name: string;
+  position: number;
   publicationStatus: PublicationStatus;
   thumbnailUrl: string;
 }
 
-export type Courses = Dict<Course>;
+export type Lectures = Dict<Lecture>;

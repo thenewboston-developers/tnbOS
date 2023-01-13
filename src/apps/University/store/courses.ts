@@ -1,38 +1,42 @@
 import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
 
 import {UNIVERSITY_COURSES} from 'apps/University/store/constants';
-import {Course, Courses} from 'apps/University/types';
+import {Course, Courses, PublicationStatus} from 'apps/University/types';
 import {IpcChannel} from 'shared/types';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Courses = {
-  abc123: {
-    courseId: 'abc123',
-    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
-    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
-    name: 'MySQL for Beginners',
-    thumbnailUrl: 'https://i.imgur.com/R9jxXUj.png',
-  },
-  abc456: {
-    courseId: 'abc456',
-    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
-    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
-    name: 'Ruby',
-    thumbnailUrl: 'https://i.imgur.com/4o8GWdj.png',
-  },
-  def123: {
-    courseId: 'def123',
-    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
-    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
-    name: 'Objective C',
-    thumbnailUrl: 'https://i.imgur.com/PSjlER4.png',
-  },
-  def456: {
-    courseId: 'def456',
+  computergamedevelopment: {
+    courseId: 'computergamedevelopment',
     description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
     instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
     name: 'Computer Game Development',
+    publicationStatus: PublicationStatus.published,
     thumbnailUrl: 'https://i.imgur.com/QkVxS3m.png',
+  },
+  mysql: {
+    courseId: 'mysql',
+    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
+    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
+    name: 'MySQL for Beginners',
+    publicationStatus: PublicationStatus.published,
+    thumbnailUrl: 'https://i.imgur.com/R9jxXUj.png',
+  },
+  objectivec: {
+    courseId: 'objectivec',
+    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
+    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
+    name: 'Objective C',
+    publicationStatus: PublicationStatus.published,
+    thumbnailUrl: 'https://i.imgur.com/PSjlER4.png',
+  },
+  ruby: {
+    courseId: 'ruby',
+    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
+    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
+    name: 'Ruby',
+    publicationStatus: PublicationStatus.published,
+    thumbnailUrl: 'https://i.imgur.com/4o8GWdj.png',
   },
 };
 
