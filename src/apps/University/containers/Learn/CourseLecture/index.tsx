@@ -1,4 +1,5 @@
 import Breadcrumbs from 'apps/University/components/Breadcrumbs';
+import Playlist from 'apps/University/components/Playlist';
 import {useActiveLearnLecture} from 'apps/University/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
@@ -22,12 +23,19 @@ const CourseLecture: SFC = ({className}) => {
   if (!lecture) return null;
 
   return (
-    <S.Container className={className}>
+    <>
       <Breadcrumbs />
-      {renderVideoPlayer()}
-      <S.Name>{lecture.name}</S.Name>
-      <S.Description>{lecture.description}</S.Description>
-    </S.Container>
+      <S.Container className={className}>
+        <S.Left>
+          {renderVideoPlayer()}
+          <S.Name>{lecture.name}</S.Name>
+          <S.Description>{lecture.description}</S.Description>
+        </S.Left>
+        <S.Right>
+          <Playlist courseId={lecture.courseId} displayDescriptions={false} />
+        </S.Right>
+      </S.Container>
+    </>
   );
 };
 

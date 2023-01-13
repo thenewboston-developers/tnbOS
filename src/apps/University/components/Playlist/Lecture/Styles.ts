@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   border-radius: 4px;
   display: flex;
+  font-size: 12px;
   padding: 4px 8px 4px 0;
   transition: all 0.15s;
 
@@ -13,7 +14,6 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  font-size: 12px;
   margin-top: 2px;
 `;
 
@@ -31,7 +31,6 @@ export const Position = styled.div`
   color: grey;
   display: flex;
   flex-shrink: 0;
-  font-size: 12px;
   justify-content: center;
   padding: 0 8px;
   width: 24px;

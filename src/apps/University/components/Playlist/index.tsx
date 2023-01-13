@@ -6,13 +6,16 @@ import * as S from './Styles';
 
 export interface PlaylistProps {
   courseId: string;
+  displayDescriptions?: boolean;
 }
 
-const Playlist: SFC<PlaylistProps> = ({className, courseId}) => {
+const Playlist: SFC<PlaylistProps> = ({className, courseId, displayDescriptions = true}) => {
   const courseLectures = useCourseLectures(courseId);
 
   const renderLectures = () => {
-    const lectures = courseLectures.map((lecture) => <Lecture key={lecture.lectureId} lecture={lecture} />);
+    const lectures = courseLectures.map((lecture) => (
+      <Lecture displayDescription={displayDescriptions} key={lecture.lectureId} lecture={lecture} />
+    ));
     return <S.Lectures>{lectures}</S.Lectures>;
   };
 

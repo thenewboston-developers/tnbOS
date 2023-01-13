@@ -4,7 +4,8 @@ import UIcon from '@mdi/react';
 export const Container = styled.div`
   align-items: center;
   display: flex;
-  padding-left: 10px;
+  margin-top: 8px;
+  padding-left: 24px;
 `;
 
 export const Icon = styled(UIcon)``;

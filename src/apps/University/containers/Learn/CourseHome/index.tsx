@@ -36,16 +36,16 @@ const CourseHome: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <div>
+      <S.Left>
         <S.CourseName>{course.name}</S.CourseName>
         <S.Instructor accountNumber={course.instructor} />
         <S.CourseDescription>{course.description}</S.CourseDescription>
         <S.Playlist courseId={course.courseId} />
-      </div>
-      <div>
+      </S.Left>
+      <S.Right>
         <S.Thumbnail alt="thumbnail" src={course.thumbnailUrl} />
         {renderButton()}
-      </div>
+      </S.Right>
     </S.Container>
   );
 };

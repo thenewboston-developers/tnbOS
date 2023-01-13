@@ -5,7 +5,7 @@ import UPlaylist from 'apps/University/components/Playlist';
 
 export const Container = styled.div`
   display: grid;
-  gap: 32px;
+  gap: 24px;
   grid-template-columns: auto 320px;
   padding: 16px 24px;
 `;
@@ -24,9 +24,13 @@ export const Instructor = styled(UInstructor)`
   margin-top: 12px;
 `;
 
+export const Left = styled.div``;
+
 export const Playlist = styled(UPlaylist)`
   margin-top: 48px;
 `;
+
+export const Right = styled.div``;
 
 export const Thumbnail = styled.img`
   height: auto;
