@@ -15,6 +15,7 @@ export const initialState: Lectures = {
     position: 1,
     publicationStatus: PublicationStatus.published,
     thumbnailUrl: 'https://i.imgur.com/QkVxS3m.png',
+    youtubeId: 'XCMWDfwUINA',
   },
   computergamedevelopmentL2: {
     courseId: 'computergamedevelopment',
@@ -24,6 +25,7 @@ export const initialState: Lectures = {
     position: 2,
     publicationStatus: PublicationStatus.published,
     thumbnailUrl: 'https://i.imgur.com/QkVxS3m.png',
+    youtubeId: 'IcNtuCWkWpo',
   },
 };
 

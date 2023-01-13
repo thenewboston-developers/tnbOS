@@ -2,8 +2,9 @@ import {useDispatch} from 'react-redux';
 
 import {useActiveLearnCourse, useIsSelfEnrolled} from 'apps/University/hooks';
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
-import {AppDispatch, SFC} from 'system/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
+import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const CourseHome: SFC = ({className}) => {
@@ -13,6 +14,7 @@ const CourseHome: SFC = ({className}) => {
 
   const handleLeaveCourseClick = () => {
     dispatch(unsetEnrollment(course!.courseId));
+    displayToast(`You have left ${course!.name}`, ToastType.success);
   };
 
   const handleTakeCourseClick = () => {
@@ -22,6 +24,7 @@ const CourseHome: SFC = ({className}) => {
         enrollmentDate: currentSystemDate(),
       }),
     );
+    displayToast(`You are now taking ${course!.name}!`, ToastType.success);
   };
 
   const renderButton = () => {

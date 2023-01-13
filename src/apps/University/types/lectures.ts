@@ -9,6 +9,7 @@ export interface Lecture {
   position: number;
   publicationStatus: PublicationStatus;
   thumbnailUrl: string;
+  youtubeId: string;
 }
 
 export type Lectures = Dict<Lecture>;

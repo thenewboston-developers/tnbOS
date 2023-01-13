@@ -7,6 +7,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Manager = {
   activeLearnCourseId: null,
+  activeLearnLectureId: null,
   activeLearnPage: LearnPage.browse,
   activeTab: Tab.learn,
   activeTeachCourseId: null,
@@ -19,6 +20,10 @@ const manager = createSlice({
   reducers: {
     setActiveLearnCourseId: (state: Manager, {payload: activeLearnCourseId}: PayloadAction<string | null>) => {
       state.activeLearnCourseId = activeLearnCourseId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_MANAGER, state: current(state)});
+    },
+    setActiveLearnLectureId: (state: Manager, {payload: activeLearnLectureId}: PayloadAction<string | null>) => {
+      state.activeLearnLectureId = activeLearnLectureId;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_MANAGER, state: current(state)});
     },
     setActiveLearnPage: (state: Manager, {payload: learnPage}: PayloadAction<LearnPage>) => {
@@ -43,6 +48,7 @@ const manager = createSlice({
 
 export const {
   setActiveLearnCourseId,
+  setActiveLearnLectureId,
   setActiveLearnPage,
   setActiveTab,
   setActiveTeachCourseId,

@@ -2,6 +2,7 @@ import {Courses, Enrollments, LearnPage, Lectures, Tab, TeachPage} from 'apps/Un
 import {RootState} from 'system/types';
 
 export const getActiveLearnCourseId = (state: RootState): string => state.university.manager.activeLearnCourseId;
+export const getActiveLearnLectureId = (state: RootState): string => state.university.manager.activeLearnLectureId;
 export const getActiveLearnPage = (state: RootState): LearnPage => state.university.manager.activeLearnPage;
 export const getActiveTab = (state: RootState): Tab => state.university.manager.activeTab;
 export const getActiveTeachCourseId = (state: RootState): string => state.university.manager.activeTeachCourseId;
