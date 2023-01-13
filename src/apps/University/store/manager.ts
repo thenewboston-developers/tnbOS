@@ -11,7 +11,7 @@ export const initialState: Manager = {
   activeLearnPage: LearnPage.browse,
   activeTab: Tab.learn,
   activeTeachCourseId: null,
-  activeTeachPage: TeachPage.dashboard,
+  activeTeachPage: TeachPage.myCourses,
 };
 
 const manager = createSlice({

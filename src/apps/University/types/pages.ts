@@ -9,6 +9,5 @@ export enum TeachPage {
   courseDetails = 'courseDetails',
   courseLectureDetails = 'courseLectureDetails',
   courseLectures = 'courseLectures',
-  dashboard = 'dashboard',
   myCourses = 'myCourses',
 }
