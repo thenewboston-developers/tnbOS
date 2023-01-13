@@ -1,3 +1,5 @@
+import {Dict} from 'system/types';
+
 export interface Course {
   courseId: string;
   description: string;
@@ -5,3 +7,5 @@ export interface Course {
   name: string;
   thumbnailUrl: string;
 }
+
+export type Courses = Dict<Course>;
