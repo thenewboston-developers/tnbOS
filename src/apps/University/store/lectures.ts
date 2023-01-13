@@ -8,7 +8,8 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 export const initialState: Lectures = {
   computergamedevelopmentL1: {
     courseId: 'computergamedevelopment',
-    description: 'In this first lecture we learn about the history of games.',
+    description:
+      'In this first lecture we learn about the history of games. In this first lecture we learn about the history of games. In this first lecture we learn about the history of games.',
     lectureId: 'computergamedevelopmentL1',
     name: 'The History of Computer Game Development',
     position: 1,
