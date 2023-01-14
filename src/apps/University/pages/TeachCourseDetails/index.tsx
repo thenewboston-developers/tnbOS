@@ -37,12 +37,7 @@ const TeachCourseDetails: SFC = ({className}) => {
   };
 
   const renderRight = (values: FormValues) => {
-    return (
-      <S.Right>
-        <S.SectionHeading heading="Preview" />
-        {renderPreview(values)}
-      </S.Right>
-    );
+    return <S.Right>{renderPreview(values)}</S.Right>;
   };
 
   // TODO: Proper validation
@@ -65,7 +60,6 @@ const TeachCourseDetails: SFC = ({className}) => {
         {({dirty, errors, isSubmitting, isValid, touched, values}) => (
           <S.Container className={className}>
             <S.Left>
-              <S.SectionHeading heading="Course Details" />
               <Form>
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <Input errors={errors} label="Name" name="name" touched={touched} />

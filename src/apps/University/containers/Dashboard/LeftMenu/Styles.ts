@@ -33,5 +33,5 @@ export const Thumbnail = styled.img`
 `;
 
 export const ThumbnailContainer = styled.div`
-  padding: 16px 16px 0;
+  padding: 24px 16px 0;
 `;

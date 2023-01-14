@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {mdiChevronRight} from '@mdi/js';
 import Icon from '@mdi/react';
 
+import BreadcrumbItem from 'apps/University/components/BreadcrumbItem';
 import {useActiveLearnLecture} from 'apps/University/hooks';
 import {getCourses} from 'apps/University/selectors/state';
 import {setActiveLearnCourseId, setActivePage} from 'apps/University/store/manager';
@@ -26,11 +27,11 @@ const LearnBreadcrumbs: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.Item isActive={true} onClick={handleCourseNameClick}>
+      <BreadcrumbItem isActive={true} onClick={handleCourseNameClick}>
         {course.name}
-      </S.Item>
-      <Icon color="#999" path={mdiChevronRight} size="18px" />
-      <S.Item>{lecture!.name}</S.Item>
+      </BreadcrumbItem>
+      <Icon color="#ccc" path={mdiChevronRight} size="18px" />
+      <BreadcrumbItem isActive={false}>{lecture!.name}</BreadcrumbItem>
     </S.Container>
   );
 };

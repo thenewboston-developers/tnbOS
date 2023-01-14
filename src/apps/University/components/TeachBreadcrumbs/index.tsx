@@ -3,6 +3,7 @@ import noop from 'lodash/noop';
 import {mdiChevronRight} from '@mdi/js';
 import Icon from '@mdi/react';
 
+import BreadcrumbItem from 'apps/University/components/BreadcrumbItem';
 import {useActiveTeachCourse, useActiveTeachLecture} from 'apps/University/hooks';
 import {getActivePage} from 'apps/University/selectors/state';
 import {setActivePage} from 'apps/University/store/manager';
@@ -40,10 +41,10 @@ const TeachBreadcrumbs: SFC = ({className}) => {
 
     return (
       <>
-        <Icon color="#999" path={mdiChevronRight} size="18px" />
-        <S.Item isActive={isActive} onClick={clickHandler}>
+        <Icon color="#ccc" path={mdiChevronRight} size="18px" />
+        <BreadcrumbItem isActive={isActive} onClick={clickHandler}>
           {activeTeachCourse.name}
-        </S.Item>
+        </BreadcrumbItem>
       </>
     );
   };
@@ -70,10 +71,10 @@ const TeachBreadcrumbs: SFC = ({className}) => {
 
     return (
       <>
-        <Icon color="#999" path={mdiChevronRight} size="18px" />
-        <S.Item isActive={activePages.includes(activePage)} onClick={clickHandler}>
+        <Icon color="#ccc" path={mdiChevronRight} size="18px" />
+        <BreadcrumbItem isActive={activePages.includes(activePage)} onClick={clickHandler}>
           {pageName}
-        </S.Item>
+        </BreadcrumbItem>
       </>
     );
   };
@@ -82,17 +83,17 @@ const TeachBreadcrumbs: SFC = ({className}) => {
     if (!activeTeachCourse || !activeTeachLecture || activePage !== Page.teachCourseLectureDetails) return null;
     return (
       <>
-        <Icon color="#999" path={mdiChevronRight} size="18px" />
-        <S.Item isActive={false}>{activeTeachLecture.name}</S.Item>
+        <Icon color="#ccc" path={mdiChevronRight} size="18px" />
+        <BreadcrumbItem isActive={false}>{activeTeachLecture.name}</BreadcrumbItem>
       </>
     );
   };
 
   return (
     <S.Container className={className}>
-      <S.Item isActive={activePage !== Page.teachMyCourses} onClick={handleMyCoursesClick}>
+      <BreadcrumbItem isActive={activePage !== Page.teachMyCourses} onClick={handleMyCoursesClick}>
         My Courses
-      </S.Item>
+      </BreadcrumbItem>
       {renderCourseName()}
       {renderCoursePageName()}
       {renderLectureName()}
