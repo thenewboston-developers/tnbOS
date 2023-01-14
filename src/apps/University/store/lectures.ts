@@ -27,6 +27,26 @@ export const initialState: Lectures = {
     thumbnailUrl: 'https://i.imgur.com/QkVxS3m.png',
     youtubeId: 'IcNtuCWkWpo',
   },
+  mysqlL1: {
+    courseId: 'mysql',
+    description: 'This is the first class in MySQL.',
+    lectureId: 'mysqlL1',
+    name: 'The History of MySQL',
+    position: 1,
+    publicationStatus: PublicationStatus.published,
+    thumbnailUrl: 'https://i.imgur.com/wdXAd3X.png',
+    youtubeId: 'XCMWDfwUINA',
+  },
+  mysqlL2: {
+    courseId: 'mysql',
+    description: 'In this second lecture we learn more about things.',
+    lectureId: 'mysqlL2',
+    name: 'Second MySQL Lecture',
+    position: 2,
+    publicationStatus: PublicationStatus.published,
+    thumbnailUrl: 'https://i.imgur.com/wdXAd3X.png',
+    youtubeId: 'IcNtuCWkWpo',
+  },
 };
 
 const lectures = createSlice({
