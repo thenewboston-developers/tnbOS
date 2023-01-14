@@ -8,6 +8,7 @@ export const Actions = styled.div`
 `;
 
 export const CreatedDate = styled.div`
+  color: ${colors.fonts.secondary};
   font-size: 13px;
 `;
 
@@ -22,6 +23,7 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.div`
+  color: ${colors.fonts.heading};
   font-weight: 600;
 
   &:hover {
@@ -30,9 +32,13 @@ export const Name = styled.div`
   }
 `;
 
-export const PublicationStatus = styled.div``;
+export const PublicationStatus = styled.div`
+  color: ${colors.fonts.secondary};
+  font-size: 12px;
+`;
 
 export const Thumbnail = styled.img`
+  border-radius: 4px;
   height: auto;
   width: 100%;
 
