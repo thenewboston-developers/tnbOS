@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
+import UButton from 'apps/University/components/Button';
 import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
-import UButton from 'system/components/Button';
 
 export const Button = styled(UButton)`
   margin-top: 16px;
+  width: 100%;
 `;
 
 export const Container = styled.div`
