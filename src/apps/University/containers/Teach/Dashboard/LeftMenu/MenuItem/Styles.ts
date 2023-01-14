@@ -12,12 +12,12 @@ export const Container = styled.div`
 `;
 
 export const Icon = styled(MdiIcon)<{$isActivePage: boolean}>`
-  color: ${({$isActivePage}) => ($isActivePage ? 'white' : '#6a7187')};
+  color: ${({$isActivePage}) => ($isActivePage ? '#cfdbe6' : '#8a9299')};
   margin-right: 12px;
 `;
 
 export const Text = styled.div<{$isActivePage: boolean}>`
-  color: ${({$isActivePage}) => ($isActivePage ? 'white' : '#a6b0cf')};
+  color: ${({$isActivePage}) => ($isActivePage ? '#cfdbe6' : '#8a9299')};
   font-size: 13px;
   font-weight: 600;
 `;

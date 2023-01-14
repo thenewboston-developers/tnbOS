@@ -10,8 +10,10 @@ export const Bottom = styled.div`
 `;
 
 export const Container = styled.div`
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #f0f1f2;
+  box-shadow: 0 2px 3px rgb(56 59 61 / 5%);
   overflow: hidden;
   transition: all 0.25s ease-in-out 0s;
 

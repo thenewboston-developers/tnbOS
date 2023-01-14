@@ -1,7 +1,6 @@
 import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 
-import TeachBreadcrumbs from 'apps/University/components/TeachBreadcrumbs';
 import {getActiveTeachPage} from 'apps/University/selectors/state';
 import {TeachPage} from 'apps/University/types';
 import {SFC} from 'system/types';
@@ -30,17 +29,7 @@ const Teach: SFC = ({className}) => {
     return teachPages[activeTeachPage];
   };
 
-  const renderBreadcrumbs = () => {
-    if (activeTeachPage === TeachPage.myCourses) return null;
-    return <TeachBreadcrumbs />;
-  };
-
-  return (
-    <S.Container className={className}>
-      {renderBreadcrumbs()}
-      {renderActiveTeachPage()}
-    </S.Container>
-  );
+  return <S.Container className={className}>{renderActiveTeachPage()}</S.Container>;
 };
 
 export default Teach;

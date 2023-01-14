@@ -15,6 +15,7 @@ export const LeftMenu = styled(ULeftMenu)`
 `;
 
 export const Right = styled.div`
+  background-color: #f5f6f7;
   grid-column: 2 / span 1;
   overflow-y: auto;
 `;

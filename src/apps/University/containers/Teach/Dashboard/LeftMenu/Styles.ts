@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: #2a3042;
-  color: #79829c;
+  background: #38444d;
+  color: #8a9299;
   display: flex;
   flex-direction: column;
   flex: auto;
