@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
+import {mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
+
 export const Container = styled.div`
   display: flex;
 `;
 
 export const Description = styled.div`
-  margin-top: 2px;
+  ${mixinListItemDescription};
 `;
 
 export const Details = styled.div`
@@ -13,13 +15,12 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.div`
-  font-size: 13px;
-  font-weight: 600;
+  ${mixinListItemName};
 `;
 
 export const Thumbnail = styled.img`
+  ${mixinListItemThumbnail};
   align-self: flex-start;
   flex-shrink: 0;
-  height: auto;
   width: 100px;
 `;

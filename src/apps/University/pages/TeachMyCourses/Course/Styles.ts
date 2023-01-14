@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors} from 'apps/University/styles';
+import {colors, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
 
 export const Actions = styled.div`
   font-size: 13px;
@@ -13,9 +13,7 @@ export const CreatedDate = styled.div`
 `;
 
 export const Description = styled.div`
-  color: ${colors.fonts.secondary};
-  font-size: 12px;
-  margin-top: 2px;
+  ${mixinListItemDescription};
 `;
 
 export const Details = styled.div`
@@ -23,8 +21,7 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.div`
-  color: ${colors.fonts.heading};
-  font-weight: 600;
+  ${mixinListItemName};
 
   &:hover {
     cursor: pointer;
@@ -38,8 +35,7 @@ export const PublicationStatus = styled.div`
 `;
 
 export const Thumbnail = styled.img`
-  border-radius: 4px;
-  height: auto;
+  ${mixinListItemThumbnail};
   width: 100%;
 
   &:hover {

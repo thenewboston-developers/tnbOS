@@ -1,4 +1,9 @@
 import colors from 'apps/University/styles/colors';
-import {mixinLeftMenu} from 'apps/University/styles/mixins';
+import {
+  mixinLeftMenu,
+  mixinListItemDescription,
+  mixinListItemName,
+  mixinListItemThumbnail,
+} from 'apps/University/styles/mixins';
 
-export {colors, mixinLeftMenu};
+export {colors, mixinLeftMenu, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail};

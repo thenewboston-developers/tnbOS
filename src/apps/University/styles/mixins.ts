@@ -10,3 +10,19 @@ export const mixinLeftMenu = css`
   flex: auto;
   overflow: auto;
 `;
+
+export const mixinListItemDescription = css`
+  color: ${colors.fonts.secondary};
+  font-size: 12px;
+  margin-top: 2px;
+`;
+
+export const mixinListItemName = css`
+  color: ${colors.fonts.heading};
+  font-weight: 600;
+`;
+
+export const mixinListItemThumbnail = css`
+  border-radius: 4px;
+  height: auto;
+`;

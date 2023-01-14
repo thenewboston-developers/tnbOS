@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors} from 'apps/University/styles';
+import {colors, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
 
 export const Container = styled.div`
   border-radius: 4px;
@@ -16,9 +16,7 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: ${colors.fonts.default};
-  font-size: 12px;
-  margin-top: 2px;
+  ${mixinListItemDescription};
 `;
 
 export const Details = styled.div`
@@ -26,9 +24,7 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.div`
-  color: ${colors.fonts.heading};
-  font-size: 13px;
-  font-weight: 600;
+  ${mixinListItemName};
 `;
 
 export const Position = styled.div`
@@ -42,9 +38,8 @@ export const Position = styled.div`
 `;
 
 export const Thumbnail = styled.img`
+  ${mixinListItemThumbnail};
   align-self: flex-start;
-  border-radius: 4px;
   flex-shrink: 0;
-  height: auto;
   width: 100px;
 `;
