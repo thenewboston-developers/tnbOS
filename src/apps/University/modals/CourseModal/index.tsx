@@ -2,11 +2,11 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
+import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
 import {setCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course, Page, PublicationStatus} from 'apps/University/types';
-import Button, {ButtonType} from 'system/components/Button';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -56,9 +56,9 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
-      description: yup.string(),
-      name: yup.string(),
-      thumbnailUrl: yup.string(),
+      description: yup.string().required(),
+      name: yup.string().required(),
+      thumbnailUrl: yup.string().required(),
     });
   }, []);
 
@@ -75,7 +75,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
             <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
             <Input errors={errors} label="Name" name="name" touched={touched} />
             <Input errors={errors} label="Description" name="description" touched={touched} />
-            <Button
+            <S.Button
               dirty={dirty}
               disabled={isSubmitting}
               isSubmitting={isSubmitting}

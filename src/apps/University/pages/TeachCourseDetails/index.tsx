@@ -2,11 +2,11 @@ import {useMemo} from 'react';
 import {Form, Formik} from 'formik';
 import noop from 'lodash/noop';
 
+import {ButtonType} from 'apps/University/components/Button';
 import CourseCard from 'apps/University/components/CourseCard';
 import {Input} from 'apps/University/components/FormElements';
 import Dashboard from 'apps/University/containers/Dashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
-import Button, {ButtonType} from 'system/components/Button';
 import {SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
 import * as S from './Styles';
@@ -70,7 +70,7 @@ const TeachCourseDetails: SFC = ({className}) => {
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <Input errors={errors} label="Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
-                <Button
+                <S.Button
                   dirty={dirty}
                   disabled={isSubmitting}
                   isSubmitting={isSubmitting}

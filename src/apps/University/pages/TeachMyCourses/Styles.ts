@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 
 import USectionHeading from 'apps/University/components/SectionHeading';
-import UButton from 'system/components/Button';
-
-export const Button = styled(UButton)`
-  width: auto;
-`;
 
 export const Container = styled.div`
   display: flex;

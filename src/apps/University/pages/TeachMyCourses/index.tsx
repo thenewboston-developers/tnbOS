@@ -1,3 +1,4 @@
+import Button from 'apps/University/components/Button';
 import {useTaughtCourses} from 'apps/University/hooks';
 import CourseModal from 'apps/University/modals/CourseModal';
 import {useToggle} from 'system/hooks';
@@ -21,7 +22,7 @@ const TeachMyCourses: SFC = ({className}) => {
   };
 
   const renderNewCourseButton = () => {
-    return <S.Button onClick={toggleCourseModal} text="New Course" />;
+    return <Button onClick={toggleCourseModal} text="New Course" />;
   };
 
   return (
