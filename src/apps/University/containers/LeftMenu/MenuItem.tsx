@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
+import LeftMenuItem from 'apps/University/components/LeftMenuItem';
 import {getActiveLearnCourseId, getActivePage, getEnrollments} from 'apps/University/selectors/state';
 import {setActivePage} from 'apps/University/store/manager';
 import {Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
-import * as S from './Styles';
 
 export interface MenuItemProps {
   children: string;
@@ -47,11 +47,17 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
   };
 
   return (
-    <S.Container $isActivePage={isActivePage} className={className} onClick={handleClick}>
-      <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
-      <S.Text $isActivePage={isActivePage}>{children}</S.Text>
-    </S.Container>
+    <LeftMenuItem className={className} icon={icon} isActivePage={isActivePage} onClick={handleClick}>
+      {children}
+    </LeftMenuItem>
   );
+
+  // return (
+  //   <S.Container $isActivePage={isActivePage} className={className} onClick={handleClick}>
+  //     <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
+  //     <S.Text $isActivePage={isActivePage}>{children}</S.Text>
+  //   </S.Container>
+  // );
 };
 
 export default MenuItem;

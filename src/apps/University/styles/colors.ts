@@ -5,7 +5,8 @@ const colors = {
     default: '#555',
     error: '#ac1818',
     heading: '#373e4a',
-    leftMenu: '#aaabae',
+    leftMenuBackground: '#303641',
+    leftMenuText: '#aaabae',
     secondary: '#999',
   },
   palette: {
