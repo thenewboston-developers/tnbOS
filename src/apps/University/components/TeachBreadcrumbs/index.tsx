@@ -3,20 +3,26 @@ import noop from 'lodash/noop';
 import {mdiChevronRight} from '@mdi/js';
 import Icon from '@mdi/react';
 
-import {useActiveTeachCourse} from 'apps/University/hooks';
+import {useActiveTeachCourse, useActiveTeachLecture} from 'apps/University/hooks';
 import {getActiveTeachPage} from 'apps/University/selectors/state';
 import {setActiveTeachPage} from 'apps/University/store/manager';
 import {TeachPage} from 'apps/University/types';
+import {GenericVoidFunction} from 'shared/types';
 import {AppDispatch, Dict, SFC} from 'system/types';
 import * as S from './Styles';
 
 const TeachBreadcrumbs: SFC = ({className}) => {
   const activeTeachCourse = useActiveTeachCourse();
+  const activeTeachLecture = useActiveTeachLecture();
   const activeTeachPage = useSelector(getActiveTeachPage);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleCourseNameClick = () => {
     dispatch(setActiveTeachPage(TeachPage.courseDetails));
+  };
+
+  const handleLecturesClick = () => {
+    dispatch(setActiveTeachPage(TeachPage.courseLectures));
   };
 
   const handleMyCoursesClick = () => {
@@ -48,18 +54,36 @@ const TeachBreadcrumbs: SFC = ({className}) => {
 
     if (!activeTeachCourse || !displayPages.includes(activeTeachPage)) return null;
 
+    const clickHandlers: Dict<GenericVoidFunction> = {
+      [TeachPage.courseDetails]: noop,
+      [TeachPage.courseLectures]: noop,
+      [TeachPage.courseLectureDetails]: handleLecturesClick,
+    };
+    const clickHandler = clickHandlers[activeTeachPage];
+
     const pageNames: Dict<string> = {
       [TeachPage.courseDetails]: 'Course Details',
       [TeachPage.courseLectures]: 'Lectures',
       [TeachPage.courseLectureDetails]: 'Lectures',
     };
-
     const pageName = pageNames[activeTeachPage];
 
     return (
       <>
         <Icon color="#999" path={mdiChevronRight} size="18px" />
-        <S.Item isActive={activePages.includes(activeTeachPage)}>{pageName}</S.Item>
+        <S.Item isActive={activePages.includes(activeTeachPage)} onClick={clickHandler}>
+          {pageName}
+        </S.Item>
+      </>
+    );
+  };
+
+  const renderLectureName = () => {
+    if (!activeTeachCourse || !activeTeachLecture || activeTeachPage !== TeachPage.courseLectureDetails) return null;
+    return (
+      <>
+        <Icon color="#999" path={mdiChevronRight} size="18px" />
+        <S.Item isActive={false}>{activeTeachLecture.name}</S.Item>
       </>
     );
   };
@@ -71,6 +95,7 @@ const TeachBreadcrumbs: SFC = ({className}) => {
       </S.Item>
       {renderCourseName()}
       {renderCoursePageName()}
+      {renderLectureName()}
     </S.Container>
   );
 };

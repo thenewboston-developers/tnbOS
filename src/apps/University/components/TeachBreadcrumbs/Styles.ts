@@ -7,7 +7,7 @@ export const Container = styled.div`
   padding-left: 24px;
 `;
 
-export const Item = styled.div<{isActive?: boolean}>`
+export const Item = styled.div<{isActive: boolean}>`
   color: ${({isActive}) => (isActive ? '#006699' : '#777')};
   font-size: 12px;
   font-weight: 500;

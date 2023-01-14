@@ -6,6 +6,7 @@ export const getActiveLearnLectureId = (state: RootState): string => state.unive
 export const getActiveLearnPage = (state: RootState): LearnPage => state.university.manager.activeLearnPage;
 export const getActiveTab = (state: RootState): Tab => state.university.manager.activeTab;
 export const getActiveTeachCourseId = (state: RootState): string => state.university.manager.activeTeachCourseId;
+export const getActiveTeachLectureId = (state: RootState): string => state.university.manager.activeTeachLectureId;
 export const getActiveTeachPage = (state: RootState): TeachPage => state.university.manager.activeTeachPage;
 export const getCourses = (state: RootState): Courses => state.university.courses;
 export const getEnrollments = (state: RootState): Enrollments => state.university.enrollments;

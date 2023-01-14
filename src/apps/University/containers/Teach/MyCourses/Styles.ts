@@ -11,5 +11,5 @@ export const Container = styled.div`
 `;
 
 export const SectionHeading = styled(USectionHeading)`
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;

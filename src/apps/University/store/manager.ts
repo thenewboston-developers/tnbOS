@@ -11,6 +11,7 @@ export const initialState: Manager = {
   activeLearnPage: LearnPage.browse,
   activeTab: Tab.learn,
   activeTeachCourseId: null,
+  activeTeachLectureId: null,
   activeTeachPage: TeachPage.myCourses,
 };
 
@@ -38,6 +39,10 @@ const manager = createSlice({
       state.activeTeachCourseId = activeTeachCourseId;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_MANAGER, state: current(state)});
     },
+    setActiveTeachLectureId: (state: Manager, {payload: activeTeachLectureId}: PayloadAction<string | null>) => {
+      state.activeTeachLectureId = activeTeachLectureId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_MANAGER, state: current(state)});
+    },
     setActiveTeachPage: (state: Manager, {payload: teachPage}: PayloadAction<TeachPage>) => {
       state.activeTeachPage = teachPage;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_MANAGER, state: current(state)});
@@ -52,6 +57,7 @@ export const {
   setActiveLearnPage,
   setActiveTab,
   setActiveTeachCourseId,
+  setActiveTeachLectureId,
   setActiveTeachPage,
   setManager,
 } = manager.actions;

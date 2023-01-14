@@ -7,5 +7,6 @@ export interface Manager {
   activeLearnPage: LearnPage;
   activeTab: Tab;
   activeTeachCourseId: string | null;
+  activeTeachLectureId: string | null;
   activeTeachPage: TeachPage;
 }
