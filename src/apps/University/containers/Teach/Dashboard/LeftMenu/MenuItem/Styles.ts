@@ -4,7 +4,7 @@ import MdiIcon from '@mdi/react';
 export const Container = styled.div`
   align-items: center;
   display: flex;
-  padding: 10px 24px;
+  padding: 4px 16px;
 
   &:hover {
     cursor: pointer;
@@ -19,4 +19,5 @@ export const Icon = styled(MdiIcon)<{$isActivePage: boolean}>`
 export const Text = styled.div<{$isActivePage: boolean}>`
   color: ${({$isActivePage}) => ($isActivePage ? 'white' : '#a6b0cf')};
   font-size: 13px;
+  font-weight: 600;
 `;

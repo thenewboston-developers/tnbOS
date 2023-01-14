@@ -8,29 +8,30 @@ export const Container = styled.div`
   flex: auto;
 `;
 
-export const Menu = styled.div`
-  margin-top: 16px;
-`;
-
-export const MenuOption = styled.div<{isActive: boolean}>`
-  color: ${({isActive}) => (isActive ? '#fff' : '#79829c')};
-
-  &:hover {
-    color: ${({isActive}) => (isActive ? '#fff' : '#79829c')};
-    cursor: pointer;
-  }
-`;
-
-export const Name = styled.div`
+export const CourseName = styled.div`
   font-weight: 400;
+  margin-top: 2px;
 `;
 
-export const NameLabel = styled.div`
+export const CourseNameContainer = styled.div`
+  font-size: 12px;
+  padding: 8px 16px 0;
+`;
+
+export const CourseNameLabel = styled.div`
   font-weight: 600;
-  margin-top: 12px;
+`;
+
+export const Menu = styled.div`
+  margin-top: 24px;
 `;
 
 export const Thumbnail = styled.img`
+  border-radius: 4px;
   height: auto;
   width: 100%;
+`;
+
+export const ThumbnailContainer = styled.div`
+  padding: 16px 16px 0;
 `;

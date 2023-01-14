@@ -1,61 +1,52 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {mdiBookshelf, mdiPencil} from '@mdi/js';
 
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {getActiveTeachPage} from 'apps/University/selectors/state';
-import {setActiveTeachPage} from 'apps/University/store/manager';
 import {TeachPage} from 'apps/University/types';
-import {AppDispatch, SFC} from 'system/types';
+import {SFC} from 'system/types';
+
+import MenuItem from './MenuItem';
 import * as S from './Styles';
 
 const LeftMenu: SFC = ({className}) => {
   const activeTeachCourse = useActiveTeachCourse();
   const activeTeachPage = useSelector(getActiveTeachPage);
-  const dispatch = useDispatch<AppDispatch>();
 
-  const handleMenuOptionClick = (page: TeachPage) => {
-    dispatch(setActiveTeachPage(page));
-  };
-
-  const renderCourseName = () => {
+  const renderCourseNameContainer = () => {
     const displayPages = [TeachPage.courseDetails, TeachPage.courseLectures];
     if (!activeTeachCourse || !displayPages.includes(activeTeachPage)) return null;
     return (
-      <>
-        <S.NameLabel>Your course</S.NameLabel>
-        <S.Name>{activeTeachCourse.name}</S.Name>
-      </>
+      <S.CourseNameContainer>
+        <S.CourseNameLabel>Your course</S.CourseNameLabel>
+        <S.CourseName>{activeTeachCourse.name}</S.CourseName>
+      </S.CourseNameContainer>
     );
-  };
-
-  const renderCourseThumbnail = () => {
-    const displayPages = [TeachPage.courseDetails, TeachPage.courseLectures];
-    if (!activeTeachCourse || !displayPages.includes(activeTeachPage)) return null;
-    return <S.Thumbnail alt="thumbnail" src={activeTeachCourse.thumbnailUrl} />;
   };
 
   const renderMenuOptions = () => {
     return (
       <S.Menu>
-        <S.MenuOption
-          isActive={activeTeachPage === TeachPage.courseDetails}
-          onClick={() => handleMenuOptionClick(TeachPage.courseDetails)}
-        >
-          Course Details
-        </S.MenuOption>
-        <S.MenuOption
-          isActive={activeTeachPage === TeachPage.courseLectures}
-          onClick={() => handleMenuOptionClick(TeachPage.courseLectures)}
-        >
-          Lectures
-        </S.MenuOption>
+        <MenuItem icon={mdiPencil} page={TeachPage.courseDetails} text="Course Details" />
+        <MenuItem icon={mdiBookshelf} page={TeachPage.courseLectures} text="Lectures" />
       </S.Menu>
+    );
+  };
+
+  const renderThumbnailContainer = () => {
+    const displayPages = [TeachPage.courseDetails, TeachPage.courseLectures];
+    if (!activeTeachCourse || !displayPages.includes(activeTeachPage)) return null;
+    return (
+      <S.ThumbnailContainer>
+        <S.Thumbnail alt="thumbnail" src={activeTeachCourse.thumbnailUrl} />
+      </S.ThumbnailContainer>
     );
   };
 
   return (
     <S.Container className={className}>
-      {renderCourseThumbnail()}
-      {renderCourseName()}
+      {renderThumbnailContainer()}
+      {renderCourseNameContainer()}
       {renderMenuOptions()}
     </S.Container>
   );
