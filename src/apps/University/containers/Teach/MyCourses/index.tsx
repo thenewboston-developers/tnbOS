@@ -1,17 +1,15 @@
-import {useSelector} from 'react-redux';
-
-import {getCourses} from 'apps/University/selectors/state';
+import {useTaughtCourses} from 'apps/University/hooks';
 import {SFC} from 'system/types';
 
 import Course from './Course';
 import * as S from './Styles';
 
 const MyCourses: SFC = ({className}) => {
-  const courses = useSelector(getCourses);
+  const taughtCourses = useTaughtCourses();
 
   const renderCourses = () => {
-    const _courses = Object.values(courses).map((course) => <Course course={course} key={course.courseId} />);
-    return <S.Courses>{_courses}</S.Courses>;
+    const courses = Object.values(taughtCourses).map((course) => <Course course={course} key={course.courseId} />);
+    return <S.Courses>{courses}</S.Courses>;
   };
 
   const renderNewCourseButton = () => {

@@ -10,7 +10,7 @@ export const initialState: Courses = {
     courseId: 'computergamedevelopment',
     createdDate: '2022-12-22T00:45:10Z',
     description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
-    instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
+    instructor: 'f8595108c232da7e6e0906ca309bf93bbdce774d2830cc107e8dec9927e7bcc0',
     name: 'Computer Game Development',
     publicationStatus: PublicationStatus.published,
     thumbnailUrl: 'https://i.imgur.com/QkVxS3m.png',
