@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import ULeftMenu from './LeftMenu';
+
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 250px auto;
@@ -7,12 +9,7 @@ export const Container = styled.div`
   overflow-y: hidden;
 `;
 
-export const LeftMenu = styled.div`
-  background: #2a3042;
-  color: #79829c;
-  display: flex;
-  flex-direction: column;
-  flex: auto;
+export const LeftMenu = styled(ULeftMenu)`
   grid-column: 1 / span 1;
   overflow-y: auto;
 `;
