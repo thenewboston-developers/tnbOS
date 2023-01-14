@@ -6,10 +6,6 @@ import * as S from './Styles';
 const LectureLeftMenu: SFC = ({className}) => {
   const activeTeachLecture = useActiveTeachLecture();
 
-  const renderMenu = () => {
-    return <S.Menu>Menu</S.Menu>;
-  };
-
   const renderLeftMenuSticker = () => {
     if (!activeTeachLecture) return null;
 
@@ -24,8 +20,8 @@ const LectureLeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      <div>&lt; Course Lectures</div>
       {renderLeftMenuSticker()}
-      {renderMenu()}
     </S.Container>
   );
 };
