@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: grid;
   gap: 48px;
   grid-template-columns: 1fr 1fr;
-  padding: 16px 24px;
+  padding: 24px;
 `;
 
 export const Left = styled.div``;
