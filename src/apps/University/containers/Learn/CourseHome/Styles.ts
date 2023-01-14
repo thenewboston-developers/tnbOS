@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
+import UButton from 'system/components/Button';
+
+export const Button = styled(UButton)`
+  margin-top: 16px;
+`;
 
 export const Container = styled.div`
   display: grid;
@@ -33,6 +38,7 @@ export const Playlist = styled(UPlaylist)`
 export const Right = styled.div``;
 
 export const Thumbnail = styled.img`
+  border-radius: 8px;
   height: auto;
   width: 100%;
 `;

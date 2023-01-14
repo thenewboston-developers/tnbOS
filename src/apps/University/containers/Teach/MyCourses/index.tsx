@@ -21,7 +21,7 @@ const MyCourses: SFC = ({className}) => {
   };
 
   const renderNewCourseButton = () => {
-    return <button onClick={toggleCourseModal}>New Course</button>;
+    return <S.Button onClick={toggleCourseModal} text="New Course" />;
   };
 
   return (
