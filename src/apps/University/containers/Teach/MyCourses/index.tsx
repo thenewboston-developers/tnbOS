@@ -10,12 +10,17 @@ const MyCourses: SFC = ({className}) => {
   const courses = useSelector(getCourses);
 
   const renderCourses = () => {
-    return Object.values(courses).map((course) => <Course course={course} key={course.courseId} />);
+    const _courses = Object.values(courses).map((course) => <Course course={course} key={course.courseId} />);
+    return <S.Courses>{_courses}</S.Courses>;
+  };
+
+  const renderNewCourseButton = () => {
+    return <button>New Course</button>;
   };
 
   return (
     <S.Container className={className}>
-      <S.SectionHeading heading="My Courses" />
+      <S.SectionHeading heading="My Courses" rightContent={renderNewCourseButton()} />
       {renderCourses()}
     </S.Container>
   );

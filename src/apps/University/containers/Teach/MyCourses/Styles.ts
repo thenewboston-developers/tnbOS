@@ -10,6 +10,12 @@ export const Container = styled.div`
   padding: 16px 24px;
 `;
 
+export const Courses = styled.div`
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 2fr 4fr 1fr 1fr 1fr;
+`;
+
 export const SectionHeading = styled(USectionHeading)`
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 `;

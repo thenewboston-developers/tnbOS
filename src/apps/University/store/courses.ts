@@ -8,6 +8,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 export const initialState: Courses = {
   computergamedevelopment: {
     courseId: 'computergamedevelopment',
+    createdDate: '2022-12-22T00:45:10Z',
     description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
     instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
     name: 'Computer Game Development',
@@ -16,7 +17,9 @@ export const initialState: Courses = {
   },
   mysql: {
     courseId: 'mysql',
-    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
+    createdDate: '2022-12-23T00:45:10Z',
+    description:
+      'Cow doner chislic turducken. Leberkas buffalo porchetta shoulder pork loin, biltong jowl kielbasa prosciutto beef hamburger pig shankle cow frankfurter. Buffalo leberkas venison shankle prosciutto, beef ribs tenderloin ham.',
     instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
     name: 'MySQL for Beginners',
     publicationStatus: PublicationStatus.published,
@@ -24,15 +27,18 @@ export const initialState: Courses = {
   },
   objectivec: {
     courseId: 'objectivec',
+    createdDate: '2022-12-24T00:45:10Z',
     description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
     instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
-    name: 'Objective C',
+    name: 'Objective C Cow doner chislic turducken Cow doner chislic turducken Cow doner chislic turducken',
     publicationStatus: PublicationStatus.published,
     thumbnailUrl: 'https://i.imgur.com/PSjlER4.png',
   },
   ruby: {
     courseId: 'ruby',
-    description: 'Hamburger pastrami meatball drumstick brisket shoulder, boudin andouille.',
+    createdDate: '2022-12-25T00:45:10Z',
+    description:
+      'Strip steak brisket beef, corned beef capicola sausage boudin. Pancetta filet mignon landjaeger pork loin, bacon rump ball tip hamburger shankle. Burgdoggen ham doner biltong landjaeger kevin. Pork belly tenderloin bresaola ham hock, jowl spare ribs flank meatloaf boudin corned beef.',
     instructor: 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c',
     name: 'Ruby',
     publicationStatus: PublicationStatus.published,

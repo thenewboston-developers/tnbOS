@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
+export const Actions = styled.div`
+  font-size: 13px;
+  white-space: nowrap;
+`;
+
+export const CreatedDate = styled.div`
+  font-size: 13px;
 `;
 
 export const Description = styled.div`
+  color: #74788d;
+  font-size: 12px;
   margin-top: 2px;
 `;
 
@@ -13,13 +20,21 @@ export const Details = styled.div`
 `;
 
 export const Name = styled.div`
-  font-size: 13px;
   font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
+export const PublicationStatus = styled.div``;
+
 export const Thumbnail = styled.img`
-  align-self: flex-start;
-  flex-shrink: 0;
   height: auto;
-  width: 100px;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

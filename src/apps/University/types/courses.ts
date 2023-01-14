@@ -3,6 +3,7 @@ import {Dict} from 'system/types';
 
 export interface Course {
   courseId: string;
+  createdDate: string;
   description: string;
   instructor: string;
   name: string;
