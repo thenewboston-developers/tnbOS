@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import {createPortal} from 'react-dom';
 import {mdiClose} from '@mdi/js';
 
+import Line from 'apps/University/components/Line';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -20,6 +21,7 @@ const Modal: SFC<ModalProps> = ({children, className, close, header}) => {
           <span>{header}</span>
           <S.Icon icon={mdiClose} onClick={close} size={16} unfocusable />
         </S.Header>
+        <Line />
         <S.Content>{children}</S.Content>
       </S.Modal>
     </>,

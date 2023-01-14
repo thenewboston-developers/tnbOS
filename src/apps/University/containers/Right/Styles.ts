@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/University/styles';
+
 export const Container = styled.div`
   background: #fff;
-  color: #555;
+  color: ${colors.fonts.default};
   display: flex;
   flex-direction: column;
 `;

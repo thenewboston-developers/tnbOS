@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/University/styles';
 import UAvatar from 'system/components/Avatar';
 import {Status} from 'system/components/Avatar/Styles';
 
@@ -17,12 +18,12 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: #74788d;
+  color: ${colors.fonts.secondary};
   font-size: 12px;
 `;
 
 export const Name = styled.div`
-  color: #343a40;
+  color: ${colors.fonts.default};
   font-size: 14px;
   font-weight: 600;
 `;

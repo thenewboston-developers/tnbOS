@@ -14,6 +14,22 @@ const blueMixin = css`
   }
 `;
 
+const grayMixin = css`
+  background-color: ${colors.palette.gray['200']};
+
+  &:hover {
+    background: ${colors.palette.gray['300']};
+  }
+`;
+
+const redMixin = css`
+  background-color: ${colors.palette.red['200']};
+
+  &:hover {
+    background: ${colors.palette.red['300']};
+  }
+`;
+
 const disabledMixin = css`
   background: ${colors.palette.black['100']};
   cursor: not-allowed;
@@ -47,6 +63,8 @@ export const Button = styled.button<{$color?: ButtonColor; hasIcon: boolean}>`
 
   ${({$color}) => {
     if ($color === ButtonColor.blue) return blueMixin;
+    if ($color === ButtonColor.gray) return grayMixin;
+    if ($color === ButtonColor.red) return redMixin;
     return;
   }}
 

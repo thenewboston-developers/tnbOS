@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/University/styles';
+
 export const Container = styled.div`
   background: #303641;
-  color: #aaabae;
+  color: ${colors.fonts.leftMenu};
   display: flex;
   flex-direction: column;
   flex: auto;
@@ -10,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const MenuTitle = styled.div`
-  color: #aaabae;
+  color: ${colors.fonts.leftMenu};
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;

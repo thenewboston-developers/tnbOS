@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import UButton from 'apps/University/components/Button';
 import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
+import {colors} from 'apps/University/styles';
 
 export const Button = styled(UButton)`
   margin-top: 16px;
@@ -21,6 +22,7 @@ export const CourseDescription = styled.div`
 `;
 
 export const CourseName = styled.div`
+  color: ${colors.fonts.heading};
   font-size: 32px;
   font-weight: 600;
   margin-top: 8px;
@@ -39,7 +41,8 @@ export const Playlist = styled(UPlaylist)`
 export const Right = styled.div``;
 
 export const Thumbnail = styled.img`
-  border-radius: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 4%);
   height: auto;
   width: 100%;
 `;

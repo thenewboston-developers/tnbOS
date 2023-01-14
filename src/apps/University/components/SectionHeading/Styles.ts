@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+import {colors} from 'apps/University/styles';
+
+export const Container = styled.div``;
+
+export const Contents = styled.div`
   align-items: flex-end;
-  border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
 `;
 
 export const Heading = styled.div`
-  color: #666;
-  font-size: 13px;
-  font-weight: 600;
+  color: ${colors.fonts.secondary};
+  font-size: 12px;
+  font-weight: 700;
 `;

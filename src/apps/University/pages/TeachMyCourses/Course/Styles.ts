@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/University/styles';
+
 export const Actions = styled.div`
   font-size: 13px;
   white-space: nowrap;
@@ -10,7 +12,7 @@ export const CreatedDate = styled.div`
 `;
 
 export const Description = styled.div`
-  color: #74788d;
+  color: ${colors.fonts.secondary};
   font-size: 12px;
   margin-top: 2px;
 `;

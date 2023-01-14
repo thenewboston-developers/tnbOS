@@ -4,7 +4,6 @@ import ULeftMenu from 'apps/University/containers/LeftMenu';
 import URight from 'apps/University/containers/Right';
 
 export const Container = styled.div`
-  color: #495057;
   display: grid;
   grid-template-columns: 250px auto;
   height: 100%;

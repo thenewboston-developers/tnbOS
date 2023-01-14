@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UInstructor from 'apps/University/components/Instructor';
+import {colors} from 'apps/University/styles';
 
 export const Bottom = styled.div`
   display: flex;
@@ -10,22 +11,20 @@ export const Bottom = styled.div`
 `;
 
 export const Container = styled.div`
-  background: #fff;
   border-radius: 4px;
-  border: 1px solid #f0f1f2;
-  box-shadow: 0 2px 3px rgb(56 59 61 / 5%);
+  border: 1px solid #ebebeb;
+  box-shadow: 0 3px 1px rgb(0 0 0 / 4%);
   overflow: hidden;
-  transition: all 0.25s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
 
   &:hover {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 5px rgb(0 0 0 / 5%);
     cursor: pointer;
-    transform: translateY(-1.5px);
   }
 `;
 
 export const Description = styled.div`
-  color: #74788d;
+  color: ${colors.fonts.secondary};
   font-size: 12px;
 `;
 
@@ -39,7 +38,7 @@ export const Instructor = styled(UInstructor)`
 `;
 
 export const Name = styled.div`
-  color: #444;
+  color: ${colors.fonts.heading};
   font-size: 20px;
   font-weight: 500;
 `;

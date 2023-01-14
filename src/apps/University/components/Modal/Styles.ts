@@ -1,5 +1,6 @@
 import styled, {keyframes} from 'styled-components';
 
+import {colors} from 'apps/University/styles';
 import UIcon from 'system/components/Icon';
 
 const addOverlay = keyframes`
@@ -12,17 +13,17 @@ const addOverlay = keyframes`
 `;
 
 export const Content = styled.div`
-  padding: 16px;
+  padding: 24px;
 `;
 
 export const Header = styled.div`
   align-items: center;
-  border-bottom: 1px solid #eff2f7;
+  color: ${colors.fonts.heading};
   display: flex;
   font-size: 16px;
   font-weight: 500;
   justify-content: space-between;
-  padding: 16px;
+  padding: 12px 24px;
   position: relative;
 `;
 
@@ -34,8 +35,7 @@ export const Icon = styled(UIcon)`
 
 export const Modal = styled.div`
   background: #fff;
-  border: 1px solid #f6f6f6;
-  border-radius: 8px;
+  border-radius: 4px;
   left: 50%;
   position: fixed;
   top: 50%;

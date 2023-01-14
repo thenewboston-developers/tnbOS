@@ -28,8 +28,8 @@ const LearnCourseHome: SFC = ({className}) => {
   };
 
   const renderButton = () => {
-    if (isSelfEnrolled) return <S.Button onClick={handleLeaveCourseClick} text="Leave Course" />;
-    return <S.Button onClick={handleTakeCourseClick} text="Take Course" />;
+    if (!isSelfEnrolled) return <S.Button onClick={handleTakeCourseClick} text="Take Course" />;
+    return <S.Button onClick={handleLeaveCourseClick} text="Leave Course" />;
   };
 
   if (!course) return null;
