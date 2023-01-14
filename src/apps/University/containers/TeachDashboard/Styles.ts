@@ -1,6 +1,12 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
-import ULeftMenu from './LeftMenu';
+import UCourseLeftMenu from './CourseLeftMenu';
+import ULectureLeftMenu from './LectureLeftMenu';
+
+const leftMenuMixin = css`
+  grid-column: 1 / span 1;
+  overflow-y: auto;
+`;
 
 export const Container = styled.div`
   display: grid;
@@ -9,9 +15,12 @@ export const Container = styled.div`
   overflow-y: hidden;
 `;
 
-export const LeftMenu = styled(ULeftMenu)`
-  grid-column: 1 / span 1;
-  overflow-y: auto;
+export const CourseLeftMenu = styled(UCourseLeftMenu)`
+  ${leftMenuMixin};
+`;
+
+export const LectureLeftMenu = styled(ULectureLeftMenu)`
+  ${leftMenuMixin};
 `;
 
 export const Right = styled.div`
