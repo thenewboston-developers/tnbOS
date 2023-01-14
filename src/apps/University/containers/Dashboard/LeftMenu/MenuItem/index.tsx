@@ -7,12 +7,12 @@ import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface MenuItemProps {
-  children: string;
   icon: string;
   page: Page;
+  text: string;
 }
 
-const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
+const MenuItem: SFC<MenuItemProps> = ({className, icon, page, text}) => {
   const activePage = useSelector(getActivePage);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -23,9 +23,9 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
   };
 
   return (
-    <S.Container $isActivePage={isActivePage} className={className} onClick={handleClick}>
+    <S.Container className={className} onClick={handleClick}>
       <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
-      <S.Text $isActivePage={isActivePage}>{children}</S.Text>
+      <S.Text $isActivePage={isActivePage}>{text}</S.Text>
     </S.Container>
   );
 };

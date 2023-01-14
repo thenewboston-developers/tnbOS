@@ -1,32 +1,30 @@
 import {useDispatch} from 'react-redux';
 
-import {setActiveLearnLectureId, setActivePage} from 'apps/University/store/manager';
+import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture as TLecture, Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface LectureProps {
-  displayDescription: boolean;
   lecture: TLecture;
 }
 
-const Lecture: SFC<LectureProps> = ({className, displayDescription, lecture}) => {
+const Lecture: SFC<LectureProps> = ({className, lecture}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {description, lectureId, name, position, thumbnailUrl} = lecture;
+  const {description, lectureId, name, thumbnailUrl} = lecture;
 
   const handleClick = () => {
-    dispatch(setActiveLearnLectureId(lectureId));
-    dispatch(setActivePage(Page.learnCourseLecture));
+    dispatch(setActiveTeachLectureId(lectureId));
+    dispatch(setActivePage(Page.teachCourseLectureDetails));
   };
 
   return (
     <S.Container className={className} onClick={handleClick}>
-      <S.Position>{position}</S.Position>
       <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
       <S.Details>
         <S.Name>{name}</S.Name>
-        {displayDescription && <S.Description>{description}</S.Description>}
+        <S.Description>{description}</S.Description>
       </S.Details>
     </S.Container>
   );

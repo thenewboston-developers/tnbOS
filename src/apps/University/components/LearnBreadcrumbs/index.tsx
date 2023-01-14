@@ -5,8 +5,8 @@ import Icon from '@mdi/react';
 
 import {useActiveLearnLecture} from 'apps/University/hooks';
 import {getCourses} from 'apps/University/selectors/state';
-import {setActiveLearnCourseId, setActiveLearnPage} from 'apps/University/store/manager';
-import {LearnPage} from 'apps/University/types';
+import {setActiveLearnCourseId, setActivePage} from 'apps/University/store/manager';
+import {Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
@@ -21,7 +21,7 @@ const LearnBreadcrumbs: SFC = ({className}) => {
 
   const handleCourseNameClick = () => {
     dispatch(setActiveLearnCourseId(course.courseId));
-    dispatch(setActiveLearnPage(LearnPage.courseHome));
+    dispatch(setActivePage(Page.learnCourseHome));
   };
 
   return (

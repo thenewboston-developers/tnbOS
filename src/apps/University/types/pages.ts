@@ -1,13 +1,10 @@
-export enum LearnPage {
-  browse = 'browse',
-  courseHome = 'courseHome',
-  courseLecture = 'courseLecture',
-  myCourses = 'myCourses',
-}
-
-export enum TeachPage {
-  courseDetails = 'courseDetails',
-  courseLectureDetails = 'courseLectureDetails',
-  courseLectures = 'courseLectures',
-  myCourses = 'myCourses',
+export enum Page {
+  learnBrowse = 'learnBrowse',
+  learnCourseHome = 'learnCourseHome',
+  learnCourseLecture = 'learnCourseLecture',
+  learnMyCourses = 'learnMyCourses',
+  teachCourseDetails = 'teachCourseDetails',
+  teachCourseLectureDetails = 'teachCourseLectureDetails',
+  teachCourseLectures = 'teachCourseLectures',
+  teachMyCourses = 'teachMyCourses',
 }

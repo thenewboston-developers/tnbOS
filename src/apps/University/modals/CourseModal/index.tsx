@@ -4,8 +4,8 @@ import {Form, Formik} from 'formik';
 
 import {Input} from 'apps/University/components/FormElements';
 import {setCourse} from 'apps/University/store/courses';
-import {setActiveTeachCourseId, setActiveTeachPage} from 'apps/University/store/manager';
-import {Course, PublicationStatus, TeachPage} from 'apps/University/types';
+import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
+import {Course, Page, PublicationStatus} from 'apps/University/types';
 import Button, {ButtonType} from 'system/components/Button';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
@@ -45,7 +45,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
 
       dispatch(setCourse(course));
       dispatch(setActiveTeachCourseId(courseId));
-      dispatch(setActiveTeachPage(TeachPage.courseDetails));
+      dispatch(setActivePage(Page.teachCourseDetails));
 
       close();
     } catch (error) {
