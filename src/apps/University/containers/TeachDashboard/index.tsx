@@ -4,11 +4,11 @@ import TeachBreadcrumbs from 'apps/University/components/TeachBreadcrumbs';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-export interface DashboardProps {
+export interface TeachDashboardProps {
   children: ReactNode;
 }
 
-const Dashboard: SFC<DashboardProps> = ({children, className}) => {
+const TeachDashboard: SFC<TeachDashboardProps> = ({children, className}) => {
   return (
     <S.Container className={className}>
       <S.LeftMenu />
@@ -20,4 +20,4 @@ const Dashboard: SFC<DashboardProps> = ({children, className}) => {
   );
 };
 
-export default Dashboard;
+export default TeachDashboard;

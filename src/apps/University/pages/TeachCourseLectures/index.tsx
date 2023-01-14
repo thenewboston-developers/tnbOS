@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux';
 
-import Dashboard from 'apps/University/containers/Dashboard';
+import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
 import {SFC} from 'system/types';
@@ -17,12 +17,12 @@ const TeachCourseLectures: SFC = ({className}) => {
   };
 
   return (
-    <Dashboard>
+    <TeachDashboard>
       <S.Container className={className}>
         <S.SectionHeading heading="Lectures" />
         {renderLectures()}
       </S.Container>
-    </Dashboard>
+    </TeachDashboard>
   );
 };
 

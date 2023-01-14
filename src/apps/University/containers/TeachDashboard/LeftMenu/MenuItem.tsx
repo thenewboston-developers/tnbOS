@@ -1,18 +1,18 @@
 import {useDispatch, useSelector} from 'react-redux';
 
+import LeftMenuItem from 'apps/University/components/LeftMenuItem';
 import {getActivePage} from 'apps/University/selectors/state';
 import {setActivePage} from 'apps/University/store/manager';
 import {Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
-import * as S from './Styles';
 
 export interface MenuItemProps {
+  children: string;
   icon: string;
   page: Page;
-  text: string;
 }
 
-const MenuItem: SFC<MenuItemProps> = ({className, icon, page, text}) => {
+const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
   const activePage = useSelector(getActivePage);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -23,10 +23,9 @@ const MenuItem: SFC<MenuItemProps> = ({className, icon, page, text}) => {
   };
 
   return (
-    <S.Container className={className} onClick={handleClick}>
-      <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
-      <S.Text $isActivePage={isActivePage}>{text}</S.Text>
-    </S.Container>
+    <LeftMenuItem className={className} icon={icon} isActivePage={isActivePage} onClick={handleClick}>
+      {children}
+    </LeftMenuItem>
   );
 };
 

@@ -5,7 +5,7 @@ import noop from 'lodash/noop';
 import {ButtonType} from 'apps/University/components/Button';
 import CourseCard from 'apps/University/components/CourseCard';
 import {Input} from 'apps/University/components/FormElements';
-import Dashboard from 'apps/University/containers/Dashboard';
+import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {SFC} from 'system/types';
 import yup from 'system/utils/forms/yup';
@@ -50,7 +50,7 @@ const TeachCourseDetails: SFC = ({className}) => {
   }, []);
 
   return (
-    <Dashboard>
+    <TeachDashboard>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -78,7 +78,7 @@ const TeachCourseDetails: SFC = ({className}) => {
           </S.Container>
         )}
       </Formik>
-    </Dashboard>
+    </TeachDashboard>
   );
 };
 

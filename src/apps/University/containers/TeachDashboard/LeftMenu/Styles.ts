@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
+import {mixinLeftMenu} from 'apps/University/styles';
+
 export const Container = styled.div`
-  background: #38444d;
-  color: #8a9299;
-  display: flex;
-  flex-direction: column;
-  flex: auto;
+  border-left: 1px solid rgba(0, 0, 0, 10%);
+  ${mixinLeftMenu};
 `;
 
 export const CourseName = styled.div`
@@ -15,7 +14,7 @@ export const CourseName = styled.div`
 
 export const CourseNameContainer = styled.div`
   font-size: 12px;
-  padding: 8px 16px 0;
+  padding: 8px 20px 0;
 `;
 
 export const CourseNameLabel = styled.div`
@@ -33,5 +32,5 @@ export const Thumbnail = styled.img`
 `;
 
 export const ThumbnailContainer = styled.div`
-  padding: 24px 16px 0;
+  padding: 24px 20px 0;
 `;

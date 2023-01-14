@@ -27,8 +27,12 @@ const LeftMenu: SFC = ({className}) => {
   const renderMenuOptions = () => {
     return (
       <S.Menu>
-        <MenuItem icon={mdiPencil} page={Page.teachCourseDetails} text="Course Details" />
-        <MenuItem icon={mdiBookshelf} page={Page.teachCourseLectures} text="Lectures" />
+        <MenuItem icon={mdiPencil} page={Page.teachCourseDetails}>
+          Course Details
+        </MenuItem>
+        <MenuItem icon={mdiBookshelf} page={Page.teachCourseLectures}>
+          Lectures
+        </MenuItem>
       </S.Menu>
     );
   };
