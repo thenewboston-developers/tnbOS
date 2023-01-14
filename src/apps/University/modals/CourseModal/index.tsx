@@ -2,16 +2,16 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
-import Modal from 'apps/University/components/Modal';
+import {Input} from 'apps/University/components/FormElements';
 import {setCourse} from 'apps/University/store/courses';
 import {setActiveTeachCourseId, setActiveTeachPage} from 'apps/University/store/manager';
 import {Course, PublicationStatus, TeachPage} from 'apps/University/types';
 import Button, {ButtonType} from 'system/components/Button';
-import {Input} from 'system/components/FormElements';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
+import * as S from './Styles';
 
 interface CourseModalProps {
   close(): void;
@@ -63,7 +63,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   }, []);
 
   return (
-    <Modal className={className} close={close} header="New Course">
+    <S.Modal className={className} close={close} header="New Course">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -86,7 +86,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
           </Form>
         )}
       </Formik>
-    </Modal>
+    </S.Modal>
   );
 };
 
