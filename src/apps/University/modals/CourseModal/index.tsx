@@ -75,7 +75,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
             <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
-            <Input errors={errors} label="Name" name="name" touched={touched} />
+            <Input errors={errors} label="Course Name" name="name" touched={touched} />
             <Input errors={errors} label="Description" name="description" touched={touched} />
             <S.Button
               dirty={dirty}

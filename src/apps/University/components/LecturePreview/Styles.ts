@@ -11,6 +11,8 @@ export const Description = styled.div`
 `;
 
 export const Img = styled.img`
+  border-radius: 4px;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 4%);
   height: auto;
   width: 100%;
 `;

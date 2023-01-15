@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
-import {Form, Formik} from 'formik';
+import {useDispatch} from 'react-redux';
+import {Form, Formik, FormikHelpers} from 'formik';
 import noop from 'lodash/noop';
 
 import {ButtonType} from 'apps/University/components/Button';
@@ -7,12 +8,15 @@ import CourseCard from 'apps/University/components/CourseCard';
 import {Input} from 'apps/University/components/FormElements';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
-import {SFC} from 'system/types';
+import {setCourse} from 'apps/University/store/courses';
+import {AppDispatch, SFC, ToastType} from 'system/types';
 import yup from 'system/utils/forms/yup';
+import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const TeachCourseDetails: SFC = ({className}) => {
   const activeTeachCourse = useActiveTeachCourse();
+  const dispatch = useDispatch<AppDispatch>();
 
   const initialValues = {
     description: activeTeachCourse?.description || '',
@@ -22,9 +26,16 @@ const TeachCourseDetails: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
+    if (!activeTeachCourse) return;
+
     try {
-      console.log(values);
+      const course = {...activeTeachCourse, ...values};
+
+      dispatch(setCourse(course));
+      setSubmitting(false);
+
+      displayToast('Course updated!', ToastType.success);
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +69,7 @@ const TeachCourseDetails: SFC = ({className}) => {
             <S.Left>
               <Form>
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
-                <Input errors={errors} label="Name" name="name" touched={touched} />
+                <Input errors={errors} label="Course Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
                 <S.Button
                   dirty={dirty}
