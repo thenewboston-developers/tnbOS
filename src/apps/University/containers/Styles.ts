@@ -5,7 +5,7 @@ import URight from 'apps/University/containers/Right';
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 250px auto;
+  grid-template-columns: fit-content(250px) auto;
   height: 100%;
   width: 100%;
 `;

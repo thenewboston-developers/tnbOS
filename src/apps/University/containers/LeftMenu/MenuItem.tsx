@@ -10,11 +10,12 @@ import {AppDispatch, SFC} from 'system/types';
 export interface MenuItemProps {
   children: string;
   icon: string;
+  isCollapsed: boolean;
   page: Page;
 }
 
 // TODO: Auto collapse when teachers left menu is open
-const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
+const MenuItem: SFC<MenuItemProps> = ({children, className, icon, isCollapsed, page}) => {
   const activeLearnCourseId = useSelector(getActiveLearnCourseId);
   const activePage = useSelector(getActivePage);
   const dispatch = useDispatch<AppDispatch>();
@@ -48,17 +49,16 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, page}) => {
   };
 
   return (
-    <LeftMenuItem className={className} icon={icon} isActivePage={isActivePage} onClick={handleClick}>
+    <LeftMenuItem
+      className={className}
+      icon={icon}
+      isActivePage={isActivePage}
+      isCollapsed={isCollapsed}
+      onClick={handleClick}
+    >
       {children}
     </LeftMenuItem>
   );
-
-  // return (
-  //   <S.Container $isActivePage={isActivePage} className={className} onClick={handleClick}>
-  //     <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
-  //     <S.Text $isActivePage={isActivePage}>{children}</S.Text>
-  //   </S.Container>
-  // );
 };
 
 export default MenuItem;

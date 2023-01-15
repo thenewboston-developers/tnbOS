@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
 import TeachBreadcrumbs from 'apps/University/components/TeachBreadcrumbs';
@@ -7,7 +7,8 @@ import {Page} from 'apps/University/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const COURSE_LEFT_MENU_PAGES = [Page.teachCourseDetails, Page.teachCourseLectures];
+const COURSE_LEFT_MENU_PAGES = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+const LECTURE_LEFT_MENU_PAGES = [Page.teachCourseLectureDetails];
 
 export interface TeachDashboardProps {
   children: ReactNode;
@@ -16,15 +17,25 @@ export interface TeachDashboardProps {
 const TeachDashboard: SFC<TeachDashboardProps> = ({children, className}) => {
   const activePage = useSelector(getActivePage);
 
-  const renderLeftMenu = () => {
-    if (COURSE_LEFT_MENU_PAGES.includes(activePage)) return <S.CourseLeftMenu />;
+  const isLectureLeftMenuVisible = useMemo(() => {
+    return LECTURE_LEFT_MENU_PAGES.includes(activePage);
+  }, [activePage]);
+
+  const renderCourseLeftMenu = () => {
+    if (!COURSE_LEFT_MENU_PAGES.includes(activePage)) return null;
+    return <S.CourseLeftMenu />;
+  };
+
+  const renderLectureLeftMenu = () => {
+    if (!isLectureLeftMenuVisible) return null;
     return <S.LectureLeftMenu />;
   };
 
   return (
-    <S.Container className={className}>
-      {renderLeftMenu()}
-      <S.Right>
+    <S.Container className={className} isLectureLeftMenuVisible={isLectureLeftMenuVisible}>
+      {renderCourseLeftMenu()}
+      {renderLectureLeftMenu()}
+      <S.Right isLectureLeftMenuVisible={isLectureLeftMenuVisible}>
         <TeachBreadcrumbs />
         {children}
       </S.Right>

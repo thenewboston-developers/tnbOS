@@ -7,6 +7,7 @@ export const BottomText = styled.div`
 
 export const TextContainer = styled.div`
   font-size: 12px;
+  margin-bottom: 24px;
   padding: 8px 20px 0;
 `;
 

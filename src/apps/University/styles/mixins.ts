@@ -8,7 +8,8 @@ export const mixinLeftMenu = css`
   display: flex;
   flex-direction: column;
   flex: auto;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 export const mixinListItemDescription = css`

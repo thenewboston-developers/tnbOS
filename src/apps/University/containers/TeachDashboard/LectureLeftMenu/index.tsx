@@ -20,7 +20,6 @@ const LectureLeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <div>&lt; Course Lectures</div>
       {renderLeftMenuSticker()}
     </S.Container>
   );

@@ -7,6 +7,4 @@ export const Container = styled.div`
   ${mixinLeftMenu};
 `;
 
-export const Menu = styled.div`
-  margin-top: 24px;
-`;
+export const Menu = styled.div``;

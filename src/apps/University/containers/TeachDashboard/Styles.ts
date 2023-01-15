@@ -1,29 +1,27 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
 import UCourseLeftMenu from './CourseLeftMenu';
 import ULectureLeftMenu from './LectureLeftMenu';
 
-const leftMenuMixin = css`
-  grid-column: 1 / span 1;
-  overflow-y: auto;
-`;
-
-export const Container = styled.div`
+export const Container = styled.div<{isLectureLeftMenuVisible: boolean}>`
   display: grid;
-  grid-template-columns: 250px auto;
+  grid-template-columns: ${({isLectureLeftMenuVisible}) =>
+    isLectureLeftMenuVisible ? 'fit-content(250px) fit-content(250px) auto' : 'fit-content(250px) auto'};
   height: 100%;
   overflow-y: hidden;
 `;
 
 export const CourseLeftMenu = styled(UCourseLeftMenu)`
-  ${leftMenuMixin};
+  grid-column: 1 / span 1;
+  overflow-y: auto;
 `;
 
 export const LectureLeftMenu = styled(ULectureLeftMenu)`
-  ${leftMenuMixin};
+  grid-column: 2 / span 1;
+  overflow-y: auto;
 `;
 
-export const Right = styled.div`
-  grid-column: 2 / span 1;
+export const Right = styled.div<{isLectureLeftMenuVisible: boolean}>`
+  grid-column: ${({isLectureLeftMenuVisible}) => (isLectureLeftMenuVisible ? '3 / span 1' : '2 / span 1')};
   overflow-y: auto;
 `;

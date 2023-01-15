@@ -6,14 +6,17 @@ export interface LeftMenuItemProps {
   children: string;
   icon: string;
   isActivePage: boolean;
+  isCollapsed: boolean;
   onClick: GenericVoidFunction;
 }
 
-const LeftMenuItem: SFC<LeftMenuItemProps> = ({children, className, icon, isActivePage, onClick}) => {
+const LeftMenuItem: SFC<LeftMenuItemProps> = ({children, className, icon, isActivePage, isCollapsed, onClick}) => {
   return (
-    <S.Container $isActivePage={isActivePage} className={className} onClick={onClick}>
+    <S.Container $isActivePage={isActivePage} $isCollapsed={isCollapsed} className={className} onClick={onClick}>
       <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
-      <S.Text $isActivePage={isActivePage}>{children}</S.Text>
+      <S.Text $isActivePage={isActivePage} $isCollapsed={isCollapsed}>
+        {children}
+      </S.Text>
     </S.Container>
   );
 };
