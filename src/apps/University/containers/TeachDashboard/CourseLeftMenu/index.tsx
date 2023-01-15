@@ -1,12 +1,14 @@
 import {useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {mdiBookshelf, mdiPencil} from '@mdi/js';
 
+import LeftMenuBack from 'apps/University/components/LeftMenuBack';
 import LeftMenuSticker from 'apps/University/components/LeftMenuSticker';
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {getActivePage} from 'apps/University/selectors/state';
+import {setActivePage} from 'apps/University/store/manager';
 import {Page} from 'apps/University/types';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 
 import MenuItem from './MenuItem';
 import * as S from './Styles';
@@ -14,10 +16,21 @@ import * as S from './Styles';
 const CourseLeftMenu: SFC = ({className}) => {
   const activePage = useSelector(getActivePage);
   const activeTeachCourse = useActiveTeachCourse();
+  const dispatch = useDispatch<AppDispatch>();
 
   const isCollapsed = useMemo(() => {
     return activePage === Page.teachCourseLectureDetails;
   }, [activePage]);
+
+  const handleLeftMenuBackClick = () => {
+    dispatch(setActivePage(Page.teachMyCourses));
+  };
+
+  const renderLeftMenuBack = () => {
+    if (!activeTeachCourse || isCollapsed) return null;
+
+    return <LeftMenuBack onClick={handleLeftMenuBackClick}>My Courses</LeftMenuBack>;
+  };
 
   const renderLeftMenuSticker = () => {
     if (!activeTeachCourse || isCollapsed) return null;
@@ -46,6 +59,7 @@ const CourseLeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      {renderLeftMenuBack()}
       {renderLeftMenuSticker()}
       {renderMenu()}
     </S.Container>

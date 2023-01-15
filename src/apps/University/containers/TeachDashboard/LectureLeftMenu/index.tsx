@@ -1,10 +1,26 @@
+import {useDispatch} from 'react-redux';
+
+import LeftMenuBack from 'apps/University/components/LeftMenuBack';
 import LeftMenuSticker from 'apps/University/components/LeftMenuSticker';
 import {useActiveTeachLecture} from 'apps/University/hooks';
-import {SFC} from 'system/types';
+import {setActivePage} from 'apps/University/store/manager';
+import {Page} from 'apps/University/types';
+import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const LectureLeftMenu: SFC = ({className}) => {
   const activeTeachLecture = useActiveTeachLecture();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleLeftMenuBackClick = () => {
+    dispatch(setActivePage(Page.teachCourseLectures));
+  };
+
+  const renderLeftMenuBack = () => {
+    if (!activeTeachLecture) return null;
+
+    return <LeftMenuBack onClick={handleLeftMenuBackClick}>Course Lectures</LeftMenuBack>;
+  };
 
   const renderLeftMenuSticker = () => {
     if (!activeTeachLecture) return null;
@@ -20,6 +36,7 @@ const LectureLeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      {renderLeftMenuBack()}
       {renderLeftMenuSticker()}
     </S.Container>
   );

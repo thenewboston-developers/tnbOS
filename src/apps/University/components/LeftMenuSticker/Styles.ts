@@ -18,7 +18,7 @@ export const Thumbnail = styled.img`
 `;
 
 export const ThumbnailContainer = styled.div`
-  padding: 24px 20px 0;
+  padding: 8px 20px 0;
 `;
 
 export const TopText = styled.div`
