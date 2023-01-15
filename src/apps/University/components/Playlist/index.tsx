@@ -12,6 +12,11 @@ export interface PlaylistProps {
 const Playlist: SFC<PlaylistProps> = ({className, courseId, displayDescriptions = true}) => {
   const courseLectures = useCourseLectures(courseId);
 
+  const renderContent = () => {
+    if (!!courseLectures.length) return renderLectures();
+    return <S.Empty>This playlist does not contain any lectures.</S.Empty>;
+  };
+
   const renderLectures = () => {
     const lectures = courseLectures.map((lecture) => (
       <Lecture displayDescription={displayDescriptions} key={lecture.lectureId} lecture={lecture} />
@@ -22,7 +27,7 @@ const Playlist: SFC<PlaylistProps> = ({className, courseId, displayDescriptions 
   return (
     <S.Container className={className}>
       <S.SectionHeading heading="Playlist" />
-      {renderLectures()}
+      {renderContent()}
     </S.Container>
   );
 };
