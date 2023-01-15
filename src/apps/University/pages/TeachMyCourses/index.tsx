@@ -1,4 +1,7 @@
+import {useMemo} from 'react';
+
 import Button from 'apps/University/components/Button';
+import EmptyText from 'apps/University/components/EmptyText';
 import {useTaughtCourses} from 'apps/University/hooks';
 import CourseModal from 'apps/University/modals/CourseModal';
 import {useToggle} from 'system/hooks';
@@ -11,9 +14,18 @@ const TeachMyCourses: SFC = ({className}) => {
   const [courseModalIsOpen, toggleCourseModal] = useToggle(false);
   const taughtCourses = useTaughtCourses();
 
+  const courses = useMemo(() => {
+    return Object.values(taughtCourses);
+  }, [taughtCourses]);
+
+  const renderContent = () => {
+    if (!!courses.length) return renderCourses();
+    return <EmptyText>No courses to display.</EmptyText>;
+  };
+
   const renderCourses = () => {
-    const courses = Object.values(taughtCourses).map((course) => <Course course={course} key={course.courseId} />);
-    return <S.Courses>{courses}</S.Courses>;
+    const _courses = courses.map((course) => <Course course={course} key={course.courseId} />);
+    return <S.Courses>{_courses}</S.Courses>;
   };
 
   const renderCourseModal = () => {
@@ -29,7 +41,7 @@ const TeachMyCourses: SFC = ({className}) => {
     <>
       <S.Container className={className}>
         <S.SectionHeading heading="My Courses" rightContent={renderNewCourseButton()} />
-        {renderCourses()}
+        {renderContent()}
       </S.Container>
       {renderCourseModal()}
     </>

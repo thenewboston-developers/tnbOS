@@ -1,3 +1,4 @@
+import EmptyText from 'apps/University/components/EmptyText';
 import {useCourseLectures} from 'apps/University/hooks';
 import {SFC} from 'system/types';
 
@@ -14,7 +15,7 @@ const Playlist: SFC<PlaylistProps> = ({className, courseId, displayDescriptions 
 
   const renderContent = () => {
     if (!!courseLectures.length) return renderLectures();
-    return <S.Empty>This playlist does not contain any lectures.</S.Empty>;
+    return <EmptyText>This playlist does not contain any lectures.</EmptyText>;
   };
 
   const renderLectures = () => {

@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 
 import Button from 'apps/University/components/Button';
+import EmptyText from 'apps/University/components/EmptyText';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
 import LectureModal from 'apps/University/modals/LectureModal';
@@ -15,6 +16,11 @@ const TeachCourseLectures: SFC = ({className}) => {
   const [lectureModalIsOpen, toggleLectureModal] = useToggle(false);
   const activeTeachCourseId = useSelector(getActiveTeachCourseId);
   const courseLectures = useCourseLectures(activeTeachCourseId);
+
+  const renderContent = () => {
+    if (!!courseLectures.length) return renderLectures();
+    return <EmptyText>No lectures to display.</EmptyText>;
+  };
 
   const renderLectures = () => {
     return courseLectures.map((lecture) => <Lecture key={lecture.lectureId} lecture={lecture} />);
@@ -34,7 +40,7 @@ const TeachCourseLectures: SFC = ({className}) => {
       <TeachDashboard>
         <S.Container className={className}>
           <S.SectionHeading heading="Lectures" rightContent={renderNewLectureButton()} />
-          {renderLectures()}
+          {renderContent()}
         </S.Container>
       </TeachDashboard>
       {renderLectureModal()}

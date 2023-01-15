@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
+import {unsetCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course as TCourse, Page} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
@@ -20,6 +21,7 @@ const Course: SFC<CourseProps> = ({course}) => {
   const {courseId, createdDate, description, name, publicationStatus, thumbnailUrl} = course;
 
   const handleDeleteCourseClick = () => {
+    dispatch(unsetCourse(courseId));
     displayToast(`Course deleted`, ToastType.success);
   };
 
