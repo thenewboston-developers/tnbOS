@@ -20,6 +20,6 @@ export const Img = styled.img`
 export const Name = styled.div`
   color: ${colors.fonts.heading};
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 12px;
 `;
