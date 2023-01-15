@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
+import PublicationBadge from 'apps/University/components/PublicationBadge';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course as TCourse, Page} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
@@ -39,7 +40,9 @@ const Course: SFC<CourseProps> = ({course}) => {
         <S.Description>{truncate(description, 200)}</S.Description>
       </S.Details>
       <S.CreatedDate>{shortDate(createdDate, false)}</S.CreatedDate>
-      <S.PublicationStatus>{publicationStatus}</S.PublicationStatus>
+      <S.PublicationStatus>
+        <PublicationBadge publicationStatus={publicationStatus} />
+      </S.PublicationStatus>
       <S.Actions>
         <ActionLink onClick={handleEditCourseClick}>Edit Course</ActionLink>
         <ActionLink onClick={handleDeleteCourseClick}>Delete Course</ActionLink>
