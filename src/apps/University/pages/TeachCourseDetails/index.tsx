@@ -36,10 +36,6 @@ const TeachCourseDetails: SFC = ({className}) => {
     return <CourseCard course={course} onClick={noop} />;
   };
 
-  const renderRight = (values: FormValues) => {
-    return <S.Right>{renderPreview(values)}</S.Right>;
-  };
-
   // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
@@ -74,7 +70,7 @@ const TeachCourseDetails: SFC = ({className}) => {
                 />
               </Form>
             </S.Left>
-            {renderRight(values)}
+            <S.Right>{renderPreview(values)}</S.Right>
           </S.Container>
         )}
       </Formik>
