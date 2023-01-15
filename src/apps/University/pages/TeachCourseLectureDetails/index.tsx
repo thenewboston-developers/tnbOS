@@ -3,6 +3,7 @@ import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
+import LecturePreview from 'apps/University/components/LecturePreview';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachLecture} from 'apps/University/hooks';
 import {SFC} from 'system/types';
@@ -16,6 +17,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
     description: activeTeachLecture?.description || '',
     name: activeTeachLecture?.name || '',
     thumbnailUrl: activeTeachLecture?.thumbnailUrl || '',
+    youtubeId: activeTeachLecture?.youtubeId || '',
   };
 
   type FormValues = typeof initialValues;
@@ -28,9 +30,10 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
     }
   };
 
-  // TODO: Pass in values and render preview
-  const renderPreview = () => {
-    return <div>Preview here</div>;
+  const renderPreview = (values: FormValues) => {
+    if (!activeTeachLecture) return null;
+    const lecture = {...activeTeachLecture, ...values};
+    return <LecturePreview lecture={lecture} />;
   };
 
   // TODO: Proper validation
@@ -39,6 +42,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
       description: yup.string(),
       name: yup.string(),
       thumbnailUrl: yup.string(),
+      youtubeId: yup.string(),
     });
   }, []);
 
@@ -50,13 +54,14 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
         validateOnMount={false}
         validationSchema={validationSchema}
       >
-        {({dirty, errors, isSubmitting, isValid, touched}) => (
+        {({dirty, errors, isSubmitting, isValid, touched, values}) => (
           <S.Container className={className}>
             <S.Left>
               <Form>
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <Input errors={errors} label="Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
+                <Input errors={errors} label="YouTube ID" name="youtubeId" touched={touched} />
                 <S.Button
                   dirty={dirty}
                   disabled={isSubmitting}
@@ -67,7 +72,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
                 />
               </Form>
             </S.Left>
-            <S.Right>{renderPreview()}</S.Right>
+            <S.Right>{renderPreview(values)}</S.Right>
           </S.Container>
         )}
       </Formik>
