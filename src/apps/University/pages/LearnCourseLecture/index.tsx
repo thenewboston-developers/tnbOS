@@ -26,14 +26,14 @@ const LearnCourseLecture: SFC = ({className}) => {
     <>
       <LearnBreadcrumbs />
       <S.Container className={className}>
-        <S.Left>
+        <S.LectureContainer>
           {renderVideoPlayer()}
           <S.Name>{lecture.name}</S.Name>
           <S.Description>{lecture.description}</S.Description>
-        </S.Left>
-        <S.Right>
-          <Playlist courseId={lecture.courseId} displayDescriptions={false} />
-        </S.Right>
+        </S.LectureContainer>
+        <S.PlaylistContainer>
+          <Playlist courseId={lecture.courseId} />
+        </S.PlaylistContainer>
       </S.Container>
     </>
   );

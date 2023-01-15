@@ -6,11 +6,10 @@ import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface LectureProps {
-  displayDescription: boolean;
   lecture: TLecture;
 }
 
-const Lecture: SFC<LectureProps> = ({className, displayDescription, lecture}) => {
+const Lecture: SFC<LectureProps> = ({className, lecture}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const {description, lectureId, name, position, thumbnailUrl} = lecture;
@@ -26,7 +25,7 @@ const Lecture: SFC<LectureProps> = ({className, displayDescription, lecture}) =>
       <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
       <S.Details>
         <S.Name>{name}</S.Name>
-        {displayDescription && <S.Description>{description}</S.Description>}
+        <S.Description>{description}</S.Description>
       </S.Details>
     </S.Container>
   );
