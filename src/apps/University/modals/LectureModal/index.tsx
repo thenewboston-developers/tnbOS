@@ -4,23 +4,23 @@ import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
-import {setCourse} from 'apps/University/store/courses';
-import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
-import {Course, Page, PublicationStatus} from 'apps/University/types';
-import {getSelf} from 'system/selectors/state';
+import {getActiveTeachCourseId} from 'apps/University/selectors/state';
+import {setLecture} from 'apps/University/store/lectures';
+import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
+import {Lecture, Page, PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
-interface CourseModalProps {
+interface LectureModalProps {
   close(): void;
 }
 
-const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
+const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
+  const activeTeachCourseId = useSelector(getActiveTeachCourseId);
   const dispatch = useDispatch<AppDispatch>();
-  const self = useSelector(getSelf);
 
   const initialValues = {
     description: '',
@@ -32,22 +32,24 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
 
   const handleSubmit = (values: FormValues) => {
     try {
-      const courseId = crypto.randomUUID();
+      const lectureId = crypto.randomUUID();
 
-      const course: Course = {
-        courseId,
+      const lecture: Lecture = {
+        courseId: activeTeachCourseId,
         createdDate: currentSystemDate(),
         description: values.description,
-        instructor: self.accountNumber,
+        lectureId,
         name: values.name,
+        position: 1, // TODO: Fix
         publicationStatus: PublicationStatus.draft,
         thumbnailUrl: values.thumbnailUrl,
+        youtubeId: 'gyMwXuJrbJQ',
       };
 
-      dispatch(setCourse(course));
-      dispatch(setActiveTeachCourseId(courseId));
-      dispatch(setActivePage(Page.teachCourseDetails));
-      displayToast('Course created!', ToastType.success);
+      dispatch(setLecture(lecture));
+      dispatch(setActiveTeachLectureId(lectureId));
+      dispatch(setActivePage(Page.teachCourseLectureDetails));
+      displayToast('Lecture created!', ToastType.success);
 
       close();
     } catch (error) {
@@ -65,7 +67,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   }, []);
 
   return (
-    <S.Modal className={className} close={close} header="New Course">
+    <S.Modal className={className} close={close} header="New Lecture">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -92,4 +94,4 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   );
 };
 
-export default CourseModal;
+export default LectureModal;

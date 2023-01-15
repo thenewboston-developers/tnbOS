@@ -8,6 +8,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 export const initialState: Lectures = {
   computergamedevelopmentL1: {
     courseId: 'computergamedevelopment',
+    createdDate: '2022-12-22T00:45:10Z',
     description:
       'In this first lecture we learn about the history of games. In this first lecture we learn about the history of games. In this first lecture we learn about the history of games.',
     lectureId: 'computergamedevelopmentL1',
@@ -19,6 +20,7 @@ export const initialState: Lectures = {
   },
   computergamedevelopmentL2: {
     courseId: 'computergamedevelopment',
+    createdDate: '2022-12-22T00:45:10Z',
     description: 'In this second lecture we learn more about things.',
     lectureId: 'computergamedevelopmentL2',
     name: 'Second Computer Game Development Lecture',
@@ -29,6 +31,7 @@ export const initialState: Lectures = {
   },
   mysqlL1: {
     courseId: 'mysql',
+    createdDate: '2022-12-22T00:45:10Z',
     description: 'This is the first class in MySQL.',
     lectureId: 'mysqlL1',
     name: 'The History of MySQL',
@@ -39,6 +42,7 @@ export const initialState: Lectures = {
   },
   mysqlL2: {
     courseId: 'mysql',
+    createdDate: '2022-12-22T00:45:10Z',
     description: 'In this second lecture we learn more about things.',
     lectureId: 'mysqlL2',
     name: 'Second MySQL Lecture',
