@@ -68,9 +68,9 @@ const TeachCourseDetails: SFC = ({className}) => {
           <S.Container className={className}>
             <S.Left>
               <Form>
-                <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <Input errors={errors} label="Course Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
+                <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <S.Button
                   dirty={dirty}
                   disabled={isSubmitting}

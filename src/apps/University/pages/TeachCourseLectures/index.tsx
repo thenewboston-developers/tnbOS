@@ -33,7 +33,7 @@ const TeachCourseLectures: SFC = ({className}) => {
     <>
       <TeachDashboard>
         <S.Container className={className}>
-          <S.SectionHeading heading="Course Lectures" rightContent={renderNewLectureButton()} />
+          <S.SectionHeading heading="Lectures" rightContent={renderNewLectureButton()} />
           {renderLectures()}
         </S.Container>
       </TeachDashboard>

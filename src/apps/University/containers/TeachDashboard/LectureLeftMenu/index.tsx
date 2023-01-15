@@ -19,7 +19,7 @@ const LectureLeftMenu: SFC = ({className}) => {
   const renderLeftMenuBack = () => {
     if (!activeTeachLecture) return null;
 
-    return <LeftMenuBack onClick={handleLeftMenuBackClick}>Course Lectures</LeftMenuBack>;
+    return <LeftMenuBack onClick={handleLeftMenuBackClick}>Lectures</LeftMenuBack>;
   };
 
   const renderLeftMenuSticker = () => {
