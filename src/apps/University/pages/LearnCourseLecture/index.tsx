@@ -1,10 +1,14 @@
+import {useSelector} from 'react-redux';
+
 import LearnBreadcrumbs from 'apps/University/components/LearnBreadcrumbs';
 import Playlist from 'apps/University/components/Playlist';
 import {useActiveLearnLecture} from 'apps/University/hooks';
+import {getActiveLearnLectureId} from 'apps/University/selectors/state';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const LearnCourseLecture: SFC = ({className}) => {
+  const activeLearnLectureId = useSelector(getActiveLearnLectureId);
   const lecture = useActiveLearnLecture();
 
   const renderVideoPlayer = () => {
@@ -32,7 +36,7 @@ const LearnCourseLecture: SFC = ({className}) => {
           <S.Description>{lecture.description}</S.Description>
         </S.LectureContainer>
         <S.PlaylistContainer>
-          <Playlist courseId={lecture.courseId} />
+          <Playlist activeLectureId={activeLearnLectureId} courseId={lecture.courseId} />
         </S.PlaylistContainer>
       </S.Container>
     </>

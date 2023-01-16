@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 import {colors, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
 
-export const Container = styled.div`
+export const Container = styled.div<{isActive: boolean}>`
+  background: ${({isActive}) => (isActive ? 'rgba(0, 0, 0, 0.06)' : 'transparent')};
   border-radius: 4px;
   display: flex;
   font-size: 12px;

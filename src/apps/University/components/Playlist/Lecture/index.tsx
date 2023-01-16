@@ -6,10 +6,11 @@ import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface LectureProps {
+  isActive: boolean;
   lecture: TLecture;
 }
 
-const Lecture: SFC<LectureProps> = ({className, lecture}) => {
+const Lecture: SFC<LectureProps> = ({className, isActive, lecture}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const {description, lectureId, name, position, thumbnailUrl} = lecture;
@@ -20,7 +21,7 @@ const Lecture: SFC<LectureProps> = ({className, lecture}) => {
   };
 
   return (
-    <S.Container className={className} onClick={handleClick}>
+    <S.Container className={className} isActive={isActive} onClick={handleClick}>
       <S.Position>{position}</S.Position>
       <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
       <S.Details>
