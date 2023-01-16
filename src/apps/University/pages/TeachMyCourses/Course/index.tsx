@@ -2,9 +2,9 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
-import {unsetCourse} from 'apps/University/store/courses';
+import {setCourse, unsetCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
-import {Course as TCourse, Page} from 'apps/University/types';
+import {Course as TCourse, Page, PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {shortDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
@@ -30,8 +30,17 @@ const Course: SFC<CourseProps> = ({course}) => {
     dispatch(setActivePage(Page.teachCourseDetails));
   };
 
-  const handleUnpublishCourseClick = () => {
-    displayToast(`Course set to draft`, ToastType.success);
+  const handlePublicationActionLinkClick = () => {
+    let newPublicationStatus = PublicationStatus.draft;
+    if (publicationStatus === PublicationStatus.draft) newPublicationStatus = PublicationStatus.published;
+    dispatch(setCourse({...course, publicationStatus: newPublicationStatus}));
+    displayToast(`Course set to ${newPublicationStatus}`, ToastType.success);
+  };
+
+  const renderPublicationActionLink = () => {
+    const actionText = publicationStatus === PublicationStatus.draft ? 'Publish' : 'Unpublish';
+    const text = `${actionText} Course`;
+    return <ActionLink onClick={handlePublicationActionLinkClick}>{text}</ActionLink>;
   };
 
   return (
@@ -48,7 +57,7 @@ const Course: SFC<CourseProps> = ({course}) => {
       <S.Actions>
         <ActionLink onClick={handleEditCourseClick}>Edit Course</ActionLink>
         <ActionLink onClick={handleDeleteCourseClick}>Delete Course</ActionLink>
-        <ActionLink onClick={handleUnpublishCourseClick}>Unpublish Course</ActionLink>
+        {renderPublicationActionLink()}
       </S.Actions>
     </>
   );
