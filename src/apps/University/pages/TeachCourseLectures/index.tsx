@@ -1,4 +1,6 @@
-import {useSelector} from 'react-redux';
+import {DragEvent, useMemo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
 import Button from 'apps/University/components/Button';
 import EmptyText from 'apps/University/components/EmptyText';
@@ -6,24 +8,76 @@ import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
 import LectureModal from 'apps/University/modals/LectureModal';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
+import {setLecture} from 'apps/University/store/lectures';
+import {Lecture as TLecture} from 'apps/University/types';
 import {useToggle} from 'system/hooks';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 
 import Lecture from './Lecture';
+import Spacer from './Spacer';
 import * as S from './Styles';
 
 const TeachCourseLectures: SFC = ({className}) => {
   const [lectureModalIsOpen, toggleLectureModal] = useToggle(false);
+  const [activeLecture, setActiveLecture] = useState<TLecture | null>(null);
   const activeTeachCourseId = useSelector(getActiveTeachCourseId);
   const courseLectures = useCourseLectures(activeTeachCourseId);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const sortedLectures = useMemo(() => {
+    return orderBy(courseLectures, ['position']);
+  }, [courseLectures]);
+
+  const handleLectureDragEnd = () => {
+    setActiveLecture(null);
+  };
+
+  const handleLectureDragStart = (_: DragEvent<HTMLDivElement>, lecture: TLecture) => {
+    setActiveLecture(lecture);
+  };
+
+  const handleSpacerDrop = (e: DragEvent<HTMLDivElement>, spacerPosition: number) => {
+    e.preventDefault();
+    if (!activeLecture) return;
+
+    const lecturesExcludingActiveLecture = sortedLectures.filter(
+      ({lectureId}) => lectureId !== activeLecture?.lectureId,
+    );
+
+    const startingLectures = lecturesExcludingActiveLecture.filter(({position}) => position < spacerPosition);
+    const endingLectures = lecturesExcludingActiveLecture.filter(({position}) => position > spacerPosition);
+    const newLectures = [...startingLectures, activeLecture, ...endingLectures];
+
+    let position = 0;
+
+    // TODO: Optimize this
+    for (const newLecture of newLectures) {
+      const lecture = {...newLecture, position};
+      dispatch(setLecture(lecture));
+      position += 1;
+    }
+  };
 
   const renderContent = () => {
-    if (!!courseLectures.length) return renderLectures();
+    if (!!sortedLectures.length) return renderLectures();
     return <EmptyText>No lectures to display.</EmptyText>;
   };
 
   const renderLectures = () => {
-    return courseLectures.map((lecture) => <Lecture key={lecture.lectureId} lecture={lecture} />);
+    return sortedLectures.map((lecture) => {
+      const spacerPosition = lecture.position + 0.5;
+      return (
+        <>
+          <Lecture
+            key={lecture.lectureId}
+            lecture={lecture}
+            onDragEnd={() => handleLectureDragEnd()}
+            onDragStart={(e) => handleLectureDragStart(e, lecture)}
+          />
+          <Spacer key={spacerPosition} onDrop={(e) => handleSpacerDrop(e, spacerPosition)} />
+        </>
+      );
+    });
   };
 
   const renderLectureModal = () => {
@@ -40,6 +94,7 @@ const TeachCourseLectures: SFC = ({className}) => {
       <TeachDashboard>
         <S.Container className={className}>
           <S.SectionHeading heading="Lectures" rightContent={renderNewLectureButton()} />
+          <Spacer key={-0.5} onDrop={(e) => handleSpacerDrop(e, -0.5)} />
           {renderContent()}
         </S.Container>
       </TeachDashboard>

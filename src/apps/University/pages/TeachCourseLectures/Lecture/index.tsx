@@ -1,4 +1,6 @@
+import {DragEventHandler} from 'react';
 import {useDispatch} from 'react-redux';
+import {mdiDrag} from '@mdi/js';
 
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture as TLecture, Page} from 'apps/University/types';
@@ -7,9 +9,11 @@ import * as S from './Styles';
 
 export interface LectureProps {
   lecture: TLecture;
+  onDragEnd: DragEventHandler<HTMLDivElement> | undefined;
+  onDragStart: DragEventHandler<HTMLDivElement> | undefined;
 }
 
-const Lecture: SFC<LectureProps> = ({className, lecture}) => {
+const Lecture: SFC<LectureProps> = ({className, lecture, onDragEnd, onDragStart}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const {description, lectureId, name, thumbnailUrl} = lecture;
@@ -20,7 +24,8 @@ const Lecture: SFC<LectureProps> = ({className, lecture}) => {
   };
 
   return (
-    <S.Container className={className} onClick={handleClick}>
+    <S.Container className={className} draggable onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <S.Icon icon={mdiDrag} size={24} />
       <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
       <S.Details>
         <S.Name>{name}</S.Name>
