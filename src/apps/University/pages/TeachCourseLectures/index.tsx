@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import Button from 'apps/University/components/Button';
+import DragSpacer from 'apps/University/components/DragSpacer';
 import EmptyText from 'apps/University/components/EmptyText';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
@@ -13,8 +14,7 @@ import {Lecture as TLecture} from 'apps/University/types';
 import {useToggle} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 
-import Lecture from './Lecture';
-import Spacer from './Spacer';
+import DraggableLecture from './DraggableLecture';
 import * as S from './Styles';
 
 const TeachCourseLectures: SFC = ({className}) => {
@@ -59,23 +59,21 @@ const TeachCourseLectures: SFC = ({className}) => {
   };
 
   const renderContent = () => {
-    if (!!sortedLectures.length) return renderLectures();
+    if (!!sortedLectures.length) return renderDraggableLectures();
     return <EmptyText>No lectures to display.</EmptyText>;
   };
 
-  const renderLectures = () => {
+  const renderDraggableLectures = () => {
     return sortedLectures.map((lecture) => {
       const spacerPosition = lecture.position + 0.5;
       return (
-        <>
-          <Lecture
-            key={lecture.lectureId}
-            lecture={lecture}
-            onDragEnd={() => handleLectureDragEnd()}
-            onDragStart={(e) => handleLectureDragStart(e, lecture)}
-          />
-          <Spacer key={spacerPosition} onDrop={(e) => handleSpacerDrop(e, spacerPosition)} />
-        </>
+        <DraggableLecture
+          key={lecture.lectureId}
+          lecture={lecture}
+          onDragEnd={() => handleLectureDragEnd()}
+          onDragStart={(e) => handleLectureDragStart(e, lecture)}
+          onSpacerDrop={(e) => handleSpacerDrop(e, spacerPosition)}
+        />
       );
     });
   };
@@ -94,7 +92,7 @@ const TeachCourseLectures: SFC = ({className}) => {
       <TeachDashboard>
         <S.Container className={className}>
           <S.SectionHeading heading="Lectures" rightContent={renderNewLectureButton()} />
-          <Spacer key={-0.5} onDrop={(e) => handleSpacerDrop(e, -0.5)} />
+          <DragSpacer key={-0.5} onDrop={(e) => handleSpacerDrop(e, -0.5)} />
           {renderContent()}
         </S.Container>
       </TeachDashboard>

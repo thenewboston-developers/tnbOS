@@ -7,7 +7,7 @@ export interface SpacerProps {
   onDrop: DragEventHandler<HTMLDivElement> | undefined;
 }
 
-const Spacer: SFC<SpacerProps> = ({className, onDrop}) => {
+const DragSpacer: SFC<SpacerProps> = ({className, onDrop}) => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -28,4 +28,4 @@ const Spacer: SFC<SpacerProps> = ({className, onDrop}) => {
   );
 };
 
-export default Spacer;
+export default DragSpacer;

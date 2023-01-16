@@ -25,6 +25,7 @@ export const Icon = styled(UIcon)`
 
 export const Name = styled.div`
   ${mixinListItemName};
+  font-size: 13px;
 `;
 
 export const Thumbnail = styled.img`
