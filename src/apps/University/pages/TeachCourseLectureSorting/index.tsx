@@ -7,7 +7,7 @@ import EmptyText from 'apps/University/components/EmptyText';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
-import {setLecture} from 'apps/University/store/lectures';
+import {updateLecturePositions} from 'apps/University/store/lectures';
 import {Lecture as TLecture} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
 
@@ -41,14 +41,8 @@ const TeachCourseLectureSorting: SFC = ({className}) => {
     const endingLectures = lecturesExcludingActiveLecture.filter(({position}) => position > spacerPosition);
     const newLectures = [...startingLectures, activeLecture, ...endingLectures];
 
-    let position = 0;
-
-    // TODO: Optimize this (bulk update)
-    for (const newLecture of newLectures) {
-      const lecture = {...newLecture, position};
-      dispatch(setLecture(lecture));
-      position += 1;
-    }
+    const payload = newLectures.map(({lectureId}, index) => ({lectureId, position: index}));
+    dispatch(updateLecturePositions(payload));
   };
 
   const renderContent = () => {

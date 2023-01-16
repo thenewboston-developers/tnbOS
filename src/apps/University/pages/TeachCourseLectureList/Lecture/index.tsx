@@ -19,7 +19,6 @@ const Lecture: SFC<LectureProps> = ({lecture}) => {
   const {description, lectureId, name, publicationStatus, thumbnailUrl} = lecture;
 
   const handleDeleteLectureClick = () => {
-    // TODO: Bulk update positions of all other lectures
     dispatch(unsetLecture(lectureId));
     displayToast(`Lecture deleted`, ToastType.success);
   };
