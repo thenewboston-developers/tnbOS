@@ -19,6 +19,14 @@ const lectures = createSlice({
     setLectures: setLocalAndStateReducer<Lectures>(UNIVERSITY_LECTURES),
     unsetLecture: (state: Lectures, {payload: lectureId}: PayloadAction<string>) => {
       delete state[lectureId];
+      const lectureList = Object.values(state);
+      let position = 0;
+
+      for (const lecture of lectureList) {
+        state[lecture.lectureId].position = position;
+        position += 1;
+      }
+
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURES, state: current(state)});
     },
   },
