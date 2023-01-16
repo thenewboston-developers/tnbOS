@@ -6,7 +6,6 @@ import {colors} from 'apps/University/styles';
 export const Bottom = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
   padding: 12px 16px;
 `;
 
@@ -26,6 +25,7 @@ export const Container = styled.div`
 export const Description = styled.div`
   color: ${colors.fonts.secondary};
   font-size: 12px;
+  margin-top: 4px;
 `;
 
 export const Img = styled.img`
@@ -34,11 +34,11 @@ export const Img = styled.img`
 `;
 
 export const Instructor = styled(UInstructor)`
-  margin-top: 4px;
+  margin-top: 16px;
 `;
 
 export const Name = styled.div`
   color: ${colors.fonts.heading};
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
 `;

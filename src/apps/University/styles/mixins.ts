@@ -10,8 +10,8 @@ export const mixinLectureDescription = css`
 
 export const mixinLectureName = css`
   color: ${colors.fonts.heading};
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   margin-top: 12px;
 `;
 
