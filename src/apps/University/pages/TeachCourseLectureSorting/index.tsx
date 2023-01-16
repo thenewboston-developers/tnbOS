@@ -43,7 +43,7 @@ const TeachCourseLectureSorting: SFC = ({className}) => {
 
     let position = 0;
 
-    // TODO: Optimize this
+    // TODO: Optimize this (bulk update)
     for (const newLecture of newLectures) {
       const lecture = {...newLecture, position};
       dispatch(setLecture(lecture));
