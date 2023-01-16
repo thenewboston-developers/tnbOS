@@ -4,6 +4,7 @@ import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
+import {useCourseLectures} from 'apps/University/hooks';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
 import {setLecture} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
@@ -20,12 +21,14 @@ interface LectureModalProps {
 
 const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
   const activeTeachCourseId = useSelector(getActiveTeachCourseId);
+  const courseLectures = useCourseLectures(activeTeachCourseId);
   const dispatch = useDispatch<AppDispatch>();
 
   const initialValues = {
     description: '',
     name: '',
     thumbnailUrl: '',
+    youtubeId: '',
   };
 
   type FormValues = typeof initialValues;
@@ -40,10 +43,10 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
         description: values.description,
         lectureId,
         name: values.name,
-        position: 1, // TODO: Fix
+        position: courseLectures.length,
         publicationStatus: PublicationStatus.draft,
         thumbnailUrl: values.thumbnailUrl,
-        youtubeId: 'gyMwXuJrbJQ',
+        youtubeId: values.youtubeId,
       };
 
       dispatch(setLecture(lecture));
@@ -57,12 +60,12 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
     }
   };
 
-  // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       description: yup.string().required(),
       name: yup.string().required(),
       thumbnailUrl: yup.string().required(),
+      youtubeId: yup.string().required(),
     });
   }, []);
 
@@ -79,6 +82,7 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
             <Input errors={errors} label="Lecture Name" name="name" touched={touched} />
             <Input errors={errors} label="Description" name="description" touched={touched} />
             <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
+            <Input errors={errors} label="YouTube ID" name="youtubeId" touched={touched} />
             <S.Button
               dirty={dirty}
               disabled={isSubmitting}
