@@ -29,10 +29,7 @@ export const Name = styled.div`
   }
 `;
 
-export const PublicationStatus = styled.div`
-  color: ${colors.fonts.secondary};
-  font-size: 12px;
-`;
+export const PublicationStatus = styled.div``;
 
 export const Thumbnail = styled.img`
   ${mixinListItemThumbnail};

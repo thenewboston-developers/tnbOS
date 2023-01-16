@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 import {mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
 
+export const Actions = styled.div`
+  font-size: 13px;
+  white-space: nowrap;
+`;
+
 export const Container = styled.div`
   display: flex;
 `;
@@ -17,11 +22,20 @@ export const Details = styled.div`
 export const Name = styled.div`
   ${mixinListItemName};
   font-size: 13px;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
+
+export const PublicationStatus = styled.div``;
 
 export const Thumbnail = styled.img`
   ${mixinListItemThumbnail};
-  align-self: flex-start;
-  flex-shrink: 0;
-  width: 100px;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

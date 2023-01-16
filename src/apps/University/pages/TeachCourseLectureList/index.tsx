@@ -19,17 +19,18 @@ const TeachCourseLectureList: SFC = ({className}) => {
   const activeTeachCourseId = useSelector(getActiveTeachCourseId);
   const courseLectures = useCourseLectures(activeTeachCourseId);
 
-  const sortedLectures = useMemo(() => {
+  const lectures = useMemo(() => {
     return orderBy(courseLectures, ['position']);
   }, [courseLectures]);
 
   const renderContent = () => {
-    if (!!sortedLectures.length) return renderLectures();
+    if (!!lectures.length) return renderLectures();
     return <EmptyText>No lectures to display.</EmptyText>;
   };
 
   const renderLectures = () => {
-    return sortedLectures.map((lecture) => <Lecture key={lecture.lectureId} lecture={lecture} />);
+    const _lectures = lectures.map((lecture) => <Lecture key={lecture.lectureId} lecture={lecture} />);
+    return <S.Lectures>{_lectures}</S.Lectures>;
   };
 
   const renderLectureModal = () => {

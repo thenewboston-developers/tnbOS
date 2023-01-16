@@ -20,7 +20,7 @@ const TeachCourseLectureSorting: SFC = ({className}) => {
   const courseLectures = useCourseLectures(activeTeachCourseId);
   const dispatch = useDispatch<AppDispatch>();
 
-  const sortedLectures = useMemo(() => {
+  const lectures = useMemo(() => {
     return orderBy(courseLectures, ['position']);
   }, [courseLectures]);
 
@@ -36,10 +36,7 @@ const TeachCourseLectureSorting: SFC = ({className}) => {
     e.preventDefault();
     if (!activeLecture) return;
 
-    const lecturesExcludingActiveLecture = sortedLectures.filter(
-      ({lectureId}) => lectureId !== activeLecture?.lectureId,
-    );
-
+    const lecturesExcludingActiveLecture = lectures.filter(({lectureId}) => lectureId !== activeLecture?.lectureId);
     const startingLectures = lecturesExcludingActiveLecture.filter(({position}) => position < spacerPosition);
     const endingLectures = lecturesExcludingActiveLecture.filter(({position}) => position > spacerPosition);
     const newLectures = [...startingLectures, activeLecture, ...endingLectures];
@@ -55,12 +52,12 @@ const TeachCourseLectureSorting: SFC = ({className}) => {
   };
 
   const renderContent = () => {
-    if (!!sortedLectures.length) return renderDraggableLectures();
+    if (!!lectures.length) return renderDraggableLectures();
     return <EmptyText>No lectures to display.</EmptyText>;
   };
 
   const renderDraggableLectures = () => {
-    return sortedLectures.map((lecture) => {
+    return lectures.map((lecture) => {
       const spacerPosition = lecture.position + 0.5;
       return (
         <DraggableLecture
