@@ -7,7 +7,8 @@ import LearnCourseLecture from 'apps/University/pages/LearnCourseLecture';
 import LearnMyCourses from 'apps/University/pages/LearnMyCourses';
 import TeachCourseDetails from 'apps/University/pages/TeachCourseDetails';
 import TeachCourseLectureDetails from 'apps/University/pages/TeachCourseLectureDetails';
-import TeachCourseLectures from 'apps/University/pages/TeachCourseLectures';
+import TeachCourseLectureList from 'apps/University/pages/TeachCourseLectureList';
+import TeachCourseLectureSorting from 'apps/University/pages/TeachCourseLectureSorting';
 import TeachMyCourses from 'apps/University/pages/TeachMyCourses';
 import {getActivePage} from 'apps/University/selectors/state';
 import {Page} from 'apps/University/types';
@@ -29,7 +30,8 @@ const Right: SFC = ({className}) => {
       [Page.learnMyCourses]: <LearnMyCourses />,
       [Page.teachCourseDetails]: <TeachCourseDetails />,
       [Page.teachCourseLectureDetails]: <TeachCourseLectureDetails />,
-      [Page.teachCourseLectures]: <TeachCourseLectures />,
+      [Page.teachCourseLectureList]: <TeachCourseLectureList />,
+      [Page.teachCourseLectureSorting]: <TeachCourseLectureSorting />,
       [Page.teachMyCourses]: <TeachMyCourses />,
     };
 

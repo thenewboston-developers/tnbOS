@@ -5,6 +5,7 @@ export enum Page {
   learnMyCourses = 'learnMyCourses',
   teachCourseDetails = 'teachCourseDetails',
   teachCourseLectureDetails = 'teachCourseLectureDetails',
-  teachCourseLectures = 'teachCourseLectures',
+  teachCourseLectureList = 'teachCourseLectureList',
+  teachCourseLectureSorting = 'teachCourseLectureSorting',
   teachMyCourses = 'teachMyCourses',
 }

@@ -13,18 +13,16 @@ const LectureLeftMenu: SFC = ({className}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLeftMenuBackClick = () => {
-    dispatch(setActivePage(Page.teachCourseLectures));
+    dispatch(setActivePage(Page.teachCourseLectureList));
   };
 
   const renderLeftMenuBack = () => {
     if (!activeTeachLecture) return null;
-
     return <LeftMenuBack onClick={handleLeftMenuBackClick}>Lectures</LeftMenuBack>;
   };
 
   const renderLeftMenuSticker = () => {
     if (!activeTeachLecture) return null;
-
     return (
       <LeftMenuSticker
         bottomText={activeTeachLecture.name}

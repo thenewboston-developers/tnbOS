@@ -23,7 +23,7 @@ const TeachBreadcrumbs: SFC = ({className}) => {
   };
 
   const handleLecturesClick = () => {
-    dispatch(setActivePage(Page.teachCourseLectures));
+    dispatch(setActivePage(Page.teachCourseLectureList));
   };
 
   const handleMyCoursesClick = () => {
@@ -31,8 +31,13 @@ const TeachBreadcrumbs: SFC = ({className}) => {
   };
 
   const renderCourseName = () => {
-    const activePages = [Page.teachCourseLectureDetails, Page.teachCourseLectures];
-    const displayPages = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+    const activePages = [Page.teachCourseLectureDetails, Page.teachCourseLectureList, Page.teachCourseLectureSorting];
+    const displayPages = [
+      Page.teachCourseDetails,
+      Page.teachCourseLectureDetails,
+      Page.teachCourseLectureList,
+      Page.teachCourseLectureSorting,
+    ];
 
     if (!activeTeachCourse || !displayPages.includes(activePage)) return null;
 
@@ -51,21 +56,28 @@ const TeachBreadcrumbs: SFC = ({className}) => {
 
   const renderCoursePageName = () => {
     const activePages = [Page.teachCourseLectureDetails];
-    const displayPages = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+    const displayPages = [
+      Page.teachCourseDetails,
+      Page.teachCourseLectureDetails,
+      Page.teachCourseLectureList,
+      Page.teachCourseLectureSorting,
+    ];
 
     if (!activeTeachCourse || !displayPages.includes(activePage)) return null;
 
     const clickHandlers: Dict<GenericVoidFunction> = {
       [Page.teachCourseDetails]: noop,
-      [Page.teachCourseLectures]: noop,
       [Page.teachCourseLectureDetails]: handleLecturesClick,
+      [Page.teachCourseLectureList]: noop,
+      [Page.teachCourseLectureSorting]: noop,
     };
     const clickHandler = clickHandlers[activePage];
 
     const pageNames: Dict<string> = {
       [Page.teachCourseDetails]: 'Course Details',
-      [Page.teachCourseLectures]: 'Lectures',
       [Page.teachCourseLectureDetails]: 'Lectures',
+      [Page.teachCourseLectureList]: 'Lectures',
+      [Page.teachCourseLectureSorting]: 'Lecture Sorting',
     };
     const pageName = pageNames[activePage];
 

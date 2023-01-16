@@ -37,7 +37,12 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, isCollapsed, p
     }
 
     if (page === Page.teachMyCourses) {
-      const teachPages = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+      const teachPages = [
+        Page.teachCourseDetails,
+        Page.teachCourseLectureDetails,
+        Page.teachCourseLectureList,
+        Page.teachCourseLectureSorting,
+      ];
       if (teachPages.includes(activePage)) return true;
     }
 

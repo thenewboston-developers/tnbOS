@@ -14,7 +14,12 @@ const LeftMenu: SFC = ({className}) => {
   const activePage = useSelector(getActivePage);
 
   const isCollapsed = useMemo(() => {
-    const collapsedPages = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+    const collapsedPages = [
+      Page.teachCourseDetails,
+      Page.teachCourseLectureDetails,
+      Page.teachCourseLectureList,
+      Page.teachCourseLectureSorting,
+    ];
     return collapsedPages.includes(activePage);
   }, [activePage]);
 

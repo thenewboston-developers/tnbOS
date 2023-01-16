@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {mdiBookshelf, mdiPencil} from '@mdi/js';
+import {mdiBookshelf, mdiPencil, mdiSwapVertical} from '@mdi/js';
 
 import LeftMenuBack from 'apps/University/components/LeftMenuBack';
 import LeftMenuSticker from 'apps/University/components/LeftMenuSticker';
@@ -50,8 +50,11 @@ const CourseLeftMenu: SFC = ({className}) => {
         <MenuItem icon={mdiPencil} isCollapsed={isCollapsed} page={Page.teachCourseDetails}>
           Course Details
         </MenuItem>
-        <MenuItem icon={mdiBookshelf} isCollapsed={isCollapsed} page={Page.teachCourseLectures}>
+        <MenuItem icon={mdiBookshelf} isCollapsed={isCollapsed} page={Page.teachCourseLectureList}>
           Lectures
+        </MenuItem>
+        <MenuItem icon={mdiSwapVertical} isCollapsed={isCollapsed} page={Page.teachCourseLectureSorting}>
+          Lecture Sorting
         </MenuItem>
       </S.Menu>
     );

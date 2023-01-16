@@ -7,7 +7,12 @@ import {Page} from 'apps/University/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const COURSE_LEFT_MENU_PAGES = [Page.teachCourseDetails, Page.teachCourseLectureDetails, Page.teachCourseLectures];
+const COURSE_LEFT_MENU_PAGES = [
+  Page.teachCourseDetails,
+  Page.teachCourseLectureDetails,
+  Page.teachCourseLectureList,
+  Page.teachCourseLectureSorting,
+];
 const LECTURE_LEFT_MENU_PAGES = [Page.teachCourseLectureDetails];
 
 export interface TeachDashboardProps {

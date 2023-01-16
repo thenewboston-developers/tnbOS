@@ -2,23 +2,19 @@ import {DragEvent, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
-import Button from 'apps/University/components/Button';
 import DragSpacer from 'apps/University/components/DragSpacer';
 import EmptyText from 'apps/University/components/EmptyText';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useCourseLectures} from 'apps/University/hooks';
-import LectureModal from 'apps/University/modals/LectureModal';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
 import {setLecture} from 'apps/University/store/lectures';
 import {Lecture as TLecture} from 'apps/University/types';
-import {useToggle} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 
 import DraggableLecture from './DraggableLecture';
 import * as S from './Styles';
 
-const TeachCourseLectures: SFC = ({className}) => {
-  const [lectureModalIsOpen, toggleLectureModal] = useToggle(false);
+const TeachCourseLectureSorting: SFC = ({className}) => {
   const [activeLecture, setActiveLecture] = useState<TLecture | null>(null);
   const activeTeachCourseId = useSelector(getActiveTeachCourseId);
   const courseLectures = useCourseLectures(activeTeachCourseId);
@@ -78,27 +74,15 @@ const TeachCourseLectures: SFC = ({className}) => {
     });
   };
 
-  const renderLectureModal = () => {
-    if (!lectureModalIsOpen) return null;
-    return <LectureModal close={toggleLectureModal} />;
-  };
-
-  const renderNewLectureButton = () => {
-    return <Button onClick={toggleLectureModal} text="New Lecture" />;
-  };
-
   return (
-    <>
-      <TeachDashboard>
-        <S.Container className={className}>
-          <S.SectionHeading heading="Lectures" rightContent={renderNewLectureButton()} />
-          <DragSpacer key={-0.5} onDrop={(e) => handleSpacerDrop(e, -0.5)} />
-          {renderContent()}
-        </S.Container>
-      </TeachDashboard>
-      {renderLectureModal()}
-    </>
+    <TeachDashboard>
+      <S.Container className={className}>
+        <S.SectionHeading heading="Lecture Sorting" />
+        <DragSpacer key={-0.5} onDrop={(e) => handleSpacerDrop(e, -0.5)} />
+        {renderContent()}
+      </S.Container>
+    </TeachDashboard>
   );
 };
 
-export default TeachCourseLectures;
+export default TeachCourseLectureSorting;

@@ -21,7 +21,7 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, isCollapsed, p
   const isActivePage = useMemo(() => {
     if (page === activePage) return true;
 
-    if (page === Page.teachCourseLectures) {
+    if (page === Page.teachCourseLectureList) {
       if (activePage === Page.teachCourseLectureDetails) return true;
     }
 
