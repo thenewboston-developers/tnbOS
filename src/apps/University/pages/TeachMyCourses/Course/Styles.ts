@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 
-import {colors, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
+import {mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
 
 export const Actions = styled.div`
   font-size: 13px;
   white-space: nowrap;
-`;
-
-export const CreatedDate = styled.div`
-  color: ${colors.fonts.secondary};
-  font-size: 13px;
 `;
 
 export const Description = styled.div`

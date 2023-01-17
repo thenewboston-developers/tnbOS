@@ -20,6 +20,7 @@ export const Details = styled.div`
 export const Icon = styled(UIcon)`
   align-self: center;
   color: #ccc;
+  flex-shrink: 0;
   margin-right: 2px;
 `;
 

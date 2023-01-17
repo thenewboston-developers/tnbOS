@@ -6,7 +6,6 @@ import {setCourse, unsetCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course as TCourse, Page, PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
-import {shortDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
@@ -18,7 +17,7 @@ export interface CourseProps {
 const Course: SFC<CourseProps> = ({course}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {courseId, createdDate, description, name, publicationStatus, thumbnailUrl} = course;
+  const {courseId, description, name, publicationStatus, thumbnailUrl} = course;
 
   const handleDeleteCourseClick = () => {
     dispatch(unsetCourse(courseId));
@@ -50,7 +49,6 @@ const Course: SFC<CourseProps> = ({course}) => {
         <S.Name onClick={handleEditCourseClick}>{name}</S.Name>
         <S.Description>{truncate(description, 200)}</S.Description>
       </S.Details>
-      <S.CreatedDate>{shortDate(createdDate, false)}</S.CreatedDate>
       <S.PublicationStatus>
         <PublicationBadge publicationStatus={publicationStatus} />
       </S.PublicationStatus>
