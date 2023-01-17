@@ -5,10 +5,11 @@ import noop from 'lodash/noop';
 
 import {ButtonType} from 'apps/University/components/Button';
 import CourseCard from 'apps/University/components/CourseCard';
-import {Input} from 'apps/University/components/FormElements';
+import {Checkbox, Input} from 'apps/University/components/FormElements';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {setCourse} from 'apps/University/store/courses';
+import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
@@ -21,6 +22,7 @@ const TeachCourseDetails: SFC = ({className}) => {
   const initialValues = {
     description: activeTeachCourse?.description || '',
     name: activeTeachCourse?.name || '',
+    publicationStatus: activeTeachCourse?.publicationStatus === PublicationStatus.published,
     thumbnailUrl: activeTeachCourse?.thumbnailUrl || '',
   };
 
@@ -30,7 +32,8 @@ const TeachCourseDetails: SFC = ({className}) => {
     if (!activeTeachCourse) return;
 
     try {
-      const course = {...activeTeachCourse, ...values};
+      const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+      const course = {...activeTeachCourse, ...values, publicationStatus};
 
       dispatch(setCourse(course));
       setSubmitting(false);
@@ -43,16 +46,17 @@ const TeachCourseDetails: SFC = ({className}) => {
 
   const renderPreview = (values: FormValues) => {
     if (!activeTeachCourse) return null;
-    const course = {...activeTeachCourse, ...values};
+    const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+    const course = {...activeTeachCourse, ...values, publicationStatus};
     return <CourseCard course={course} onClick={noop} />;
   };
 
-  // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
-      description: yup.string(),
-      name: yup.string(),
-      thumbnailUrl: yup.string(),
+      description: yup.string().required(),
+      name: yup.string().required(),
+      publicationStatus: yup.boolean().required(),
+      thumbnailUrl: yup.string().required(),
     });
   }, []);
 
@@ -71,6 +75,7 @@ const TeachCourseDetails: SFC = ({className}) => {
                 <Input errors={errors} label="Course Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
+                <Checkbox errors={errors} label="Publish Course" name="publicationStatus" touched={touched} />
                 <S.Button
                   dirty={dirty}
                   disabled={isSubmitting}

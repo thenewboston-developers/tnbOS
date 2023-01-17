@@ -1,3 +1,4 @@
+import Checkbox from './Checkbox';
 import Input from './Input';
 
-export {Input};
+export {Checkbox, Input};
