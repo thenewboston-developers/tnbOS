@@ -3,11 +3,13 @@ import {useDispatch} from 'react-redux';
 import {Form, Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/University/components/Button';
-import {Input} from 'apps/University/components/FormElements';
+import {Checkbox, Input} from 'apps/University/components/FormElements';
 import LecturePreview from 'apps/University/components/LecturePreview';
+import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachLecture} from 'apps/University/hooks';
 import {setLecture} from 'apps/University/store/lectures';
+import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
@@ -20,6 +22,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
   const initialValues = {
     description: activeTeachLecture?.description || '',
     name: activeTeachLecture?.name || '',
+    publicationStatus: activeTeachLecture?.publicationStatus === PublicationStatus.published,
     thumbnailUrl: activeTeachLecture?.thumbnailUrl || '',
     youtubeId: activeTeachLecture?.youtubeId || '',
   };
@@ -30,7 +33,8 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
     if (!activeTeachLecture) return;
 
     try {
-      const lecture = {...activeTeachLecture, ...values};
+      const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+      const lecture = {...activeTeachLecture, ...values, publicationStatus};
 
       dispatch(setLecture(lecture));
       setSubmitting(false);
@@ -43,23 +47,34 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
 
   const renderPreview = (values: FormValues) => {
     if (!activeTeachLecture) return null;
-    const lecture = {...activeTeachLecture, ...values};
-    return <LecturePreview lecture={lecture} />;
+
+    const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+    const lecture = {...activeTeachLecture, ...values, publicationStatus};
+
+    return (
+      <>
+        <S.PublicationStatus>
+          <PublicationBadge publicationStatus={publicationStatus} />
+        </S.PublicationStatus>
+        <LecturePreview lecture={lecture} />
+      </>
+    );
   };
 
-  // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
-      description: yup.string(),
-      name: yup.string(),
-      thumbnailUrl: yup.string(),
-      youtubeId: yup.string(),
+      description: yup.string().required(),
+      name: yup.string().required(),
+      publicationStatus: yup.boolean().required(),
+      thumbnailUrl: yup.string().required(),
+      youtubeId: yup.string().required(),
     });
   }, []);
 
   return (
     <TeachDashboard>
       <Formik
+        enableReinitialize={true}
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validateOnMount={false}
@@ -73,6 +88,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
                 <Input errors={errors} label="Description" name="description" touched={touched} />
                 <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
                 <Input errors={errors} label="YouTube ID" name="youtubeId" touched={touched} />
+                <Checkbox errors={errors} label="Publish Lecture" name="publicationStatus" touched={touched} />
                 <S.Button
                   dirty={dirty}
                   disabled={isSubmitting}

@@ -15,4 +15,10 @@ export const Container = styled.div`
 
 export const Left = styled.div``;
 
+export const PublicationStatus = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-bottom: 12px;
+`;
+
 export const Right = styled.div``;

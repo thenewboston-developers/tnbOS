@@ -6,6 +6,7 @@ import noop from 'lodash/noop';
 import {ButtonType} from 'apps/University/components/Button';
 import CourseCard from 'apps/University/components/CourseCard';
 import {Checkbox, Input} from 'apps/University/components/FormElements';
+import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {setCourse} from 'apps/University/store/courses';
@@ -28,7 +29,7 @@ const TeachCourseDetails: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
-  const handleSubmit = (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
+  const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
     if (!activeTeachCourse) return;
 
     try {
@@ -37,6 +38,7 @@ const TeachCourseDetails: SFC = ({className}) => {
 
       dispatch(setCourse(course));
       setSubmitting(false);
+      setValues(values);
 
       displayToast('Course updated!', ToastType.success);
     } catch (error) {
@@ -46,9 +48,18 @@ const TeachCourseDetails: SFC = ({className}) => {
 
   const renderPreview = (values: FormValues) => {
     if (!activeTeachCourse) return null;
+
     const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
     const course = {...activeTeachCourse, ...values, publicationStatus};
-    return <CourseCard course={course} onClick={noop} />;
+
+    return (
+      <>
+        <S.PublicationStatus>
+          <PublicationBadge publicationStatus={publicationStatus} />
+        </S.PublicationStatus>
+        <CourseCard course={course} onClick={noop} />
+      </>
+    );
   };
 
   const validationSchema = useMemo(() => {
@@ -63,6 +74,7 @@ const TeachCourseDetails: SFC = ({className}) => {
   return (
     <TeachDashboard>
       <Formik
+        enableReinitialize={true}
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validateOnMount={false}
