@@ -3,6 +3,7 @@ import useActiveLearnLecture from 'apps/University/hooks/useActiveLearnLecture';
 import useActiveTeachCourse from 'apps/University/hooks/useActiveTeachCourse';
 import useActiveTeachLecture from 'apps/University/hooks/useActiveTeachLecture';
 import useAvailableCourses from 'apps/University/hooks/useAvailableCourses';
+import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
 import useCourseLectures from 'apps/University/hooks/useCourseLectures';
 import useEnrolledCourses from 'apps/University/hooks/useEnrolledCourses';
 import useIsSelfEnrolled from 'apps/University/hooks/useIsSelfEnrolled';
@@ -14,6 +15,7 @@ export {
   useActiveTeachCourse,
   useActiveTeachLecture,
   useAvailableCourses,
+  useConnectedAccounts,
   useCourseLectures,
   useEnrolledCourses,
   useIsSelfEnrolled,
