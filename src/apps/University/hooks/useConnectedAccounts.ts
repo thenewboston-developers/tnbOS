@@ -5,7 +5,7 @@ import {getAccountOnlineStatuses, getBalances, getNetworkAccountOnlineStatuses} 
 import {OnlineStatus} from 'system/types';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 
-interface ConnectedAccount {
+export interface ConnectedAccount {
   accountNumber: string;
   defaultNetworkId: string;
 }
