@@ -1,5 +1,6 @@
 import AppIcon from 'apps/University/assets/app-icon.png';
 import University from 'apps/University/containers';
+import appRouter from 'apps/University/routers/appRouter';
 import universityReducer from 'apps/University/store';
 import loadAppData from 'apps/University/store/initializer';
 import {UniversityElectronStore} from 'apps/University/types';
@@ -12,6 +13,7 @@ const UniversityRegistration: AppRegistration = {
   initializer: loadAppData,
   isSystemApp: false,
   reducer: universityReducer,
+  router: appRouter,
 };
 
 export {University, UniversityElectronStore, UniversityRegistration};

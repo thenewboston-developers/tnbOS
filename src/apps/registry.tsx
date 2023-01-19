@@ -40,6 +40,7 @@ export const appRouters: AppDataHandlers = {
   chat: ChatRegistration.router!,
   speedTest: SpeedTestRegistration.router!,
   trade: TradeRegistration.router!,
+  university: UniversityRegistration.router!,
 };
 
 export const Apps: SFC = () => {
