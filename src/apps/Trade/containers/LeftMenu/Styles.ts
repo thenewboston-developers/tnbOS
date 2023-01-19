@@ -9,6 +9,18 @@ export const Container = styled.div`
   overflow: auto;
 `;
 
+export const Logo = styled.img`
+  height: auto;
+  width: 100%;
+`;
+
+export const LogoContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 32px 48px 16px;
+`;
+
 export const MenuTitle = styled.div`
   color: #6a7187;
   font-size: 11px;
