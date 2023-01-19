@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 
+import ULeftMenu from 'apps/University/containers/LeftMenu';
+import URight from 'apps/University/containers/Right';
+
 export const Container = styled.div`
-  align-items: center;
-  background: #f7fafc;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 3%);
-  display: flex;
-  height: 90%;
-  justify-content: center;
-  width: 90%;
+  display: grid;
+  grid-template-columns: fit-content(250px) auto;
+  height: 100%;
+  width: 100%;
+`;
+
+export const LeftMenu = styled(ULeftMenu)`
+  grid-column: 1 / span 1;
+  overflow-y: auto;
+`;
+
+export const Right = styled(URight)`
+  grid-column: 2 / span 1;
+  overflow-y: auto;
 `;
