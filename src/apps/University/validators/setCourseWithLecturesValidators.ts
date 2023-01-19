@@ -56,8 +56,7 @@ export const validateLectureCourseIds = (course: Course, lectures: Lecture[]) =>
 };
 
 export const validateLecturePositions = (lectures: Lecture[]) => {
-  [...Array(lectures.length)].forEach((lecture, index) => {
-    console.log(lecture.name);
-    console.log(index);
-  });
+  const positions = lectures.map(({position}) => position);
+  const positionSet = new Set(positions);
+  if (lectures.length !== positionSet.size) throw new Error('Each lecture must have a unique position');
 };
