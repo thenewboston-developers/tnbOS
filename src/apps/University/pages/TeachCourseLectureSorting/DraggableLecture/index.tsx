@@ -2,12 +2,12 @@ import {DragEventHandler} from 'react';
 import {mdiDrag} from '@mdi/js';
 
 import DragSpacer from 'apps/University/components/DragSpacer';
-import {Lecture as TLecture} from 'apps/University/types';
+import {Lecture} from 'apps/University/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface DraggableLectureProps {
-  lecture: TLecture;
+  lecture: Lecture;
   onDragEnd: DragEventHandler<HTMLDivElement> | undefined;
   onDragStart: DragEventHandler<HTMLDivElement> | undefined;
   onSpacerDrop: DragEventHandler<HTMLDivElement> | undefined;
