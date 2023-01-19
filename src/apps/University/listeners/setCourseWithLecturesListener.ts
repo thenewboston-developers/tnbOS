@@ -1,4 +1,5 @@
 import {setCourse} from 'apps/University/store/courses';
+import {setLectureList} from 'apps/University/store/lectures';
 import {
   setCourseWithLecturesValidator,
   validateInstructor,
@@ -22,8 +23,8 @@ const setCourseWithLecturesListener = (block: Block, dispatch: AppDispatch) => {
       validateLectureCourseIds(course, lectures);
       validateLecturePositions(lectures);
 
-      // TODO: Need to set lectures at the same time to prevent lectures in redux without any related course
       dispatch(setCourse(course));
+      dispatch(setLectureList(lectures));
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');
