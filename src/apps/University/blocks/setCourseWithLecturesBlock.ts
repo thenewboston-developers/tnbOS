@@ -1,5 +1,5 @@
-import setCoursesPayload from 'apps/University/payloads/setCoursesPayload';
-import {Course} from 'apps/University/types';
+import setCourseWithLecturesPayload from 'apps/University/payloads/setCourseWithLecturesPayload';
+import {SetCourseWithLecturesParams} from 'apps/University/types';
 import {UnsignedBlock} from 'shared/types';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import {createBlock} from 'system/core/blocks';
@@ -8,11 +8,11 @@ import {signData} from 'system/utils/signing';
 
 interface SetCoursesBlock {
   networkId: string;
-  params: Course[];
+  params: SetCourseWithLecturesParams;
   recipient: string;
 }
 
-const setCoursesBlock = async ({networkId, params, recipient}: SetCoursesBlock) => {
+const setCourseWithLecturesBlock = async ({networkId, params, recipient}: SetCoursesBlock) => {
   const {
     system: {self},
   } = store.getState();
@@ -20,7 +20,7 @@ const setCoursesBlock = async ({networkId, params, recipient}: SetCoursesBlock) 
   const data: UnsignedBlock = {
     amount: 0,
     id: crypto.randomUUID(),
-    payload: setCoursesPayload(params),
+    payload: setCourseWithLecturesPayload(params),
     recipient,
     sender: self.accountNumber,
     transaction_fee: CORE_TRANSACTION_FEE,
@@ -30,4 +30,4 @@ const setCoursesBlock = async ({networkId, params, recipient}: SetCoursesBlock) 
   return createBlock(block, networkId);
 };
 
-export default setCoursesBlock;
+export default setCourseWithLecturesBlock;

@@ -1,3 +1,3 @@
-import setCoursesBlock from 'apps/University/blocks/setCoursesBlock';
+import setCourseWithLecturesBlock from 'apps/University/blocks/setCourseWithLecturesBlock';
 
-export {setCoursesBlock};
+export {setCourseWithLecturesBlock};

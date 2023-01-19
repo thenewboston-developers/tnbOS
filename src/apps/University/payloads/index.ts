@@ -1,3 +1,3 @@
-import setCoursesPayload from 'apps/University/payloads/setCoursesPayload';
+import setCourseWithLecturesPayload from 'apps/University/payloads/setCourseWithLecturesPayload';
 
-export {setCoursesPayload};
+export {setCourseWithLecturesPayload};

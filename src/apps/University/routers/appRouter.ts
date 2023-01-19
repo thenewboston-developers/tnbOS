@@ -1,4 +1,4 @@
-import {setCoursesListener} from 'apps/University/listeners';
+import {setCourseWithLecturesListener} from 'apps/University/listeners';
 import {UniversityFn} from 'apps/University/types';
 import {Block} from 'shared/types';
 import {AppDataHandlers, AppDispatch} from 'system/types';
@@ -10,7 +10,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
   } = block;
 
   const fnHandlers: AppDataHandlers = {
-    [UniversityFn.setCourses]: setCoursesListener,
+    [UniversityFn.setCourseWithLectures]: setCourseWithLecturesListener,
   };
 
   const fnHandler = fnHandlers[fn];

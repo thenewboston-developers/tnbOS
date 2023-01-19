@@ -1,3 +1,3 @@
-import setCoursesListener from 'apps/University/listeners/setCoursesListener';
+import setCourseWithLecturesListener from 'apps/University/listeners/setCourseWithLecturesListener';
 
-export {setCoursesListener};
+export {setCourseWithLecturesListener};
