@@ -3,6 +3,8 @@ import {mdiFileSign, mdiMinusCircleOutline, mdiPlusCircleOutline, mdiTextBoxOutl
 import MenuItem from 'apps/Trade/containers/LeftMenu/MenuItem';
 import {Page} from 'apps/Trade/types';
 import {SFC} from 'system/types';
+
+import TradeLogo from './assets/trade-logo.png';
 import * as S from './Styles';
 
 const LeftMenu: SFC = ({className}) => {
@@ -21,6 +23,14 @@ const LeftMenu: SFC = ({className}) => {
     </>
   );
 
+  const renderLogoContainer = () => {
+    return (
+      <S.LogoContainer>
+        <S.Logo alt="Trade Logo" src={TradeLogo} />
+      </S.LogoContainer>
+    );
+  };
+
   const renderManualMenu = () => (
     <>
       <S.MenuTitle>MANUAL</S.MenuTitle>
@@ -31,6 +41,7 @@ const LeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      {renderLogoContainer()}
       {renderManualMenu()}
       {renderAutomatedMenu()}
       {renderGeneralMenu()}
