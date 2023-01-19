@@ -6,14 +6,14 @@ import {Lecture as TLecture} from 'apps/University/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-export interface LectureProps {
+export interface DraggableLectureProps {
   lecture: TLecture;
   onDragEnd: DragEventHandler<HTMLDivElement> | undefined;
   onDragStart: DragEventHandler<HTMLDivElement> | undefined;
   onSpacerDrop: DragEventHandler<HTMLDivElement> | undefined;
 }
 
-const DraggableLecture: SFC<LectureProps> = ({className, lecture, onDragEnd, onDragStart, onSpacerDrop}) => {
+const DraggableLecture: SFC<DraggableLectureProps> = ({className, lecture, onDragEnd, onDragStart, onSpacerDrop}) => {
   const {description, name, thumbnailUrl} = lecture;
 
   return (
