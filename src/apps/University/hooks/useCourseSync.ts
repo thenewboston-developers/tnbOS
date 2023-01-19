@@ -14,6 +14,8 @@ const useCourseSync = () => {
   );
 
   (async () => {
+    accountsSynced = [...accountsSynced, ...connectedAccountsToSync];
+
     for (const connectedAccount of connectedAccountsToSync) {
       try {
         console.log('Syncing...');
@@ -25,8 +27,6 @@ const useCourseSync = () => {
           params: taughtCourses,
           recipient: connectedAccount.accountNumber,
         });
-
-        accountsSynced = [...accountsSynced, connectedAccount];
       } catch (error) {
         console.error(error);
       }
