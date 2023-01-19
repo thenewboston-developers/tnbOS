@@ -7,6 +7,7 @@ import {getActivePage} from 'apps/University/selectors/state';
 import {Page} from 'apps/University/types';
 import {SFC} from 'system/types';
 
+import UniversityLogo from './assets/university-logo.png';
 import MenuItem from './MenuItem';
 import * as S from './Styles';
 
@@ -35,6 +36,15 @@ const LeftMenu: SFC = ({className}) => {
     </>
   );
 
+  const renderLogoContainer = () => {
+    if (isCollapsed) return null;
+    return (
+      <S.LogoContainer>
+        <S.Logo alt="University Logo" src={UniversityLogo} />
+      </S.LogoContainer>
+    );
+  };
+
   const renderTeachMenu = () => (
     <>
       <LeftMenuTitle isCollapsed={isCollapsed}>TEACH</LeftMenuTitle>
@@ -46,6 +56,7 @@ const LeftMenu: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
+      {renderLogoContainer()}
       {renderLearnMenu()}
       {renderTeachMenu()}
     </S.Container>
