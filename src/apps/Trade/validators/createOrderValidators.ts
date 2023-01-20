@@ -15,7 +15,7 @@ import {
 } from 'apps/Trade/types';
 import {getBalanceDetails} from 'apps/Trade/utils/balances';
 import {Balances, Dict, Self} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 interface TradeDetails {
   isUserBuyingClientAsset: boolean;

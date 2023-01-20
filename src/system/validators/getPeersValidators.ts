@@ -1,5 +1,5 @@
 import {Dict, PeerOnlineStatus} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const accountOnlineStatusValidator = yup.object({
   accountNumber: accountNumberSchema.required(),

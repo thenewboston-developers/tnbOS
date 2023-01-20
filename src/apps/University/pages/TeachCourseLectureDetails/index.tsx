@@ -11,8 +11,8 @@ import {useActiveTeachLecture} from 'apps/University/hooks';
 import {setLecture} from 'apps/University/store/lectures';
 import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
-import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 const TeachCourseLectureDetails: SFC = ({className}) => {

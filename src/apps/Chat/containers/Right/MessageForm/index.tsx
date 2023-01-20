@@ -15,8 +15,8 @@ import {useRecipientsDefaultNetworkId} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import yup from 'system/utils/forms/yup';
 import {displayErrorToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 const MessageForm: SFC = ({className}) => {

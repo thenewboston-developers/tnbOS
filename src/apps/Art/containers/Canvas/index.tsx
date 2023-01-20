@@ -22,10 +22,10 @@ import {sortAttributesAlphabetically} from 'apps/Art/utils/attributes';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import yup from 'system/utils/forms/yup';
 import {signData} from 'system/utils/signing';
 import {verifySignature} from 'system/utils/tnb';
 import {displayToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 const Canvas: SFC = ({className}) => {

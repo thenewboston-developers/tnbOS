@@ -8,7 +8,7 @@ import Modal from 'system/components/Modal';
 import {getSelf} from 'system/selectors/state';
 import {updateSelf} from 'system/store/self';
 import {AppDispatch, SFC} from 'system/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export interface EditSelfModalProps {
   close(): void;

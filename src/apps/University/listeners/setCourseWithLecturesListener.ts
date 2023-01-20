@@ -2,8 +2,10 @@ import {setCourse} from 'apps/University/store/courses';
 import {setLectureList} from 'apps/University/store/lectures';
 import {
   setCourseWithLecturesValidator,
+  validateCourseIdAccountNumber,
   validateInstructor,
-  validateLectureCourseIds,
+  validateLectureCourseIdsMatchCourseId,
+  validateLectureIdsAccountNumber,
   validateLecturePositions,
 } from 'apps/University/validators/setCourseWithLecturesValidators';
 import {Block} from 'shared/types';
@@ -19,8 +21,10 @@ const setCourseWithLecturesListener = (block: Block, dispatch: AppDispatch) => {
       await setCourseWithLecturesValidator.validate(params);
       const {course, lectures} = params;
 
+      validateCourseIdAccountNumber(course);
       validateInstructor(blockSender, course);
-      validateLectureCourseIds(course, lectures);
+      validateLectureCourseIdsMatchCourseId(course, lectures);
+      validateLectureIdsAccountNumber(course, lectures);
       validateLecturePositions(lectures);
 
       dispatch(setCourse(course));

@@ -1,6 +1,6 @@
 import {appRouters} from 'apps/registry';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 import {verifyBlockSignature} from 'system/utils/tnb';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const blockSchema = yup
   .object({

@@ -13,9 +13,9 @@ import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import {createBlock} from 'system/core/blocks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 import {signData} from 'system/utils/signing';
 import {displayErrorToast} from 'system/utils/toast';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 import * as S from './Styles';
 
 const WalletSend: SFC = ({className}) => {

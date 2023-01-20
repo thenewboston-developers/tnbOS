@@ -18,10 +18,10 @@ import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
 import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {systemDate} from 'system/utils/dates';
-import yup from 'system/utils/forms/yup';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {generateAccount} from 'system/utils/tnb';
 import {displayErrorToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 interface BuyModalProps {

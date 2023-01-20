@@ -9,10 +9,11 @@ import {getActiveTeachCourseId} from 'apps/University/selectors/state';
 import {setLecture} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture, Page, PublicationStatus} from 'apps/University/types';
+import {generateNetworkUUID} from 'apps/University/utils/uuid';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 interface LectureModalProps {
@@ -35,7 +36,7 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
 
   const handleSubmit = (values: FormValues) => {
     try {
-      const lectureId = crypto.randomUUID();
+      const lectureId = generateNetworkUUID();
 
       const lecture: Lecture = {
         courseId: activeTeachCourseId,

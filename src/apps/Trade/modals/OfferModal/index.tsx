@@ -11,8 +11,8 @@ import {Offer} from 'apps/Trade/types';
 import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
-import yup from 'system/utils/forms/yup';
 import {displayToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 interface FormValues {

@@ -1,5 +1,5 @@
 import {OffersSync} from 'apps/Trade/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export const setOffersReceiptValidator = yup.object({
   modifiedDate: yup.date().required(),

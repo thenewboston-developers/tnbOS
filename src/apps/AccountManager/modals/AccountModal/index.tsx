@@ -8,7 +8,7 @@ import Modal from 'system/components/Modal';
 import {getAccounts, getSelf} from 'system/selectors/state';
 import {deleteAccount, setAccount} from 'system/store/accounts';
 import {Account, AppDispatch, SFC} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 export interface AccountModalProps {
   account?: Account;
