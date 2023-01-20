@@ -11,15 +11,12 @@ const LearnCourseLecture: SFC = ({className}) => {
   const activeLearnLectureId = useSelector(getActiveLearnLectureId);
   const lecture = useActiveLearnLecture();
 
-  const renderVideoPlayer = () => {
+  const renderIFrame = () => {
     return (
-      <iframe
+      <S.IFrame
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        frameBorder="0"
-        height="360"
-        src={`https://www.youtube.com/embed/${lecture!.youtubeId}`}
-        width="640"
+        src={`https://www.youtube.com/embed/${lecture!.youtubeId}?autoplay=1&rel=0`}
       />
     );
   };
@@ -31,7 +28,7 @@ const LearnCourseLecture: SFC = ({className}) => {
       <LearnBreadcrumbs />
       <S.Container className={className}>
         <S.LectureContainer>
-          {renderVideoPlayer()}
+          {renderIFrame()}
           <S.Name>{lecture.name}</S.Name>
           <S.Description>{lecture.description}</S.Description>
         </S.LectureContainer>
