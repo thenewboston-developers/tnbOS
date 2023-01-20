@@ -2,7 +2,20 @@ import {Course, Lecture, PublicationStatus} from 'apps/University/types';
 import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 
 const courseValidator = yup.object({
-  courseId: yup.string().required().uuid(),
+  courseId: yup
+    .string()
+    .required()
+    .test(
+      'course-id-is-correct-format',
+      'Course ID must follow the correct format of [accountNumber]-[uuid]',
+      async (courseId: any) => {
+        const accountNumber = courseId.substring(0, 64);
+        const uuid = courseId.substring(65);
+        const isAccountNumberValid = await accountNumberSchema.required().isValid(accountNumber);
+        const isUUIDValid = await yup.string().required().uuid().isValid(uuid);
+        return isAccountNumberValid && isUUIDValid;
+      },
+    ),
   createdDate: yup.date().required(),
   description: yup.string().required(),
   instructor: accountNumberSchema.required(),

@@ -7,6 +7,7 @@ import {Input} from 'apps/University/components/FormElements';
 import {setCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course, Page, PublicationStatus} from 'apps/University/types';
+import {generateNetworkUUID} from 'apps/University/utils/uuid';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -32,7 +33,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
 
   const handleSubmit = (values: FormValues) => {
     try {
-      const courseId = crypto.randomUUID();
+      const courseId = generateNetworkUUID();
 
       const course: Course = {
         courseId,
