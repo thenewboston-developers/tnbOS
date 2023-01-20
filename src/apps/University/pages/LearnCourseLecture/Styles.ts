@@ -17,6 +17,14 @@ export const Description = styled.div`
   ${mixinLectureDescription};
 `;
 
+export const IFrame = styled.iframe`
+  aspect-ratio: 16 / 9;
+  border: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+`;
+
 export const LectureContainer = styled.div``;
 
 export const Name = styled.div`
