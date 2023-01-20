@@ -1,4 +1,4 @@
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const messageSchema = yup.object({
   account_number: accountNumberSchema.required(),

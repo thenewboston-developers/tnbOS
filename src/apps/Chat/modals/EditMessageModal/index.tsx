@@ -12,8 +12,8 @@ import {DeliveryStatus} from 'apps/Chat/types';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import yup from 'system/utils/forms/yup';
 import {displayErrorToast} from 'system/utils/toast';
+import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 export interface EditMessageModalProps {

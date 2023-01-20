@@ -1,5 +1,5 @@
 import {Accounts, Self} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 export const trackOnlineStatusValidator = yup.object({
   account_number: accountNumberSchema.required(),

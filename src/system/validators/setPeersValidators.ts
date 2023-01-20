@@ -1,4 +1,4 @@
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export const setPeersValidator = yup.object({
   correlation_id: yup.string().required(),

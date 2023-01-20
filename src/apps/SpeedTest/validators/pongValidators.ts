@@ -1,5 +1,5 @@
 import {Run, RunStatus} from 'apps/SpeedTest/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export const pongValidator = yup.object({
   runId: yup.string().required().uuid(),

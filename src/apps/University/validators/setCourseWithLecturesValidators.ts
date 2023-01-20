@@ -1,21 +1,12 @@
 import {Course, Lecture, PublicationStatus} from 'apps/University/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import {networkUUIDSchema} from 'apps/University/utils/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const courseValidator = yup.object({
-  courseId: yup
-    .string()
-    .required()
-    .test(
-      'course-id-is-correct-format',
-      'Course ID must follow the correct format of [accountNumber]-[uuid]',
-      async (courseId: any) => {
-        const accountNumber = courseId.substring(0, 64);
-        const uuid = courseId.substring(65);
-        const isAccountNumberValid = await accountNumberSchema.required().isValid(accountNumber);
-        const isUUIDValid = await yup.string().required().uuid().isValid(uuid);
-        return isAccountNumberValid && isUUIDValid;
-      },
-    ),
+  courseId: networkUUIDSchema(
+    'course-id-is-correct-format',
+    'Course ID must follow the correct format of [accountNumber]-[uuid]',
+  ),
   createdDate: yup.date().required(),
   description: yup.string().required(),
   instructor: accountNumberSchema.required(),
@@ -32,10 +23,16 @@ const courseValidator = yup.object({
 });
 
 const lectureValidator = yup.object({
-  courseId: yup.string().required().uuid(),
+  courseId: networkUUIDSchema(
+    'course-id-is-correct-format',
+    'Course ID must follow the correct format of [accountNumber]-[uuid]',
+  ),
   createdDate: yup.date().required(),
   description: yup.string().required(),
-  lectureId: yup.string().required().uuid(),
+  lectureId: networkUUIDSchema(
+    'lecture-id-is-correct-format',
+    'Lecture ID must follow the correct format of [accountNumber]-[uuid]',
+  ),
   name: yup.string().required(),
   position: yup.number().required().integer().min(0),
   publicationStatus: yup

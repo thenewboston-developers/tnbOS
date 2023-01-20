@@ -1,6 +1,6 @@
 import {Order, OrderErrors} from 'apps/Trade/types';
 import {Self} from 'system/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 export const setOrderErrorValidator = yup.object({
   createdDate: yup.date().required(),

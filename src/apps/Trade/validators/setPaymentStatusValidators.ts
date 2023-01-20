@@ -1,5 +1,5 @@
 import {PaymentStatus} from 'apps/Trade/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export const setPaymentStatusValidator = yup.object({
   orderId: yup.string().required().uuid(),

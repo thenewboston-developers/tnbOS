@@ -10,7 +10,7 @@ import {deleteNetwork, initializeNetworkRelatedObjects} from 'system/dispatchers
 import {getNetworks} from 'system/selectors/state';
 import {setNetwork} from 'system/store/networks';
 import {AppDispatch, Network, NetworkProtocol, SFC} from 'system/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export interface NetworkModalProps {
   close(): void;

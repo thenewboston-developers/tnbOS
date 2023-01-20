@@ -1,6 +1,6 @@
 import {Artwork, GenesisBlock} from 'apps/Art/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
 import {verifySignature} from 'system/utils/tnb';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const artworkIdPayloadSchema = yup.object({
   currentTime: yup.number().required().integer().min(0),

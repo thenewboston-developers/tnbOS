@@ -1,5 +1,5 @@
 import {Offer} from 'apps/Trade/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const termsValidator = yup.object({
   enabled: yup.boolean().required(),

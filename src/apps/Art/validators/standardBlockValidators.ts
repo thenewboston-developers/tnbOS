@@ -1,5 +1,5 @@
 import {Artwork, ArtworkAttributes, StandardBlock} from 'apps/Art/types';
-import yup, {accountNumberSchema} from 'system/utils/forms/yup';
+import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const standardBlockPayloadSchema = yup.object({
   artworkId: yup.string().required(),

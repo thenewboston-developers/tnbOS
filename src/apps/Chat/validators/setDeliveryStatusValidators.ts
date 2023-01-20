@@ -1,5 +1,5 @@
 import {DeliveryStatus, Message} from 'apps/Chat/types';
-import yup from 'system/utils/forms/yup';
+import yup from 'system/utils/yup';
 
 export const setDeliveryStatusValidator = yup.object({
   deliveryStatus: yup
