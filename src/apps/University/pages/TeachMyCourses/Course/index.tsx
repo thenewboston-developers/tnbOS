@@ -2,11 +2,13 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
+import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse, unsetCourse} from 'apps/University/store/courses';
 import {unsetCourseLectures} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course as TCourse, Page, PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
@@ -23,6 +25,7 @@ const Course: SFC<CourseProps> = ({course}) => {
   const handleDeleteCourseClick = () => {
     dispatch(unsetCourse(courseId));
     dispatch(unsetCourseLectures(courseId));
+    dispatch(unsetCourseRecord({courseId, instructor: course.instructor}));
     displayToast(`Course deleted`, ToastType.success);
   };
 
@@ -33,8 +36,23 @@ const Course: SFC<CourseProps> = ({course}) => {
 
   const handlePublicationActionLinkClick = () => {
     let newPublicationStatus = PublicationStatus.draft;
+
     if (publicationStatus === PublicationStatus.draft) newPublicationStatus = PublicationStatus.published;
-    dispatch(setCourse({...course, publicationStatus: newPublicationStatus}));
+
+    const _course = {
+      ...course,
+      modifiedDate: currentSystemDate(),
+      publicationStatus: newPublicationStatus,
+    };
+
+    dispatch(setCourse(_course));
+
+    if (newPublicationStatus === PublicationStatus.published) {
+      dispatch(setCourseRecord(_course));
+    } else if (newPublicationStatus === PublicationStatus.draft) {
+      dispatch(unsetCourseRecord({courseId, instructor: _course.instructor}));
+    }
+
     displayToast(`Course set to ${newPublicationStatus}`, ToastType.success);
   };
 

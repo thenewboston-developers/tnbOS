@@ -9,9 +9,11 @@ import {Checkbox, Input} from 'apps/University/components/FormElements';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
+import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse} from 'apps/University/store/courses';
 import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
@@ -34,9 +36,25 @@ const TeachCourseDetails: SFC = ({className}) => {
 
     try {
       const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
-      const course = {...activeTeachCourse, ...values, publicationStatus};
+      const course = {
+        ...activeTeachCourse,
+        ...values,
+        modifiedDate: currentSystemDate(),
+        publicationStatus,
+      };
 
       dispatch(setCourse(course));
+
+      if (publicationStatus === PublicationStatus.published) {
+        dispatch(setCourseRecord(course));
+      } else if (
+        activeTeachCourse?.publicationStatus === PublicationStatus.published &&
+        publicationStatus === PublicationStatus.draft
+      ) {
+        const {courseId, instructor} = course;
+        dispatch(unsetCourseRecord({courseId, instructor}));
+      }
+
       setSubmitting(false);
       setValues(values);
 
