@@ -23,5 +23,6 @@ const courseRecordRecipients = createSlice({
   },
 });
 
-export const {resetCourseRecordRecipients, setCourseRecordRecipient, unsetCourseRecordRecipient} = courseRecordRecipients.actions;
+export const {resetCourseRecordRecipients, setCourseRecordRecipient, unsetCourseRecordRecipient} =
+  courseRecordRecipients.actions;
 export default courseRecordRecipients.reducer;
