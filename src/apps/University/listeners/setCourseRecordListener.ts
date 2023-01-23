@@ -1,7 +1,10 @@
 import difference from 'lodash/difference';
 
 import {setCourseRecordReceiptBlock} from 'apps/University/blocks';
+import {unsetCourses} from 'apps/University/store/courses';
 import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
+import {unsetEnrollments} from 'apps/University/store/enrollments';
+import {unsetLectures} from 'apps/University/store/lectures';
 import {CourseRecord} from 'apps/University/types';
 import {
   courseIdListValidator,
@@ -16,7 +19,7 @@ import {displayErrorToast} from 'system/utils/toast';
 const getRemovedCourseIds = (courseRecord: CourseRecord, existingCourseRecord: CourseRecord) => {
   const existingCourseIds = Object.keys(existingCourseRecord.courseModifiedDates);
   const courseIds = Object.keys(courseRecord.courseModifiedDates);
-  console.log(difference(existingCourseIds, courseIds));
+  return difference(existingCourseIds, courseIds);
 };
 
 const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
@@ -49,10 +52,11 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
           }),
         );
 
-        // get any courses from that instructor that are no longer published
-        getRemovedCourseIds(courseRecord, existingCourseRecord);
+        const removedCourseIds = getRemovedCourseIds(courseRecord, existingCourseRecord);
 
-        // delete those course trees (along with any related course information such as lectures, enrollments, etc...)
+        dispatch(unsetEnrollments(removedCourseIds));
+        dispatch(unsetLectures(removedCourseIds));
+        dispatch(unsetCourses(removedCourseIds));
       }
 
       await setCourseRecordReceiptBlock({

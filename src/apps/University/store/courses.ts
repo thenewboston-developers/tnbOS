@@ -21,8 +21,14 @@ const courses = createSlice({
       delete state[courseId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_COURSES, state: current(state)});
     },
+    unsetCourses: (state: Courses, {payload: courseIds}: PayloadAction<string[]>) => {
+      for (const courseId of courseIds) {
+        if (state[courseId]) delete state[courseId];
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_COURSES, state: current(state)});
+    },
   },
 });
 
-export const {setCourse, setCourses, unsetCourse} = courses.actions;
+export const {setCourse, setCourses, unsetCourse, unsetCourses} = courses.actions;
 export default courses.reducer;
