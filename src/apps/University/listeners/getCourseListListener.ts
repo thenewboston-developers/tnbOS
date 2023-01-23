@@ -1,4 +1,4 @@
-import {setCourseListBlock} from 'apps/University/blocks';
+import {setCourseListBlock, setCourseRecordBlock} from 'apps/University/blocks';
 import {courseIdListValidator} from 'apps/University/validators/common';
 import {validateCoursesIds} from 'apps/University/validators/getCourseListValidators';
 import store from 'system/store';
@@ -13,7 +13,7 @@ const getCourseListListener = (block: Block, _: AppDispatch, networkId: string) 
       const {params} = payload;
       const {
         system: {self},
-        university: {courses},
+        university: {courseRecords, courses},
       } = store.getState();
 
       await courseIdListValidator.validate(params);
@@ -28,8 +28,14 @@ const getCourseListListener = (block: Block, _: AppDispatch, networkId: string) 
           recipient: blockSender,
         });
       } catch (error) {
-        // if request is invalid because user requested course ID of course that does not exist, teacher will respond by
-        // sending back an update course record instead of the course data
+        const courseRecord = courseRecords[self.accountNumber];
+        if (courseRecord) {
+          await setCourseRecordBlock({
+            networkId: networkId,
+            params: courseRecord,
+            recipient: blockSender,
+          });
+        }
       }
     } catch (error) {
       console.error(error);
