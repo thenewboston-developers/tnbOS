@@ -73,7 +73,7 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         // for any new/updated courses, fetch the latest data
         // fetch all at once by passing in a list of course IDs
         // actually only need to fetch the courses you do not already have the latest versions of
-        const updatedCourseIds = getUpdatedCourseIds(courseRecords, courses);
+        const updatedCourseIds = getUpdatedCourseIds(courseRecord, courses);
 
         if (!!updatedCourseIds.length) {
           // fetch
