@@ -1,11 +1,13 @@
 import {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
+import {setCourseRecordBlock} from 'apps/University/blocks';
 import {
   COURSE_RECORD_SYNC_TASK_RUN_INTERVAL_SECONDS,
   MAX_COURSE_RECORD_DELIVERY_ATTEMPTS,
 } from 'apps/University/constants/protocol';
 import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
+import useSelfCourseRecord from 'apps/University/hooks/useSelfCourseRecord';
 import {getCourseRecordRecipients} from 'apps/University/selectors/state';
 import {setCourseRecordRecipient} from 'apps/University/store/courseRecordRecipients';
 import {AppDispatch} from 'system/types';
@@ -13,6 +15,7 @@ import {displayErrorToast} from 'system/utils/toast';
 
 const useCourseRecordSyncTask = () => {
   const connectedAccounts = useConnectedAccounts();
+  const courseRecord = useSelfCourseRecord();
   const courseRecordRecipients = useSelector(getCourseRecordRecipients);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -25,15 +28,21 @@ const useCourseRecordSyncTask = () => {
 
   const run = useCallback(() => {
     (async () => {
-      try {
-        for (const recipientAccountNumber of recipientAccountNumbers) {
-          console.log('~~~~ Sending the course record from useCourseRecordSyncTask ~~~~');
-          console.log(recipientAccountNumber);
-          console.log(connectedAccounts[recipientAccountNumber]);
+      if (!courseRecord) return;
 
-          const courseRecordRecipient = courseRecordRecipients[recipientAccountNumber];
-          const deliveryAttempts = courseRecordRecipient.deliveryAttempts || 0;
+      for (const recipientAccountNumber of recipientAccountNumbers) {
+        const courseRecordRecipient = courseRecordRecipients[recipientAccountNumber];
+        const deliveryAttempts = courseRecordRecipient.deliveryAttempts || 0;
 
+        try {
+          await setCourseRecordBlock({
+            networkId: connectedAccounts[recipientAccountNumber],
+            params: courseRecord,
+            recipient: recipientAccountNumber,
+          });
+        } catch (error) {
+          displayErrorToast('Error sending the course record');
+        } finally {
           dispatch(
             setCourseRecordRecipient({
               accountNumber: recipientAccountNumber,
@@ -41,13 +50,10 @@ const useCourseRecordSyncTask = () => {
               deliveryAttempts: deliveryAttempts + 1,
             }),
           );
-          // Send course record block
         }
-      } catch (error) {
-        displayErrorToast('Error sending the course record');
       }
     })();
-  }, [connectedAccounts, courseRecordRecipients, dispatch, recipientAccountNumbers]);
+  }, [connectedAccounts, courseRecord, courseRecordRecipients, dispatch, recipientAccountNumbers]);
 
   useEffect(() => {
     const runInterval = setInterval(() => run(), COURSE_RECORD_SYNC_TASK_RUN_INTERVAL_SECONDS * 1000);

@@ -8,4 +8,5 @@ export interface SetCourseWithLecturesParams {
 
 export enum UniversityFn {
   setCourseWithLectures = 'setCourseWithLectures',
+  setCourseRecord = 'setCourseRecord',
 }
