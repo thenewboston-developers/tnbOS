@@ -57,8 +57,10 @@ const Course: SFC<CourseProps> = ({course}) => {
           modifiedDate: _course.modifiedDate,
         }),
       );
+      dispatch(resetCourseRecordRecipients());
     } else if (newPublicationStatus === PublicationStatus.draft) {
       dispatch(unsetCourseRecord({courseId, instructor: _course.instructor}));
+      dispatch(resetCourseRecordRecipients());
     }
 
     displayToast(`Course set to ${newPublicationStatus}`, ToastType.success);
