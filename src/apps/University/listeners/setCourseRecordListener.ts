@@ -1,3 +1,4 @@
+import {setCourseRecordReceiptBlock} from 'apps/University/blocks';
 import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
 import {
   courseIdListValidator,
@@ -30,7 +31,11 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         }),
       );
 
-      // Send back course record receipt block
+      await setCourseRecordReceiptBlock({
+        networkId,
+        params: {recordModifiedDate},
+        recipient: blockSender,
+      });
       console.log(networkId);
     } catch (error) {
       console.error(error);
