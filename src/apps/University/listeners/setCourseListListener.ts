@@ -1,5 +1,6 @@
-import {setCourseListValidator, validateInstructors} from 'apps/University/validators/setCourseListValidators';
+import {setCourseList} from 'apps/University/store/courses';
 import {Course} from 'apps/University/types';
+import {setCourseListValidator, validateInstructors} from 'apps/University/validators/setCourseListValidators';
 import {Block} from 'shared/types';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
@@ -15,9 +16,7 @@ const setCourseListListener = (block: Block, dispatch: AppDispatch) => {
 
       validateInstructors(blockSender, courseList);
 
-      // set in redux
-      console.log('Here are the courses:');
-      console.log(courseList);
+      dispatch(setCourseList(courseList));
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');
