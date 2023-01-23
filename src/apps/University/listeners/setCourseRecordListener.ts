@@ -1,6 +1,6 @@
 import difference from 'lodash/difference';
 
-import {setCourseRecordReceiptBlock} from 'apps/University/blocks';
+import {getCourseListBlock, setCourseRecordReceiptBlock} from 'apps/University/blocks';
 import {unsetCourses} from 'apps/University/store/courses';
 import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
 import {unsetEnrollments} from 'apps/University/store/enrollments';
@@ -70,18 +70,15 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         dispatch(unsetLectures(removedCourseIds));
         dispatch(unsetCourses(removedCourseIds));
 
-        // for any new/updated courses, fetch the latest data
-        // fetch all at once by passing in a list of course IDs
-        // actually only need to fetch the courses you do not already have the latest versions of
         const updatedCourseIds = getUpdatedCourseIds(courseRecord, courses);
 
         if (!!updatedCourseIds.length) {
-          // fetch
-          console.log(updatedCourseIds);
+          await getCourseListBlock({
+            networkId,
+            params: updatedCourseIds,
+            recipient: blockSender,
+          });
         }
-
-        // if request is invalid because user requested course ID of course that does not exist, teacher will respond by
-        // sending back an update course record instead of the course data
       }
 
       await setCourseRecordReceiptBlock({

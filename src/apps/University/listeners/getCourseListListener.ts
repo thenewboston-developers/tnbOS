@@ -11,6 +11,8 @@ const getCourseListListener = (block: Block, dispatch: AppDispatch, networkId: s
 
       await courseIdListValidator.validate(params);
 
+      // if request is invalid because user requested course ID of course that does not exist, teacher will respond by
+      // sending back an update course record instead of the course data
       console.log(params);
     } catch (error) {
       console.error(error);
