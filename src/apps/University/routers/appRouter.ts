@@ -1,5 +1,6 @@
 import {
   getCourseListListener,
+  setCourseListListener,
   setCourseRecordListener,
   setCourseRecordReceiptListener,
   setCourseWithLecturesListener,
@@ -16,6 +17,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
 
   const fnHandlers: AppDataHandlers = {
     [UniversityFn.getCourseList]: getCourseListListener,
+    [UniversityFn.setCourseList]: setCourseListListener,
     [UniversityFn.setCourseRecordReceipt]: setCourseRecordReceiptListener,
     [UniversityFn.setCourseRecord]: setCourseRecordListener,
     [UniversityFn.setCourseWithLectures]: setCourseWithLecturesListener,
