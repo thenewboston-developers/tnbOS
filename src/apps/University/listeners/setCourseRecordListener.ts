@@ -36,7 +36,6 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         params: {recordModifiedDate},
         recipient: blockSender,
       });
-      console.log(networkId);
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

@@ -50,5 +50,6 @@ const courseRecords = createSlice({
   },
 });
 
-export const {setCourseRecords, setIncomingCourseRecord, setSelfCourseRecord, unsetCourseRecord} = courseRecords.actions;
+export const {setCourseRecords, setIncomingCourseRecord, setSelfCourseRecord, unsetCourseRecord} =
+  courseRecords.actions;
 export default courseRecords.reducer;
