@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
+import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
 import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse, unsetCourse} from 'apps/University/store/courses';
 import {unsetCourseLectures} from 'apps/University/store/lectures';
@@ -26,6 +27,7 @@ const Course: SFC<CourseProps> = ({course}) => {
     dispatch(unsetCourse(courseId));
     dispatch(unsetCourseLectures(courseId));
     dispatch(unsetCourseRecord({courseId, instructor: course.instructor}));
+    dispatch(resetCourseRecordRecipients());
     displayToast(`Course deleted`, ToastType.success);
   };
 

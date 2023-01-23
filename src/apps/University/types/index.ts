@@ -1,3 +1,4 @@
+import {CourseRecordRecipient, CourseRecordRecipients} from 'apps/University/types/courseRecordRecipients';
 import {CourseRecord, CourseRecords} from 'apps/University/types/courseRecords';
 import {Course, Courses} from 'apps/University/types/courses';
 import {UniversityElectronStore} from 'apps/University/types/electronStore';
@@ -11,6 +12,8 @@ import {PublicationStatus} from 'apps/University/types/publicationStatus';
 export {
   Course,
   CourseRecord,
+  CourseRecordRecipient,
+  CourseRecordRecipients,
   CourseRecords,
   Courses,
   Enrollment,

@@ -9,6 +9,7 @@ import {Checkbox, Input} from 'apps/University/components/FormElements';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
+import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
 import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse} from 'apps/University/store/courses';
 import {PublicationStatus} from 'apps/University/types';
@@ -47,12 +48,14 @@ const TeachCourseDetails: SFC = ({className}) => {
 
       if (publicationStatus === PublicationStatus.published) {
         dispatch(setCourseRecord(course));
+        dispatch(resetCourseRecordRecipients());
       } else if (
         activeTeachCourse?.publicationStatus === PublicationStatus.published &&
         publicationStatus === PublicationStatus.draft
       ) {
         const {courseId, instructor} = course;
         dispatch(unsetCourseRecord({courseId, instructor}));
+        dispatch(resetCourseRecordRecipients());
       }
 
       setSubmitting(false);
