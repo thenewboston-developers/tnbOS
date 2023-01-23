@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
 import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
-import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
+import {setSelfCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse, unsetCourse} from 'apps/University/store/courses';
 import {unsetCourseLectures} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
@@ -50,7 +50,13 @@ const Course: SFC<CourseProps> = ({course}) => {
     dispatch(setCourse(_course));
 
     if (newPublicationStatus === PublicationStatus.published) {
-      dispatch(setCourseRecord(_course));
+      dispatch(
+        setSelfCourseRecord({
+          courseId: _course.courseId,
+          instructor: _course.instructor,
+          modifiedDate: _course.modifiedDate,
+        }),
+      );
     } else if (newPublicationStatus === PublicationStatus.draft) {
       dispatch(unsetCourseRecord({courseId, instructor: _course.instructor}));
     }

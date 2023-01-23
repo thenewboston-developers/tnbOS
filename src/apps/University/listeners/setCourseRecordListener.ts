@@ -1,3 +1,4 @@
+import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
 import {
   courseIdListValidator,
   courseModifiedDateListValidator,
@@ -22,8 +23,15 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
       await courseIdListValidator.validate(courseIdList);
       await courseModifiedDateListValidator.validate(courseModifiedDateList);
 
-      console.log('Valid!');
-      console.log(params);
+      dispatch(
+        setIncomingCourseRecord({
+          courseRecord: {courseModifiedDates, recordModifiedDate},
+          instructor: blockSender,
+        }),
+      );
+
+      // Send back course record receipt block
+      console.log(networkId);
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

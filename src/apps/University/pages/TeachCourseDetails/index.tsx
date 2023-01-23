@@ -10,7 +10,7 @@ import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
 import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
-import {setCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
+import {setSelfCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse} from 'apps/University/store/courses';
 import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
@@ -37,6 +37,7 @@ const TeachCourseDetails: SFC = ({className}) => {
 
     try {
       const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+
       const course = {
         ...activeTeachCourse,
         ...values,
@@ -47,7 +48,13 @@ const TeachCourseDetails: SFC = ({className}) => {
       dispatch(setCourse(course));
 
       if (publicationStatus === PublicationStatus.published) {
-        dispatch(setCourseRecord(course));
+        dispatch(
+          setSelfCourseRecord({
+            courseId: course.courseId,
+            instructor: course.instructor,
+            modifiedDate: course.modifiedDate,
+          }),
+        );
         dispatch(resetCourseRecordRecipients());
       } else if (
         activeTeachCourse?.publicationStatus === PublicationStatus.published &&
