@@ -3,8 +3,8 @@ import difference from 'lodash/difference';
 import {getCourseListBlock, setCourseRecordReceiptBlock} from 'apps/University/blocks';
 import {unsetCourses} from 'apps/University/store/courses';
 import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
-import {unsetEnrollments} from 'apps/University/store/enrollments';
-import {unsetLectures} from 'apps/University/store/lectures';
+import {unsetEnrollmentsFromCourseIds} from 'apps/University/store/enrollments';
+import {unsetLecturesFromCourseIds} from 'apps/University/store/lectures';
 import {CourseRecord, Courses} from 'apps/University/types';
 import {universityIdListValidator, universityModifiedDateListValidator} from 'apps/University/validators/common';
 import {setCourseRecordValidator} from 'apps/University/validators/setCourseRecordValidators';
@@ -63,8 +63,8 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
 
         const removedCourseIds = getRemovedCourseIds(courseRecord, existingCourseRecord);
 
-        dispatch(unsetEnrollments(removedCourseIds));
-        dispatch(unsetLectures(removedCourseIds));
+        dispatch(unsetEnrollmentsFromCourseIds(removedCourseIds));
+        dispatch(unsetLecturesFromCourseIds(removedCourseIds));
         dispatch(unsetCourses(removedCourseIds));
 
         const updatedCourseIds = getUpdatedCourseIds(courseRecord, courses);

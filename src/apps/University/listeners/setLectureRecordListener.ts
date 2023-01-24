@@ -1,10 +1,32 @@
+import difference from 'lodash/difference';
+
 import {setIncomingLectureRecord} from 'apps/University/store/lectureRecords';
+import {unsetLectures} from 'apps/University/store/lectures';
 import {universityIdListValidator, universityModifiedDateListValidator} from 'apps/University/validators/common';
 import {setLectureRecordValidator} from 'apps/University/validators/setLectureRecordValidators';
+import {LectureRecord, Lectures} from 'apps/University/types';
 import {Block} from 'shared/types';
 import store from 'system/store';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
+
+const getRemovedLectureIds = (lectureRecord: LectureRecord, existingLectureRecord: LectureRecord) => {
+  const existingLectureIds = Object.keys(existingLectureRecord.lectureModifiedDates);
+  const lectureIds = Object.keys(lectureRecord.lectureModifiedDates);
+  return difference(existingLectureIds, lectureIds);
+};
+
+const getUpdatedLectureIds = (lectureRecord: LectureRecord, lectures: Lectures) => {
+  const lectureIds = Object.keys(lectureRecord.lectureModifiedDates);
+
+  return lectureIds.filter((lectureId) => {
+    const lecture = lectures[lectureId];
+    if (!lecture) return true;
+    const lectureModifiedDate = lecture.modifiedDate;
+    const lectureRecordModifiedDate = lectureRecord.lectureModifiedDates[lectureId];
+    return lectureModifiedDate < lectureRecordModifiedDate;
+  });
+};
 
 const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
   (async () => {
@@ -12,7 +34,7 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
       const {payload, sender: blockSender} = block;
       const {params} = payload;
       const {
-        university: {lectureRecords},
+        university: {lectureRecords, lectures},
       } = store.getState();
 
       await setLectureRecordValidator.validate(params);
@@ -29,10 +51,19 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
 
       if (!existingLectureRecord || existingLectureRecord.recordModifiedDate < recordModifiedDate) {
         dispatch(setIncomingLectureRecord({courseId, lectureRecord}));
-        // TODO
-        // delete any removed lectures from that course
-        // get updated lecture IDs
-        // send getLectureList() block with those IDs
+
+        const removedLectureIds = getRemovedLectureIds(lectureRecord, existingLectureRecord);
+
+        dispatch(unsetLectures(removedLectureIds));
+
+        const updatedLectureIds = getUpdatedLectureIds(lectureRecord, lectures);
+
+        if (!!updatedLectureIds.length) {
+          // TODO: send getLectureList() block with these IDs
+          console.log(blockSender);
+          console.log(networkId);
+          console.log(updatedLectureIds);
+        }
       }
 
       // TODO: If student (future) send back lecture record receipt block

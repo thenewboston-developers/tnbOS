@@ -47,7 +47,13 @@ const lectures = createSlice({
 
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURES, state: current(state)});
     },
-    unsetLectures: (state: Lectures, {payload: courseIds}: PayloadAction<string[]>) => {
+    unsetLectures: (state: Lectures, {payload: lectureIds}: PayloadAction<string[]>) => {
+      for (const lectureId of lectureIds) {
+        if (state[lectureId]) delete state[lectureId];
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURES, state: current(state)});
+    },
+    unsetLecturesFromCourseIds: (state: Lectures, {payload: courseIds}: PayloadAction<string[]>) => {
       const _lectures = Object.values(state);
 
       for (const courseId of courseIds) {
@@ -74,6 +80,7 @@ export const {
   unsetCourseLectures,
   unsetLecture,
   unsetLectures,
+  unsetLecturesFromCourseIds,
   updateLecturePositions,
 } = lectures.actions;
 export default lectures.reducer;
