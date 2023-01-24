@@ -1,16 +1,50 @@
-import {useDispatch} from 'react-redux';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {getLectureRecordBlock} from 'apps/University/blocks';
 import {useActiveLearnCourse, useIsSelfEnrolled} from 'apps/University/hooks';
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
+import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import {displayToast} from 'system/utils/toast';
+import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
+import {displayErrorToast, displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const LearnCourseHome: SFC = ({className}) => {
+  const balances = useSelector(getBalances);
   const course = useActiveLearnCourse();
   const dispatch = useDispatch<AppDispatch>();
   const isSelfEnrolled = useIsSelfEnrolled(course?.courseId);
+  const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
+
+  useEffect(() => {
+    if (!course) return;
+
+    (async () => {
+      try {
+        const recipient = course.instructor;
+
+        const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+          balances,
+          networkAccountOnlineStatuses,
+          recipient,
+        });
+
+        if (!recipientsDefaultNetworkId) return;
+
+        await getLectureRecordBlock({
+          networkId: recipientsDefaultNetworkId,
+          params: {
+            courseId: course.courseId,
+          },
+          recipient,
+        });
+      } catch (error) {
+        displayErrorToast('Error sending the course record');
+      }
+    })();
+  });
 
   const handleLeaveCourseClick = () => {
     dispatch(unsetEnrollment(course!.courseId));
