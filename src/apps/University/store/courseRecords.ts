@@ -23,9 +23,9 @@ const courseRecords = createSlice({
     },
     setSelfCourseRecord: (
       state: CourseRecords,
-      {payload: course}: PayloadAction<{courseId: string; instructor: string; modifiedDate: string}>,
+      {payload}: PayloadAction<{courseId: string; instructor: string; modifiedDate: string}>,
     ) => {
-      const {courseId, instructor, modifiedDate} = course;
+      const {courseId, instructor, modifiedDate} = payload;
 
       if (!state[instructor]) {
         state[instructor] = {

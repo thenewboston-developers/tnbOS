@@ -35,43 +35,34 @@ const TeachCourseDetails: SFC = ({className}) => {
   const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
     if (!activeTeachCourse) return;
 
-    try {
-      const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
+    const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
 
-      const course = {
-        ...activeTeachCourse,
-        ...values,
-        modifiedDate: currentSystemDate(),
-        publicationStatus,
-      };
+    const course = {
+      ...activeTeachCourse,
+      ...values,
+      modifiedDate: currentSystemDate(),
+      publicationStatus,
+    };
 
-      dispatch(setCourse(course));
+    dispatch(setCourse(course));
 
-      if (publicationStatus === PublicationStatus.published) {
-        dispatch(
-          setSelfCourseRecord({
-            courseId: course.courseId,
-            instructor: course.instructor,
-            modifiedDate: course.modifiedDate,
-          }),
-        );
-        dispatch(resetCourseRecordRecipients());
-      } else if (
-        activeTeachCourse?.publicationStatus === PublicationStatus.published &&
-        publicationStatus === PublicationStatus.draft
-      ) {
-        const {courseId, instructor} = course;
-        dispatch(unsetCourseRecord({courseId, instructor}));
-        dispatch(resetCourseRecordRecipients());
-      }
+    const {courseId, instructor, modifiedDate} = course;
 
-      setSubmitting(false);
-      setValues(values);
-
-      displayToast('Course updated!', ToastType.success);
-    } catch (error) {
-      console.error(error);
+    if (publicationStatus === PublicationStatus.published) {
+      dispatch(setSelfCourseRecord({courseId, instructor, modifiedDate}));
+      dispatch(resetCourseRecordRecipients());
+    } else if (
+      activeTeachCourse?.publicationStatus === PublicationStatus.published &&
+      publicationStatus === PublicationStatus.draft
+    ) {
+      dispatch(unsetCourseRecord({courseId, instructor}));
+      dispatch(resetCourseRecordRecipients());
     }
+
+    setSubmitting(false);
+    setValues(values);
+
+    displayToast('Course updated!', ToastType.success);
   };
 
   const renderPreview = (values: FormValues) => {

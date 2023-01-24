@@ -8,9 +8,11 @@ import LecturePreview from 'apps/University/components/LecturePreview';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachLecture} from 'apps/University/hooks';
+import {setSelfLectureRecord, unsetLectureRecord} from 'apps/University/store/lectureRecords';
 import {setLecture} from 'apps/University/store/lectures';
 import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
@@ -32,17 +34,33 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
   const handleSubmit = (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
     if (!activeTeachLecture) return;
 
-    try {
-      const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
-      const lecture = {...activeTeachLecture, ...values, publicationStatus};
+    const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
 
-      dispatch(setLecture(lecture));
-      setSubmitting(false);
+    const lecture = {
+      ...activeTeachLecture,
+      ...values,
+      modifiedDate: currentSystemDate(),
+      publicationStatus,
+    };
 
-      displayToast('Lecture updated!', ToastType.success);
-    } catch (error) {
-      console.error(error);
+    dispatch(setLecture(lecture));
+
+    const {courseId, lectureId, modifiedDate} = lecture;
+
+    if (publicationStatus === PublicationStatus.published) {
+      dispatch(setSelfLectureRecord({courseId, lectureId, modifiedDate}));
+      // TODO: dispatch(resetLectureRecordRecipients());
+    } else if (
+      activeTeachLecture?.publicationStatus === PublicationStatus.published &&
+      publicationStatus === PublicationStatus.draft
+    ) {
+      dispatch(unsetLectureRecord({courseId, lectureId}));
+      // TODO: dispatch(resetLectureRecordRecipients());
     }
+
+    setSubmitting(false);
+
+    displayToast('Lecture updated!', ToastType.success);
   };
 
   const renderPreview = (values: FormValues) => {

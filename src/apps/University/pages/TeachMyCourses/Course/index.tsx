@@ -49,17 +49,13 @@ const Course: SFC<CourseProps> = ({course}) => {
 
     dispatch(setCourse(_course));
 
+    const {instructor, modifiedDate} = _course;
+
     if (newPublicationStatus === PublicationStatus.published) {
-      dispatch(
-        setSelfCourseRecord({
-          courseId: _course.courseId,
-          instructor: _course.instructor,
-          modifiedDate: _course.modifiedDate,
-        }),
-      );
+      dispatch(setSelfCourseRecord({courseId, instructor, modifiedDate}));
       dispatch(resetCourseRecordRecipients());
     } else if (newPublicationStatus === PublicationStatus.draft) {
-      dispatch(unsetCourseRecord({courseId, instructor: _course.instructor}));
+      dispatch(unsetCourseRecord({courseId, instructor}));
       dispatch(resetCourseRecordRecipients());
     }
 
