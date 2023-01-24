@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getLectureRecordBlock} from 'apps/University/blocks';
@@ -12,6 +12,7 @@ import {displayErrorToast, displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const LearnCourseHome: SFC = ({className}) => {
+  const [lectureRecordRequested, setLectureRecordRequested] = useState<boolean>(false);
   const balances = useSelector(getBalances);
   const course = useActiveLearnCourse();
   const dispatch = useDispatch<AppDispatch>();
@@ -19,7 +20,7 @@ const LearnCourseHome: SFC = ({className}) => {
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
 
   useEffect(() => {
-    if (!course) return;
+    if (!course || lectureRecordRequested) return;
 
     (async () => {
       try {
@@ -40,11 +41,13 @@ const LearnCourseHome: SFC = ({className}) => {
           },
           recipient,
         });
+
+        setLectureRecordRequested(true);
       } catch (error) {
         displayErrorToast('Error sending the course record');
       }
     })();
-  });
+  }, [balances, course, lectureRecordRequested, networkAccountOnlineStatuses]);
 
   const handleLeaveCourseClick = () => {
     dispatch(unsetEnrollment(course!.courseId));
