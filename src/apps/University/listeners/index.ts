@@ -4,6 +4,7 @@ import setCourseListListener from 'apps/University/listeners/setCourseListListen
 import setCourseRecordListener from 'apps/University/listeners/setCourseRecordListener';
 import setCourseRecordReceiptListener from 'apps/University/listeners/setCourseRecordReceiptListener';
 import setCourseWithLecturesListener from 'apps/University/listeners/setCourseWithLecturesListener';
+import setLectureRecordListener from 'apps/University/listeners/setLectureRecordListener';
 
 export {
   getCourseListListener,
@@ -12,4 +13,5 @@ export {
   setCourseRecordListener,
   setCourseRecordReceiptListener,
   setCourseWithLecturesListener,
+  setLectureRecordListener,
 };
