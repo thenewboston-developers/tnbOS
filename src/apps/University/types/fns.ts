@@ -27,7 +27,6 @@ export enum UniversityFn {
   setCourseList = 'setCourseList',
   setCourseRecord = 'setCourseRecord',
   setCourseRecordReceipt = 'setCourseRecordReceipt',
-  setCourseWithLectures = 'setCourseWithLectures',
   setLectureList = 'setLectureList',
   setLectureRecord = 'setLectureRecord',
 }

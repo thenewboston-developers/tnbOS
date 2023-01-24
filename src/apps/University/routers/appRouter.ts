@@ -5,7 +5,6 @@ import {
   setCourseListListener,
   setCourseRecordListener,
   setCourseRecordReceiptListener,
-  setCourseWithLecturesListener,
   setLectureListListener,
   setLectureRecordListener,
 } from 'apps/University/listeners';
@@ -26,7 +25,6 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
     [UniversityFn.setCourseList]: setCourseListListener,
     [UniversityFn.setCourseRecordReceipt]: setCourseRecordReceiptListener,
     [UniversityFn.setCourseRecord]: setCourseRecordListener,
-    [UniversityFn.setCourseWithLectures]: setCourseWithLecturesListener,
     [UniversityFn.setLectureList]: setLectureListListener,
     [UniversityFn.setLectureRecord]: setLectureRecordListener,
   };
