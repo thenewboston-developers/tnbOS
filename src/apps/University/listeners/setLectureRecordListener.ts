@@ -51,8 +51,12 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
 
       console.log(1);
       console.log(existingLectureRecord);
+      console.log(existingLectureRecord.recordModifiedDate);
+      console.log(recordModifiedDate);
 
       if (!existingLectureRecord || existingLectureRecord.recordModifiedDate < recordModifiedDate) {
+        console.log(2);
+
         dispatch(setIncomingLectureRecord({courseId, lectureRecord}));
 
         const removedLectureIds = getRemovedLectureIds(lectureRecord, existingLectureRecord);
