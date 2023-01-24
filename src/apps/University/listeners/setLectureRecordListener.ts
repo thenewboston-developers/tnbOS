@@ -49,14 +49,7 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
 
       const existingLectureRecord = lectureRecords[courseId];
 
-      console.log(1);
-      console.log(existingLectureRecord);
-      console.log(existingLectureRecord.recordModifiedDate);
-      console.log(recordModifiedDate);
-
       if (!existingLectureRecord || existingLectureRecord.recordModifiedDate < recordModifiedDate) {
-        console.log(2);
-
         dispatch(setIncomingLectureRecord({courseId, lectureRecord}));
 
         const removedLectureIds = getRemovedLectureIds(lectureRecord, existingLectureRecord);
@@ -66,7 +59,7 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
         const updatedLectureIds = getUpdatedLectureIds(lectureRecord, lectures);
 
         if (!!updatedLectureIds.length) {
-          // TODO: send getLectureList() block with these IDs
+          // TODO: send getLectureListBlock() block with these IDs
           console.log(blockSender);
           console.log(networkId);
           console.log(updatedLectureIds);
