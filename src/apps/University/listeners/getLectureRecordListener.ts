@@ -1,3 +1,4 @@
+import {setLectureRecordBlock} from 'apps/University/blocks';
 import {getLectureRecordValidator, validateCourse} from 'apps/University/validators/getLectureRecordValidators';
 import {Block} from 'shared/types';
 import store from 'system/store';
@@ -22,12 +23,14 @@ const getLectureRecordListener = (block: Block, _: AppDispatch, networkId: strin
       const lectureRecord = lectureRecords[courseId];
 
       if (lectureRecord) {
-        // TODO: send back lecture record
-        console.log(blockSender);
-        console.log(networkId);
-        console.log('----');
-        console.log(courseId);
-        console.log(lectureRecord);
+        await setLectureRecordBlock({
+          networkId,
+          params: {
+            courseId,
+            lectureRecord,
+          },
+          recipient: blockSender,
+        });
       }
     } catch (error) {
       console.error(error);

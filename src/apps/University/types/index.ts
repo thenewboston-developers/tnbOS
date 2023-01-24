@@ -7,6 +7,7 @@ import {
   GetLectureRecordParams,
   SetCourseRecordReceiptParams,
   SetCourseWithLecturesParams,
+  SetLectureRecordParams,
   UniversityFn,
 } from 'apps/University/types/fns';
 import {LectureRecord, LectureRecords} from 'apps/University/types/lectureRecords';
@@ -34,6 +35,7 @@ export {
   PublicationStatus,
   SetCourseRecordReceiptParams,
   SetCourseWithLecturesParams,
+  SetLectureRecordParams,
   UniversityElectronStore,
   UniversityFn,
 };

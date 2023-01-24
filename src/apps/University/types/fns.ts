@@ -1,4 +1,5 @@
 import {Course} from 'apps/University/types/courses';
+import {LectureRecord} from 'apps/University/types/lectureRecords';
 import {Lecture} from 'apps/University/types/lectures';
 
 export interface GetLectureRecordParams {
@@ -14,6 +15,11 @@ export interface SetCourseWithLecturesParams {
   lectures: Lecture[];
 }
 
+export interface SetLectureRecordParams {
+  courseId: string;
+  lectureRecord: LectureRecord;
+}
+
 export enum UniversityFn {
   getCourseList = 'getCourseList',
   getLectureRecord = 'getLectureRecord',
@@ -21,4 +27,5 @@ export enum UniversityFn {
   setCourseRecord = 'setCourseRecord',
   setCourseRecordReceipt = 'setCourseRecordReceipt',
   setCourseWithLectures = 'setCourseWithLectures',
+  setLectureRecord = 'setLectureRecord',
 }
