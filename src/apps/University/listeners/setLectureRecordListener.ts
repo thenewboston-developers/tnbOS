@@ -1,5 +1,6 @@
 import difference from 'lodash/difference';
 
+import {getLectureListBlock} from 'apps/University/blocks';
 import {setIncomingLectureRecord} from 'apps/University/store/lectureRecords';
 import {unsetLectures} from 'apps/University/store/lectures';
 import {universityIdListValidator, universityModifiedDateListValidator} from 'apps/University/validators/common';
@@ -59,10 +60,11 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
         const updatedLectureIds = getUpdatedLectureIds(lectureRecord, lectures);
 
         if (!!updatedLectureIds.length) {
-          // TODO: send getLectureListBlock() block with these IDs
-          console.log(blockSender);
-          console.log(networkId);
-          console.log(updatedLectureIds);
+          await getLectureListBlock({
+            networkId,
+            params: updatedLectureIds,
+            recipient: blockSender,
+          });
         }
       }
 

@@ -22,6 +22,7 @@ export interface SetLectureRecordParams {
 
 export enum UniversityFn {
   getCourseList = 'getCourseList',
+  getLectureList = 'getLectureList',
   getLectureRecord = 'getLectureRecord',
   setCourseList = 'setCourseList',
   setCourseRecord = 'setCourseRecord',
