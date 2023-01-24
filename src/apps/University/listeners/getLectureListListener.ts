@@ -1,3 +1,4 @@
+import {setLectureListBlock} from 'apps/University/blocks';
 import {universityIdListValidator} from 'apps/University/validators/common';
 import {validateLectureIds} from 'apps/University/validators/getLectureListValidators';
 import {Block} from 'shared/types';
@@ -18,13 +19,15 @@ const getLectureListListener = (block: Block, _: AppDispatch, networkId: string)
       await universityIdListValidator.validate(params);
       const lectureIds: string[] = params;
 
-      try {
-        validateLectureIds(courses, lectureIds, lectures, self);
-        const _lectures = lectureIds.map((lectureId) => lectures[lectureId]);
-        console.log(_lectures);
-      } catch (error) {
-        console.log(error);
-      }
+      validateLectureIds(courses, lectureIds, lectures, self);
+
+      const _lectures = lectureIds.map((lectureId) => lectures[lectureId]);
+
+      await setLectureListBlock({
+        networkId,
+        params: _lectures,
+        recipient: blockSender,
+      });
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

@@ -5,6 +5,7 @@ import setCourseListPayload from 'apps/University/payloads/setCourseListPayload'
 import setCourseRecordPayload from 'apps/University/payloads/setCourseRecordPayload';
 import setCourseRecordReceiptPayload from 'apps/University/payloads/setCourseRecordReceiptPayload';
 import setCourseWithLecturesPayload from 'apps/University/payloads/setCourseWithLecturesPayload';
+import setLectureListPayload from 'apps/University/payloads/setLectureListPayload';
 import setLectureRecordPayload from 'apps/University/payloads/setLectureRecordPayload';
 
 export {
@@ -15,5 +16,6 @@ export {
   setCourseRecordPayload,
   setCourseRecordReceiptPayload,
   setCourseWithLecturesPayload,
+  setLectureListPayload,
   setLectureRecordPayload,
 };

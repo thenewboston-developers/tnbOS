@@ -5,6 +5,7 @@ import setCourseListBlock from 'apps/University/blocks/setCourseListBlock';
 import setCourseRecordBlock from 'apps/University/blocks/setCourseRecordBlock';
 import setCourseRecordReceiptBlock from 'apps/University/blocks/setCourseRecordReceiptBlock';
 import setCourseWithLecturesBlock from 'apps/University/blocks/setCourseWithLecturesBlock';
+import setLectureListBlock from 'apps/University/blocks/setLectureListBlock';
 import setLectureRecordBlock from 'apps/University/blocks/setLectureRecordBlock';
 
 export {
@@ -15,5 +16,6 @@ export {
   setCourseRecordBlock,
   setCourseRecordReceiptBlock,
   setCourseWithLecturesBlock,
+  setLectureListBlock,
   setLectureRecordBlock,
 };
