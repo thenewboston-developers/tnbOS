@@ -1,7 +1,7 @@
 import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
 
 import {UNIVERSITY_LECTURE_RECORDS} from 'apps/University/store/constants';
-import {LectureRecords} from 'apps/University/types';
+import {LectureRecord, LectureRecords} from 'apps/University/types';
 import {IpcChannel} from 'shared/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
@@ -12,6 +12,14 @@ const lectureRecords = createSlice({
   initialState,
   name: UNIVERSITY_LECTURE_RECORDS,
   reducers: {
+    setIncomingLectureRecord: (
+      state: LectureRecords,
+      {payload}: PayloadAction<{courseId: string; lectureRecord: LectureRecord}>,
+    ) => {
+      const {courseId, lectureRecord} = payload;
+      state[courseId] = lectureRecord;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURE_RECORDS, state: current(state)});
+    },
     setLectureRecords: setLocalAndStateReducer<LectureRecords>(UNIVERSITY_LECTURE_RECORDS),
     setSelfLectureRecord: (
       state: LectureRecords,
@@ -42,5 +50,6 @@ const lectureRecords = createSlice({
   },
 });
 
-export const {setLectureRecords, setSelfLectureRecord, unsetLectureRecord} = lectureRecords.actions;
+export const {setIncomingLectureRecord, setLectureRecords, setSelfLectureRecord, unsetLectureRecord} =
+  lectureRecords.actions;
 export default lectureRecords.reducer;

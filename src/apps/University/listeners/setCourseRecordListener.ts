@@ -6,11 +6,8 @@ import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
 import {unsetEnrollments} from 'apps/University/store/enrollments';
 import {unsetLectures} from 'apps/University/store/lectures';
 import {CourseRecord, Courses} from 'apps/University/types';
-import {courseIdListValidator} from 'apps/University/validators/common';
-import {
-  courseModifiedDateListValidator,
-  setCourseRecordValidator,
-} from 'apps/University/validators/setCourseRecordValidators';
+import {universityIdListValidator, universityModifiedDateListValidator} from 'apps/University/validators/common';
+import {setCourseRecordValidator} from 'apps/University/validators/setCourseRecordValidators';
 import store from 'system/store';
 import {Block} from 'shared/types';
 import {AppDispatch} from 'system/types';
@@ -49,8 +46,8 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
       const courseIdList = Object.keys(courseModifiedDates);
       const courseModifiedDateList = Object.values(courseModifiedDates);
 
-      await courseIdListValidator.validate(courseIdList);
-      await courseModifiedDateListValidator.validate(courseModifiedDateList);
+      await universityIdListValidator.validate(courseIdList);
+      await universityModifiedDateListValidator.validate(courseModifiedDateList);
 
       const existingCourseRecord = courseRecords[blockSender];
 

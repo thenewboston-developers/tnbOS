@@ -1,5 +1,5 @@
 import {setCourseListBlock, setCourseRecordBlock} from 'apps/University/blocks';
-import {courseIdListValidator} from 'apps/University/validators/common';
+import {universityIdListValidator} from 'apps/University/validators/common';
 import {validateCoursesIds} from 'apps/University/validators/getCourseListValidators';
 import store from 'system/store';
 import {Block} from 'shared/types';
@@ -16,7 +16,7 @@ const getCourseListListener = (block: Block, _: AppDispatch, networkId: string) 
         university: {courseRecords, courses},
       } = store.getState();
 
-      await courseIdListValidator.validate(params);
+      await universityIdListValidator.validate(params);
       const courseIds: string[] = params;
 
       try {
