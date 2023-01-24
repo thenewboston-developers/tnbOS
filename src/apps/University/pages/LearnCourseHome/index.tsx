@@ -21,6 +21,7 @@ const LearnCourseHome: SFC = ({className}) => {
 
   useEffect(() => {
     if (!course || lectureRecordRequested) return;
+    setLectureRecordRequested(true);
 
     (async () => {
       try {
@@ -41,10 +42,8 @@ const LearnCourseHome: SFC = ({className}) => {
           },
           recipient,
         });
-
-        setLectureRecordRequested(true);
       } catch (error) {
-        displayErrorToast('Error sending the course record');
+        displayErrorToast('Error requesting the lecture record');
       }
     })();
   }, [balances, course, lectureRecordRequested, networkAccountOnlineStatuses]);
