@@ -49,6 +49,9 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
 
       const existingLectureRecord = lectureRecords[courseId];
 
+      console.log(1);
+      console.log(existingLectureRecord);
+
       if (!existingLectureRecord || existingLectureRecord.recordModifiedDate < recordModifiedDate) {
         dispatch(setIncomingLectureRecord({courseId, lectureRecord}));
 
