@@ -4,6 +4,7 @@ import {getCourseListBlock, setCourseRecordReceiptBlock} from 'apps/University/b
 import {unsetCourses} from 'apps/University/store/courses';
 import {setIncomingCourseRecord} from 'apps/University/store/courseRecords';
 import {unsetEnrollmentsFromCourseIds} from 'apps/University/store/enrollments';
+import {unsetLectureRecordsFromCourseIds} from 'apps/University/store/lectureRecords';
 import {unsetLecturesFromCourseIds} from 'apps/University/store/lectures';
 import {CourseRecord, Courses} from 'apps/University/types';
 import {universityIdListValidator, universityModifiedDateListValidator} from 'apps/University/validators/common';
@@ -64,6 +65,7 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         const removedCourseIds = getRemovedCourseIds(courseRecord, existingCourseRecord);
 
         dispatch(unsetEnrollmentsFromCourseIds(removedCourseIds));
+        dispatch(unsetLectureRecordsFromCourseIds(removedCourseIds));
         dispatch(unsetLecturesFromCourseIds(removedCourseIds));
         dispatch(unsetCourses(removedCourseIds));
 

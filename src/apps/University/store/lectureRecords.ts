@@ -47,9 +47,20 @@ const lectureRecords = createSlice({
       state[courseId].recordModifiedDate = currentSystemDate();
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURE_RECORDS, state: current(state)});
     },
+    unsetLectureRecordsFromCourseIds: (state: LectureRecords, {payload: courseIds}: PayloadAction<string[]>) => {
+      for (const courseId of courseIds) {
+        if (state[courseId]) delete state[courseId];
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURE_RECORDS, state: current(state)});
+    },
   },
 });
 
-export const {setIncomingLectureRecord, setLectureRecords, setSelfLectureRecord, unsetLectureRecord} =
-  lectureRecords.actions;
+export const {
+  setIncomingLectureRecord,
+  setLectureRecords,
+  setSelfLectureRecord,
+  unsetLectureRecord,
+  unsetLectureRecordsFromCourseIds,
+} = lectureRecords.actions;
 export default lectureRecords.reducer;
