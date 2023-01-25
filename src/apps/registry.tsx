@@ -1,11 +1,11 @@
 import {useSelector} from 'react-redux';
 
 import {AccountManager, AccountManagerRegistration} from 'apps/AccountManager/registration';
-import {ArtElectronStore, ArtRegistration} from 'apps/Art/registration';
+import {Art, ArtElectronStore, ArtRegistration} from 'apps/Art/registration';
 import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration';
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
-import {SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
-import {TradeElectronStore, TradeRegistration} from 'apps/Trade/registration';
+import {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
+import {Trade, TradeElectronStore, TradeRegistration} from 'apps/Trade/registration';
 import {University, UniversityElectronStore, UniversityRegistration} from 'apps/University/registration';
 import {getManager} from 'system/selectors/state';
 import {AppDataHandlers, AppRegistration, SFC} from 'system/types';
@@ -49,11 +49,11 @@ export const Apps: SFC = () => {
   return (
     <>
       <AccountManager display={activeApp === AccountManagerRegistration.appId} />
-      {/*<Art display={activeApp === ArtRegistration.appId} />*/}
+      <Art display={activeApp === ArtRegistration.appId} />
       <Chat display={activeApp === ChatRegistration.appId} />
       <NetworkManager display={activeApp === NetworkManagerRegistration.appId} />
-      {/*<SpeedTest display={activeApp === SpeedTestRegistration.appId} />*/}
-      {/*<Trade display={activeApp === TradeRegistration.appId} />*/}
+      <SpeedTest display={activeApp === SpeedTestRegistration.appId} />
+      <Trade display={activeApp === TradeRegistration.appId} />
       <University display={activeApp === UniversityRegistration.appId} />
     </>
   );
