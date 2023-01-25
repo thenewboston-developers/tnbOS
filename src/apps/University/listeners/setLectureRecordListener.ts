@@ -11,7 +11,8 @@ import store from 'system/store';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
-const getRemovedLectureIds = (lectureRecord: LectureRecord, existingLectureRecord: LectureRecord) => {
+const getRemovedLectureIds = (lectureRecord: LectureRecord, existingLectureRecord?: LectureRecord) => {
+  if (!existingLectureRecord) return [];
   const existingLectureIds = Object.keys(existingLectureRecord.lectureModifiedDates);
   const lectureIds = Object.keys(lectureRecord.lectureModifiedDates);
   return difference(existingLectureIds, lectureIds);
