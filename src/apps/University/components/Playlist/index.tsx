@@ -1,3 +1,5 @@
+import orderBy from 'lodash/orderBy';
+
 import EmptyText from 'apps/University/components/EmptyText';
 import {useCourseLectures} from 'apps/University/hooks';
 import {SFC} from 'system/types';
@@ -19,7 +21,7 @@ const Playlist: SFC<PlaylistProps> = ({activeLectureId, className, courseId}) =>
   };
 
   const renderLectures = () => {
-    const lectures = courseLectures.map((lecture) => (
+    const lectures = orderBy(courseLectures, ['position']).map((lecture) => (
       <Lecture key={lecture.lectureId} isActive={lecture.lectureId === activeLectureId} lecture={lecture} />
     ));
     return <S.Lectures>{lectures}</S.Lectures>;
