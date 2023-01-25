@@ -5,9 +5,13 @@ import useActiveTeachLecture from 'apps/University/hooks/useActiveTeachLecture';
 import useAvailableCourses from 'apps/University/hooks/useAvailableCourses';
 import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
 import useCourseLectures from 'apps/University/hooks/useCourseLectures';
-import useCourseSync from 'apps/University/hooks/useCourseSync';
+import useCourseRecordSyncTask from 'apps/University/hooks/useCourseRecordSyncTask';
 import useEnrolledCourses from 'apps/University/hooks/useEnrolledCourses';
 import useIsSelfEnrolled from 'apps/University/hooks/useIsSelfEnrolled';
+import useOnConnection from 'apps/University/hooks/useOnConnection';
+import useOnDisconnection from 'apps/University/hooks/useOnDisconnection';
+import useOnResetCourseRecordRecipients from 'apps/University/hooks/useOnResetCourseRecordRecipients';
+import useSelfCourseRecord from 'apps/University/hooks/useSelfCourseRecord';
 import useTaughtCourses from 'apps/University/hooks/useTaughtCourses';
 
 export {
@@ -18,8 +22,12 @@ export {
   useAvailableCourses,
   useConnectedAccounts,
   useCourseLectures,
-  useCourseSync,
+  useCourseRecordSyncTask,
   useEnrolledCourses,
   useIsSelfEnrolled,
+  useOnConnection,
+  useOnDisconnection,
+  useOnResetCourseRecordRecipients,
+  useSelfCourseRecord,
   useTaughtCourses,
 };

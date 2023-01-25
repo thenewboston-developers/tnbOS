@@ -1,10 +1,18 @@
-import {useCourseSync} from 'apps/University/hooks';
+import {
+  useCourseRecordSyncTask,
+  useOnConnection,
+  useOnDisconnection,
+  useOnResetCourseRecordRecipients,
+} from 'apps/University/hooks';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
 
 const University: SFC<AppProps> = ({className, display}) => {
-  useCourseSync();
+  useOnConnection();
+  useOnDisconnection();
+  useOnResetCourseRecordRecipients();
+  useCourseRecordSyncTask();
 
   return (
     <AppWindow className={className} display={display}>

@@ -1,0 +1,4 @@
+export const MAX_COURSE_RECORD_DELIVERY_ATTEMPTS = 3;
+
+// Task run intervals
+export const COURSE_RECORD_SYNC_TASK_RUN_INTERVAL_SECONDS = 10;

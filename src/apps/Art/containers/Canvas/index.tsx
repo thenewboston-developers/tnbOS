@@ -18,9 +18,9 @@ import {
   UnsignedGenesisBlock,
   UnsignedStandardBlock,
 } from 'apps/Art/types';
-import {sortAttributesAlphabetically} from 'apps/Art/utils/attributes';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {sortAttributesAlphabetically} from 'system/utils/attributes';
 import {currentSystemDate} from 'system/utils/dates';
 import {signData} from 'system/utils/signing';
 import {verifySignature} from 'system/utils/tnb';

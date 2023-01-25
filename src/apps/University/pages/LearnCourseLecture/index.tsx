@@ -1,14 +1,18 @@
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import LearnBreadcrumbs from 'apps/University/components/LearnBreadcrumbs';
 import Playlist from 'apps/University/components/Playlist';
 import {useActiveLearnLecture} from 'apps/University/hooks';
 import {getActiveLearnLectureId} from 'apps/University/selectors/state';
-import {SFC} from 'system/types';
+import {setActivePage} from 'apps/University/store/manager';
+import {Page} from 'apps/University/types';
+import {AppDispatch, SFC} from 'system/types';
+import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const LearnCourseLecture: SFC = ({className}) => {
   const activeLearnLectureId = useSelector(getActiveLearnLectureId);
+  const dispatch = useDispatch<AppDispatch>();
   const lecture = useActiveLearnLecture();
 
   const renderIFrame = () => {
@@ -21,7 +25,11 @@ const LearnCourseLecture: SFC = ({className}) => {
     );
   };
 
-  if (!lecture) return null;
+  if (!lecture) {
+    dispatch(setActivePage(Page.learnBrowse));
+    displayErrorToast('The lecture you were viewing is no longer available');
+    return null;
+  }
 
   return (
     <>

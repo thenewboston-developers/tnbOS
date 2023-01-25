@@ -6,6 +6,7 @@ export interface Lecture {
   createdDate: string;
   description: string;
   lectureId: string;
+  modifiedDate: string;
   name: string;
   position: number;
   publicationStatus: PublicationStatus;

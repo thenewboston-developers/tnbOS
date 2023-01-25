@@ -1,16 +1,54 @@
-import {useDispatch} from 'react-redux';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {getLectureRecordBlock} from 'apps/University/blocks';
 import {useActiveLearnCourse, useIsSelfEnrolled} from 'apps/University/hooks';
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
+import {setActivePage} from 'apps/University/store/manager';
+import {Page} from 'apps/University/types';
+import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import {displayToast} from 'system/utils/toast';
+import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
+import {displayErrorToast, displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 const LearnCourseHome: SFC = ({className}) => {
+  const [lectureRecordRequested, setLectureRecordRequested] = useState<boolean>(false);
+  const balances = useSelector(getBalances);
   const course = useActiveLearnCourse();
   const dispatch = useDispatch<AppDispatch>();
   const isSelfEnrolled = useIsSelfEnrolled(course?.courseId);
+  const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
+
+  useEffect(() => {
+    if (!course || lectureRecordRequested) return;
+    setLectureRecordRequested(true);
+
+    (async () => {
+      try {
+        const recipient = course.instructor;
+
+        const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+          balances,
+          networkAccountOnlineStatuses,
+          recipient,
+        });
+
+        if (!recipientsDefaultNetworkId) return;
+
+        await getLectureRecordBlock({
+          networkId: recipientsDefaultNetworkId,
+          params: {
+            courseId: course.courseId,
+          },
+          recipient,
+        });
+      } catch (error) {
+        displayErrorToast('Error requesting the lecture record');
+      }
+    })();
+  }, [balances, course, lectureRecordRequested, networkAccountOnlineStatuses]);
 
   const handleLeaveCourseClick = () => {
     dispatch(unsetEnrollment(course!.courseId));
@@ -32,7 +70,11 @@ const LearnCourseHome: SFC = ({className}) => {
     return <S.Button onClick={handleLeaveCourseClick} text="Leave Course" />;
   };
 
-  if (!course) return null;
+  if (!course) {
+    dispatch(setActivePage(Page.learnBrowse));
+    displayErrorToast('The course you were viewing is no longer available');
+    return null;
+  }
 
   return (
     <S.Container className={className}>

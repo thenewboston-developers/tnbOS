@@ -9,9 +9,12 @@ import {Checkbox, Input} from 'apps/University/components/FormElements';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
 import TeachDashboard from 'apps/University/containers/TeachDashboard';
 import {useActiveTeachCourse} from 'apps/University/hooks';
+import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
+import {setSelfCourseRecord, unsetCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse} from 'apps/University/store/courses';
 import {PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
@@ -32,18 +35,34 @@ const TeachCourseDetails: SFC = ({className}) => {
   const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
     if (!activeTeachCourse) return;
 
-    try {
-      const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
-      const course = {...activeTeachCourse, ...values, publicationStatus};
+    const publicationStatus = values.publicationStatus ? PublicationStatus.published : PublicationStatus.draft;
 
-      dispatch(setCourse(course));
-      setSubmitting(false);
-      setValues(values);
+    const course = {
+      ...activeTeachCourse,
+      ...values,
+      modifiedDate: currentSystemDate(),
+      publicationStatus,
+    };
 
-      displayToast('Course updated!', ToastType.success);
-    } catch (error) {
-      console.error(error);
+    dispatch(setCourse(course));
+
+    const {courseId, instructor, modifiedDate} = course;
+
+    if (publicationStatus === PublicationStatus.published) {
+      dispatch(setSelfCourseRecord({courseId, instructor, modifiedDate}));
+      dispatch(resetCourseRecordRecipients());
+    } else if (
+      activeTeachCourse?.publicationStatus === PublicationStatus.published &&
+      publicationStatus === PublicationStatus.draft
+    ) {
+      dispatch(unsetCourseRecord({courseId, instructor}));
+      dispatch(resetCourseRecordRecipients());
     }
+
+    setSubmitting(false);
+    setValues(values);
+
+    displayToast('Course updated!', ToastType.success);
   };
 
   const renderPreview = (values: FormValues) => {

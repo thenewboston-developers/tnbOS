@@ -6,6 +6,7 @@ export interface Course {
   createdDate: string;
   description: string;
   instructor: string;
+  modifiedDate: string;
   name: string;
   publicationStatus: PublicationStatus;
   thumbnailUrl: string;

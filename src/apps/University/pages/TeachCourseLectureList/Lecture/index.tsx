@@ -2,10 +2,12 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/University/components/ActionLink';
 import PublicationBadge from 'apps/University/components/PublicationBadge';
+import {setSelfLectureRecord, unsetLectureRecord} from 'apps/University/store/lectureRecords';
 import {setLecture, unsetLecture} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture as TLecture, Page, PublicationStatus} from 'apps/University/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
@@ -30,8 +32,27 @@ const Lecture: SFC<LectureProps> = ({lecture}) => {
 
   const handlePublicationActionLinkClick = () => {
     let newPublicationStatus = PublicationStatus.draft;
+
     if (publicationStatus === PublicationStatus.draft) newPublicationStatus = PublicationStatus.published;
-    dispatch(setLecture({...lecture, publicationStatus: newPublicationStatus}));
+
+    const _lecture = {
+      ...lecture,
+      modifiedDate: currentSystemDate(),
+      publicationStatus: newPublicationStatus,
+    };
+
+    dispatch(setLecture(_lecture));
+
+    const {courseId, modifiedDate} = _lecture;
+
+    if (newPublicationStatus === PublicationStatus.published) {
+      dispatch(setSelfLectureRecord({courseId, lectureId, modifiedDate}));
+      // TODO: dispatch(resetLectureRecordRecipients());
+    } else if (newPublicationStatus === PublicationStatus.draft) {
+      dispatch(unsetLectureRecord({courseId, lectureId}));
+      // TODO: dispatch(resetLectureRecordRecipients());
+    }
+
     displayToast(`Lecture set to ${newPublicationStatus}`, ToastType.success);
   };
 
