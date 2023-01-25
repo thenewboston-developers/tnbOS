@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getLectureRecordBlock} from 'apps/University/blocks';
 import {useActiveLearnCourse, useIsSelfEnrolled} from 'apps/University/hooks';
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
+import {setActivePage} from 'apps/University/store/manager';
+import {Page} from 'apps/University/types';
 import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -68,7 +70,11 @@ const LearnCourseHome: SFC = ({className}) => {
     return <S.Button onClick={handleLeaveCourseClick} text="Leave Course" />;
   };
 
-  if (!course) return null;
+  if (!course) {
+    dispatch(setActivePage(Page.learnBrowse));
+    displayErrorToast('The course you were viewing is no longer available');
+    return null;
+  }
 
   return (
     <S.Container className={className}>
