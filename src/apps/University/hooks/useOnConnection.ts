@@ -3,9 +3,9 @@ import {useDispatch} from 'react-redux';
 import difference from 'lodash/difference';
 
 import {setCourseRecordBlock} from 'apps/University/blocks';
-import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
 import useSelfCourseRecord from 'apps/University/hooks/useSelfCourseRecord';
 import {setCourseRecordRecipient} from 'apps/University/store/courseRecordRecipients';
+import {useConnectedAccounts} from 'system/hooks';
 import {AppDispatch, Dict} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 

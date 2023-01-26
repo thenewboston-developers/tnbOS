@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {useBroadcastBlock} from 'apps/Art/hooks';
 import {getArtworks} from 'apps/Art/selectors/state';
-import {deleteQueuedBlock, processQueuedBlock, setBlockQueueNeedsProcessing} from 'apps/Art/store/artworks';
+import {processQueuedBlock, setBlockQueueNeedsProcessing, unsetQueuedBlock} from 'apps/Art/store/artworks';
 import {Artwork, GenesisBlock, QueuedBlock, StandardBlock} from 'apps/Art/types';
 import {validateQueuedBlockSignature} from 'apps/Art/validators/common';
 import {
@@ -117,7 +117,7 @@ const useBlockQueueProcessor = () => {
         dispatch(processQueuedBlock(queuedBlock));
         await broadcastBlock(queuedBlock);
       } else {
-        dispatch(deleteQueuedBlock(queuedBlock));
+        dispatch(unsetQueuedBlock(queuedBlock));
       }
     })();
   }, [artworks, broadcastBlock, dispatch, findArtworkNeedingProcessing, isValidNextBlock]);

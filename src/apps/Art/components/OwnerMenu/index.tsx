@@ -2,7 +2,7 @@ import {useDispatch} from 'react-redux';
 
 import {useDetailsPageArtwork} from 'apps/Art/hooks';
 import TransferModal from 'apps/Art/modals/TransferModal';
-import {deleteArtwork} from 'apps/Art/store/artworks';
+import {unsetArtwork} from 'apps/Art/store/artworks';
 import {setActivePage, setCanvasArtworkId} from 'apps/Art/store/manager';
 import {Page} from 'apps/Art/types';
 import {useToggle} from 'system/hooks';
@@ -19,7 +19,7 @@ const OwnerMenu: SFC = ({className}) => {
 
   const handleDeleteClick = () => {
     dispatch(setActivePage(Page.myCollection));
-    dispatch(deleteArtwork(artworkId!));
+    dispatch(unsetArtwork(artworkId!));
     displayToast('Artwork deleted', ToastType.success);
   };
 
