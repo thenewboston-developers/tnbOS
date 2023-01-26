@@ -6,7 +6,6 @@ import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
 import {useCourseLectures} from 'apps/University/hooks';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
-import {setSelfLectureRecord} from 'apps/University/store/lectureRecords';
 import {setLecture} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture, Page, PublicationStatus} from 'apps/University/types';
@@ -36,41 +35,29 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues) => {
-    try {
-      const courseId = activeTeachCourseId;
-      const lectureId = generateNetworkUUID();
-      const now = currentSystemDate();
+    const courseId = activeTeachCourseId;
+    const lectureId = generateNetworkUUID();
+    const now = currentSystemDate();
 
-      const lecture: Lecture = {
-        courseId,
-        createdDate: now,
-        description: values.description,
-        lectureId,
-        modifiedDate: now,
-        name: values.name,
-        position: courseLectures.length,
-        publicationStatus: PublicationStatus.draft,
-        thumbnailUrl: values.thumbnailUrl,
-        youtubeId: values.youtubeId,
-      };
+    const lecture: Lecture = {
+      courseId,
+      createdDate: now,
+      description: values.description,
+      lectureId,
+      modifiedDate: now,
+      name: values.name,
+      position: courseLectures.length,
+      publicationStatus: PublicationStatus.draft,
+      thumbnailUrl: values.thumbnailUrl,
+      youtubeId: values.youtubeId,
+    };
 
-      dispatch(setLecture(lecture));
-      dispatch(
-        setSelfLectureRecord({
-          courseId,
-          lectureId,
-          modifiedDate: now,
-        }),
-      );
-      // TODO: dispatch(resetLectureRecordRecipients());
-      dispatch(setActiveTeachLectureId(lectureId));
-      dispatch(setActivePage(Page.teachCourseLectureDetails));
-      displayToast('Lecture created!', ToastType.success);
+    dispatch(setLecture(lecture));
+    dispatch(setActiveTeachLectureId(lectureId));
+    dispatch(setActivePage(Page.teachCourseLectureDetails));
+    displayToast('Lecture created!', ToastType.success);
 
-      close();
-    } catch (error) {
-      console.error(error);
-    }
+    close();
   };
 
   const validationSchema = useMemo(() => {

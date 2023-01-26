@@ -2,11 +2,15 @@ import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getLectureRecordBlock} from 'apps/University/blocks';
-import {useActiveLearnCourse, useIsSelfEnrolled} from 'apps/University/hooks';
+import {ButtonColor} from 'apps/University/components/Button';
+import {setCourse} from 'apps/University/store/courses';
+import {setLectureList} from 'apps/University/store/lectures';
+import {useActiveLearnCourse, useCourseLectures, useIsSelfEnrolled} from 'apps/University/hooks';
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
-import {setActivePage} from 'apps/University/store/manager';
-import {Page} from 'apps/University/types';
-import {getBalances, getNetworkAccountOnlineStatuses} from 'system/selectors/state';
+import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
+import {Course, Lecture, Page, PublicationStatus} from 'apps/University/types';
+import {generateNetworkUUID} from 'apps/University/utils/uuid';
+import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
@@ -17,9 +21,11 @@ const LearnCourseHome: SFC = ({className}) => {
   const [lectureRecordRequested, setLectureRecordRequested] = useState<boolean>(false);
   const balances = useSelector(getBalances);
   const course = useActiveLearnCourse();
+  const courseLectures = useCourseLectures(course?.courseId);
   const dispatch = useDispatch<AppDispatch>();
   const isSelfEnrolled = useIsSelfEnrolled(course?.courseId);
   const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
+  const self = useSelector(getSelf);
 
   useEffect(() => {
     if (!course || lectureRecordRequested) return;
@@ -50,6 +56,44 @@ const LearnCourseHome: SFC = ({className}) => {
     })();
   }, [balances, course, lectureRecordRequested, networkAccountOnlineStatuses]);
 
+  const cloneCourseLectures = (courseId: string) => {
+    const lectureList: Lecture[] = courseLectures.map((lecture) => {
+      const lectureId = generateNetworkUUID();
+      const now = currentSystemDate();
+
+      return {
+        ...lecture,
+        courseId,
+        createdDate: now,
+        lectureId,
+        modifiedDate: now,
+        publicationStatus: PublicationStatus.draft,
+      };
+    });
+
+    dispatch(setLectureList(lectureList));
+  };
+
+  const handleCloneCourseClick = () => {
+    const courseId = generateNetworkUUID();
+    const now = currentSystemDate();
+
+    const _course: Course = {
+      ...course!,
+      courseId,
+      createdDate: now,
+      instructor: self.accountNumber,
+      modifiedDate: now,
+      publicationStatus: PublicationStatus.draft,
+    };
+
+    dispatch(setCourse(_course));
+    cloneCourseLectures(courseId);
+    dispatch(setActiveTeachCourseId(courseId));
+    dispatch(setActivePage(Page.teachCourseDetails));
+    displayToast('Course cloned!', ToastType.success);
+  };
+
   const handleLeaveCourseClick = () => {
     dispatch(unsetEnrollment(course!.courseId));
     displayToast(`You have left ${course!.name}`, ToastType.success);
@@ -65,9 +109,13 @@ const LearnCourseHome: SFC = ({className}) => {
     displayToast(`You are now taking ${course!.name}!`, ToastType.success);
   };
 
-  const renderButton = () => {
-    if (!isSelfEnrolled) return <S.Button onClick={handleTakeCourseClick} text="Take Course" />;
-    return <S.Button onClick={handleLeaveCourseClick} text="Leave Course" />;
+  const renderCloneCourseButton = () => {
+    return <S.CloneCourseButton color={ButtonColor.gray} onClick={handleCloneCourseClick} text="Clone Course" />;
+  };
+
+  const renderEnrollmentButton = () => {
+    if (!isSelfEnrolled) return <S.EnrollmentButton onClick={handleTakeCourseClick} text="Take Course" />;
+    return <S.EnrollmentButton onClick={handleLeaveCourseClick} text="Leave Course" />;
   };
 
   if (!course) {
@@ -86,7 +134,8 @@ const LearnCourseHome: SFC = ({className}) => {
       </S.Left>
       <S.Right>
         <S.Thumbnail alt="thumbnail" src={course.thumbnailUrl} />
-        {renderButton()}
+        {renderEnrollmentButton()}
+        {renderCloneCourseButton()}
       </S.Right>
     </S.Container>
   );

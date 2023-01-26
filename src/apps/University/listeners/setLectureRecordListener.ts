@@ -68,8 +68,6 @@ const setLectureRecordListener = (block: Block, dispatch: AppDispatch, networkId
           });
         }
       }
-
-      // TODO: If student (future) send back lecture record receipt block
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

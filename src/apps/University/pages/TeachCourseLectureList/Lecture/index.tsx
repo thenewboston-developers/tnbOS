@@ -47,10 +47,8 @@ const Lecture: SFC<LectureProps> = ({lecture}) => {
 
     if (newPublicationStatus === PublicationStatus.published) {
       dispatch(setSelfLectureRecord({courseId, lectureId, modifiedDate}));
-      // TODO: dispatch(resetLectureRecordRecipients());
     } else if (newPublicationStatus === PublicationStatus.draft) {
       dispatch(unsetLectureRecord({courseId, lectureId}));
-      // TODO: dispatch(resetLectureRecordRecipients());
     }
 
     displayToast(`Lecture set to ${newPublicationStatus}`, ToastType.success);

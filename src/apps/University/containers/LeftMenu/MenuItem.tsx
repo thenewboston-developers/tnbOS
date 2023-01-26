@@ -14,7 +14,6 @@ export interface MenuItemProps {
   page: Page;
 }
 
-// TODO: Auto collapse when teachers left menu is open
 const MenuItem: SFC<MenuItemProps> = ({children, className, icon, isCollapsed, page}) => {
   const activeLearnCourseId = useSelector(getActiveLearnCourseId);
   const activePage = useSelector(getActivePage);
