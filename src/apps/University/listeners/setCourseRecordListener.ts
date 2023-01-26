@@ -14,7 +14,7 @@ import {Block} from 'shared/types';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
-const getRemovedCourseIds = (courseRecord: CourseRecord, existingCourseRecord: CourseRecord) => {
+const getRemovedCourseIds = (courseRecord: CourseRecord, existingCourseRecord?: CourseRecord) => {
   if (!existingCourseRecord) return [];
   const existingCourseIds = Object.keys(existingCourseRecord.courseModifiedDates);
   const courseIds = Object.keys(courseRecord.courseModifiedDates);
