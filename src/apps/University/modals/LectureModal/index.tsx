@@ -35,33 +35,29 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues) => {
-    try {
-      const courseId = activeTeachCourseId;
-      const lectureId = generateNetworkUUID();
-      const now = currentSystemDate();
+    const courseId = activeTeachCourseId;
+    const lectureId = generateNetworkUUID();
+    const now = currentSystemDate();
 
-      const lecture: Lecture = {
-        courseId,
-        createdDate: now,
-        description: values.description,
-        lectureId,
-        modifiedDate: now,
-        name: values.name,
-        position: courseLectures.length,
-        publicationStatus: PublicationStatus.draft,
-        thumbnailUrl: values.thumbnailUrl,
-        youtubeId: values.youtubeId,
-      };
+    const lecture: Lecture = {
+      courseId,
+      createdDate: now,
+      description: values.description,
+      lectureId,
+      modifiedDate: now,
+      name: values.name,
+      position: courseLectures.length,
+      publicationStatus: PublicationStatus.draft,
+      thumbnailUrl: values.thumbnailUrl,
+      youtubeId: values.youtubeId,
+    };
 
-      dispatch(setLecture(lecture));
-      dispatch(setActiveTeachLectureId(lectureId));
-      dispatch(setActivePage(Page.teachCourseLectureDetails));
-      displayToast('Lecture created!', ToastType.success);
+    dispatch(setLecture(lecture));
+    dispatch(setActiveTeachLectureId(lectureId));
+    dispatch(setActivePage(Page.teachCourseLectureDetails));
+    displayToast('Lecture created!', ToastType.success);
 
-      close();
-    } catch (error) {
-      console.error(error);
-    }
+    close();
   };
 
   const validationSchema = useMemo(() => {

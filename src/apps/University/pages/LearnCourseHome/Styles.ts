@@ -5,8 +5,8 @@ import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
 import {colors} from 'apps/University/styles';
 
-export const Button = styled(UButton)`
-  margin-top: 16px;
+export const CloneCourseButton = styled(UButton)`
+  margin-top: 12px;
   width: 100%;
 `;
 
@@ -26,6 +26,11 @@ export const CourseName = styled.div`
   font-size: 32px;
   font-weight: 600;
   margin-top: 8px;
+`;
+
+export const EnrollmentButton = styled(UButton)`
+  margin-top: 16px;
+  width: 100%;
 `;
 
 export const Instructor = styled(UInstructor)`

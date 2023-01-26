@@ -32,33 +32,28 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues) => {
-    try {
-      const courseId = generateNetworkUUID();
-      const now = currentSystemDate();
+    const courseId = generateNetworkUUID();
+    const now = currentSystemDate();
 
-      const course: Course = {
-        courseId,
-        createdDate: now,
-        description: values.description,
-        instructor: self.accountNumber,
-        modifiedDate: now,
-        name: values.name,
-        publicationStatus: PublicationStatus.draft,
-        thumbnailUrl: values.thumbnailUrl,
-      };
+    const course: Course = {
+      courseId,
+      createdDate: now,
+      description: values.description,
+      instructor: self.accountNumber,
+      modifiedDate: now,
+      name: values.name,
+      publicationStatus: PublicationStatus.draft,
+      thumbnailUrl: values.thumbnailUrl,
+    };
 
-      dispatch(setCourse(course));
-      dispatch(setActiveTeachCourseId(courseId));
-      dispatch(setActivePage(Page.teachCourseDetails));
-      displayToast('Course created!', ToastType.success);
+    dispatch(setCourse(course));
+    dispatch(setActiveTeachCourseId(courseId));
+    dispatch(setActivePage(Page.teachCourseDetails));
+    displayToast('Course created!', ToastType.success);
 
-      close();
-    } catch (error) {
-      console.error(error);
-    }
+    close();
   };
 
-  // TODO: Proper validation
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       description: yup.string().required(),

@@ -16,6 +16,7 @@ const blueMixin = css`
 
 const grayMixin = css`
   background-color: ${colors.palette.gray['200']};
+  color: ${colors.fonts.default};
 
   &:hover {
     background: ${colors.palette.gray['300']};
