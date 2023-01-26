@@ -32,7 +32,7 @@ const useCourseRecordSyncTask = () => {
 
       for (const recipientAccountNumber of recipientAccountNumbers) {
         const courseRecordRecipient = courseRecordRecipients[recipientAccountNumber];
-        const deliveryAttempts = courseRecordRecipient.deliveryAttempts || 0;
+        const deliveryAttempts = courseRecordRecipient?.deliveryAttempts || 0;
 
         try {
           await setCourseRecordBlock({
