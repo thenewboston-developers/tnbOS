@@ -6,6 +6,8 @@ import loadAppData from 'apps/Art/store/initializer';
 import {ArtElectronStore} from 'apps/Art/types';
 import {AppIconType, AppRegistration} from 'system/types';
 
+// Art app
+
 const ArtRegistration: AppRegistration = {
   appId: 'art',
   icon: AppIcon,
