@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import {setCourseRecordBlock} from 'apps/University/blocks';
-import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
 import useSelfCourseRecord from 'apps/University/hooks/useSelfCourseRecord';
 import {getCourseRecordRecipients} from 'apps/University/selectors/state';
 import {setCourseRecordRecipient} from 'apps/University/store/courseRecordRecipients';
 import {CourseRecordRecipients} from 'apps/University/types';
+import {useConnectedAccounts} from 'system/hooks';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 

@@ -6,7 +6,7 @@ import Home from 'apps/Art/containers/Home';
 import MyCollection from 'apps/Art/containers/MyCollection';
 import TopNav from 'apps/Art/containers/TopNav';
 import Transfers from 'apps/Art/containers/Transfers';
-import {useBlockQueueProcessor, useNewlyOnlineAccounts} from 'apps/Art/hooks';
+import {useBlockQueueProcessor, useNewlyOnlineAccounts, useOnDisconnection} from 'apps/Art/hooks';
 import {getActivePage} from 'apps/Art/selectors/state';
 import {Page} from 'apps/Art/types';
 import AppWindow from 'system/components/AppWindow';
@@ -17,6 +17,7 @@ const Art: SFC<AppProps> = ({className, display}) => {
   const activePage = useSelector(getActivePage);
   useBlockQueueProcessor();
   useNewlyOnlineAccounts();
+  useOnDisconnection();
 
   const renderPage = () => {
     const pages = {

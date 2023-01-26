@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import ArtMiniDetails from 'apps/Art/components/ArtMiniDetails';
 import OutlineButton, {ButtonColor} from 'apps/Art/components/OutlineButton';
 import {useIncomingTransferArtworks, useOutgoingTransferArtworks} from 'apps/Art/hooks';
-import {deleteArtwork, setQueuedBlock} from 'apps/Art/store/artworks';
+import {setQueuedBlock, unsetArtwork} from 'apps/Art/store/artworks';
 import {UnsignedStandardBlock} from 'apps/Art/types';
 import {getSecondToLastBlock} from 'apps/Art/utils/blocks';
 import NetworksEmptyStateGraphic from 'apps/NetworkManager/assets/networks-empty-state.png';
@@ -65,7 +65,7 @@ const Transfers: SFC = ({className}) => {
   };
 
   const handleDeleteClick = (artworkId: string) => {
-    dispatch(deleteArtwork(artworkId));
+    dispatch(unsetArtwork(artworkId));
     displayToast('Artwork deleted', ToastType.success);
   };
 

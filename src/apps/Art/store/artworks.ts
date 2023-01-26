@@ -11,16 +11,6 @@ const artworks = createSlice({
   initialState,
   name: ART_ARTWORKS,
   reducers: {
-    deleteArtwork: (state: Artworks, {payload: artworkId}: PayloadAction<string>) => {
-      delete state[artworkId];
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
-    },
-    deleteQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
-      const {payload} = block;
-      const {artworkId, blockId} = payload;
-      delete state[artworkId].blockQueue[blockId];
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
-    },
     processQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
       const {payload: blockPayload} = block;
       const {artworkId, blockId} = blockPayload;
@@ -62,15 +52,32 @@ const artworks = createSlice({
       state[artworkId].blockQueueNeedsProcessing = true;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
     },
+    unsetArtwork: (state: Artworks, {payload: artworkId}: PayloadAction<string>) => {
+      delete state[artworkId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
+    },
+    unsetArtworks: (state: Artworks, {payload: artworkIds}: PayloadAction<string[]>) => {
+      for (const artworkId of artworkIds) {
+        if (state[artworkId]) delete state[artworkId];
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
+    },
+    unsetQueuedBlock: (state: Artworks, {payload: block}: PayloadAction<QueuedBlock>) => {
+      const {payload} = block;
+      const {artworkId, blockId} = payload;
+      delete state[artworkId].blockQueue[blockId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: ART_ARTWORKS, state: current(state)});
+    },
   },
 });
 
 export const {
-  deleteArtwork,
-  deleteQueuedBlock,
   processQueuedBlock,
   setArtworks,
   setBlockQueueNeedsProcessing,
   setQueuedBlock,
+  unsetArtwork,
+  unsetArtworks,
+  unsetQueuedBlock,
 } = artworks.actions;
 export default artworks.reducer;

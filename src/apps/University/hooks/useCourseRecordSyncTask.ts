@@ -6,10 +6,10 @@ import {
   COURSE_RECORD_SYNC_TASK_RUN_INTERVAL_SECONDS,
   MAX_COURSE_RECORD_DELIVERY_ATTEMPTS,
 } from 'apps/University/constants/protocol';
-import useConnectedAccounts from 'apps/University/hooks/useConnectedAccounts';
 import useSelfCourseRecord from 'apps/University/hooks/useSelfCourseRecord';
 import {getCourseRecordRecipients} from 'apps/University/selectors/state';
 import {setCourseRecordRecipient} from 'apps/University/store/courseRecordRecipients';
+import {useConnectedAccounts} from 'system/hooks';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
