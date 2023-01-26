@@ -23,10 +23,10 @@ export const appReducers = {
 };
 
 export const appRegistrations: AppRegistration[] = [
+  UniversityRegistration,
   ChatRegistration,
   TradeRegistration,
   SpeedTestRegistration,
-  UniversityRegistration,
   AccountManagerRegistration,
   NetworkManagerRegistration,
 ];
