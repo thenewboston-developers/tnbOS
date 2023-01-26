@@ -4,8 +4,6 @@ import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
-import {resetCourseRecordRecipients} from 'apps/University/store/courseRecordRecipients';
-import {setSelfCourseRecord} from 'apps/University/store/courseRecords';
 import {setCourse} from 'apps/University/store/courses';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course, Page, PublicationStatus} from 'apps/University/types';
@@ -50,14 +48,6 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
       };
 
       dispatch(setCourse(course));
-      dispatch(
-        setSelfCourseRecord({
-          courseId,
-          instructor: self.accountNumber,
-          modifiedDate: now,
-        }),
-      );
-      dispatch(resetCourseRecordRecipients());
       dispatch(setActiveTeachCourseId(courseId));
       dispatch(setActivePage(Page.teachCourseDetails));
       displayToast('Course created!', ToastType.success);

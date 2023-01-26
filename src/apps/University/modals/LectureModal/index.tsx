@@ -6,7 +6,6 @@ import {ButtonType} from 'apps/University/components/Button';
 import {Input} from 'apps/University/components/FormElements';
 import {useCourseLectures} from 'apps/University/hooks';
 import {getActiveTeachCourseId} from 'apps/University/selectors/state';
-import {setSelfLectureRecord} from 'apps/University/store/lectureRecords';
 import {setLecture} from 'apps/University/store/lectures';
 import {setActivePage, setActiveTeachLectureId} from 'apps/University/store/manager';
 import {Lecture, Page, PublicationStatus} from 'apps/University/types';
@@ -55,14 +54,6 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
       };
 
       dispatch(setLecture(lecture));
-      dispatch(
-        setSelfLectureRecord({
-          courseId,
-          lectureId,
-          modifiedDate: now,
-        }),
-      );
-      // TODO: dispatch(resetLectureRecordRecipients());
       dispatch(setActiveTeachLectureId(lectureId));
       dispatch(setActivePage(Page.teachCourseLectureDetails));
       displayToast('Lecture created!', ToastType.success);

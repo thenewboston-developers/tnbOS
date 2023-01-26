@@ -49,13 +49,11 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
 
     if (publicationStatus === PublicationStatus.published) {
       dispatch(setSelfLectureRecord({courseId, lectureId, modifiedDate}));
-      // TODO: dispatch(resetLectureRecordRecipients());
     } else if (
       activeTeachLecture?.publicationStatus === PublicationStatus.published &&
       publicationStatus === PublicationStatus.draft
     ) {
       dispatch(unsetLectureRecord({courseId, lectureId}));
-      // TODO: dispatch(resetLectureRecordRecipients());
     }
 
     setSubmitting(false);
