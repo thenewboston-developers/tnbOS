@@ -1,10 +1,10 @@
 import {ACCEPTABLE_TIME_TO_PAY_FOR_OPEN_ORDER_SECONDS} from 'apps/Trade/constants/protocol';
 import {setApprovalStatus} from 'apps/Trade/store/orders';
-import {ApprovalStatus, Order} from 'apps/Trade/types';
+import {ApprovalStatus, ApproveOrderParams, Order} from 'apps/Trade/types';
 import {AppDispatch} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-export const approveOrderValidator = yup.object({
+export const approveOrderValidator: yup.SchemaOf<ApproveOrderParams> = yup.object({
   hostReceivingAddress: accountNumberSchema.required(),
   orderId: yup.string().required().uuid(),
 });

@@ -1,4 +1,4 @@
-import {Offer} from 'apps/Trade/types';
+import {Offer, SetOffersParams} from 'apps/Trade/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const termsValidator = yup.object({
@@ -8,7 +8,7 @@ const termsValidator = yup.object({
   price: yup.number().moreThan(0).required(),
 });
 
-const offerValidator = yup.object({
+const offerValidator: yup.SchemaOf<Offer> = yup.object({
   clientAsset: yup
     .string()
     .required()
@@ -26,7 +26,11 @@ const offerValidator = yup.object({
   saleTerms: termsValidator,
 });
 
-export const setOffersValidator = yup.object({
+interface ISetOffersParams extends Omit<SetOffersParams, 'modifiedDate'> {
+  modifiedDate: Date;
+}
+
+export const setOffersValidator: yup.SchemaOf<ISetOffersParams> = yup.object({
   modifiedDate: yup.date().required(),
   offers: yup.array().of(offerValidator).required(),
 });

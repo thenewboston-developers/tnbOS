@@ -1,8 +1,12 @@
-import {Order, OrderErrors} from 'apps/Trade/types';
+import {Order, OrderError, OrderErrors} from 'apps/Trade/types';
 import {Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-export const setOrderErrorValidator = yup.object({
+interface IOrderError extends Omit<OrderError, 'createdDate'> {
+  createdDate: Date;
+}
+
+export const setOrderErrorValidator: yup.SchemaOf<IOrderError> = yup.object({
   createdDate: yup.date().required(),
   creator: accountNumberSchema.required(),
   message: yup.string().required(),

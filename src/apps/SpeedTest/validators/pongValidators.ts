@@ -1,7 +1,7 @@
-import {Run, RunStatus} from 'apps/SpeedTest/types';
+import {PongParams, Run, RunStatus} from 'apps/SpeedTest/types';
 import yup from 'system/utils/yup';
 
-export const pongValidator = yup.object({
+export const pongValidator: yup.SchemaOf<PongParams> = yup.object({
   runId: yup.string().required().uuid(),
 });
 
