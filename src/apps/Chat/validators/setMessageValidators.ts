@@ -1,13 +1,18 @@
-import {Message} from 'apps/Chat/types';
+import {Message, Transfer} from 'apps/Chat/types';
 import {Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-const transferSchema = yup.object({
+const transferSchema: yup.SchemaOf<Transfer> = yup.object({
   amount: yup.number().required().integer().min(0),
   networkId: yup.string().required(),
 });
 
-export const setMessageValidator = yup.object({
+interface IMessage extends Omit<Message, 'createdDate' | 'modifiedDate'> {
+  createdDate: Date;
+  modifiedDate: Date;
+}
+
+export const setMessageValidator: yup.SchemaOf<IMessage> = yup.object({
   content: yup.string().defined(),
   createdDate: yup.date().required(),
   messageId: yup.string().required().uuid(),

@@ -6,7 +6,6 @@ import {Enrollment, Enrollments} from 'apps/University/types/enrollments';
 import {
   GetLectureRecordParams,
   SetCourseRecordReceiptParams,
-  SetCourseWithLecturesParams,
   SetLectureRecordParams,
   UniversityFn,
 } from 'apps/University/types/fns';
@@ -34,7 +33,6 @@ export {
   Page,
   PublicationStatus,
   SetCourseRecordReceiptParams,
-  SetCourseWithLecturesParams,
   SetLectureRecordParams,
   UniversityElectronStore,
   UniversityFn,

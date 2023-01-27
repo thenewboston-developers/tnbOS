@@ -17,17 +17,22 @@ import {getBalanceDetails} from 'apps/Trade/utils/balances';
 import {Balances, Dict, Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
+interface IOrder extends Omit<Order, 'approvalExpirationDate' | 'createdDate' | 'paymentExpirationDate'> {
+  approvalExpirationDate: Date;
+  createdDate: Date;
+  paymentExpirationDate: Date;
+}
+
 interface TradeDetails {
   isUserBuyingClientAsset: boolean;
   isUserSellingClientAsset: boolean;
   offer: Offer;
 }
 
-export const createOrderValidator = yup.object({
+export const createOrderValidator: yup.SchemaOf<IOrder> = yup.object({
   approvalExpirationDate: yup.date().required(),
   approvalStatus: yup
-    .string()
-    .required()
+    .mixed()
     .test(
       'approval-status-is-pending',
       'Approval status must be set to pending',
@@ -51,8 +56,7 @@ export const createOrderValidator = yup.object({
       return timeDifferenceSeconds <= ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS;
     }),
   fillStatus: yup
-    .string()
-    .required()
+    .mixed()
     .test(
       'fill-status-is-none',
       'Fill status must be set to none',
@@ -63,21 +67,13 @@ export const createOrderValidator = yup.object({
       accountNumber: accountNumberSchema.required(),
       outgoingAmount: yup.number().required(),
       outgoingAsset: yup.string().required(),
-      receivingAddress: yup
-        .string()
-        .nullable()
-        .test(
-          'host-receiving-address-is-null',
-          'Host receiving address must be null',
-          (receivingAddress: any) => receivingAddress === null,
-        ),
+      receivingAddress: yup.mixed().oneOf([null]),
     })
     .required(),
   orderId: yup.string().required().uuid(),
   paymentExpirationDate: yup.date().required(),
   paymentStatus: yup
-    .string()
-    .required()
+    .mixed()
     .test(
       'payment-status-is-none',
       'Payment status must be set to none',

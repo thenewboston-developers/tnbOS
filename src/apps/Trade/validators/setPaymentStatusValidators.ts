@@ -1,15 +1,9 @@
-import {PaymentStatus} from 'apps/Trade/types';
+import {PaymentStatus, SetPaymentStatusParams} from 'apps/Trade/types';
 import yup from 'system/utils/yup';
 
-export const setPaymentStatusValidator = yup.object({
+export const setPaymentStatusValidator: yup.SchemaOf<SetPaymentStatusParams> = yup.object({
   orderId: yup.string().required().uuid(),
-  paymentStatus: yup
-    .string()
-    .required()
-    .test('is-valid-payment-status', 'Invalid payment status', (paymentStatus: any) => {
-      const validPaymentStatuses = [PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial];
-      return validPaymentStatuses.includes(paymentStatus);
-    }),
+  paymentStatus: yup.mixed().oneOf([PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial]),
 });
 
 export const validateChangeInPaymentStatus = (currentPaymentStatus: PaymentStatus, newPaymentStatus: PaymentStatus) => {

@@ -63,7 +63,7 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
     }
   };
 
-  const validationSchema = useMemo(() => {
+  const validationSchema = useMemo((): yup.SchemaOf<Network> => {
     return yup.object().shape({
       displayImage: yup.string().url().required(),
       displayName: yup.string().required(),
@@ -77,10 +77,7 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
           return !networkIds.includes(value);
         }),
       port: yup.number().integer().max(65535).min(0),
-      protocol: yup
-        .string()
-        .required()
-        .test('is-valid-protocol', 'Invalid protocol', (value: any) => Object.values(NetworkProtocol).includes(value)),
+      protocol: yup.mixed().oneOf(Object.values(NetworkProtocol)),
     });
   }, [network, networks]);
 

@@ -1,9 +1,9 @@
-import {Courses, PublicationStatus} from 'apps/University/types';
+import {Courses, GetLectureRecordParams, PublicationStatus} from 'apps/University/types';
 import {courseIdSchema} from 'apps/University/utils/yup';
 import {Self} from 'system/types';
 import yup from 'system/utils/yup';
 
-export const getLectureRecordValidator = yup.object({
+export const getLectureRecordValidator: yup.SchemaOf<GetLectureRecordParams> = yup.object({
   courseId: courseIdSchema,
 });
 

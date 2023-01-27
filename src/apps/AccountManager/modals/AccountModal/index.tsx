@@ -45,7 +45,7 @@ const AccountModal: SFC<AccountModalProps> = ({account, className, close}) => {
     }
   };
 
-  const validationSchema = useMemo(() => {
+  const validationSchema = useMemo((): yup.SchemaOf<Account> => {
     return yup.object().shape({
       accountNumber: accountNumberSchema
         .required()
