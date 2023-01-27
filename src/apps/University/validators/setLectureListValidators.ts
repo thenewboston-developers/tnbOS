@@ -2,7 +2,12 @@ import {Lecture, PublicationStatus} from 'apps/University/types';
 import {courseIdSchema, lectureIdSchema} from 'apps/University/utils/yup';
 import yup from 'system/utils/yup';
 
-const lectureValidator = yup.object({
+interface ILecture extends Omit<Lecture, 'createdDate' | 'modifiedDate'> {
+  createdDate: Date;
+  modifiedDate: Date;
+}
+
+const lectureValidator: yup.SchemaOf<ILecture> = yup.object({
   courseId: courseIdSchema,
   createdDate: yup.date().required(),
   description: yup.string().required(),
@@ -11,8 +16,7 @@ const lectureValidator = yup.object({
   name: yup.string().required(),
   position: yup.number().required().integer().min(0),
   publicationStatus: yup
-    .string()
-    .required()
+    .mixed()
     .test(
       'publication-status-is-published',
       'Publication status must be set to published',

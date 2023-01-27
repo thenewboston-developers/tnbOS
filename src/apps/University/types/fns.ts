@@ -1,6 +1,4 @@
-import {Course} from 'apps/University/types/courses';
 import {LectureRecord} from 'apps/University/types/lectureRecords';
-import {Lecture} from 'apps/University/types/lectures';
 
 export interface GetLectureRecordParams {
   courseId: string;
@@ -8,11 +6,6 @@ export interface GetLectureRecordParams {
 
 export interface SetCourseRecordReceiptParams {
   recordModifiedDate: string;
-}
-
-export interface SetCourseWithLecturesParams {
-  course: Course;
-  lectures: Lecture[];
 }
 
 export interface SetLectureRecordParams {
