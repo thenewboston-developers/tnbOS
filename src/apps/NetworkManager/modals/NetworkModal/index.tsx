@@ -2,7 +2,6 @@ import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
-import {isDevelopment} from 'shared/utils/environment';
 import Button, {ButtonType} from 'system/components/Button';
 import {Input} from 'system/components/FormElements';
 import Modal from 'system/components/Modal';
@@ -21,16 +20,12 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   const dispatch = useDispatch<AppDispatch>();
   const networks = useSelector(getNetworks);
 
-  const developmentInitialValues = {
-    port: network?.port?.toString() || '',
-    protocol: network?.protocol || '',
-  };
-
   const initialValues = {
-    ...(isDevelopment ? developmentInitialValues : {}),
     displayImage: network?.displayImage || '',
     displayName: network?.displayName || '',
     networkId: network?.networkId || '',
+    port: network?.port?.toString() || '',
+    protocol: network?.protocol || '',
   };
 
   type FormValues = typeof initialValues;
@@ -69,17 +64,8 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   };
 
   const validationSchema = useMemo(() => {
-    const developmentFields = {
-      port: yup.number().integer().max(65535).min(0),
-      protocol: yup
-        .string()
-        .required()
-        .test('is-valid-protocol', 'Invalid protocol', (value: any) => Object.values(NetworkProtocol).includes(value)),
-    };
-
     return yup.object().shape({
-      ...(isDevelopment ? developmentFields : {}),
-      displayImage: yup.string().required(),
+      displayImage: yup.string().url().required(),
       displayName: yup.string().required(),
       networkId: yup
         .string()
@@ -90,6 +76,11 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
           const networkIds = networkList.map(({networkId}) => networkId);
           return !networkIds.includes(value);
         }),
+      port: yup.number().integer().max(65535).min(0),
+      protocol: yup
+        .string()
+        .required()
+        .test('is-valid-protocol', 'Invalid protocol', (value: any) => Object.values(NetworkProtocol).includes(value)),
     });
   }, [network, networks]);
 
@@ -104,12 +95,8 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
             <Input errors={errors} label="Network ID" name="networkId" touched={touched} />
-            {isDevelopment ? (
-              <>
-                <Input errors={errors} label="Protocol" name="protocol" touched={touched} />
-                <Input errors={errors} label="Port" name="port" touched={touched} type="number" />
-              </>
-            ) : null}
+            <Input errors={errors} label="Protocol" name="protocol" touched={touched} />
+            <Input errors={errors} label="Port" name="port" touched={touched} type="number" />
             <Input errors={errors} label="Display Name" name="displayName" touched={touched} />
             <Input errors={errors} label="Logo URL" name="displayImage" touched={touched} />
             <Button

@@ -36,8 +36,8 @@ const EditSelfModal: SFC<EditSelfModalProps> = ({className, close}) => {
 
   const validationSchema = useMemo(() => {
     return yup.object().shape({
-      displayImage: yup.string(),
-      displayName: yup.string(),
+      displayImage: yup.string().url().required(),
+      displayName: yup.string().required(),
     });
   }, []);
 

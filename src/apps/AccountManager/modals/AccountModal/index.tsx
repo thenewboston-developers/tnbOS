@@ -58,8 +58,8 @@ const AccountModal: SFC<AccountModalProps> = ({account, className, close}) => {
           const accountNumbers = accountList.map(({accountNumber}) => accountNumber);
           return !accountNumbers.includes(value);
         }),
-      displayImage: yup.string(),
-      displayName: yup.string(),
+      displayImage: yup.string().url().required(),
+      displayName: yup.string().required(),
     });
   }, [account, accounts, self.accountNumber]);
 

@@ -82,7 +82,7 @@ const TeachCourseLectureDetails: SFC = ({className}) => {
       description: yup.string().required(),
       name: yup.string().required(),
       publicationStatus: yup.boolean().required(),
-      thumbnailUrl: yup.string().required(),
+      thumbnailUrl: yup.string().url().required(),
       youtubeId: yup.string().required(),
     });
   }, []);
