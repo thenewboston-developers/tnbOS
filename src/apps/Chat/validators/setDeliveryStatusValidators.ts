@@ -1,13 +1,8 @@
-import {DeliveryStatus, Message} from 'apps/Chat/types';
+import {DeliveryStatus, Message, SetDeliveryStatusParams} from 'apps/Chat/types';
 import yup from 'system/utils/yup';
 
-export const setDeliveryStatusValidator = yup.object({
-  deliveryStatus: yup
-    .string()
-    .required()
-    .test('is-valid-delivery-status', 'Invalid delivery status', (deliveryStatus: any) => {
-      return [DeliveryStatus.error, DeliveryStatus.received].includes(deliveryStatus);
-    }),
+export const setDeliveryStatusValidator: yup.SchemaOf<SetDeliveryStatusParams> = yup.object({
+  deliveryStatus: yup.mixed().oneOf([DeliveryStatus.error, DeliveryStatus.received]),
   messageId: yup.string().required().uuid(),
 });
 
