@@ -64,7 +64,7 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
     return yup.object().shape({
       description: yup.string().required(),
       name: yup.string().required(),
-      thumbnailUrl: yup.string().required(),
+      thumbnailUrl: yup.string().url().required(),
       youtubeId: yup.string().required(),
     });
   }, []);

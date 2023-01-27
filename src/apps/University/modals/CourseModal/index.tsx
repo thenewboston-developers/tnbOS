@@ -58,7 +58,7 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
     return yup.object().shape({
       description: yup.string().required(),
       name: yup.string().required(),
-      thumbnailUrl: yup.string().required(),
+      thumbnailUrl: yup.string().url().required(),
     });
   }, []);
 

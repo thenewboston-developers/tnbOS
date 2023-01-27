@@ -86,7 +86,7 @@ const TeachCourseDetails: SFC = ({className}) => {
       description: yup.string().required(),
       name: yup.string().required(),
       publicationStatus: yup.boolean().required(),
-      thumbnailUrl: yup.string().required(),
+      thumbnailUrl: yup.string().url().required(),
     });
   }, []);
 
