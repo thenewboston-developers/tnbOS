@@ -166,9 +166,14 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
 
   return (
     <>
-      <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
+      <S.Container
+        className={className}
+        onMouseOut={handleMouseOut}
+        onMouseOver={handleMouseOver}
+        self={self.accountNumber === sender}
+      >
         <Avatar displayImage={displayImage} />
-        <S.Right>
+        <S.Right self={self.accountNumber === sender}>
           {renderHeader()}
           {renderMessageBody()}
         </S.Right>

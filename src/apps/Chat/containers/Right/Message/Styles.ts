@@ -4,7 +4,7 @@ import {Status} from 'apps/Chat/components/Avatar/Styles';
 import {colors, fonts} from 'apps/Chat/styles';
 import Icon from 'system/components/Icon';
 
-export const Container = styled.div`
+export const Container = styled.div<{self: boolean}>`
   display: flex;
   padding: 8px 16px;
 
@@ -12,6 +12,8 @@ export const Container = styled.div`
     border-color: ${colors.rightBackground};
   }
 
+  justify-content: ${({self}) => (self ? 'end' : 'start')};
+  flex-direction: ${({self}) => (self ? 'row-reverse' : 'row')};
   &:hover {
     background: ${colors.hoverDark};
 
@@ -69,9 +71,12 @@ export const ModifiedDetails = styled.div`
   font-weight: ${fonts.weight.light};
 `;
 
-export const Right = styled.div`
-  flex: auto;
+export const Right = styled.div<{self: boolean}>`
   margin-left: 10px;
+  background-color: ${({self}) => (self ? '#985eff' : '#121212')};
+  padding: 0.5rem;
+  border-radius: 10px;
+  position: relative;
 `;
 
 export const Tool = styled(Icon)`
