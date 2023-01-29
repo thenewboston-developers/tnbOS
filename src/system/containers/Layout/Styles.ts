@@ -8,6 +8,7 @@ export const Container = styled.div`
   display: grid;
   grid-template-rows: auto ${constants.toolbarHeight};
   height: 100vh;
+  overflow: hidden;
 `;
 
 export const MainArea = styled(UMainArea)`
