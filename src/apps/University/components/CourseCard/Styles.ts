@@ -30,7 +30,16 @@ export const Description = styled.div`
 
 export const Img = styled.img`
   height: auto;
+  object-fit: cover;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
+`;
+
+export const ImgContainer = styled.div`
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 `;
 
 export const Instructor = styled(UInstructor)`
