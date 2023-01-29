@@ -1,10 +1,12 @@
 import {PaymentStatus, SetPaymentStatusParams} from 'apps/Trade/types';
 import yup from 'system/utils/yup';
 
-export const setPaymentStatusValidator: yup.SchemaOf<SetPaymentStatusParams> = yup.object({
-  orderId: yup.string().required().uuid(),
-  paymentStatus: yup.mixed().oneOf([PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial]),
-});
+export const setPaymentStatusValidator: yup.SchemaOf<SetPaymentStatusParams> = yup
+  .object({
+    orderId: yup.string().required().uuid(),
+    paymentStatus: yup.mixed().oneOf([PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial]),
+  })
+  .noUnknown();
 
 export const validateChangeInPaymentStatus = (currentPaymentStatus: PaymentStatus, newPaymentStatus: PaymentStatus) => {
   if (currentPaymentStatus === newPaymentStatus) throw new Error('No change in payment status');

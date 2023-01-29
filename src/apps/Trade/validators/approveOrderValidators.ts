@@ -4,10 +4,12 @@ import {ApprovalStatus, ApproveOrderParams, Order} from 'apps/Trade/types';
 import {AppDispatch} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-export const approveOrderValidator: yup.SchemaOf<ApproveOrderParams> = yup.object({
-  hostReceivingAddress: accountNumberSchema.required(),
-  orderId: yup.string().required().uuid(),
-});
+export const approveOrderValidator: yup.SchemaOf<ApproveOrderParams> = yup
+  .object({
+    hostReceivingAddress: accountNumberSchema.required(),
+    orderId: yup.string().required().uuid(),
+  })
+  .noUnknown();
 
 export const validateBlockSenderIsOrderHost = (blockSender: string, order: Order) => {
   if (blockSender !== order.host.accountNumber) throw new Error('Block sender must be order host');

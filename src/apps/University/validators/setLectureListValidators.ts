@@ -7,24 +7,26 @@ interface ILecture extends Omit<Lecture, 'createdDate' | 'modifiedDate'> {
   modifiedDate: Date;
 }
 
-const lectureValidator: yup.SchemaOf<ILecture> = yup.object({
-  courseId: courseIdSchema,
-  createdDate: yup.date().required(),
-  description: yup.string().required(),
-  lectureId: lectureIdSchema,
-  modifiedDate: yup.date().required(),
-  name: yup.string().required(),
-  position: yup.number().required().integer().min(0),
-  publicationStatus: yup
-    .mixed()
-    .test(
-      'publication-status-is-published',
-      'Publication status must be set to published',
-      (publicationStatus: any) => publicationStatus === PublicationStatus.published,
-    ),
-  thumbnailUrl: yup.string().required(),
-  youtubeId: yup.string().required(),
-});
+const lectureValidator: yup.SchemaOf<ILecture> = yup
+  .object({
+    courseId: courseIdSchema,
+    createdDate: yup.date().required(),
+    description: yup.string().required(),
+    lectureId: lectureIdSchema,
+    modifiedDate: yup.date().required(),
+    name: yup.string().required(),
+    position: yup.number().required().integer().min(0),
+    publicationStatus: yup
+      .mixed()
+      .test(
+        'publication-status-is-published',
+        'Publication status must be set to published',
+        (publicationStatus: any) => publicationStatus === PublicationStatus.published,
+      ),
+    thumbnailUrl: yup.string().required(),
+    youtubeId: yup.string().required(),
+  })
+  .noUnknown();
 
 export const setLectureListValidator = yup.array().of(lectureValidator).required();
 

@@ -1,8 +1,9 @@
 import {appRouters} from 'apps/registry';
+import {Block} from 'shared/types';
 import {verifyBlockSignature} from 'system/utils/tnb';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-const blockSchema = yup
+const blockSchema: yup.SchemaOf<Block> = yup
   .object({
     amount: yup.number().required().integer().min(0),
     id: yup.string().required().uuid(),
@@ -26,7 +27,8 @@ const blockSchema = yup
     signature: yup.string().required(),
     transaction_fee: yup.number().required().integer().min(0),
   })
-  .test('is-signature-valid', 'Invalid signature', (block) => verifyBlockSignature(block));
+  .test('is-signature-valid', 'Invalid signature', (block) => verifyBlockSignature(block))
+  .noUnknown();
 
 export const blockValidator = yup.object({
   message: blockSchema.required(),

@@ -3,9 +3,11 @@ import {courseIdSchema} from 'apps/University/utils/yup';
 import {Self} from 'system/types';
 import yup from 'system/utils/yup';
 
-export const getLectureRecordValidator: yup.SchemaOf<GetLectureRecordParams> = yup.object({
-  courseId: courseIdSchema,
-});
+export const getLectureRecordValidator: yup.SchemaOf<GetLectureRecordParams> = yup
+  .object({
+    courseId: courseIdSchema,
+  })
+  .noUnknown();
 
 export const validateCourse = (courseId: string, courses: Courses, self: Self) => {
   const course = courses[courseId];
