@@ -22,5 +22,6 @@ export const EmptyState = styled.div`
 
 export const Messages = styled.div`
   flex: auto;
+  overflow-x: hidden;
   overflow-y: auto;
 `;

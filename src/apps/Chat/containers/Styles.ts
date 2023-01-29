@@ -26,5 +26,6 @@ export const Left = styled(ULeft)`
 
 export const Right = styled(URight)`
   grid-column: 2 / span 1;
+  overflow-x: hidden;
   overflow-y: auto;
 `;
