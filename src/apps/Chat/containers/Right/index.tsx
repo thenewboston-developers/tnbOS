@@ -48,10 +48,10 @@ const Right: SFC = ({className}) => {
     setScrollToBottom(isScrolledToBottom);
   };
 
-  const renderEmptyState = () => (
-    <S.EmptyState>
+  const renderEmptyStateContainer = () => (
+    <S.EmptyStateContainer>
       <EmptyState />
-    </S.EmptyState>
+    </S.EmptyStateContainer>
   );
 
   const renderMessages = () => {
@@ -77,7 +77,7 @@ const Right: SFC = ({className}) => {
     );
   };
 
-  if (!activeChat) return renderEmptyState();
+  if (!activeChat) return renderEmptyStateContainer();
 
   return (
     <S.Container className={className}>

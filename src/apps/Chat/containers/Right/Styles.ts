@@ -13,7 +13,7 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const EmptyState = styled.div`
+export const EmptyStateContainer = styled.div`
   align-items: center;
   background: ${colors.rightBackground};
   display: flex;
