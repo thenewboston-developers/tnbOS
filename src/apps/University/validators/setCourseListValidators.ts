@@ -7,22 +7,24 @@ interface ICourse extends Omit<Course, 'createdDate' | 'modifiedDate'> {
   modifiedDate: Date;
 }
 
-const courseValidator: yup.SchemaOf<ICourse> = yup.object({
-  courseId: courseIdSchema,
-  createdDate: yup.date().required(),
-  description: yup.string().required(),
-  instructor: accountNumberSchema.required(),
-  modifiedDate: yup.date().required(),
-  name: yup.string().required(),
-  publicationStatus: yup
-    .mixed()
-    .test(
-      'publication-status-is-published',
-      'Publication status must be set to published',
-      (publicationStatus: any) => publicationStatus === PublicationStatus.published,
-    ),
-  thumbnailUrl: yup.string().required(),
-});
+const courseValidator: yup.SchemaOf<ICourse> = yup
+  .object({
+    courseId: courseIdSchema,
+    createdDate: yup.date().required(),
+    description: yup.string().required(),
+    instructor: accountNumberSchema.required(),
+    modifiedDate: yup.date().required(),
+    name: yup.string().required(),
+    publicationStatus: yup
+      .mixed()
+      .test(
+        'publication-status-is-published',
+        'Publication status must be set to published',
+        (publicationStatus: any) => publicationStatus === PublicationStatus.published,
+      ),
+    thumbnailUrl: yup.string().required(),
+  })
+  .noUnknown();
 
 export const setCourseListValidator = yup.array().of(courseValidator).required();
 

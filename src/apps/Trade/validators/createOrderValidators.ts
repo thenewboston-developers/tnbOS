@@ -29,57 +29,61 @@ interface TradeDetails {
   offer: Offer;
 }
 
-export const createOrderValidator: yup.SchemaOf<IOrder> = yup.object({
-  approvalExpirationDate: yup.date().required(),
-  approvalStatus: yup
-    .mixed()
-    .test(
-      'approval-status-is-pending',
-      'Approval status must be set to pending',
-      (approvalStatus: any) => approvalStatus === ApprovalStatus.pending,
-    ),
-  client: yup
-    .object({
-      accountNumber: accountNumberSchema.required(),
-      outgoingAmount: yup.number().required(),
-      outgoingAsset: yup.string().required(),
-      receivingAddress: accountNumberSchema.required(),
-    })
-    .required(),
-  createdDate: yup
-    .date()
-    .required()
-    .test('created-date-within-acceptable-range', 'Created date is outside the acceptable range', (value: any) => {
-      const createdDate = new Date(value);
-      const now = new Date();
-      const timeDifferenceSeconds = Math.abs(createdDate.getTime() - now.getTime()) / 1000;
-      return timeDifferenceSeconds <= ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS;
-    }),
-  fillStatus: yup
-    .mixed()
-    .test(
-      'fill-status-is-none',
-      'Fill status must be set to none',
-      (fillStatus: any) => fillStatus === FillStatus.none,
-    ),
-  host: yup
-    .object({
-      accountNumber: accountNumberSchema.required(),
-      outgoingAmount: yup.number().required(),
-      outgoingAsset: yup.string().required(),
-      receivingAddress: yup.mixed().oneOf([null]),
-    })
-    .required(),
-  orderId: yup.string().required().uuid(),
-  paymentExpirationDate: yup.date().required(),
-  paymentStatus: yup
-    .mixed()
-    .test(
-      'payment-status-is-none',
-      'Payment status must be set to none',
-      (paymentStatus: any) => paymentStatus === PaymentStatus.none,
-    ),
-});
+export const createOrderValidator: yup.SchemaOf<IOrder> = yup
+  .object({
+    approvalExpirationDate: yup.date().required(),
+    approvalStatus: yup
+      .mixed()
+      .test(
+        'approval-status-is-pending',
+        'Approval status must be set to pending',
+        (approvalStatus: any) => approvalStatus === ApprovalStatus.pending,
+      ),
+    client: yup
+      .object({
+        accountNumber: accountNumberSchema.required(),
+        outgoingAmount: yup.number().required(),
+        outgoingAsset: yup.string().required(),
+        receivingAddress: accountNumberSchema.required(),
+      })
+      .required()
+      .noUnknown(),
+    createdDate: yup
+      .date()
+      .required()
+      .test('created-date-within-acceptable-range', 'Created date is outside the acceptable range', (value: any) => {
+        const createdDate = new Date(value);
+        const now = new Date();
+        const timeDifferenceSeconds = Math.abs(createdDate.getTime() - now.getTime()) / 1000;
+        return timeDifferenceSeconds <= ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS;
+      }),
+    fillStatus: yup
+      .mixed()
+      .test(
+        'fill-status-is-none',
+        'Fill status must be set to none',
+        (fillStatus: any) => fillStatus === FillStatus.none,
+      ),
+    host: yup
+      .object({
+        accountNumber: accountNumberSchema.required(),
+        outgoingAmount: yup.number().required(),
+        outgoingAsset: yup.string().required(),
+        receivingAddress: yup.mixed().oneOf([null]),
+      })
+      .required()
+      .noUnknown(),
+    orderId: yup.string().required().uuid(),
+    paymentExpirationDate: yup.date().required(),
+    paymentStatus: yup
+      .mixed()
+      .test(
+        'payment-status-is-none',
+        'Payment status must be set to none',
+        (paymentStatus: any) => paymentStatus === PaymentStatus.none,
+      ),
+  })
+  .noUnknown();
 
 export const validateApprovalExpirationDateIsCorrectValue = (approvalExpirationDate: string, createdDate: string) => {
   const createdTime = new Date(createdDate).getTime();

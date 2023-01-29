@@ -1,10 +1,12 @@
 import {DeliveryStatus, Message, SetDeliveryStatusParams} from 'apps/Chat/types';
 import yup from 'system/utils/yup';
 
-export const setDeliveryStatusValidator: yup.SchemaOf<SetDeliveryStatusParams> = yup.object({
-  deliveryStatus: yup.mixed().oneOf([DeliveryStatus.error, DeliveryStatus.received]),
-  messageId: yup.string().required().uuid(),
-});
+export const setDeliveryStatusValidator: yup.SchemaOf<SetDeliveryStatusParams> = yup
+  .object({
+    deliveryStatus: yup.mixed().oneOf([DeliveryStatus.error, DeliveryStatus.received]),
+    messageId: yup.string().required().uuid(),
+  })
+  .noUnknown();
 
 export const validateMessageExists = (message: Message) => {
   if (!message) throw new Error('Message with that ID does not exist');

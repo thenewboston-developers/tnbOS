@@ -2,25 +2,29 @@ import {Message, Transfer} from 'apps/Chat/types';
 import {Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-const transferSchema: yup.SchemaOf<Transfer> = yup.object({
-  amount: yup.number().required().integer().min(0),
-  networkId: yup.string().required(),
-});
+const transferSchema: yup.SchemaOf<Transfer> = yup
+  .object({
+    amount: yup.number().required().integer().min(0),
+    networkId: yup.string().required(),
+  })
+  .noUnknown();
 
 interface IMessage extends Omit<Message, 'createdDate' | 'modifiedDate'> {
   createdDate: Date;
   modifiedDate: Date;
 }
 
-export const setMessageValidator: yup.SchemaOf<IMessage> = yup.object({
-  content: yup.string().defined(),
-  createdDate: yup.date().required(),
-  messageId: yup.string().required().uuid(),
-  modifiedDate: yup.date().required(),
-  recipient: accountNumberSchema.required(),
-  sender: accountNumberSchema.required(),
-  transfer: transferSchema.defined().nullable(),
-});
+export const setMessageValidator: yup.SchemaOf<IMessage> = yup
+  .object({
+    content: yup.string().defined(),
+    createdDate: yup.date().required(),
+    messageId: yup.string().required().uuid(),
+    modifiedDate: yup.date().required(),
+    recipient: accountNumberSchema.required(),
+    sender: accountNumberSchema.required(),
+    transfer: transferSchema.defined().nullable(),
+  })
+  .noUnknown();
 
 export const validateBlockRecipient = (blockRecipient: string, messageRecipient: string) => {
   if (blockRecipient !== messageRecipient) throw new Error('Block recipient must match message recipient');

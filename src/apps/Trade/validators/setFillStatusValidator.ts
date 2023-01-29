@@ -3,10 +3,12 @@ import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
 import yup from 'system/utils/yup';
 
-export const setFillStatusValidator: yup.SchemaOf<SetFillStatusParams> = yup.object({
-  fillStatus: yup.mixed().oneOf([FillStatus.complete, FillStatus.partial]),
-  orderId: yup.string().required().uuid(),
-});
+export const setFillStatusValidator: yup.SchemaOf<SetFillStatusParams> = yup
+  .object({
+    fillStatus: yup.mixed().oneOf([FillStatus.complete, FillStatus.partial]),
+    orderId: yup.string().required().uuid(),
+  })
+  .noUnknown();
 
 export const validateChangeInFillStatus = (currentFillStatus: FillStatus, newFillStatus: FillStatus) => {
   if (currentFillStatus === newFillStatus) throw new Error('No change in fill status');

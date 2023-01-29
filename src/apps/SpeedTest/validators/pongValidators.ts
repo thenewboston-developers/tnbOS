@@ -1,9 +1,11 @@
 import {PongParams, Run, RunStatus} from 'apps/SpeedTest/types';
 import yup from 'system/utils/yup';
 
-export const pongValidator: yup.SchemaOf<PongParams> = yup.object({
-  runId: yup.string().required().uuid(),
-});
+export const pongValidator: yup.SchemaOf<PongParams> = yup
+  .object({
+    runId: yup.string().required().uuid(),
+  })
+  .noUnknown();
 
 export const validateNetworkId = (blockNetworkId: string, runNetworkId: string) => {
   if (blockNetworkId !== runNetworkId) throw new Error('Block network ID does not match run network ID');

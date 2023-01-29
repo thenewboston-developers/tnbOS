@@ -6,13 +6,15 @@ interface IOrderError extends Omit<OrderError, 'createdDate'> {
   createdDate: Date;
 }
 
-export const setOrderErrorValidator: yup.SchemaOf<IOrderError> = yup.object({
-  createdDate: yup.date().required(),
-  creator: accountNumberSchema.required(),
-  message: yup.string().required(),
-  orderErrorId: yup.string().required().uuid(),
-  orderId: yup.string().required().uuid(),
-});
+export const setOrderErrorValidator: yup.SchemaOf<IOrderError> = yup
+  .object({
+    createdDate: yup.date().required(),
+    creator: accountNumberSchema.required(),
+    message: yup.string().required(),
+    orderErrorId: yup.string().required().uuid(),
+    orderId: yup.string().required().uuid(),
+  })
+  .noUnknown();
 
 export const validateCreator = (blockSender: string, creator: string, order: Order, self: Self) => {
   if (blockSender !== creator) throw new Error('Block sender must match creator');
