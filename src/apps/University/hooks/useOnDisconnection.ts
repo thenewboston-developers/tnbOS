@@ -15,13 +15,13 @@ const useOnDisconnection = () => {
   const connectedAccountNumbers = Object.keys(connectedAccounts);
   const prevConnectedAccountNumbers = Object.keys(prevConnectedAccounts);
 
-  for (const accountNumber of difference(prevConnectedAccountNumbers, connectedAccountNumbers)) {
-    dispatch(unsetCourseRecordRecipient(accountNumber));
-  }
-
   useEffect(() => {
+    for (const accountNumber of difference(prevConnectedAccountNumbers, connectedAccountNumbers)) {
+      dispatch(unsetCourseRecordRecipient(accountNumber));
+    }
+
     prevConnectedAccounts = connectedAccounts;
-  }, [connectedAccounts]);
+  }, [connectedAccountNumbers, connectedAccounts, dispatch, prevConnectedAccountNumbers]);
 };
 
 export default useOnDisconnection;
