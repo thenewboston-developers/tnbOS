@@ -108,6 +108,10 @@ const configuration: webpack.Configuration = {
       },
       template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
     }),
+
+    new webpack.DefinePlugin({
+      'process.type': '"renderer"',
+    }),
   ],
   target: ['web', 'electron-renderer'],
 };

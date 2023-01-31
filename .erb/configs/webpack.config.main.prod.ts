@@ -61,6 +61,10 @@ const configuration: webpack.Configuration = {
       NODE_ENV: 'production',
       START_MINIMIZED: false,
     }),
+
+    new webpack.DefinePlugin({
+      'process.type': '"browser"',
+    }),
   ],
   target: 'electron-main',
 };
