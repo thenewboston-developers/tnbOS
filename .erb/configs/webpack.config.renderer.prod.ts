@@ -52,8 +52,27 @@ const configuration: webpack.Configuration = {
       },
       // Images
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
+      },
+      // SVG
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              prettier: false,
+              ref: true,
+              svgo: false,
+              svgoConfig: {
+                plugins: [{removeViewBox: false}],
+              },
+              titleProp: true,
+            },
+          },
+          'file-loader',
+        ],
       },
     ],
   },
@@ -95,6 +114,7 @@ const configuration: webpack.Configuration = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerPort: 8889,
     }),
 
     new HtmlWebpackPlugin({
@@ -107,6 +127,10 @@ const configuration: webpack.Configuration = {
         removeComments: true,
       },
       template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
+    }),
+
+    new webpack.DefinePlugin({
+      'process.type': '"renderer"',
     }),
   ],
   target: ['web', 'electron-renderer'],

@@ -45,6 +45,7 @@ const configuration: webpack.Configuration = {
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerPort: 8888,
     }),
 
     /**
@@ -60,6 +61,10 @@ const configuration: webpack.Configuration = {
       DEBUG_PROD: false,
       NODE_ENV: 'production',
       START_MINIMIZED: false,
+    }),
+
+    new webpack.DefinePlugin({
+      'process.type': '"browser"',
     }),
   ],
   target: 'electron-main',
