@@ -7,14 +7,18 @@ import {mdiChatPlus} from '@mdi/js';
 import {useNonContactAccounts} from 'apps/Chat/hooks';
 import AddContactModal from 'apps/Chat/modals/AddContactModal';
 import {getActiveChat, getContacts} from 'apps/Chat/selectors/state';
-import {Contact as TContact} from 'apps/Chat/types';
+import {Contact as TContact, Message} from 'apps/Chat/types';
 import {useToggle} from 'system/hooks';
 import {getAccounts} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {Dict, SFC} from 'system/types';
 import Contact from './Contact';
 import * as S from './Styles';
 
-const Left: SFC = ({className}) => {
+export interface LeftProps {
+  unreadMessages: Dict<Message[]>;
+}
+
+const Left: SFC<LeftProps> = ({className, unreadMessages}) => {
   const [addContactModalIsOpen, toggleAddContactModal] = useToggle(false);
   const [searchText, setSearchText] = useState<string>('');
   const accounts = useSelector(getAccounts);
@@ -59,14 +63,14 @@ const Left: SFC = ({className}) => {
     let items = filterBySearchText(contactList);
     items = orderBy(items, ['lastActivityDate'], ['desc']);
 
-    const results = items.map(({accountNumber, lastActivityDate, lastMessageId}) => {
+    const results = items.map((contact) => {
+      const {accountNumber} = contact;
       return (
         <Contact
-          accountNumber={accountNumber}
+          contact={contact}
           isActiveChat={activeChat === accountNumber}
           key={accountNumber}
-          lastActivityDate={lastActivityDate}
-          lastMessageId={lastMessageId}
+          notificationCount={unreadMessages[accountNumber].length}
         />
       );
     });

@@ -4,6 +4,7 @@ export interface Contact {
   accountNumber: string;
   lastActivityDate: string;
   lastMessageId?: string;
+  lastSeenDate: string;
 }
 
 export type Contacts = Dict<Contact>;

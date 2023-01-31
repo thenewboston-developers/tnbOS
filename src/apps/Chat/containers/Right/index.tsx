@@ -1,23 +1,44 @@
-import {useEffect, useRef, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
 import {ChatRegistration} from 'apps/Chat/registration';
-import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
+import {getActiveChat, getContacts, getMessages} from 'apps/Chat/selectors/state';
+import {Message as TMessage} from 'apps/Chat/types';
 import {getManager} from 'system/selectors/state';
-import {SFC} from 'system/types';
+import {setContact} from 'apps/Chat/store/contacts';
+import {AppDispatch, Dict, SFC} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import EmptyState from './EmptyState';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import OverviewMessageContainer from './OverviewMessageContainer';
 import * as S from './Styles';
 
-const Right: SFC = ({className}) => {
+export interface RightProps {
+  unreadMessages: Dict<TMessage[]>;
+}
+
+const Right: SFC<RightProps> = ({className, unreadMessages}) => {
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
   const activeChat = useSelector(getActiveChat);
   const bottomMessageRef = useRef<HTMLDivElement>(null);
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch<AppDispatch>();
   const manager = useSelector(getManager);
   const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!activeChat) return;
+      const contact = contacts[activeChat];
+      const notificationCount = unreadMessages[activeChat].length;
+      if (!!notificationCount) dispatch(setContact({...contact, lastSeenDate: currentSystemDate()}));
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, [activeChat, contacts, dispatch, unreadMessages]);
 
   useEffect(() => {
     if (!bottomMessageRef.current || !messagesRef.current || manager.activeApp !== ChatRegistration.appId) return;
@@ -41,6 +62,13 @@ const Right: SFC = ({className}) => {
     bottomMessageRef.current.scrollIntoView({behavior: 'smooth'});
   }, [messages, scrollToBottom]);
 
+  const firstUnreadMessageId = useMemo((): string | null => {
+    if (!activeChat) return null;
+    const messageList = orderBy(unreadMessages[activeChat], ['createdDate']);
+    const message = messageList[0];
+    return message ? message.messageId : null;
+  }, [activeChat, unreadMessages]);
+
   const handleMessagesScroll = () => {
     if (!bottomMessageRef.current || !messagesRef.current) return;
     const {clientHeight, scrollHeight, scrollTop} = messagesRef.current;
@@ -61,6 +89,7 @@ const Right: SFC = ({className}) => {
         <Message
           content={content}
           createdDate={createdDate}
+          firstUnreadMessageId={firstUnreadMessageId}
           key={messageId}
           messageId={messageId}
           modifiedDate={modifiedDate}

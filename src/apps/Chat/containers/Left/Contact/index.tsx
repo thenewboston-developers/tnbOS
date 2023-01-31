@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Avatar from 'apps/Chat/components/Avatar';
 import {getMessages} from 'apps/Chat/selectors/state';
 import {setActiveChat} from 'apps/Chat/store/manager';
+import {Contact as TContact} from 'apps/Chat/types';
 import {useAccountDisplayImage, useAccountDisplayName, useAccountOnlineStatus} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
@@ -11,13 +12,14 @@ import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface ContactProps {
-  accountNumber: string;
+  contact: TContact;
   isActiveChat: boolean;
-  lastActivityDate: string;
-  lastMessageId?: string;
+  notificationCount: number;
 }
 
-const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, lastActivityDate, lastMessageId}) => {
+const Contact: SFC<ContactProps> = ({className, contact, isActiveChat, notificationCount}) => {
+  const {accountNumber, lastActivityDate, lastMessageId} = contact;
+
   const dispatch = useDispatch<AppDispatch>();
   const displayImage = useAccountDisplayImage(accountNumber);
   const displayName = useAccountDisplayName(accountNumber, 10);
@@ -40,15 +42,15 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
   };
 
   const renderDate = () => {
-    if (accountNumber === 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c') return null;
+    if (!!notificationCount) return null;
     return <S.Date>{shortDate(lastActivityDate, false)}</S.Date>;
   };
 
   const renderNotificationCountContainer = () => {
-    if (accountNumber !== 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c') return null;
+    if (!notificationCount) return null;
     return (
       <S.NotificationCountContainer>
-        <S.NotificationCount>5</S.NotificationCount>
+        <S.NotificationCount>{notificationCount}</S.NotificationCount>
       </S.NotificationCountContainer>
     );
   };

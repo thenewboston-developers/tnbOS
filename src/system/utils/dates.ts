@@ -2,6 +2,10 @@ export const currentSystemDate = (): string => {
   return systemDate(new Date());
 };
 
+export const epochDate = (): string => {
+  return systemDate(new Date(0));
+};
+
 export const isToday = (date: Date): boolean => {
   const today = new Date();
   return (
