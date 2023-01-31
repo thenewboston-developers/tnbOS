@@ -2,6 +2,7 @@ import styled, {css} from 'styled-components';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
 import {colors, fonts} from 'apps/Chat/styles';
+import {colors as systemColors} from 'system/styles';
 
 export const BottomText = styled.div`
   font-size: 12px;
@@ -47,6 +48,24 @@ export const Date = styled.div`
 export const DisplayName = styled.div`
   font-size: 14px;
   font-weight: ${fonts.weight.bold};
+`;
+
+export const NotificationCount = styled.div`
+  align-items: center;
+  background: ${systemColors.red};
+  border-radius: 8px;
+  display: flex;
+  font-size: 12px;
+  font-weight: 600;
+  height: 16px;
+  justify-content: center;
+  width: 24px;
+`;
+
+export const NotificationCountContainer = styled.div`
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
 `;
 
 export const Right = styled.div`

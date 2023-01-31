@@ -153,6 +153,11 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 
+  const renderNotificationLine = () => {
+    if (messageId !== 'dd464161-4944-4b34-bb8c-8a26fc78e07e') return null;
+    return <S.NotificationLine />;
+  };
+
   const renderTools = () => {
     return (
       <S.ToolsContainer>
@@ -166,6 +171,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
 
   return (
     <>
+      {renderNotificationLine()}
       <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
         <Avatar displayImage={displayImage} />
         <S.Right>

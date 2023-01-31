@@ -39,16 +39,31 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
     dispatch(setActiveChat(accountNumber));
   };
 
+  const renderDate = () => {
+    if (true) return null;
+    return <S.Date>{shortDate(lastActivityDate, false)}</S.Date>;
+  };
+
+  const renderNotificationCountContainer = () => {
+    if (false) return null;
+    return (
+      <S.NotificationCountContainer>
+        <S.NotificationCount>5</S.NotificationCount>
+      </S.NotificationCountContainer>
+    );
+  };
+
   return (
     <S.Container className={className} isActiveChat={isActiveChat} onClick={handleClick}>
       <Avatar displayImage={displayImage} onlineStatus={onlineStatus} />
       <S.Right>
         <S.TopText>
           <S.DisplayName>{displayName}</S.DisplayName>
-          <S.Date>{shortDate(lastActivityDate, false)}</S.Date>
+          {renderDate()}
         </S.TopText>
         <S.BottomText>{getSnippet()}</S.BottomText>
       </S.Right>
+      {renderNotificationCountContainer()}
     </S.Container>
   );
 };
