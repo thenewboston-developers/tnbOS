@@ -2,9 +2,9 @@ import {useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import AccountCard from 'apps/AccountManager/components/AccountCard';
+import CardsContainer from 'system/components/CardsContainer';
 import {getAccounts} from 'system/selectors/state';
 import {SFC} from 'system/types';
-import * as S from './Styles';
 
 const MainArea: SFC = ({className}) => {
   const accounts = useSelector(getAccounts);
@@ -14,7 +14,7 @@ const MainArea: SFC = ({className}) => {
     return orderedAccounts.map((account) => <AccountCard account={account} key={account.accountNumber} />);
   };
 
-  return <S.Container className={className}>{renderAccountCards()}</S.Container>;
+  return <CardsContainer className={className}>{renderAccountCards()}</CardsContainer>;
 };
 
 export default MainArea;
