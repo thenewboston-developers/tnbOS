@@ -54,6 +54,7 @@ export const NotificationCount = styled.div`
   align-items: center;
   background: ${systemColors.red};
   border-radius: 8px;
+  color: #fff;
   display: flex;
   font-size: 12px;
   font-weight: 600;

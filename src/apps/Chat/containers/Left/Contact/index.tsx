@@ -40,12 +40,12 @@ const Contact: SFC<ContactProps> = ({accountNumber, className, isActiveChat, las
   };
 
   const renderDate = () => {
-    if (true) return null;
+    if (accountNumber === 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c') return null;
     return <S.Date>{shortDate(lastActivityDate, false)}</S.Date>;
   };
 
   const renderNotificationCountContainer = () => {
-    if (false) return null;
+    if (accountNumber !== 'f48a59446bc4397a4887b1d8654b013ad152006d9977da721667542f8e19a38c') return null;
     return (
       <S.NotificationCountContainer>
         <S.NotificationCount>5</S.NotificationCount>
