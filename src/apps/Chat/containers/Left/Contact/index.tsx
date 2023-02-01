@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import Avatar from 'apps/Chat/components/Avatar';
@@ -29,6 +30,10 @@ const Contact: SFC<ContactProps> = ({className, contact, isActiveChat, notificat
 
   const lastMessage = lastMessageId ? messages[lastMessageId] : null;
 
+  const displayNotificationCount = useMemo((): boolean => {
+    return !!notificationCount && !isActiveChat;
+  }, [isActiveChat, notificationCount]);
+
   const getSnippet = (): string => {
     const lastMessageAmount = lastMessage?.transfer?.amount;
     const lastMessageContent = lastMessage?.content;
@@ -42,12 +47,12 @@ const Contact: SFC<ContactProps> = ({className, contact, isActiveChat, notificat
   };
 
   const renderDate = () => {
-    if (!!notificationCount) return null;
+    if (displayNotificationCount) return null;
     return <S.Date>{shortDate(lastActivityDate, false)}</S.Date>;
   };
 
   const renderNotificationCountContainer = () => {
-    if (!notificationCount) return null;
+    if (!displayNotificationCount) return null;
     return (
       <S.NotificationCountContainer>
         <S.NotificationCount>{notificationCount}</S.NotificationCount>

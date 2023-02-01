@@ -15,6 +15,8 @@ import MessageForm from './MessageForm';
 import OverviewMessageContainer from './OverviewMessageContainer';
 import * as S from './Styles';
 
+let firstUnreadMessageRendered = false;
+
 const Right: SFC = ({className}) => {
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
   const activeChat = useSelector(getActiveChat);
@@ -25,6 +27,10 @@ const Right: SFC = ({className}) => {
   const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
   const unreadMessages = useUnreadMessages();
+
+  useEffect(() => {
+    firstUnreadMessageRendered = false;
+  }, [activeChat]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -82,18 +88,22 @@ const Right: SFC = ({className}) => {
   const renderMessages = () => {
     const results = Object.values(messages)
       .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
-      .map(({content, createdDate, messageId, modifiedDate, sender, transfer}) => (
-        <Message
-          content={content}
-          createdDate={createdDate}
-          firstUnreadMessageId={firstUnreadMessageId}
-          key={messageId}
-          messageId={messageId}
-          modifiedDate={modifiedDate}
-          sender={sender}
-          transfer={transfer}
-        />
-      ));
+      .map(({content, createdDate, messageId, modifiedDate, sender, transfer}) => {
+        const isFirstUnreadMessage = firstUnreadMessageId === messageId && !firstUnreadMessageRendered;
+        if (isFirstUnreadMessage) firstUnreadMessageRendered = true;
+        return (
+          <Message
+            content={content}
+            createdDate={createdDate}
+            isFirstUnreadMessage={isFirstUnreadMessage}
+            key={messageId}
+            messageId={messageId}
+            modifiedDate={modifiedDate}
+            sender={sender}
+            transfer={transfer}
+          />
+        );
+      });
 
     return (
       <S.Messages onScroll={handleMessagesScroll} ref={messagesRef}>

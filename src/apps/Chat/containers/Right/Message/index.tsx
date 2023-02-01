@@ -23,7 +23,7 @@ import * as S from './Styles';
 export interface MessageProps {
   content: string;
   createdDate: string;
-  firstUnreadMessageId: string | null;
+  isFirstUnreadMessage: boolean;
   messageId: string;
   modifiedDate: string;
   sender: string;
@@ -34,14 +34,14 @@ const Message: SFC<MessageProps> = ({
   className,
   content,
   createdDate,
-  firstUnreadMessageId,
+  isFirstUnreadMessage,
   messageId,
   modifiedDate,
   sender,
   transfer,
 }) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
-  const [isFirstUnreadMessage] = useState<boolean>(firstUnreadMessageId === messageId);
+  const [isFirstUnreadMessageSticky] = useState<boolean>(isFirstUnreadMessage);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
   const activeChat = useSelector(getActiveChat);
   const deliveryStatus = useDeliveryStatus(messageId);
@@ -165,7 +165,7 @@ const Message: SFC<MessageProps> = ({
   };
 
   const renderNotificationLine = () => {
-    if (!isFirstUnreadMessage) return null;
+    if (!isFirstUnreadMessageSticky) return null;
     return <S.NotificationLine />;
   };
 
