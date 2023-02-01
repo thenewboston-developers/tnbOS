@@ -29,7 +29,7 @@ const Playlist: SFC<PlaylistProps> = ({activeLectureId, className, courseId}) =>
 
   return (
     <S.Container className={className}>
-      <S.SectionHeading heading="Playlist" />
+      <S.SectionHeading heading="Lectures" />
       {renderContent()}
     </S.Container>
   );
