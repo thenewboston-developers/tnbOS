@@ -2,12 +2,12 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
+import {useUnreadMessages} from 'apps/Chat/hooks';
 import {ChatRegistration} from 'apps/Chat/registration';
 import {getActiveChat, getContacts, getMessages} from 'apps/Chat/selectors/state';
-import {Message as TMessage} from 'apps/Chat/types';
 import {getManager} from 'system/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
-import {AppDispatch, Dict, SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import EmptyState from './EmptyState';
 import Message from './Message';
@@ -15,11 +15,7 @@ import MessageForm from './MessageForm';
 import OverviewMessageContainer from './OverviewMessageContainer';
 import * as S from './Styles';
 
-export interface RightProps {
-  unreadMessages: Dict<TMessage[]>;
-}
-
-const Right: SFC<RightProps> = ({className, unreadMessages}) => {
+const Right: SFC = ({className}) => {
   const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
   const activeChat = useSelector(getActiveChat);
   const bottomMessageRef = useRef<HTMLDivElement>(null);
@@ -28,6 +24,7 @@ const Right: SFC<RightProps> = ({className, unreadMessages}) => {
   const manager = useSelector(getManager);
   const messages = useSelector(getMessages);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const unreadMessages = useUnreadMessages();
 
   useEffect(() => {
     const timeout = setTimeout(() => {

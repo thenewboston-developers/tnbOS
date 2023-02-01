@@ -4,27 +4,24 @@ import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import {mdiChatPlus} from '@mdi/js';
 
-import {useNonContactAccounts} from 'apps/Chat/hooks';
+import {useNonContactAccounts, useUnreadMessages} from 'apps/Chat/hooks';
 import AddContactModal from 'apps/Chat/modals/AddContactModal';
 import {getActiveChat, getContacts} from 'apps/Chat/selectors/state';
-import {Contact as TContact, Message} from 'apps/Chat/types';
+import {Contact as TContact} from 'apps/Chat/types';
 import {useToggle} from 'system/hooks';
 import {getAccounts} from 'system/selectors/state';
-import {Dict, SFC} from 'system/types';
+import {SFC} from 'system/types';
 import Contact from './Contact';
 import * as S from './Styles';
 
-export interface LeftProps {
-  unreadMessages: Dict<Message[]>;
-}
-
-const Left: SFC<LeftProps> = ({className, unreadMessages}) => {
+const Left: SFC = ({className}) => {
   const [addContactModalIsOpen, toggleAddContactModal] = useToggle(false);
   const [searchText, setSearchText] = useState<string>('');
   const accounts = useSelector(getAccounts);
   const activeChat = useSelector(getActiveChat);
   const contacts = useSelector(getContacts);
   const nonContactAccounts = useNonContactAccounts();
+  const unreadMessages = useUnreadMessages();
 
   const contactList = Object.values(contacts);
 
