@@ -78,6 +78,7 @@ const MessageForm: SFC = ({className}) => {
           accountNumber: recipient,
           lastActivityDate: now,
           lastMessageId: messageId,
+          lastSeenDate: now,
         }),
       );
 

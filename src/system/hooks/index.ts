@@ -11,6 +11,7 @@ import useEventListener from 'system/hooks/useEventListener';
 import useNetworkBlocks from 'system/hooks/useNetworkBlocks';
 import useNetworkDisplayImage from 'system/hooks/useNetworkDisplayImage';
 import useNetworkDisplayName from 'system/hooks/useNetworkDisplayName';
+import useNotificationCount from 'system/hooks/useNotificationCount';
 import useOnlineAccountNumbers from 'system/hooks/useOnlineAccountNumbers';
 import useRecipientsDefaultNetworkId from 'system/hooks/useRecipientsDefaultNetworkId';
 import useSocketStatus from 'system/hooks/useSocketStatus';
@@ -29,6 +30,7 @@ export {
   useNetworkBlocks,
   useNetworkDisplayImage,
   useNetworkDisplayName,
+  useNotificationCount,
   useOnlineAccountNumbers,
   useReadIpc,
   useRecipientsDefaultNetworkId,

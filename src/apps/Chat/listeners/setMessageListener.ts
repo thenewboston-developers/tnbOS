@@ -14,7 +14,7 @@ import {
 import {Block} from 'shared/types';
 import store from 'system/store';
 import {AppDispatch} from 'system/types';
-import {currentSystemDate} from 'system/utils/dates';
+import {currentSystemDate, epochDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 
 const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
@@ -23,7 +23,7 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
       const {payload, recipient, sender} = block;
       const {params: message} = payload;
       const {
-        chat: {messages},
+        chat: {contacts, messages},
         system: {self},
       } = store.getState();
 
@@ -41,12 +41,14 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
       }
 
       if (!existingMessage || new Date(message.modifiedDate) > new Date(existingMessage.modifiedDate)) {
+        const contact = contacts[sender];
         dispatch(setMessage(message));
         dispatch(
           setContact({
             accountNumber: sender,
             lastActivityDate: currentSystemDate(),
             lastMessageId: message.messageId,
+            lastSeenDate: contact ? contact.lastSeenDate : epochDate(),
           }),
         );
       }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Status} from 'apps/Chat/components/Avatar/Styles';
 import {colors, fonts} from 'apps/Chat/styles';
 import Icon from 'system/components/Icon';
+import {colors as systemColors} from 'system/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -67,6 +68,12 @@ export const ModifiedDetails = styled.div`
   font-size: 10px;
   font-style: italic;
   font-weight: ${fonts.weight.light};
+`;
+
+export const NotificationLine = styled.hr`
+  border: 0;
+  border-top: 0.5px solid ${systemColors.red};
+  margin: 4px 16px;
 `;
 
 export const Right = styled.div`

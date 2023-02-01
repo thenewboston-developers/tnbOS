@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   height: ${constants.toolbarHeight};
   justify-content: center;
+  position: relative;
   width: ${constants.toolbarHeight};
 
   &:hover {

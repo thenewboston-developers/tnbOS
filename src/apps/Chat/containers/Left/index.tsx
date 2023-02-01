@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import orderBy from 'lodash/orderBy';
 import {mdiChatPlus} from '@mdi/js';
 
-import {useNonContactAccounts} from 'apps/Chat/hooks';
+import {useNonContactAccounts, useUnreadMessages} from 'apps/Chat/hooks';
 import AddContactModal from 'apps/Chat/modals/AddContactModal';
 import {getActiveChat, getContacts} from 'apps/Chat/selectors/state';
 import {Contact as TContact} from 'apps/Chat/types';
@@ -21,6 +21,7 @@ const Left: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const contacts = useSelector(getContacts);
   const nonContactAccounts = useNonContactAccounts();
+  const unreadMessages = useUnreadMessages();
 
   const contactList = Object.values(contacts);
 
@@ -59,14 +60,14 @@ const Left: SFC = ({className}) => {
     let items = filterBySearchText(contactList);
     items = orderBy(items, ['lastActivityDate'], ['desc']);
 
-    const results = items.map(({accountNumber, lastActivityDate, lastMessageId}) => {
+    const results = items.map((contact) => {
+      const {accountNumber} = contact;
       return (
         <Contact
-          accountNumber={accountNumber}
+          contact={contact}
           isActiveChat={activeChat === accountNumber}
           key={accountNumber}
-          lastActivityDate={lastActivityDate}
-          lastMessageId={lastMessageId}
+          notificationCount={unreadMessages[accountNumber].length}
         />
       );
     });

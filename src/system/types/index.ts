@@ -17,10 +17,11 @@ import {IdentificationData} from 'system/types/identification';
 import {Internal} from 'system/types/internal';
 import {Manager} from 'system/types/manager';
 import {Network, NetworkProtocol, Networks} from 'system/types/networks';
-import {OnlineStatus} from 'system/types/onlineStatuses';
 import {NetworkAccountOnlineStatuses} from 'system/types/networkAccountOnlineStatuses';
 import {NetworkBlock, NetworkBlocks} from 'system/types/networkBlocks';
 import {InternalRequestMapping, NetworkCorrelationIds} from 'system/types/networkCorrelationIds';
+import {NotificationCounts} from 'system/types/notificationCounts';
+import {OnlineStatus} from 'system/types/onlineStatuses';
 import {
   NetworkPeerRequests,
   PeerRequestDetails,
@@ -85,6 +86,7 @@ export {
   NetworkPeerRequests,
   NetworkProtocol,
   Networks,
+  NotificationCounts,
   OnlineStatus,
   PeerOnlineStatus,
   PeerRequestDetails,

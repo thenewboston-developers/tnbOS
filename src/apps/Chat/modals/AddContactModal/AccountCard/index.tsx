@@ -21,12 +21,16 @@ const AccountCard: SFC<AccountCardProps> = ({accountNumber, className, close}) =
   const onlineStatus = useAccountOnlineStatus(accountNumber);
 
   const handleAddContact = () => {
+    const now = currentSystemDate();
+
     dispatch(
       setContact({
         accountNumber,
-        lastActivityDate: currentSystemDate(),
+        lastActivityDate: now,
+        lastSeenDate: now,
       }),
     );
+
     close();
   };
 

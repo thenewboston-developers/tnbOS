@@ -10,6 +10,7 @@ import networkAccountOnlineStatusesReducer from 'system/store/networkAccountOnli
 import networkBlocksReducer from 'system/store/networkBlocks';
 import networkCorrelationIdsReducer from 'system/store/networkCorrelationIds';
 import networksReducer from 'system/store/networks';
+import notificationCountsReducer from 'system/store/notificationCounts';
 import peerRequestManagerReducer from 'system/store/peerRequestManager';
 import selfReducer from 'system/store/self';
 import socketStatusesReducer from 'system/store/socketStatuses';
@@ -24,6 +25,7 @@ const systemReducer = combineReducers({
   networkBlocks: networkBlocksReducer,
   networkCorrelationIds: networkCorrelationIdsReducer,
   networks: networksReducer,
+  notificationCounts: notificationCountsReducer,
   peerRequestManager: peerRequestManagerReducer,
   self: selfReducer,
   socketStatuses: socketStatusesReducer,

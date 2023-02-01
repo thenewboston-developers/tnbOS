@@ -23,14 +23,25 @@ import * as S from './Styles';
 export interface MessageProps {
   content: string;
   createdDate: string;
+  firstUnreadMessageId: string | null;
   messageId: string;
   modifiedDate: string;
   sender: string;
   transfer: TTransfer | null;
 }
 
-const Message: SFC<MessageProps> = ({className, content, createdDate, messageId, modifiedDate, sender, transfer}) => {
+const Message: SFC<MessageProps> = ({
+  className,
+  content,
+  createdDate,
+  firstUnreadMessageId,
+  messageId,
+  modifiedDate,
+  sender,
+  transfer,
+}) => {
   const [editMessageModalIsOpen, toggleEditMessageModal] = useToggle(false);
+  const [isFirstUnreadMessage] = useState<boolean>(firstUnreadMessageId === messageId);
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
   const activeChat = useSelector(getActiveChat);
   const deliveryStatus = useDeliveryStatus(messageId);
@@ -153,6 +164,11 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
     return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 
+  const renderNotificationLine = () => {
+    if (!isFirstUnreadMessage) return null;
+    return <S.NotificationLine />;
+  };
+
   const renderTools = () => {
     return (
       <S.ToolsContainer>
@@ -166,6 +182,7 @@ const Message: SFC<MessageProps> = ({className, content, createdDate, messageId,
 
   return (
     <>
+      {renderNotificationLine()}
       <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
         <Avatar displayImage={displayImage} />
         <S.Right>

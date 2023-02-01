@@ -2,9 +2,8 @@
 
 const colors = {
   background: '#f1f6fa',
-  badgeGold: '#ffc700',
-  black: '#000',
   primary: '#2c3967',
+  red: '#dd060f',
   white: '#fff',
   palette: {
     blue: {
