@@ -51,6 +51,9 @@ const Orders: SFC = ({className}) => {
     return (
       <S.Container className={className}>
         <PageHeader title="Orders" />
+        <S.StackedBarChartContainer>
+          <S.StackedBarChart />
+        </S.StackedBarChartContainer>
         {renderOrderCards()}
         {renderViewMore()}
       </S.Container>

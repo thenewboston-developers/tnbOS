@@ -85,6 +85,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-toastify": "^9.0.7",
+    "recharts": "^2.3.2",
     "reconnecting-websocket": "^4.4.0",
     "styled-components": "^5.3.5",
     "tweetnacl": "^1.0.3",
