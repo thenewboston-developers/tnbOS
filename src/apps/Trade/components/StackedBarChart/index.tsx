@@ -1,46 +1,46 @@
+import {useMemo} from 'react';
+import {useSelector} from 'react-redux';
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
+import {getResolutions} from 'apps/Trade/selectors/state';
+import {FillStatus, Order, ResolutionStatus} from 'apps/Trade/types';
 import {SFC} from 'system/types';
 
-const data = [
-  {
-    cancelled: 1,
-    createdDate: 'Jan 8, 2023',
-    filled: 5,
-  },
-  {
-    cancelled: 2,
-    createdDate: 'Jan 9, 2023',
-    filled: 10,
-  },
-  {
-    cancelled: 2,
-    createdDate: 'Jan 10, 2023',
-    filled: 9,
-  },
-  {
-    cancelled: 3,
-    createdDate: 'Jan 11, 2023',
-    filled: 15,
-  },
-  {
-    cancelled: 2,
-    createdDate: 'Jan 12, 2023',
-    filled: 16,
-  },
-  {
-    cancelled: 3,
-    createdDate: 'Jan 13, 2023',
-    filled: 12,
-  },
-  {
-    cancelled: 2,
-    createdDate: 'Jan 14, 2023',
-    filled: 14,
-  },
-];
+export interface StackedBarChartProps {
+  orderList: Order[];
+}
 
-const StackedBarChart: SFC = ({className}) => {
+const StackedBarChart: SFC<StackedBarChartProps> = ({className, orderList}) => {
+  const resolutions = useSelector(getResolutions);
+
+  const data = useMemo(() => {
+    const results = orderList.reduce((previousValue: any, order) => {
+      const createdDate = new Date(order.createdDate).toLocaleDateString(undefined, {dateStyle: 'short'});
+      const dateStr = createdDate.toString();
+      const resolution = resolutions[order.orderId];
+
+      const isCancelled = !!resolution && resolution.resolutionStatus === ResolutionStatus.cancelled;
+      const isFilled = order.fillStatus === FillStatus.complete;
+
+      if (!isCancelled && !isFilled) return previousValue;
+
+      if (previousValue[dateStr]) {
+        previousValue[dateStr].cancelled += isCancelled ? 1 : 0;
+        previousValue[dateStr].filled += isFilled ? 1 : 0;
+      } else {
+        previousValue[dateStr] = {
+          cancelled: isCancelled ? 1 : 0,
+          createdDate: dateStr,
+          filled: isFilled ? 1 : 0,
+        };
+      }
+
+      return previousValue;
+    }, {});
+
+    return Object.values(results).slice(0, 7).reverse();
+  }, [orderList, resolutions]);
+
   return (
     <ResponsiveContainer className={className} height={260} width="100%">
       <BarChart data={data}>
