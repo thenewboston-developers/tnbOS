@@ -49,8 +49,8 @@ const StackedBarChart: SFC<StackedBarChartProps> = ({className, orderList}) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="filled" stackId="a" fill="#34c38f" />
-        <Bar dataKey="cancelled" stackId="a" fill="#f46a6a" />
+        <Bar dataKey="filled" fill="#34c38f" stackId="a" />
+        <Bar dataKey="cancelled" fill="#f46a6a" stackId="a" />
       </BarChart>
     </ResponsiveContainer>
   );
