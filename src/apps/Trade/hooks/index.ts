@@ -11,6 +11,7 @@ import useOrderFillStatusTask from 'apps/Trade/hooks/useOrderFillStatusTask';
 import useOrderPaymentStatusTask from 'apps/Trade/hooks/useOrderPaymentStatusTask';
 import useReceivingAccountTransferTask from 'apps/Trade/hooks/useReceivingAccountTransferTask';
 import useTradeBalances from 'apps/Trade/hooks/useTradeBalances';
+import useUpdateNotificationCount from 'apps/Trade/hooks/useUpdateNotificationCount';
 
 export {
   useActiveNetworkBalance,
@@ -26,4 +27,5 @@ export {
   useOrderPaymentStatusTask,
   useReceivingAccountTransferTask,
   useTradeBalances,
+  useUpdateNotificationCount,
 };
