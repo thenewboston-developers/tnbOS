@@ -6,6 +6,7 @@ import {
   useOrderFillStatusTask,
   useOrderPaymentStatusTask,
   useReceivingAccountTransferTask,
+  useUpdateNotificationCount,
 } from 'apps/Trade/hooks';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
@@ -20,6 +21,9 @@ const Trade: SFC<AppProps> = ({className, display}) => {
   useOrderFillStatusTask();
   useOrderPaymentStatusTask();
   useReceivingAccountTransferTask();
+  useUpdateNotificationCount();
+
+  if (!display) return null;
 
   return (
     <AppWindow className={className} display={display}>
