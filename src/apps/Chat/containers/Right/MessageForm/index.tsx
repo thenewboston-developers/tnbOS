@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
+import AttachmentSelector from 'apps/Chat/components/AttachmentSelector';
 import {ButtonType} from 'apps/Chat/components/Button';
 import NetworkSelector from 'apps/Chat/components/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
@@ -127,6 +128,7 @@ const MessageForm: SFC = ({className}) => {
             />
           ) : null}
           <NetworkSelector />
+          <AttachmentSelector />
           <S.Button
             dirty={dirty}
             disabled={isSubmitting}
