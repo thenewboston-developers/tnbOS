@@ -4,7 +4,7 @@ import {Formik, FormikHelpers} from 'formik';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
 import {ButtonType} from 'apps/Chat/components/Button';
-import NetworkSelector from 'apps/Chat/containers/Right/NetworkSelector';
+import NetworkSelector from 'apps/Chat/components/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
