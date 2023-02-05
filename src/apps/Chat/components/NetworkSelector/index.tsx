@@ -26,7 +26,6 @@ const NetworkSelector: SFC = ({className}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const networks = useSelector(getNetworks);
-  const optionsRef = useRef<HTMLDivElement[]>([]);
 
   const handleClick = (e: any): void => {
     if (containerRef.current?.contains(e.target)) return;
@@ -74,10 +73,6 @@ const NetworkSelector: SFC = ({className}) => {
           onClick={handleOptionClick(() => {
             dispatch(setActiveNetworkId(networkId));
           })}
-          ref={(el) => {
-            if (el) optionsRef.current[index] = el;
-          }}
-          role="button"
         />
       ));
   }, [activeNetworkId, balances, dispatch, handleOptionClick, networks]);
@@ -93,10 +88,6 @@ const NetworkSelector: SFC = ({className}) => {
         onClick={handleOptionClick(() => {
           dispatch(setActiveNetworkId(null));
         })}
-        ref={(el) => {
-          if (el) optionsRef.current[index] = el;
-        }}
-        role="button"
       />,
     ];
   }, [activeNetwork, dispatch, handleOptionClick, networkOptions.length]);

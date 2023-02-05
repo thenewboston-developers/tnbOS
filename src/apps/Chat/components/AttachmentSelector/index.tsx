@@ -14,7 +14,6 @@ const AttachmentSelector: SFC = ({className}) => {
   const [isOpen, toggleIsOpen] = useToggle(false);
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
-  const optionsRef = useRef<HTMLDivElement[]>([]);
 
   const handleClick = (e: any): void => {
     if (containerRef.current?.contains(e.target)) return;
@@ -50,35 +49,24 @@ const AttachmentSelector: SFC = ({className}) => {
     toggleIsOpen();
   }, [toggleIsOpen]);
 
-  const renderMenu = () => {
-    const options = [
+  const renderMenu = () => (
+    <Menu style={menuPosition}>
       <div
-        key={0}
         onClick={handleOptionClick(() => {
           console.log('Hey');
         })}
-        ref={(el) => {
-          if (el) optionsRef.current[0] = el;
-        }}
-        role="button"
       >
         Hey
-      </div>,
+      </div>
       <div
-        key={1}
         onClick={handleOptionClick(() => {
           console.log('Now');
         })}
-        ref={(el) => {
-          if (el) optionsRef.current[1] = el;
-        }}
-        role="button"
       >
         Now
-      </div>,
-    ];
-    return <Menu style={menuPosition}>{options}</Menu>;
-  };
+      </div>
+    </Menu>
+  );
 
   return (
     <>
