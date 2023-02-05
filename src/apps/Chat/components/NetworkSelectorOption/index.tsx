@@ -1,11 +1,10 @@
-import {HTMLAttributes} from 'react';
 import {mdiMinusCircle} from '@mdi/js';
 
 import {GenericVoidFunction} from 'shared/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-export interface NetworkSelectorOptionProps extends HTMLAttributes<HTMLDivElement> {
+export interface NetworkSelectorOptionProps {
   balance: number | null;
   displayImage?: string;
   displayName: string;
