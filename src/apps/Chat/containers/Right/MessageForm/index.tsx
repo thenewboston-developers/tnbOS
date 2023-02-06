@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
@@ -24,6 +24,8 @@ const MessageForm: SFC = ({className}) => {
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
   const activeNetworkBalance = useActiveNetworkBalance();
+  const [attachedAccountNumbers, setAttachedAccountNumbers] = useState<string[]>([]);
+  const [attachedNetworkIds, setAttachedNetworkIds] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
@@ -128,7 +130,12 @@ const MessageForm: SFC = ({className}) => {
             />
           ) : null}
           <NetworkSelector />
-          <AttachmentSelector />
+          <AttachmentSelector
+            attachedAccountNumbers={attachedAccountNumbers}
+            attachedNetworkIds={attachedNetworkIds}
+            setAttachedAccountNumbers={setAttachedAccountNumbers}
+            setAttachedNetworkIds={setAttachedNetworkIds}
+          />
           <S.Button
             dirty={dirty}
             disabled={isSubmitting}

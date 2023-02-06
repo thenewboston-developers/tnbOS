@@ -6,13 +6,27 @@ import AttachmentSelectorOption from 'apps/Chat/components/AttachmentSelectorOpt
 import Menu from 'apps/Chat/components/Menu';
 import AttachAccountsModal from 'apps/Chat/modals/AttachAccountsModal';
 import AttachNetworksModal from 'apps/Chat/modals/AttachNetworksModal';
+import {GenericVoidFunction} from 'shared/types';
 import {useEventListener, useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 const dropupRoot = document.getElementById('dropup-root')!;
 
-const AttachmentSelector: SFC = ({className}) => {
+interface AttachmentSelectorProps {
+  attachedAccountNumbers: string[];
+  attachedNetworkIds: string[];
+  setAttachedAccountNumbers: GenericVoidFunction;
+  setAttachedNetworkIds: GenericVoidFunction;
+}
+
+const AttachmentSelector: SFC<AttachmentSelectorProps> = ({
+  attachedAccountNumbers,
+  attachedNetworkIds,
+  className,
+  setAttachedAccountNumbers,
+  setAttachedNetworkIds,
+}) => {
   const [attachAccountsModalIsOpen, toggleAttachAccountsModal] = useToggle(false);
   const [attachNetworksModalIsOpen, toggleAttachNetworksModal] = useToggle(false);
   const [isMenuOpen, toggleIsMenuOpen] = useToggle(false);
@@ -57,12 +71,24 @@ const AttachmentSelector: SFC = ({className}) => {
 
   const renderAttachAccountsModal = () => {
     if (!attachAccountsModalIsOpen) return null;
-    return <AttachAccountsModal close={toggleAttachAccountsModal} />;
+    return (
+      <AttachAccountsModal
+        attachedAccountNumbers={attachedAccountNumbers}
+        close={toggleAttachAccountsModal}
+        setAttachedAccountNumbers={setAttachedAccountNumbers}
+      />
+    );
   };
 
   const renderAttachNetworksModal = () => {
     if (!attachNetworksModalIsOpen) return null;
-    return <AttachNetworksModal close={toggleAttachNetworksModal} />;
+    return (
+      <AttachNetworksModal
+        attachedNetworkIds={attachedNetworkIds}
+        close={toggleAttachNetworksModal}
+        setAttachedNetworkIds={setAttachedNetworkIds}
+      />
+    );
   };
 
   const renderMenu = () => (

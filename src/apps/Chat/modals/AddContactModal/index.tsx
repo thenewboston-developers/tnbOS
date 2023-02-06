@@ -10,18 +10,20 @@ interface AddContactModalProps {
 }
 
 const AddContactModal: SFC<AddContactModalProps> = ({className, close, nonContactAccounts}) => {
-  const renderAccountCards = () => {
+  const renderAccountCardsContainer = () => {
     const accountsList = Object.values(nonContactAccounts);
     const orderedAccounts = orderBy(accountsList, ['displayName']);
+
     const accountCards = orderedAccounts.map(({accountNumber}) => (
       <AccountCard accountNumber={accountNumber} close={close} key={accountNumber} />
     ));
-    return <S.AccountCardContainer>{accountCards}</S.AccountCardContainer>;
+
+    return <S.AccountCardsContainer>{accountCards}</S.AccountCardsContainer>;
   };
 
   return (
     <S.Modal className={className} close={close} header="New Chat">
-      {renderAccountCards()}
+      {renderAccountCardsContainer()}
     </S.Modal>
   );
 };
