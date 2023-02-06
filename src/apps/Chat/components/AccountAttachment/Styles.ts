@@ -13,12 +13,12 @@ export const Container = styled.div`
 `;
 
 export const Img = styled.img`
-  height: 96px;
-  width: 96px;
+  height: 72px;
+  width: 72px;
 `;
 
 export const Text = styled.div`
-  font-size: 13px;
+  font-size: 12px;
   margin-top: 8px;
 `;
 
