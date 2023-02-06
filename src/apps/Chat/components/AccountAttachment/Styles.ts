@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import UTools from 'apps/Chat/components/Tools';
+
 export const Container = styled.div`
   align-items: center;
   background: #2e3136;
@@ -7,6 +9,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 8px;
+  position: relative;
 `;
 
 export const Img = styled.img`
@@ -17,4 +20,8 @@ export const Img = styled.img`
 export const Text = styled.div`
   font-size: 13px;
   margin-top: 8px;
+`;
+
+export const Tools = styled(UTools)`
+  top: 0;
 `;

@@ -5,6 +5,7 @@ import MdiIcon from '@mdi/react';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
 import Avatar from 'apps/Chat/components/Avatar';
+import Tool from 'apps/Chat/components/Tool';
 import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
@@ -170,11 +171,12 @@ const Message: SFC<MessageProps> = ({
   };
 
   const renderTools = () => {
+    if (!toolsVisible) return null;
     return (
       <S.ToolsContainer>
-        <S.Tools $display={toolsVisible}>
-          <S.Tool icon={mdiPencil} onClick={toggleEditMessageModal} size={20} totalSize="unset" unfocusable />
-          <S.Tool icon={mdiDelete} onClick={handleDeleteClick} size={20} totalSize="unset" unfocusable />
+        <S.Tools>
+          <Tool icon={mdiPencil} onClick={toggleEditMessageModal} />
+          <Tool icon={mdiDelete} onClick={handleDeleteClick} />
         </S.Tools>
       </S.ToolsContainer>
     );
