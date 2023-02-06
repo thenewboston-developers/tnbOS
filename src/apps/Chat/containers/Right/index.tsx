@@ -88,11 +88,13 @@ const Right: SFC = ({className}) => {
   const renderMessages = () => {
     const results = Object.values(messages)
       .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
-      .map(({content, createdDate, messageId, modifiedDate, sender, transfer}) => {
+      .map(({attachedAccounts, attachedNetworks, content, createdDate, messageId, modifiedDate, sender, transfer}) => {
         const isFirstUnreadMessage = firstUnreadMessageId === messageId && !firstUnreadMessageRendered;
         if (isFirstUnreadMessage) firstUnreadMessageRendered = true;
         return (
           <Message
+            attachedAccounts={attachedAccounts}
+            attachedNetworks={attachedNetworks}
             content={content}
             createdDate={createdDate}
             isFirstUnreadMessage={isFirstUnreadMessage}

@@ -1,6 +1,8 @@
-import {Dict} from 'system/types/generic';
+import {Account, Dict, Network} from 'system/types';
 
 export interface Message {
+  attachedAccounts: Account[];
+  attachedNetworks: Network[];
   content: string;
   createdDate: string;
   messageId: string;

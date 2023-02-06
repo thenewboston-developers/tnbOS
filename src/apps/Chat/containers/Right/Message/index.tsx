@@ -16,12 +16,14 @@ import {colors} from 'apps/Chat/styles';
 import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
 import {useAccountDisplayImage, useAccountDisplayName, useRecipientsDefaultNetworkId, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
-import {AppDispatch, SFC} from 'system/types';
+import {Account, AppDispatch, Network, SFC} from 'system/types';
 import {currentSystemDate, shortDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 export interface MessageProps {
+  attachedAccounts: Account[];
+  attachedNetworks: Network[];
   content: string;
   createdDate: string;
   isFirstUnreadMessage: boolean;
@@ -32,6 +34,8 @@ export interface MessageProps {
 }
 
 const Message: SFC<MessageProps> = ({
+  attachedAccounts,
+  attachedNetworks,
   className,
   content,
   createdDate,
@@ -53,7 +57,8 @@ const Message: SFC<MessageProps> = ({
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
-  const isContentDeleted = !content && !transfer;
+  const hasContent = !!content || !!transfer;
+  const isMessageDeleted = !attachedAccounts.length && !attachedNetworks.length && !content && !transfer;
 
   const handleDeleteClick = async () => {
     try {
@@ -98,7 +103,7 @@ const Message: SFC<MessageProps> = ({
   };
 
   const handleMouseOver = () => {
-    if (self.accountNumber !== sender || isContentDeleted) return;
+    if (self.accountNumber !== sender || !hasContent) return;
     setToolsVisible(true);
   };
 
@@ -150,7 +155,7 @@ const Message: SFC<MessageProps> = ({
   };
 
   const renderMessageBody = () => {
-    if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
+    if (isMessageDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
     return (
       <>
         {content ? <S.Content>{content}</S.Content> : null}
@@ -161,7 +166,7 @@ const Message: SFC<MessageProps> = ({
 
   const renderModifiedDetails = () => {
     if (createdDate === modifiedDate) return null;
-    const verb = isContentDeleted ? 'deleted' : 'edited';
+    const verb = isMessageDeleted ? 'deleted' : 'edited';
     return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 

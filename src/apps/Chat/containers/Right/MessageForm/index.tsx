@@ -14,7 +14,7 @@ import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus, Transfer} from 'apps/Chat/types';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
+import {getAccounts, getNetworks, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
@@ -22,12 +22,14 @@ import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 const MessageForm: SFC = ({className}) => {
+  const [attachedAccountNumbers, setAttachedAccountNumbers] = useState<string[]>([]);
+  const [attachedNetworkIds, setAttachedNetworkIds] = useState<string[]>([]);
+  const accounts = useSelector(getAccounts);
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
   const activeNetworkBalance = useActiveNetworkBalance();
-  const [attachedAccountNumbers, setAttachedAccountNumbers] = useState<string[]>([]);
-  const [attachedNetworkIds, setAttachedNetworkIds] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
+  const networks = useSelector(getNetworks);
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
@@ -37,6 +39,14 @@ const MessageForm: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  const getAttachedAccounts = () => {
+    return attachedAccountNumbers.map((accountNumber) => accounts[accountNumber]);
+  };
+
+  const getAttachedNetworks = () => {
+    return attachedNetworkIds.map((networkId) => networks[networkId]);
+  };
 
   const getIsDirty = (isFormDirty: boolean): boolean => {
     if (attachedAccountNumbers || attachedNetworkIds) return true;
@@ -68,6 +78,8 @@ const MessageForm: SFC = ({className}) => {
       const transfer = getTransfer(amount);
 
       const message = {
+        attachedAccounts: getAttachedAccounts(),
+        attachedNetworks: getAttachedNetworks(),
         content,
         createdDate: now,
         messageId,
