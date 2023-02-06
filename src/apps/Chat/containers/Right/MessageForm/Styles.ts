@@ -9,6 +9,12 @@ export const AmountInput = styled(InlineInput)`
   width: 80px;
 `;
 
+export const AttachmentContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  padding: 0 16px 16px;
+`;
+
 export const Button = styled(UButton)`
   display: none;
 `;

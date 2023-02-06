@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
+import AccountAttachment from 'apps/Chat/components/AccountAttachment';
 import AttachmentSelector from 'apps/Chat/components/AttachmentSelector';
 import {ButtonType} from 'apps/Chat/components/Button';
 import NetworkSelector from 'apps/Chat/components/NetworkSelector';
@@ -102,6 +103,14 @@ const MessageForm: SFC = ({className}) => {
     }
   };
 
+  const renderAttachmentContainer = () => {
+    if (!attachedAccountNumbers.length) return null;
+    const accountAttachments = attachedAccountNumbers.map((accountNumber) => (
+      <AccountAttachment accountNumber={accountNumber} key={accountNumber} />
+    ));
+    return <S.AttachmentContainer>{accountAttachments}</S.AttachmentContainer>;
+  };
+
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       amount: yup.number().test('amount-does-not-exceed-balance', 'Invalid amount', (amount) => {
@@ -119,32 +128,35 @@ const MessageForm: SFC = ({className}) => {
       validationSchema={validationSchema}
     >
       {({dirty, errors, isSubmitting, isValid, touched}) => (
-        <S.Form className={className}>
-          <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
-          {activeNetwork ? (
-            <S.AmountInput
-              errors={errors}
-              name="amount"
-              placeholder={activeNetwork.displayName || ''}
-              touched={touched}
+        <div>
+          <S.Form className={className}>
+            <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
+            {activeNetwork ? (
+              <S.AmountInput
+                errors={errors}
+                name="amount"
+                placeholder={activeNetwork.displayName || ''}
+                touched={touched}
+              />
+            ) : null}
+            <NetworkSelector />
+            <AttachmentSelector
+              attachedAccountNumbers={attachedAccountNumbers}
+              attachedNetworkIds={attachedNetworkIds}
+              setAttachedAccountNumbers={setAttachedAccountNumbers}
+              setAttachedNetworkIds={setAttachedNetworkIds}
             />
-          ) : null}
-          <NetworkSelector />
-          <AttachmentSelector
-            attachedAccountNumbers={attachedAccountNumbers}
-            attachedNetworkIds={attachedNetworkIds}
-            setAttachedAccountNumbers={setAttachedAccountNumbers}
-            setAttachedNetworkIds={setAttachedNetworkIds}
-          />
-          <S.Button
-            dirty={dirty}
-            disabled={isSubmitting}
-            isSubmitting={isSubmitting}
-            isValid={isValid}
-            text=""
-            type={ButtonType.submit}
-          />
-        </S.Form>
+            <S.Button
+              dirty={dirty}
+              disabled={isSubmitting}
+              isSubmitting={isSubmitting}
+              isValid={isValid}
+              text=""
+              type={ButtonType.submit}
+            />
+          </S.Form>
+          {renderAttachmentContainer()}
+        </div>
       )}
     </Formik>
   );
