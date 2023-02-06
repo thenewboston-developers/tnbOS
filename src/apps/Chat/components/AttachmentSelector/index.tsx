@@ -4,7 +4,8 @@ import {mdiCellphoneLink, mdiPaperclip, mdiSignal} from '@mdi/js';
 
 import AttachmentSelectorOption from 'apps/Chat/components/AttachmentSelectorOption';
 import Menu from 'apps/Chat/components/Menu';
-import {GenericVoidFunction} from 'shared/types';
+import AttachAccountsModal from 'apps/Chat/modals/AttachAccountsModal';
+import AttachNetworksModal from 'apps/Chat/modals/AttachNetworksModal';
 import {useEventListener, useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
@@ -12,9 +13,21 @@ import * as S from './Styles';
 const dropupRoot = document.getElementById('dropup-root')!;
 
 const AttachmentSelector: SFC = ({className}) => {
+  const [attachAccountsModalIsOpen, toggleAttachAccountsModal] = useToggle(false);
+  const [attachNetworksModalIsOpen, toggleAttachNetworksModal] = useToggle(false);
   const [isMenuOpen, toggleIsMenuOpen] = useToggle(false);
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleAttachAccountsClick = () => {
+    toggleAttachAccountsModal();
+    toggleIsMenuOpen(false);
+  };
+
+  const handleAttachNetworksClick = () => {
+    toggleAttachNetworksModal();
+    toggleIsMenuOpen(false);
+  };
 
   const handleClick = (e: any): void => {
     if (containerRef.current?.contains(e.target)) return;
@@ -22,14 +35,6 @@ const AttachmentSelector: SFC = ({className}) => {
   };
 
   useEventListener('mousedown', handleClick, document);
-
-  const handleOptionClick = useCallback(
-    (optionOnClick: GenericVoidFunction) => async (): Promise<void> => {
-      await optionOnClick();
-      toggleIsMenuOpen(false);
-    },
-    [toggleIsMenuOpen],
-  );
 
   const handleToggleButtonClick = useCallback((): void => {
     if (!containerRef.current) return;
@@ -50,22 +55,20 @@ const AttachmentSelector: SFC = ({className}) => {
     toggleIsMenuOpen();
   }, [toggleIsMenuOpen]);
 
+  const renderAttachAccountsModal = () => {
+    if (!attachAccountsModalIsOpen) return null;
+    return <AttachAccountsModal close={toggleAttachAccountsModal} />;
+  };
+
+  const renderAttachNetworksModal = () => {
+    if (!attachNetworksModalIsOpen) return null;
+    return <AttachNetworksModal close={toggleAttachNetworksModal} />;
+  };
+
   const renderMenu = () => (
     <Menu style={menuPosition}>
-      <AttachmentSelectorOption
-        icon={mdiCellphoneLink}
-        onClick={handleOptionClick(() => {
-          console.log('Attach Accounts');
-        })}
-        text="Accounts"
-      />
-      <AttachmentSelectorOption
-        icon={mdiSignal}
-        onClick={handleOptionClick(() => {
-          console.log('Attach Networks');
-        })}
-        text="Networks"
-      />
+      <AttachmentSelectorOption icon={mdiCellphoneLink} onClick={handleAttachAccountsClick} text="Accounts" />
+      <AttachmentSelectorOption icon={mdiSignal} onClick={handleAttachNetworksClick} text="Networks" />
     </Menu>
   );
 
@@ -75,6 +78,8 @@ const AttachmentSelector: SFC = ({className}) => {
         <S.Icon path={mdiPaperclip} size="26px" />
       </S.Container>
       {isMenuOpen && createPortal(renderMenu(), dropupRoot)}
+      {renderAttachAccountsModal()}
+      {renderAttachNetworksModal()}
     </>
   );
 };
