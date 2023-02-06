@@ -105,9 +105,16 @@ const MessageForm: SFC = ({className}) => {
 
   const renderAttachmentContainer = () => {
     if (!attachedAccountNumbers.length) return null;
+
     const accountAttachments = attachedAccountNumbers.map((accountNumber) => (
-      <AccountAttachment accountNumber={accountNumber} key={accountNumber} />
+      <AccountAttachment
+        accountNumber={accountNumber}
+        attachedAccountNumbers={attachedAccountNumbers}
+        key={accountNumber}
+        setAttachedAccountNumbers={setAttachedAccountNumbers}
+      />
     ));
+
     return <S.AttachmentContainer>{accountAttachments}</S.AttachmentContainer>;
   };
 
