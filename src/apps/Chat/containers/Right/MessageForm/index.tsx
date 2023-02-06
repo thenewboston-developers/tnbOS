@@ -38,6 +38,17 @@ const MessageForm: SFC = ({className}) => {
 
   type FormValues = typeof initialValues;
 
+  const getIsDirty = (isFormDirty: boolean): boolean => {
+    if (attachedAccountNumbers || attachedNetworkIds) return true;
+    return isFormDirty;
+  };
+
+  const getIsValid = (isFormValid: boolean, values: FormValues): boolean => {
+    const {amount, content} = values;
+    if (amount || content) return isFormValid;
+    return !!attachedAccountNumbers.length || !!attachedNetworkIds.length;
+  };
+
   const getTransfer = (amount: number): Transfer | null => {
     if (!activeNetwork || amount === 0) return null;
     return {
@@ -96,6 +107,8 @@ const MessageForm: SFC = ({className}) => {
         }),
       );
 
+      setAttachedAccountNumbers([]);
+      setAttachedNetworkIds([]);
       resetForm();
     } catch (error) {
       console.error(error);
@@ -134,7 +147,7 @@ const MessageForm: SFC = ({className}) => {
       validateOnMount={false}
       validationSchema={validationSchema}
     >
-      {({dirty, errors, isSubmitting, isValid, touched}) => (
+      {({dirty, errors, isSubmitting, isValid, touched, values}) => (
         <div>
           <S.Form className={className}>
             <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
@@ -154,10 +167,10 @@ const MessageForm: SFC = ({className}) => {
               setAttachedNetworkIds={setAttachedNetworkIds}
             />
             <S.Button
-              dirty={dirty}
+              dirty={getIsDirty(dirty)}
               disabled={isSubmitting}
               isSubmitting={isSubmitting}
-              isValid={isValid}
+              isValid={getIsValid(isValid, values)}
               text=""
               type={ButtonType.submit}
             />
