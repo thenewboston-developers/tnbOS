@@ -3,8 +3,9 @@ import {mdiArrowRightBoldCircleOutline, mdiCheckBold} from '@mdi/js';
 
 import NoImage from 'apps/Chat/components/_Attachment/assets/no-image.png';
 import * as S from 'apps/Chat/components/_Attachment/Styles';
-import {getAccounts} from 'system/selectors/state';
+import {getAccounts, getSelf} from 'system/selectors/state';
 import {setAccount} from 'system/store/accounts';
+import {updateSelf} from 'system/store/self';
 import {Account, AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 
@@ -15,6 +16,7 @@ export interface AccountAttachmentProps {
 const AccountAttachment: SFC<AccountAttachmentProps> = ({attachedAccount, className}) => {
   const accounts = useSelector(getAccounts);
   const dispatch = useDispatch<AppDispatch>();
+  const self = useSelector(getSelf);
 
   const localAccount = accounts[attachedAccount.accountNumber];
 
@@ -24,7 +26,12 @@ const AccountAttachment: SFC<AccountAttachmentProps> = ({attachedAccount, classN
 
   const handleIconClick = () => {
     if (!hasDifferences) return;
-    dispatch(setAccount(attachedAccount));
+
+    if (attachedAccount.accountNumber === self.accountNumber) {
+      dispatch(updateSelf(attachedAccount));
+    } else {
+      dispatch(setAccount(attachedAccount));
+    }
   };
 
   const renderAvatar = (account?: Account) => {
