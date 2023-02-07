@@ -25,7 +25,7 @@ export const Center = styled.div`
 export const Container = styled.div`
   background: ${colors.leftBackground};
   border-radius: 4px;
-  color: #dcddde;
+  color: ${fonts.color.default};
   display: flex;
   flex-direction: column;
   font-size: 13px;
@@ -62,9 +62,13 @@ export const Label = styled.div`
   margin: 16px 0 4px;
 `;
 
-export const Left = styled.div``;
+export const Left = styled.div`
+  min-width: 120px;
+`;
 
-export const Right = styled.div``;
+export const Right = styled.div`
+  min-width: 120px;
+`;
 
 export const Top = styled.div`
   box-shadow: 0 1px 2px rgb(0 0 0 / 16%);

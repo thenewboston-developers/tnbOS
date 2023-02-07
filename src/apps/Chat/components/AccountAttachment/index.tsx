@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {mdiArrowRightBoldCircleOutline, mdiCheckBold} from '@mdi/js';
 
+import NoImage from 'apps/Chat/components/_Attachment/assets/no-image.png';
+import * as S from 'apps/Chat/components/_Attachment/Styles';
 import {getAccounts} from 'system/selectors/state';
 import {setAccount} from 'system/store/accounts';
 import {Account, AppDispatch, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
-import NoImage from './assets/no-image.png';
-import * as S from './Styles';
 
 export interface AccountAttachmentProps {
   attachedAccount: Account;
