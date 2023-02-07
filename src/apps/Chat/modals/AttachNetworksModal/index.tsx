@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
@@ -24,6 +24,11 @@ const AttachNetworksModal: SFC<AttachNetworksModalProps> = ({
   const [selectedNetworkIds, setSelectedNetworkIds] = useState<string[]>(attachedNetworkIds);
   const networks = useSelector(getNetworks);
 
+  const orderedNetworks = useMemo(() => {
+    const networkList = Object.values(networks);
+    return orderBy(networkList, ['displayName']);
+  }, [networks]);
+
   const handleButtonClick = () => {
     setAttachedNetworkIds(selectedNetworkIds);
     close();
@@ -37,10 +42,22 @@ const AttachNetworksModal: SFC<AttachNetworksModalProps> = ({
     setSelectedNetworkIds(results);
   };
 
-  const renderNetworkSelectCardsContainer = () => {
-    const networkList = Object.values(networks);
-    const orderedNetworks = orderBy(networkList, ['displayName']);
+  const renderEmptyNetworks = () => <S.ModalEmptyState heading="Nothing here!" helperText="No networks to display" />;
 
+  const renderModalContent = () => {
+    if (!orderedNetworks.length) return renderEmptyNetworks();
+
+    return (
+      <>
+        {renderNetworkSelectCardsContainer()}
+        <S.ButtonContainer>
+          <Button onClick={handleButtonClick} text="Submit" />
+        </S.ButtonContainer>
+      </>
+    );
+  };
+
+  const renderNetworkSelectCardsContainer = () => {
     const networkSelectCards = orderedNetworks.map(({networkId}) => (
       <NetworkSelectCard
         key={networkId}
@@ -55,10 +72,7 @@ const AttachNetworksModal: SFC<AttachNetworksModalProps> = ({
 
   return (
     <S.Modal className={className} close={close} header="Attach Networks">
-      {renderNetworkSelectCardsContainer()}
-      <S.ButtonContainer>
-        <Button onClick={handleButtonClick} text="Submit" />
-      </S.ButtonContainer>
+      {renderModalContent()}
     </S.Modal>
   );
 };

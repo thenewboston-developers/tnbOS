@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import {AccountManagerRegistration} from 'apps/AccountManager/registration';
+import * as S from 'apps/Chat/components/_EmptyState/Styles';
 import {useNonContactAccounts} from 'apps/Chat/hooks';
 import AddContactModal from 'apps/Chat/modals/AddContactModal';
 import {NetworkManagerRegistration} from 'apps/NetworkManager/registration';
@@ -9,9 +10,8 @@ import {useToggle} from 'system/hooks';
 import {getAccounts, getNetworks} from 'system/selectors/state';
 import {setActiveApp} from 'system/store/manager';
 import {AppDispatch, SFC} from 'system/types';
-import * as S from './Styles';
 
-const EmptyState: SFC = ({className}) => {
+const RightEmptyState: SFC = ({className}) => {
   const [addContactModalIsOpen, toggleAddContactModal] = useToggle(false);
   const accounts = useSelector(getAccounts);
   const dispatch = useDispatch<AppDispatch>();
@@ -77,4 +77,4 @@ const EmptyState: SFC = ({className}) => {
   );
 };
 
-export default EmptyState;
+export default RightEmptyState;

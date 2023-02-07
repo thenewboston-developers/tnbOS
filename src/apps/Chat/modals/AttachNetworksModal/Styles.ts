@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UModal from 'apps/Chat/components/Modal';
+import UModalEmptyState from 'apps/Chat/components/ModalEmptyState';
 import {scrollStyle} from 'apps/Chat/styles';
 
 export const ButtonContainer = styled.div`
@@ -17,6 +18,10 @@ export const Modal = styled(UModal)`
   flex-direction: column;
   min-width: 380px;
   max-width: 400px;
+`;
+
+export const ModalEmptyState = styled(UModalEmptyState)`
+  padding: 16px 32px 24px;
 `;
 
 export const NetworkSelectCardsContainer = styled.div`

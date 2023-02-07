@@ -2,6 +2,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
+import RightEmptyState from 'apps/Chat/components/RightEmptyState';
 import {useUnreadMessages} from 'apps/Chat/hooks';
 import {ChatRegistration} from 'apps/Chat/registration';
 import {getActiveChat, getContacts, getMessages} from 'apps/Chat/selectors/state';
@@ -9,7 +10,6 @@ import {getManager} from 'system/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import EmptyState from './EmptyState';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import OverviewMessageContainer from './OverviewMessageContainer';
@@ -81,7 +81,7 @@ const Right: SFC = ({className}) => {
 
   const renderEmptyStateContainer = () => (
     <S.EmptyStateContainer>
-      <EmptyState />
+      <RightEmptyState />
     </S.EmptyStateContainer>
   );
 

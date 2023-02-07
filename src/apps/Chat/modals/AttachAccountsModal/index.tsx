@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
@@ -24,6 +24,11 @@ const AttachAccountsModal: SFC<AttachAccountsModalProps> = ({
   const [selectedAccountNumbers, setSelectedAccountNumbers] = useState<string[]>(attachedAccountNumbers);
   const accounts = useSelector(getAccounts);
 
+  const orderedAccounts = useMemo(() => {
+    const accountList = Object.values(accounts);
+    return orderBy(accountList, ['displayName']);
+  }, [accounts]);
+
   const handleAccountSelectCardClick = (accountNumber: string) => {
     const results = selectedAccountNumbers.includes(accountNumber)
       ? selectedAccountNumbers.filter((item) => item !== accountNumber)
@@ -38,9 +43,6 @@ const AttachAccountsModal: SFC<AttachAccountsModalProps> = ({
   };
 
   const renderAccountSelectCardsContainer = () => {
-    const accountList = Object.values(accounts);
-    const orderedAccounts = orderBy(accountList, ['displayName']);
-
     const accountSelectCards = orderedAccounts.map(({accountNumber}) => (
       <AccountSelectCard
         accountNumber={accountNumber}
@@ -53,12 +55,24 @@ const AttachAccountsModal: SFC<AttachAccountsModalProps> = ({
     return <S.AccountSelectCardsContainer>{accountSelectCards}</S.AccountSelectCardsContainer>;
   };
 
+  const renderEmptyAccounts = () => <S.ModalEmptyState heading="Nothing here!" helperText="No accounts to display" />;
+
+  const renderModalContent = () => {
+    if (!orderedAccounts.length) return renderEmptyAccounts();
+
+    return (
+      <>
+        {renderAccountSelectCardsContainer()}
+        <S.ButtonContainer>
+          <Button onClick={handleButtonClick} text="Submit" />
+        </S.ButtonContainer>
+      </>
+    );
+  };
+
   return (
     <S.Modal className={className} close={close} header="Attach Accounts">
-      {renderAccountSelectCardsContainer()}
-      <S.ButtonContainer>
-        <Button onClick={handleButtonClick} text="Submit" />
-      </S.ButtonContainer>
+      {renderModalContent()}
     </S.Modal>
   );
 };
