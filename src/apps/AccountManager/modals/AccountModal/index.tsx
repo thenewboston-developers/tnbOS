@@ -46,7 +46,7 @@ const AccountModal: SFC<AccountModalProps> = ({account, className, close}) => {
   };
 
   const validationSchema = useMemo((): yup.SchemaOf<Account> => {
-    return yup.object().shape({
+    return yup.object({
       accountNumber: accountNumberSchema
         .required()
         .test('account-number-is-not-self', 'Unable to add your own account', (value: any) => {

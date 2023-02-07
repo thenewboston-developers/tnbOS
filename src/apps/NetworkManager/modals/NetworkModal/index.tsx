@@ -64,7 +64,7 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close, network}) => {
   };
 
   const validationSchema = useMemo((): yup.SchemaOf<Network> => {
-    return yup.object().shape({
+    return yup.object({
       displayImage: yup.string().url().required(),
       displayName: yup.string().required(),
       networkId: yup
