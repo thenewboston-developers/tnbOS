@@ -6,6 +6,7 @@ import {setMessageBlock} from 'apps/Chat/blocks';
 import AccountAttachment from 'apps/Chat/components/AccountAttachment';
 import Avatar from 'apps/Chat/components/Avatar';
 import DeliveryStatus from 'apps/Chat/components/DeliveryStatus';
+import NetworkAttachment from 'apps/Chat/components/NetworkAttachment';
 import Tool from 'apps/Chat/components/Tool';
 import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
@@ -115,7 +116,16 @@ const Message: SFC<MessageProps> = ({
       <AccountAttachment attachedAccount={attachedAccount} key={attachedAccount.accountNumber} />
     ));
 
-    return <S.AttachmentContainer>{accountAttachments}</S.AttachmentContainer>;
+    const networkAttachments = attachedNetworks.map((attachedNetwork) => (
+      <NetworkAttachment attachedNetwork={attachedNetwork} key={attachedNetwork.networkId} />
+    ));
+
+    return (
+      <S.AttachmentContainer>
+        {accountAttachments}
+        {networkAttachments}
+      </S.AttachmentContainer>
+    );
   };
 
   const renderEditMessageModal = () => {
