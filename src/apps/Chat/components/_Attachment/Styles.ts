@@ -25,12 +25,15 @@ export const Center = styled.div`
 
 export const Container = styled.div`
   background: ${colors.leftBackground};
+  border: 0.5px solid ${colors.dark};
   border-radius: 4px;
+  border-top: none;
   color: ${fonts.color.default};
   display: flex;
   flex-direction: column;
   font-size: 13px;
   min-width: 420px;
+  overflow: hidden;
   position: relative;
 `;
 
@@ -77,7 +80,7 @@ export const Tools = styled(UTools)`
 `;
 
 export const Top = styled.div`
-  box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+  background: ${colors.dark};
   display: flex;
   font-weight: 600;
   justify-content: center;
