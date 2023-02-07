@@ -8,7 +8,6 @@ import {
   validateBlockRecipient,
   validateBlockSender,
   validateDates,
-  validateNetworkIdsMatch,
   validateRecipientIsSelf,
   validateSendersMatch,
 } from 'apps/Chat/validators/setMessageValidators';
@@ -32,7 +31,6 @@ const setMessageListener = (block: Block, dispatch: AppDispatch, networkId: stri
       validateBlockRecipient(recipient, message.recipient);
       validateBlockSender(sender, message.sender);
       validateDates(message.createdDate, message.modifiedDate);
-      validateNetworkIdsMatch(message, networkId);
       validateRecipientIsSelf(recipient, self);
 
       const existingMessage = messages[message.messageId];
