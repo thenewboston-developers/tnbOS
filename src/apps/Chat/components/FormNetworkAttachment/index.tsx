@@ -4,28 +4,28 @@ import {mdiDelete} from '@mdi/js';
 import * as S from 'apps/Chat/components/_FormAttachment/Styles';
 import Tool from 'apps/Chat/components/Tool';
 import {GenericVoidFunction} from 'shared/types';
-import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
+import {useNetworkDisplayImage, useNetworkDisplayName} from 'system/hooks';
 import {SFC} from 'system/types';
 
-export interface FormAccountAttachmentProps {
-  accountNumber: string;
-  attachedAccountNumbers: string[];
-  setAttachedAccountNumbers: GenericVoidFunction;
+export interface FormNetworkAttachmentProps {
+  attachedNetworkIds: string[];
+  networkId: string;
+  setAttachedNetworkIds: GenericVoidFunction;
 }
 
-const FormAccountAttachment: SFC<FormAccountAttachmentProps> = ({
-  accountNumber,
-  attachedAccountNumbers,
+const FormNetworkAttachment: SFC<FormNetworkAttachmentProps> = ({
+  attachedNetworkIds,
   className,
-  setAttachedAccountNumbers,
+  networkId,
+  setAttachedNetworkIds,
 }) => {
   const [toolsVisible, setToolsVisible] = useState<boolean>(false);
-  const displayImage = useAccountDisplayImage(accountNumber);
-  const displayName = useAccountDisplayName(accountNumber, 10);
+  const displayImage = useNetworkDisplayImage(networkId);
+  const displayName = useNetworkDisplayName(networkId);
 
   const handleDeleteClick = () => {
-    const results = attachedAccountNumbers.filter((item) => item !== accountNumber);
-    setAttachedAccountNumbers(results);
+    const results = attachedNetworkIds.filter((item) => item !== networkId);
+    setAttachedNetworkIds(results);
   };
 
   const handleMouseOut = () => {
@@ -54,4 +54,4 @@ const FormAccountAttachment: SFC<FormAccountAttachmentProps> = ({
   );
 };
 
-export default FormAccountAttachment;
+export default FormNetworkAttachment;

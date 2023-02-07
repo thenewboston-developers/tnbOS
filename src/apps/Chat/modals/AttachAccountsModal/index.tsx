@@ -28,6 +28,7 @@ const AttachAccountsModal: SFC<AttachAccountsModalProps> = ({
     const results = selectedAccountNumbers.includes(accountNumber)
       ? selectedAccountNumbers.filter((item) => item !== accountNumber)
       : [...selectedAccountNumbers, accountNumber];
+
     setSelectedAccountNumbers(results);
   };
 
@@ -37,19 +38,17 @@ const AttachAccountsModal: SFC<AttachAccountsModalProps> = ({
   };
 
   const renderAccountSelectCardsContainer = () => {
-    const accountsList = Object.values(accounts);
-    const orderedAccounts = orderBy(accountsList, ['displayName']);
+    const accountList = Object.values(accounts);
+    const orderedAccounts = orderBy(accountList, ['displayName']);
 
-    const accountSelectCards = orderedAccounts.map(({accountNumber}) => {
-      return (
-        <AccountSelectCard
-          accountNumber={accountNumber}
-          key={accountNumber}
-          onClick={() => handleAccountSelectCardClick(accountNumber)}
-          selectedAccountNumbers={selectedAccountNumbers}
-        />
-      );
-    });
+    const accountSelectCards = orderedAccounts.map(({accountNumber}) => (
+      <AccountSelectCard
+        accountNumber={accountNumber}
+        key={accountNumber}
+        onClick={() => handleAccountSelectCardClick(accountNumber)}
+        selectedAccountNumbers={selectedAccountNumbers}
+      />
+    ));
 
     return <S.AccountSelectCardsContainer>{accountSelectCards}</S.AccountSelectCardsContainer>;
   };

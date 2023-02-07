@@ -6,6 +6,7 @@ import {setMessageBlock} from 'apps/Chat/blocks';
 import AttachmentSelector from 'apps/Chat/components/AttachmentSelector';
 import {ButtonType} from 'apps/Chat/components/Button';
 import FormAccountAttachment from 'apps/Chat/components/FormAccountAttachment';
+import FormNetworkAttachment from 'apps/Chat/components/FormNetworkAttachment';
 import NetworkSelector from 'apps/Chat/components/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
 import {getActiveChat} from 'apps/Chat/selectors/state';
@@ -129,7 +130,7 @@ const MessageForm: SFC = ({className}) => {
   };
 
   const renderAttachmentContainer = () => {
-    if (!attachedAccountNumbers.length) return null;
+    if (!attachedAccountNumbers.length && !attachedNetworkIds) return null;
 
     const accountAttachments = attachedAccountNumbers.map((accountNumber) => (
       <FormAccountAttachment
@@ -140,7 +141,21 @@ const MessageForm: SFC = ({className}) => {
       />
     ));
 
-    return <S.AttachmentContainer>{accountAttachments}</S.AttachmentContainer>;
+    const networkAttachments = attachedNetworkIds.map((networkId) => (
+      <FormNetworkAttachment
+        attachedNetworkIds={attachedNetworkIds}
+        key={networkId}
+        networkId={networkId}
+        setAttachedNetworkIds={setAttachedNetworkIds}
+      />
+    ));
+
+    return (
+      <S.AttachmentContainer>
+        {accountAttachments}
+        {networkAttachments}
+      </S.AttachmentContainer>
+    );
   };
 
   const validationSchema = useMemo(() => {
