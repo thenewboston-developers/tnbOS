@@ -1,26 +1,30 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} from '@mdi/js';
-import MdiIcon from '@mdi/react';
+import {mdiDelete, mdiPencil} from '@mdi/js';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
+import AccountAttachment from 'apps/Chat/components/AccountAttachment';
 import Avatar from 'apps/Chat/components/Avatar';
+import DeliveryStatus from 'apps/Chat/components/DeliveryStatus';
+import NetworkAttachment from 'apps/Chat/components/NetworkAttachment';
+import Tool from 'apps/Chat/components/Tool';
 import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
 import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {colors} from 'apps/Chat/styles';
-import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
+import {DeliveryStatus as TDeliveryStatus, Message as TMessage, Transfer as TTransfer} from 'apps/Chat/types';
 import {useAccountDisplayImage, useAccountDisplayName, useRecipientsDefaultNetworkId, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
-import {AppDispatch, SFC} from 'system/types';
+import {Account, AppDispatch, Network, SFC} from 'system/types';
 import {currentSystemDate, shortDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 export interface MessageProps {
+  attachedAccounts: Account[];
+  attachedNetworks: Network[];
   content: string;
   createdDate: string;
   isFirstUnreadMessage: boolean;
@@ -31,6 +35,8 @@ export interface MessageProps {
 }
 
 const Message: SFC<MessageProps> = ({
+  attachedAccounts,
+  attachedNetworks,
   className,
   content,
   createdDate,
@@ -52,7 +58,50 @@ const Message: SFC<MessageProps> = ({
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
-  const isContentDeleted = !content && !transfer;
+  const hasAttachments = !!attachedAccounts.length || !!attachedNetworks.length;
+  const hasContent = !!content || !!transfer;
+  const isMessageDeleted = !attachedAccounts.length && !attachedNetworks.length && !content && !transfer;
+
+  const editMessage = async (newMessage: TMessage) => {
+    if (recipientsDefaultNetworkId) {
+      await setMessageBlock({
+        amount: 0,
+        networkId: recipientsDefaultNetworkId,
+        params: newMessage,
+        recipient: newMessage.recipient,
+      });
+    }
+
+    dispatch(setMessage(newMessage));
+
+    dispatch(
+      setDelivery({
+        delivery: {
+          attempts: 1,
+          status: TDeliveryStatus.pending,
+        },
+        messageId,
+      }),
+    );
+  };
+
+  const handleAccountAttachmentDeleteClick = async (accountNumber: string) => {
+    try {
+      const message = messages[messageId];
+      const newAttachedAccounts = message.attachedAccounts.filter((account) => account.accountNumber !== accountNumber);
+      const newMessage = {
+        ...message,
+        ...{
+          attachedAccounts: newAttachedAccounts,
+          modifiedDate: currentSystemDate(),
+        },
+      };
+      await editMessage(newMessage);
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error deleting the attachment');
+    }
+  };
 
   const handleDeleteClick = async () => {
     try {
@@ -65,27 +114,7 @@ const Message: SFC<MessageProps> = ({
           transfer: null,
         },
       };
-
-      if (recipientsDefaultNetworkId) {
-        await setMessageBlock({
-          amount: 0,
-          networkId: recipientsDefaultNetworkId,
-          params: newMessage,
-          recipient: message.recipient,
-        });
-      }
-
-      dispatch(setMessage(newMessage));
-
-      dispatch(
-        setDelivery({
-          delivery: {
-            attempts: 1,
-            status: DeliveryStatus.pending,
-          },
-          messageId,
-        }),
-      );
+      await editMessage(newMessage);
     } catch (error) {
       console.error(error);
       displayErrorToast('Error editing the message');
@@ -97,34 +126,55 @@ const Message: SFC<MessageProps> = ({
   };
 
   const handleMouseOver = () => {
-    if (self.accountNumber !== sender || isContentDeleted) return;
+    if (self.accountNumber !== sender || !hasContent) return;
     setToolsVisible(true);
   };
 
-  const renderDeliveryStatus = () => {
-    if (!deliveryStatus) return null;
+  const handleNetworkAttachmentDeleteClick = async (networkId: string) => {
+    try {
+      const message = messages[messageId];
+      const newAttachedNetworks = message.attachedNetworks.filter((network) => network.networkId !== networkId);
+      const newMessage = {
+        ...message,
+        ...{
+          attachedNetworks: newAttachedNetworks,
+          modifiedDate: currentSystemDate(),
+        },
+      };
+      await editMessage(newMessage);
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error deleting the attachment');
+    }
+  };
 
-    const icons = {
-      [DeliveryStatus.error]: {
-        color: colors.palette.red['300'],
-        path: mdiAlertCircleOutline,
-      },
-      [DeliveryStatus.failed]: {
-        color: colors.palette.orange['300'],
-        path: mdiAlertCircleOutline,
-      },
-      [DeliveryStatus.pending]: {
-        color: colors.palette.gray['300'],
-        path: mdiClockOutline,
-      },
-      [DeliveryStatus.received]: {
-        color: colors.palette.green['300'],
-        path: mdiCheck,
-      },
-    };
+  const renderAttachments = () => {
+    if (!hasAttachments) return null;
 
-    const {color, path} = icons[deliveryStatus];
-    return <MdiIcon color={color} path={path} size="14px" />;
+    const accountAttachments = attachedAccounts.map((attachedAccount) => (
+      <AccountAttachment
+        attachedAccount={attachedAccount}
+        key={attachedAccount.accountNumber}
+        onDeleteClick={handleAccountAttachmentDeleteClick}
+        sender={sender}
+      />
+    ));
+
+    const networkAttachments = attachedNetworks.map((attachedNetwork) => (
+      <NetworkAttachment
+        attachedNetwork={attachedNetwork}
+        key={attachedNetwork.networkId}
+        onDeleteClick={handleNetworkAttachmentDeleteClick}
+        sender={sender}
+      />
+    ));
+
+    return (
+      <S.AttachmentContainer>
+        {accountAttachments}
+        {networkAttachments}
+      </S.AttachmentContainer>
+    );
   };
 
   const renderEditMessageModal = () => {
@@ -142,14 +192,14 @@ const Message: SFC<MessageProps> = ({
         </S.HeaderLeft>
         <S.HeaderRight>
           {renderTools()}
-          {renderDeliveryStatus()}
+          <DeliveryStatus deliveryStatus={deliveryStatus} />
         </S.HeaderRight>
       </S.Header>
     );
   };
 
   const renderMessageBody = () => {
-    if (isContentDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
+    if (isMessageDeleted) return <S.ContentDeleted>This message has been deleted</S.ContentDeleted>;
     return (
       <>
         {content ? <S.Content>{content}</S.Content> : null}
@@ -160,7 +210,7 @@ const Message: SFC<MessageProps> = ({
 
   const renderModifiedDetails = () => {
     if (createdDate === modifiedDate) return null;
-    const verb = isContentDeleted ? 'deleted' : 'edited';
+    const verb = isMessageDeleted ? 'deleted' : 'edited';
     return <S.ModifiedDetails>({verb})</S.ModifiedDetails>;
   };
 
@@ -170,11 +220,12 @@ const Message: SFC<MessageProps> = ({
   };
 
   const renderTools = () => {
+    if (!toolsVisible) return null;
     return (
       <S.ToolsContainer>
-        <S.Tools $display={toolsVisible}>
-          <S.Tool icon={mdiPencil} onClick={toggleEditMessageModal} size={20} totalSize="unset" unfocusable />
-          <S.Tool icon={mdiDelete} onClick={handleDeleteClick} size={20} totalSize="unset" unfocusable />
+        <S.Tools>
+          <Tool icon={mdiPencil} onClick={toggleEditMessageModal} />
+          <Tool icon={mdiDelete} onClick={handleDeleteClick} />
         </S.Tools>
       </S.ToolsContainer>
     );
@@ -188,6 +239,7 @@ const Message: SFC<MessageProps> = ({
         <S.Right>
           {renderHeader()}
           {renderMessageBody()}
+          {renderAttachments()}
         </S.Right>
       </S.Container>
       {renderEditMessageModal()}

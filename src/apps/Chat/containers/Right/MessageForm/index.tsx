@@ -1,10 +1,13 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
+import AttachmentSelector from 'apps/Chat/components/AttachmentSelector';
 import {ButtonType} from 'apps/Chat/components/Button';
-import NetworkSelector from 'apps/Chat/containers/Right/NetworkSelector';
+import FormAccountAttachment from 'apps/Chat/components/FormAccountAttachment';
+import FormNetworkAttachment from 'apps/Chat/components/FormNetworkAttachment';
+import NetworkSelector from 'apps/Chat/components/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
 import {getActiveChat} from 'apps/Chat/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
@@ -12,7 +15,7 @@ import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
 import {DeliveryStatus, Transfer} from 'apps/Chat/types';
 import {useRecipientsDefaultNetworkId} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
+import {getAccounts, getNetworks, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayErrorToast} from 'system/utils/toast';
@@ -20,10 +23,14 @@ import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 const MessageForm: SFC = ({className}) => {
+  const [attachedAccountNumbers, setAttachedAccountNumbers] = useState<string[]>([]);
+  const [attachedNetworkIds, setAttachedNetworkIds] = useState<string[]>([]);
+  const accounts = useSelector(getAccounts);
   const activeChat = useSelector(getActiveChat);
   const activeNetwork = useActiveNetwork();
   const activeNetworkBalance = useActiveNetworkBalance();
   const dispatch = useDispatch<AppDispatch>();
+  const networks = useSelector(getNetworks);
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
@@ -33,6 +40,25 @@ const MessageForm: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  const getAttachedAccounts = () => {
+    return attachedAccountNumbers.map((accountNumber) => accounts[accountNumber]);
+  };
+
+  const getAttachedNetworks = () => {
+    return attachedNetworkIds.map((networkId) => networks[networkId]);
+  };
+
+  const getIsDirty = (isFormDirty: boolean): boolean => {
+    if (attachedAccountNumbers || attachedNetworkIds) return true;
+    return isFormDirty;
+  };
+
+  const getIsValid = (isFormValid: boolean, values: FormValues): boolean => {
+    const {amount, content} = values;
+    if (amount || content) return isFormValid;
+    return !!attachedAccountNumbers.length || !!attachedNetworkIds.length;
+  };
 
   const getTransfer = (amount: number): Transfer | null => {
     if (!activeNetwork || amount === 0) return null;
@@ -53,6 +79,8 @@ const MessageForm: SFC = ({className}) => {
       const transfer = getTransfer(amount);
 
       const message = {
+        attachedAccounts: getAttachedAccounts(),
+        attachedNetworks: getAttachedNetworks(),
         content,
         createdDate: now,
         messageId,
@@ -92,11 +120,42 @@ const MessageForm: SFC = ({className}) => {
         }),
       );
 
+      setAttachedAccountNumbers([]);
+      setAttachedNetworkIds([]);
       resetForm();
     } catch (error) {
       console.error(error);
       displayErrorToast('Error sending the message');
     }
+  };
+
+  const renderAttachmentContainer = () => {
+    if (!attachedAccountNumbers.length && !attachedNetworkIds) return null;
+
+    const accountAttachments = attachedAccountNumbers.map((accountNumber) => (
+      <FormAccountAttachment
+        accountNumber={accountNumber}
+        attachedAccountNumbers={attachedAccountNumbers}
+        key={accountNumber}
+        setAttachedAccountNumbers={setAttachedAccountNumbers}
+      />
+    ));
+
+    const networkAttachments = attachedNetworkIds.map((networkId) => (
+      <FormNetworkAttachment
+        attachedNetworkIds={attachedNetworkIds}
+        key={networkId}
+        networkId={networkId}
+        setAttachedNetworkIds={setAttachedNetworkIds}
+      />
+    ));
+
+    return (
+      <S.AttachmentContainer>
+        {accountAttachments}
+        {networkAttachments}
+      </S.AttachmentContainer>
+    );
   };
 
   const validationSchema = useMemo(() => {
@@ -115,27 +174,36 @@ const MessageForm: SFC = ({className}) => {
       validateOnMount={false}
       validationSchema={validationSchema}
     >
-      {({dirty, errors, isSubmitting, isValid, touched}) => (
-        <S.Form className={className}>
-          <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
-          {activeNetwork ? (
-            <S.AmountInput
-              errors={errors}
-              name="amount"
-              placeholder={activeNetwork.displayName || ''}
-              touched={touched}
+      {({dirty, errors, isSubmitting, isValid, touched, values}) => (
+        <div>
+          <S.Form className={className}>
+            <S.ContentInput errors={errors} name="content" placeholder="New Message" touched={touched} />
+            {activeNetwork ? (
+              <S.AmountInput
+                errors={errors}
+                name="amount"
+                placeholder={activeNetwork.displayName || ''}
+                touched={touched}
+              />
+            ) : null}
+            <NetworkSelector />
+            <AttachmentSelector
+              attachedAccountNumbers={attachedAccountNumbers}
+              attachedNetworkIds={attachedNetworkIds}
+              setAttachedAccountNumbers={setAttachedAccountNumbers}
+              setAttachedNetworkIds={setAttachedNetworkIds}
             />
-          ) : null}
-          <NetworkSelector />
-          <S.Button
-            dirty={dirty}
-            disabled={isSubmitting}
-            isSubmitting={isSubmitting}
-            isValid={isValid}
-            text=""
-            type={ButtonType.submit}
-          />
-        </S.Form>
+            <S.Button
+              dirty={getIsDirty(dirty)}
+              disabled={isSubmitting}
+              isSubmitting={isSubmitting}
+              isValid={getIsValid(isValid, values)}
+              text=""
+              type={ButtonType.submit}
+            />
+          </S.Form>
+          {renderAttachmentContainer()}
+        </div>
       )}
     </Formik>
   );

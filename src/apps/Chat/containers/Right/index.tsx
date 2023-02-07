@@ -2,6 +2,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
+import RightEmptyState from 'apps/Chat/components/RightEmptyState';
 import {useUnreadMessages} from 'apps/Chat/hooks';
 import {ChatRegistration} from 'apps/Chat/registration';
 import {getActiveChat, getContacts, getMessages} from 'apps/Chat/selectors/state';
@@ -9,7 +10,6 @@ import {getManager} from 'system/selectors/state';
 import {setContact} from 'apps/Chat/store/contacts';
 import {AppDispatch, SFC} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import EmptyState from './EmptyState';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import OverviewMessageContainer from './OverviewMessageContainer';
@@ -81,18 +81,20 @@ const Right: SFC = ({className}) => {
 
   const renderEmptyStateContainer = () => (
     <S.EmptyStateContainer>
-      <EmptyState />
+      <RightEmptyState />
     </S.EmptyStateContainer>
   );
 
   const renderMessages = () => {
     const results = Object.values(messages)
       .filter(({recipient, sender}) => [recipient, sender].includes(activeChat!))
-      .map(({content, createdDate, messageId, modifiedDate, sender, transfer}) => {
+      .map(({attachedAccounts, attachedNetworks, content, createdDate, messageId, modifiedDate, sender, transfer}) => {
         const isFirstUnreadMessage = firstUnreadMessageId === messageId && !firstUnreadMessageRendered;
         if (isFirstUnreadMessage) firstUnreadMessageRendered = true;
         return (
           <Message
+            attachedAccounts={attachedAccounts}
+            attachedNetworks={attachedNetworks}
             content={content}
             createdDate={createdDate}
             isFirstUnreadMessage={isFirstUnreadMessage}

@@ -10,7 +10,7 @@ export const Container = styled.div`
   display: grid;
   font-family: ${fonts.family.default};
   grid-template-columns: 240px auto;
-  height: 80%;
+  height: 90%;
   overflow: hidden;
   width: 90%;
 

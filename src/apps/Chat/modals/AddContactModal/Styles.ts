@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import UModal from 'apps/Chat/components/Modal';
 import {scrollStyle} from 'apps/Chat/styles';
 
-export const AccountCardContainer = styled.div`
+export const AccountCardsContainer = styled.div`
   max-height: 320px;
   overflow-y: scroll;
   ${scrollStyle};

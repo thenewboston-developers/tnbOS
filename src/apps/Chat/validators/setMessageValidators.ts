@@ -1,8 +1,26 @@
 import {Message, Transfer} from 'apps/Chat/types';
-import {Self} from 'system/types';
+import {Account, Network, NetworkProtocol, Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
-const transferSchema: yup.SchemaOf<Transfer> = yup
+const accountValidator: yup.SchemaOf<Account> = yup
+  .object({
+    accountNumber: accountNumberSchema.required(),
+    displayImage: yup.string().url().required(),
+    displayName: yup.string().required(),
+  })
+  .noUnknown();
+
+const networkValidator: yup.SchemaOf<Network> = yup
+  .object({
+    displayImage: yup.string().url().required(),
+    displayName: yup.string().required(),
+    networkId: yup.string().required(),
+    port: yup.number().integer().max(65535).min(0),
+    protocol: yup.mixed().oneOf(Object.values(NetworkProtocol)),
+  })
+  .noUnknown();
+
+const transferValidator: yup.SchemaOf<Transfer> = yup
   .object({
     amount: yup.number().required().integer().min(0),
     networkId: yup.string().required(),
@@ -16,13 +34,15 @@ interface IMessage extends Omit<Message, 'createdDate' | 'modifiedDate'> {
 
 export const setMessageValidator: yup.SchemaOf<IMessage> = yup
   .object({
+    attachedAccounts: yup.array().of(accountValidator).required(),
+    attachedNetworks: yup.array().of(networkValidator).required(),
     content: yup.string().defined(),
     createdDate: yup.date().required(),
     messageId: yup.string().required().uuid(),
     modifiedDate: yup.date().required(),
     recipient: accountNumberSchema.required(),
     sender: accountNumberSchema.required(),
-    transfer: transferSchema.defined().nullable(),
+    transfer: transferValidator.defined().nullable(),
   })
   .noUnknown();
 
@@ -38,11 +58,6 @@ export const validateDates = (createdDate: string, modifiedDate: string) => {
   if (new Date(modifiedDate) < new Date(createdDate)) {
     throw new Error('Modified date can not be earlier than the created date');
   }
-};
-
-export const validateNetworkIdsMatch = (message: Message, networkId: string) => {
-  if (!message.transfer) return;
-  if (message.transfer.networkId !== networkId) throw new Error('Invalid networkId');
 };
 
 export const validateRecipientIsSelf = (recipient: string, self: Self) => {

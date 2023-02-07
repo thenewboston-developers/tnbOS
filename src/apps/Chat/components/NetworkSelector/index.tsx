@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 import {mdiPlusCircle} from '@mdi/js';
 
-import NetworkSelectorOption from 'apps/Chat/containers/Right/NetworkSelector/NetworkSelectorOption';
+import Menu from 'apps/Chat/components/Menu';
+import NetworkSelectorOption from 'apps/Chat/components/NetworkSelectorOption';
 import {useActiveNetwork} from 'apps/Chat/hooks';
 import {getActiveNetworkId} from 'apps/Chat/selectors/state';
 import {setActiveNetworkId} from 'apps/Chat/store/manager';
@@ -22,27 +23,34 @@ const NetworkSelector: SFC = ({className}) => {
   const activeNetwork = useActiveNetwork();
   const activeNetworkId = useSelector(getActiveNetworkId);
   const balances = useSelector(getBalances);
+  const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const imgRef = useRef<HTMLDivElement>(null);
   const networks = useSelector(getNetworks);
-  const optionsRef = useRef<HTMLDivElement[]>([]);
 
   const handleClick = (e: any): void => {
-    if (imgRef.current?.contains(e.target)) return;
-    if (!imgRef.current?.contains(e.target) && !dropupRoot.contains(e.target)) toggleIsOpen(false);
+    if (containerRef.current?.contains(e.target)) return;
+    if (!containerRef.current?.contains(e.target) && !dropupRoot.contains(e.target)) toggleIsOpen(false);
   };
 
   useEventListener('mousedown', handleClick, document);
 
-  const handleImageClick = useCallback((): void => {
-    if (!imgRef.current) return;
+  const handleOptionClick = useCallback(
+    (optionOnClick: GenericVoidFunction) => async (): Promise<void> => {
+      await optionOnClick();
+      toggleIsOpen(false);
+    },
+    [toggleIsOpen],
+  );
+
+  const handleToggleButtonClick = useCallback((): void => {
+    if (!containerRef.current) return;
 
     const {
       bottom: iconBottom,
       height: iconHeight,
       left: iconLeft,
       width: iconWidth,
-    } = imgRef.current.getBoundingClientRect();
+    } = containerRef.current.getBoundingClientRect();
 
     const position: CSSProperties = {
       bottom: window.innerHeight - iconBottom + iconHeight / 2,
@@ -52,14 +60,6 @@ const NetworkSelector: SFC = ({className}) => {
     setMenuPosition(position);
     toggleIsOpen();
   }, [toggleIsOpen]);
-
-  const handleOptionClick = useCallback(
-    (optionOnClick: GenericVoidFunction) => async (): Promise<void> => {
-      await optionOnClick();
-      toggleIsOpen(false);
-    },
-    [toggleIsOpen],
-  );
 
   const networkOptions = useMemo(() => {
     return orderBy(Object.values(networks), ['displayName'])
@@ -73,10 +73,6 @@ const NetworkSelector: SFC = ({className}) => {
           onClick={handleOptionClick(() => {
             dispatch(setActiveNetworkId(networkId));
           })}
-          ref={(el) => {
-            if (el) optionsRef.current[index] = el;
-          }}
-          role="button"
         />
       ));
   }, [activeNetworkId, balances, dispatch, handleOptionClick, networks]);
@@ -92,15 +88,16 @@ const NetworkSelector: SFC = ({className}) => {
         onClick={handleOptionClick(() => {
           dispatch(setActiveNetworkId(null));
         })}
-        ref={(el) => {
-          if (el) optionsRef.current[index] = el;
-        }}
-        role="button"
       />,
     ];
   }, [activeNetwork, dispatch, handleOptionClick, networkOptions.length]);
 
-  const renderImage = () => {
+  const renderMenu = () => {
+    const options = [...networkOptions, ...removeOption];
+    return <Menu style={menuPosition}>{options}</Menu>;
+  };
+
+  const renderToggleButtonGraphic = () => {
     return activeNetwork ? (
       <S.Img alt="logo" src={activeNetwork.displayImage} />
     ) : (
@@ -108,16 +105,11 @@ const NetworkSelector: SFC = ({className}) => {
     );
   };
 
-  const renderMenu = () => {
-    const options = [...networkOptions, ...removeOption];
-    return <S.Menu style={menuPosition}>{options}</S.Menu>;
-  };
-
   return (
     <>
-      <S.ImgContainer className={className} onClick={handleImageClick} ref={imgRef}>
-        {renderImage()}
-      </S.ImgContainer>
+      <S.Container className={className} onClick={handleToggleButtonClick} ref={containerRef}>
+        {renderToggleButtonGraphic()}
+      </S.Container>
       {isOpen && createPortal(renderMenu(), dropupRoot)}
     </>
   );

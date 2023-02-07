@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
+import UTools from 'apps/Chat/components/Tools';
 import {colors, fonts} from 'apps/Chat/styles';
-import Icon from 'system/components/Icon';
 import {colors as systemColors} from 'system/styles';
+
+export const AttachmentContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -81,33 +88,9 @@ export const Right = styled.div`
   margin-left: 10px;
 `;
 
-export const Tool = styled(Icon)`
-  background: ${colors.rightBackground};
-  border-radius: unset;
-  color: ${colors.iconGray};
-  padding: 4px;
-
-  &:hover {
-    background: #40444a;
-    color: ${fonts.color.default};
-    cursor: pointer;
-  }
-`;
-
-export const Tools = styled.div<{$display: boolean}>`
-  align-items: center;
-  border: 1px solid ${colors.border};
-  border-radius: 4px;
-  display: ${(props) => (props.$display ? 'flex' : 'none')};
+export const Tools = styled(UTools)`
   margin-right: 12px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
   top: -26px;
-
-  &:hover {
-    box-shadow: 0 2px 4px rgb(0 0 0 / 16%);
-  }
 `;
 
 export const ToolsContainer = styled.div`

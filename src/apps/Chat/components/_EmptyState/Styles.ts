@@ -22,7 +22,6 @@ export const Container = styled.div`
 export const H3 = styled.h3`
   color: #fff;
   font-weight: ${fonts.weight.bold};
-  margin-top: 32px;
 `;
 
 export const HelperText = styled.span`
