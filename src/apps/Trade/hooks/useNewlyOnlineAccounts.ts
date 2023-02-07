@@ -40,14 +40,18 @@ const useNewlyOnlineAccounts = () => {
 
       if (!recipientsDefaultNetworkId) continue;
 
-      await setOffersBlock({
-        networkId: recipientsDefaultNetworkId,
-        params: {
-          modifiedDate: offersSync.modifiedDate,
-          offers,
-        },
-        recipient: accountNumber,
-      });
+      try {
+        await setOffersBlock({
+          networkId: recipientsDefaultNetworkId,
+          params: {
+            modifiedDate: offersSync.modifiedDate,
+            offers,
+          },
+          recipient: accountNumber,
+        });
+      } catch (error) {
+        console.error(error);
+      }
 
       dispatch(
         setOffersSyncRecipient({
