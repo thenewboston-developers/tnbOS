@@ -13,10 +13,12 @@ const useUnreadMessages = (): Dict<Message[]> => {
     return Object.keys(contacts).reduce((previousValue, accountNumber) => {
       const {lastSeenDate} = contacts[accountNumber];
 
-      const unreadMessages = Object.values(messages).filter(({content, createdDate, sender, transfer}) => {
-        const isContentDeleted = !content && !transfer;
-        return !isContentDeleted && accountNumber === sender && lastSeenDate < createdDate;
-      });
+      const unreadMessages = Object.values(messages).filter(
+        ({attachedAccounts, attachedNetworks, content, createdDate, sender, transfer}) => {
+          const isMessageDeleted = !attachedAccounts.length && !attachedNetworks.length && !content && !transfer;
+          return !isMessageDeleted && accountNumber === sender && lastSeenDate < createdDate;
+        },
+      );
 
       return {...previousValue, [accountNumber]: unreadMessages};
     }, {});
