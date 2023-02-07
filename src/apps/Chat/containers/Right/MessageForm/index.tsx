@@ -3,9 +3,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
-import AccountAttachment from 'apps/Chat/components/AccountAttachment';
 import AttachmentSelector from 'apps/Chat/components/AttachmentSelector';
 import {ButtonType} from 'apps/Chat/components/Button';
+import FormAccountAttachment from 'apps/Chat/components/FormAccountAttachment';
 import NetworkSelector from 'apps/Chat/components/NetworkSelector';
 import {useActiveNetwork, useActiveNetworkBalance} from 'apps/Chat/hooks';
 import {getActiveChat} from 'apps/Chat/selectors/state';
@@ -132,7 +132,7 @@ const MessageForm: SFC = ({className}) => {
     if (!attachedAccountNumbers.length) return null;
 
     const accountAttachments = attachedAccountNumbers.map((accountNumber) => (
-      <AccountAttachment
+      <FormAccountAttachment
         accountNumber={accountNumber}
         attachedAccountNumbers={attachedAccountNumbers}
         key={accountNumber}

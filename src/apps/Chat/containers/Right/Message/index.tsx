@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {mdiAlertCircleOutline, mdiCheck, mdiClockOutline, mdiDelete, mdiPencil} from '@mdi/js';
-import MdiIcon from '@mdi/react';
+import {mdiDelete, mdiPencil} from '@mdi/js';
 
 import {setMessageBlock} from 'apps/Chat/blocks';
+import AccountAttachment from 'apps/Chat/components/AccountAttachment';
 import Avatar from 'apps/Chat/components/Avatar';
+import DeliveryStatus from 'apps/Chat/components/DeliveryStatus';
 import Tool from 'apps/Chat/components/Tool';
 import Transfer from 'apps/Chat/containers/Right/Transfer';
 import {useDeliveryStatus} from 'apps/Chat/hooks';
@@ -12,8 +13,7 @@ import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {colors} from 'apps/Chat/styles';
-import {DeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
+import {DeliveryStatus as TDeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
 import {useAccountDisplayImage, useAccountDisplayName, useRecipientsDefaultNetworkId, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {Account, AppDispatch, Network, SFC} from 'system/types';
@@ -57,6 +57,7 @@ const Message: SFC<MessageProps> = ({
   const recipientsDefaultNetworkId = useRecipientsDefaultNetworkId(activeChat!);
   const self = useSelector(getSelf);
 
+  const hasAttachments = !!attachedAccounts.length || !!attachedNetworks.length;
   const hasContent = !!content || !!transfer;
   const isMessageDeleted = !attachedAccounts.length && !attachedNetworks.length && !content && !transfer;
 
@@ -87,7 +88,7 @@ const Message: SFC<MessageProps> = ({
         setDelivery({
           delivery: {
             attempts: 1,
-            status: DeliveryStatus.pending,
+            status: TDeliveryStatus.pending,
           },
           messageId,
         }),
@@ -107,30 +108,14 @@ const Message: SFC<MessageProps> = ({
     setToolsVisible(true);
   };
 
-  const renderDeliveryStatus = () => {
-    if (!deliveryStatus) return null;
+  const renderAttachments = () => {
+    if (!hasAttachments) return null;
 
-    const icons = {
-      [DeliveryStatus.error]: {
-        color: colors.palette.red['300'],
-        path: mdiAlertCircleOutline,
-      },
-      [DeliveryStatus.failed]: {
-        color: colors.palette.orange['300'],
-        path: mdiAlertCircleOutline,
-      },
-      [DeliveryStatus.pending]: {
-        color: colors.palette.gray['300'],
-        path: mdiClockOutline,
-      },
-      [DeliveryStatus.received]: {
-        color: colors.palette.green['300'],
-        path: mdiCheck,
-      },
-    };
+    const accountAttachments = attachedAccounts.map((attachedAccount) => (
+      <AccountAttachment attachedAccount={attachedAccount} key={attachedAccount.accountNumber} />
+    ));
 
-    const {color, path} = icons[deliveryStatus];
-    return <MdiIcon color={color} path={path} size="14px" />;
+    return <S.AttachmentContainer>{accountAttachments}</S.AttachmentContainer>;
   };
 
   const renderEditMessageModal = () => {
@@ -148,7 +133,7 @@ const Message: SFC<MessageProps> = ({
         </S.HeaderLeft>
         <S.HeaderRight>
           {renderTools()}
-          {renderDeliveryStatus()}
+          <DeliveryStatus deliveryStatus={deliveryStatus} />
         </S.HeaderRight>
       </S.Header>
     );
@@ -195,6 +180,7 @@ const Message: SFC<MessageProps> = ({
         <S.Right>
           {renderHeader()}
           {renderMessageBody()}
+          {renderAttachments()}
         </S.Right>
       </S.Container>
       {renderEditMessageModal()}

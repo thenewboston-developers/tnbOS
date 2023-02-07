@@ -1,55 +1,72 @@
-import {useState} from 'react';
-import {mdiDelete} from '@mdi/js';
+import {useSelector} from 'react-redux';
+import {mdiArrowRightBoldCircleOutline, mdiCheckBold} from '@mdi/js';
 
-import Tool from 'apps/Chat/components/Tool';
-import {GenericVoidFunction} from 'shared/types';
-import {useAccountDisplayImage, useAccountDisplayName} from 'system/hooks';
-import {SFC} from 'system/types';
+import {getAccounts} from 'system/selectors/state';
+import {Account, SFC} from 'system/types';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface AccountAttachmentProps {
-  accountNumber: string;
-  attachedAccountNumbers: string[];
-  setAttachedAccountNumbers: GenericVoidFunction;
+  attachedAccount: Account;
 }
 
-const AccountAttachment: SFC<AccountAttachmentProps> = ({
-  accountNumber,
-  attachedAccountNumbers,
-  className,
-  setAttachedAccountNumbers,
-}) => {
-  const [toolsVisible, setToolsVisible] = useState<boolean>(false);
-  const displayImage = useAccountDisplayImage(accountNumber);
-  const displayName = useAccountDisplayName(accountNumber, 10);
+const AccountAttachment: SFC<AccountAttachmentProps> = ({attachedAccount, className}) => {
+  const accounts = useSelector(getAccounts);
 
-  const handleDeleteClick = () => {
-    const results = attachedAccountNumbers.filter((item) => item !== accountNumber);
-    setAttachedAccountNumbers(results);
-  };
+  const localAccount = accounts[attachedAccount.accountNumber];
 
-  const handleMouseOut = () => {
-    setToolsVisible(false);
-  };
+  const renderAvatar = (account: Account) => (
+    <S.AlignCenter>
+      <S.Img alt="avatar" src={account.displayImage} />
+    </S.AlignCenter>
+  );
 
-  const handleMouseOver = () => {
-    setToolsVisible(true);
-  };
+  const renderAvatarURL = (account: Account) => (
+    <S.AlignCenter>
+      <S.Label>Avatar URL</S.Label>
+      <div>{truncate(account.displayImage, 16)}</div>
+    </S.AlignCenter>
+  );
 
-  const renderTools = () => {
-    if (!toolsVisible) return null;
+  const renderCenter = () => {
+    const hasDifferences =
+      attachedAccount.displayImage !== localAccount.displayImage ||
+      attachedAccount.displayName !== localAccount.displayName;
+
+    const path = hasDifferences ? mdiArrowRightBoldCircleOutline : mdiCheckBold;
+
     return (
-      <S.Tools>
-        <Tool icon={mdiDelete} onClick={handleDeleteClick} />
-      </S.Tools>
+      <S.Center>
+        <S.Icon $hasDifferences={hasDifferences} path={path} size="48px" />
+      </S.Center>
     );
   };
 
+  const renderDisplayName = (account: Account) => (
+    <S.AlignCenter>
+      <S.Label>Display Name</S.Label>
+      <div>{truncate(account.displayName, 16)}</div>
+    </S.AlignCenter>
+  );
+
   return (
-    <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
-      <S.Img alt="display image" src={displayImage} />
-      <S.Text>{displayName}</S.Text>
-      {renderTools()}
+    <S.Container className={className}>
+      <S.Top>Account: {truncate(attachedAccount.accountNumber, 32)}</S.Top>
+      <S.Bottom>
+        <S.Left>
+          <S.Heading>Attachment</S.Heading>
+          {renderAvatar(attachedAccount)}
+          {renderDisplayName(attachedAccount)}
+          {renderAvatarURL(attachedAccount)}
+        </S.Left>
+        {renderCenter()}
+        <S.Right>
+          <S.Heading>Yours</S.Heading>
+          {renderAvatar(localAccount)}
+          {renderDisplayName(localAccount)}
+          {renderAvatarURL(localAccount)}
+        </S.Right>
+      </S.Bottom>
     </S.Container>
   );
 };

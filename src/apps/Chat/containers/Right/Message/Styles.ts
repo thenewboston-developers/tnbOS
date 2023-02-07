@@ -5,6 +5,13 @@ import UTools from 'apps/Chat/components/Tools';
 import {colors, fonts} from 'apps/Chat/styles';
 import {colors as systemColors} from 'system/styles';
 
+export const AttachmentContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+`;
+
 export const Container = styled.div`
   display: flex;
   padding: 8px 16px;

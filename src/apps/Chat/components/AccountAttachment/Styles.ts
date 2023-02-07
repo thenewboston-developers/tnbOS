@@ -1,27 +1,75 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
 
-import UTools from 'apps/Chat/components/Tools';
+import {colors, fonts} from 'apps/Chat/styles';
 
-export const Container = styled.div`
+export const AlignCenter = styled.div`
   align-items: center;
-  background: #2e3136;
-  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  padding: 8px;
-  position: relative;
+`;
+
+export const Bottom = styled.div`
+  display: flex;
+  justify-content: space-around;
+  padding: 16px 12px;
+`;
+
+export const Center = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-width: 100px;
+`;
+
+export const Container = styled.div`
+  background: ${colors.leftBackground};
+  border-radius: 4px;
+  color: #dcddde;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  min-width: 420px;
+`;
+
+export const Heading = styled.div`
+  color: ${fonts.color.light};
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  text-decoration: underline;
+`;
+
+export const Icon = styled(UMdiIcon)<{$hasDifferences: boolean}>`
+  color: ${({$hasDifferences}) => ($hasDifferences ? colors.palette.blue['500'] : colors.palette.green['500'])};
+
+  &:hover {
+    color: ${({$hasDifferences}) => ($hasDifferences ? colors.palette.blue['400'] : colors.palette.green['500'])};
+    cursor: ${({$hasDifferences}) => ($hasDifferences ? 'pointer' : 'default')};
+  }
 `;
 
 export const Img = styled.img`
+  border-radius: 50%;
   height: 72px;
+  margin-top: 16px;
   width: 72px;
 `;
 
-export const Text = styled.div`
-  font-size: 12px;
-  margin-top: 8px;
+export const Label = styled.div`
+  color: ${fonts.color.light};
+  font-size: 11px;
+  margin: 16px 0 4px;
 `;
 
-export const Tools = styled(UTools)`
-  top: 0;
+export const Left = styled.div``;
+
+export const Right = styled.div``;
+
+export const Top = styled.div`
+  box-shadow: 0 1px 2px rgb(0 0 0 / 16%);
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  padding: 8px 12px;
 `;
