@@ -14,7 +14,7 @@ import EditMessageModal from 'apps/Chat/modals/EditMessageModal';
 import {getActiveChat, getMessages} from 'apps/Chat/selectors/state';
 import {setDelivery} from 'apps/Chat/store/deliveries';
 import {setMessage} from 'apps/Chat/store/messages';
-import {DeliveryStatus as TDeliveryStatus, Transfer as TTransfer} from 'apps/Chat/types';
+import {DeliveryStatus as TDeliveryStatus, Message as TMessage, Transfer as TTransfer} from 'apps/Chat/types';
 import {useAccountDisplayImage, useAccountDisplayName, useRecipientsDefaultNetworkId, useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {Account, AppDispatch, Network, SFC} from 'system/types';
@@ -62,6 +62,47 @@ const Message: SFC<MessageProps> = ({
   const hasContent = !!content || !!transfer;
   const isMessageDeleted = !attachedAccounts.length && !attachedNetworks.length && !content && !transfer;
 
+  const editMessage = async (newMessage: TMessage) => {
+    if (recipientsDefaultNetworkId) {
+      await setMessageBlock({
+        amount: 0,
+        networkId: recipientsDefaultNetworkId,
+        params: newMessage,
+        recipient: newMessage.recipient,
+      });
+    }
+
+    dispatch(setMessage(newMessage));
+
+    dispatch(
+      setDelivery({
+        delivery: {
+          attempts: 1,
+          status: TDeliveryStatus.pending,
+        },
+        messageId,
+      }),
+    );
+  };
+
+  const handleAccountAttachmentDeleteClick = async (accountNumber: string) => {
+    try {
+      const message = messages[messageId];
+      const newAttachedAccounts = message.attachedAccounts.filter((account) => account.accountNumber !== accountNumber);
+      const newMessage = {
+        ...message,
+        ...{
+          attachedAccounts: newAttachedAccounts,
+          modifiedDate: currentSystemDate(),
+        },
+      };
+      await editMessage(newMessage);
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error deleting the attachment');
+    }
+  };
+
   const handleDeleteClick = async () => {
     try {
       const message = messages[messageId];
@@ -73,27 +114,7 @@ const Message: SFC<MessageProps> = ({
           transfer: null,
         },
       };
-
-      if (recipientsDefaultNetworkId) {
-        await setMessageBlock({
-          amount: 0,
-          networkId: recipientsDefaultNetworkId,
-          params: newMessage,
-          recipient: message.recipient,
-        });
-      }
-
-      dispatch(setMessage(newMessage));
-
-      dispatch(
-        setDelivery({
-          delivery: {
-            attempts: 1,
-            status: TDeliveryStatus.pending,
-          },
-          messageId,
-        }),
-      );
+      await editMessage(newMessage);
     } catch (error) {
       console.error(error);
       displayErrorToast('Error editing the message');
@@ -109,15 +130,43 @@ const Message: SFC<MessageProps> = ({
     setToolsVisible(true);
   };
 
+  const handleNetworkAttachmentDeleteClick = async (networkId: string) => {
+    try {
+      const message = messages[messageId];
+      const newAttachedNetworks = message.attachedNetworks.filter((network) => network.networkId !== networkId);
+      const newMessage = {
+        ...message,
+        ...{
+          attachedNetworks: newAttachedNetworks,
+          modifiedDate: currentSystemDate(),
+        },
+      };
+      await editMessage(newMessage);
+    } catch (error) {
+      console.error(error);
+      displayErrorToast('Error deleting the attachment');
+    }
+  };
+
   const renderAttachments = () => {
     if (!hasAttachments) return null;
 
     const accountAttachments = attachedAccounts.map((attachedAccount) => (
-      <AccountAttachment attachedAccount={attachedAccount} key={attachedAccount.accountNumber} />
+      <AccountAttachment
+        attachedAccount={attachedAccount}
+        key={attachedAccount.accountNumber}
+        onDeleteClick={handleAccountAttachmentDeleteClick}
+        sender={sender}
+      />
     ));
 
     const networkAttachments = attachedNetworks.map((attachedNetwork) => (
-      <NetworkAttachment attachedNetwork={attachedNetwork} key={attachedNetwork.networkId} />
+      <NetworkAttachment
+        attachedNetwork={attachedNetwork}
+        key={attachedNetwork.networkId}
+        onDeleteClick={handleNetworkAttachmentDeleteClick}
+        sender={sender}
+      />
     ));
 
     return (

@@ -1,21 +1,27 @@
+import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {mdiArrowRightBoldCircleOutline, mdiCheckBold} from '@mdi/js';
+import {mdiArrowRightBoldCircleOutline, mdiCheckBold, mdiDelete} from '@mdi/js';
 
 import NoImage from 'apps/Chat/components/_Attachment/assets/no-image.png';
 import * as S from 'apps/Chat/components/_Attachment/Styles';
+import Tool from 'apps/Chat/components/Tool';
 import {initializeNetworkRelatedObjects} from 'system/dispatchers/networks';
-import {getNetworks} from 'system/selectors/state';
+import {getNetworks, getSelf} from 'system/selectors/state';
 import {setNetwork} from 'system/store/networks';
 import {AppDispatch, Network, SFC} from 'system/types';
 import {truncate} from 'system/utils/strings';
 
 export interface NetworkAttachmentProps {
   attachedNetwork: Network;
+  onDeleteClick: (networkId: string) => void;
+  sender: string;
 }
 
-const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, className}) => {
+const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, className, onDeleteClick, sender}) => {
+  const [toolsVisible, setToolsVisible] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const networks = useSelector(getNetworks);
+  const self = useSelector(getSelf);
 
   const localNetwork = networks[attachedNetwork.networkId];
 
@@ -24,6 +30,10 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
     attachedNetwork.displayName !== localNetwork?.displayName ||
     attachedNetwork.port !== localNetwork?.port ||
     attachedNetwork.protocol !== localNetwork?.protocol;
+
+  const handleDeleteClick = () => {
+    onDeleteClick(attachedNetwork.networkId);
+  };
 
   const handleIconClick = () => {
     if (!hasDifferences) return;
@@ -35,9 +45,16 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
     dispatch(setNetwork(attachedNetwork));
   };
 
+  const handleMouseOut = () => {
+    setToolsVisible(false);
+  };
+
+  const handleMouseOver = () => {
+    setToolsVisible(true);
+  };
+
   const renderAvatarURL = (network?: Network) => {
     const url = network?.displayImage ? truncate(network.displayImage, 16) : '-';
-
     return (
       <S.AlignCenter>
         <S.Label>Avatar URL</S.Label>
@@ -48,7 +65,6 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
 
   const renderCenter = () => {
     const path = hasDifferences ? mdiArrowRightBoldCircleOutline : mdiCheckBold;
-
     return (
       <S.Center>
         <div onClick={handleIconClick}>
@@ -60,7 +76,6 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
 
   const renderDisplayImage = (network?: Network) => {
     const src = network?.displayImage ? network.displayImage : NoImage;
-
     return (
       <S.AlignCenter>
         <S.Img alt="display image" src={src} />
@@ -70,7 +85,6 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
 
   const renderDisplayName = (network?: Network) => {
     const displayName = network?.displayName ? truncate(network.displayName, 16) : '-';
-
     return (
       <S.AlignCenter>
         <S.Label>Display Name</S.Label>
@@ -81,7 +95,6 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
 
   const renderPort = (network?: Network) => {
     const port = Number.isInteger(network?.port) ? network?.port : '-';
-
     return (
       <S.AlignCenter>
         <S.Label>Port</S.Label>
@@ -92,7 +105,6 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
 
   const renderProtocol = (network?: Network) => {
     const protocol = network?.protocol || '-';
-
     return (
       <S.AlignCenter>
         <S.Label>Protocol</S.Label>
@@ -101,8 +113,17 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
     );
   };
 
+  const renderTools = () => {
+    if (sender !== self.accountNumber || !toolsVisible) return null;
+    return (
+      <S.Tools>
+        <Tool icon={mdiDelete} onClick={handleDeleteClick} />
+      </S.Tools>
+    );
+  };
+
   return (
-    <S.Container className={className}>
+    <S.Container className={className} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}>
       <S.Top>Network: {truncate(attachedNetwork.networkId, 32)}</S.Top>
       <S.Bottom>
         <S.Left>
@@ -123,6 +144,7 @@ const NetworkAttachment: SFC<NetworkAttachmentProps> = ({attachedNetwork, classN
           {renderPort(localNetwork)}
         </S.Right>
       </S.Bottom>
+      {renderTools()}
     </S.Container>
   );
 };

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import UMdiIcon from '@mdi/react';
 
+import UTools from 'apps/Chat/components/Tools';
 import {colors, fonts} from 'apps/Chat/styles';
 
 export const AlignCenter = styled.div`
@@ -30,6 +31,7 @@ export const Container = styled.div`
   flex-direction: column;
   font-size: 13px;
   min-width: 420px;
+  position: relative;
 `;
 
 export const Heading = styled.div`
@@ -68,6 +70,10 @@ export const Left = styled.div`
 
 export const Right = styled.div`
   min-width: 120px;
+`;
+
+export const Tools = styled(UTools)`
+  top: 0;
 `;
 
 export const Top = styled.div`

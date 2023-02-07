@@ -60,11 +60,6 @@ export const validateDates = (createdDate: string, modifiedDate: string) => {
   }
 };
 
-export const validateNetworkIdsMatch = (message: Message, networkId: string) => {
-  if (!message.transfer) return;
-  if (message.transfer.networkId !== networkId) throw new Error('Invalid networkId');
-};
-
 export const validateRecipientIsSelf = (recipient: string, self: Self) => {
   if (recipient !== self.accountNumber) throw new Error('Invalid recipient');
 };
