@@ -18,7 +18,8 @@ const AccountAttachment: SFC<AccountAttachmentProps> = ({attachedAccount, classN
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
-  const localAccount = accounts[attachedAccount.accountNumber];
+  const localAccount =
+    attachedAccount.accountNumber === self.accountNumber ? self : accounts[attachedAccount.accountNumber];
 
   const hasDifferences =
     attachedAccount.displayImage !== localAccount?.displayImage ||
