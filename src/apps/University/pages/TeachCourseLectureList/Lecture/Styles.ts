@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
+import {mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
 
 export const Actions = styled.div`
   font-size: 13px;
@@ -32,7 +32,7 @@ export const Name = styled.div`
 export const PublicationStatus = styled.div``;
 
 export const Thumbnail = styled.img`
-  ${mixinListItemThumbnail};
+  height: auto;
   object-fit: cover;
   position: relative;
   top: 50%;

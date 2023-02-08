@@ -5,7 +5,6 @@ import {
   mixinLeftMenu,
   mixinListItemDescription,
   mixinListItemName,
-  mixinListItemThumbnail,
 } from 'apps/University/styles/mixins';
 
 export {
@@ -15,5 +14,4 @@ export {
   mixinLeftMenu,
   mixinListItemDescription,
   mixinListItemName,
-  mixinListItemThumbnail,
 };

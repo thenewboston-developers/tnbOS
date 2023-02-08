@@ -1,5 +1,6 @@
 import {useDispatch} from 'react-redux';
 
+import ThumbnailMini from 'apps/University/components/ThumbnailMini';
 import {setActiveLearnLectureId, setActivePage} from 'apps/University/store/manager';
 import {Lecture as TLecture, Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
@@ -23,9 +24,7 @@ const Lecture: SFC<LectureProps> = ({className, isActive, lecture}) => {
   return (
     <S.Container className={className} isActive={isActive} onClick={handleClick}>
       <S.Position>{position + 1}</S.Position>
-      <S.ThumbnailContainer>
-        <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
-      </S.ThumbnailContainer>
+      <ThumbnailMini thumbnailUrl={thumbnailUrl} />
       <S.Details>
         <S.Name>{name}</S.Name>
         <S.Description>{description}</S.Description>
