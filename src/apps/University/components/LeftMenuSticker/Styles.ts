@@ -12,7 +12,6 @@ export const TextContainer = styled.div`
 `;
 
 export const Thumbnail = styled.img`
-  border-radius: 4px;
   height: auto;
   object-fit: cover;
   position: relative;

@@ -62,7 +62,9 @@ const Lecture: SFC<LectureProps> = ({lecture}) => {
 
   return (
     <>
-      <S.Thumbnail alt="thumbnail" onClick={handleEditLectureClick} src={thumbnailUrl} />
+      <S.ThumbnailContainer>
+        <S.Thumbnail alt="thumbnail" onClick={handleEditLectureClick} src={thumbnailUrl} />
+      </S.ThumbnailContainer>
       <S.Details>
         <S.Name onClick={handleEditLectureClick}>{name}</S.Name>
         <S.Description>{description}</S.Description>

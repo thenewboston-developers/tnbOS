@@ -9,7 +9,9 @@ export interface LecturePreviewProps {
 const LecturePreview: SFC<LecturePreviewProps> = ({className, lecture}) => {
   return (
     <S.Container className={className}>
-      <S.Img alt="thumbnail" src={lecture.thumbnailUrl} />
+      <S.ImgContainer>
+        <S.Img alt="thumbnail" src={lecture.thumbnailUrl} />
+      </S.ImgContainer>
       <S.Name>{lecture.name}</S.Name>
       <S.Description>{lecture.description}</S.Description>
     </S.Container>

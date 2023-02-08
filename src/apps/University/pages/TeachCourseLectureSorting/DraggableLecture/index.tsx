@@ -20,7 +20,9 @@ const DraggableLecture: SFC<DraggableLectureProps> = ({className, lecture, onDra
     <>
       <S.Container className={className} draggable onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <S.Icon icon={mdiDrag} size={24} />
-        <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
+        <S.ThumbnailContainer>
+          <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
+        </S.ThumbnailContainer>
         <S.Details>
           <S.Name>{name}</S.Name>
           <S.Description>{description}</S.Description>

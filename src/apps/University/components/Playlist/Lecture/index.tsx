@@ -23,7 +23,9 @@ const Lecture: SFC<LectureProps> = ({className, isActive, lecture}) => {
   return (
     <S.Container className={className} isActive={isActive} onClick={handleClick}>
       <S.Position>{position + 1}</S.Position>
-      <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
+      <S.ThumbnailContainer>
+        <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
+      </S.ThumbnailContainer>
       <S.Details>
         <S.Name>{name}</S.Name>
         <S.Description>{description}</S.Description>
