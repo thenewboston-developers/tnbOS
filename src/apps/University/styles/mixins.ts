@@ -35,8 +35,3 @@ export const mixinListItemName = css`
   color: ${colors.fonts.heading};
   font-weight: 600;
 `;
-
-export const mixinListItemThumbnail = css`
-  border-radius: 4px;
-  height: auto;
-`;

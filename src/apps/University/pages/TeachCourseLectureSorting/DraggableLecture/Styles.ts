@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import UIcon from 'system/components/Icon';
 
-import {mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
+import {mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
 
 export const Container = styled.div`
   cursor: move;
@@ -27,11 +27,4 @@ export const Icon = styled(UIcon)`
 export const Name = styled.div`
   ${mixinListItemName};
   font-size: 13px;
-`;
-
-export const Thumbnail = styled.img`
-  ${mixinListItemThumbnail};
-  align-self: flex-start;
-  flex-shrink: 0;
-  width: 100px;
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors, mixinListItemDescription, mixinListItemName, mixinListItemThumbnail} from 'apps/University/styles';
+import {colors, mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
 
 export const Container = styled.div<{isActive: boolean}>`
   background: ${({isActive}) => (isActive ? 'rgba(0, 0, 0, 0.06)' : 'transparent')};
@@ -36,11 +36,4 @@ export const Position = styled.div`
   justify-content: center;
   padding: 0 8px;
   width: 24px;
-`;
-
-export const Thumbnail = styled.img`
-  ${mixinListItemThumbnail};
-  align-self: flex-start;
-  flex-shrink: 0;
-  width: 100px;
 `;
