@@ -7,12 +7,10 @@ export const Container = styled.div`
 `;
 
 export const Img = styled.img`
-  align-self: flex-start;
-  flex-shrink: 0;
   height: auto;
   object-fit: cover;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  width: 100px;
+  width: 100%;
 `;

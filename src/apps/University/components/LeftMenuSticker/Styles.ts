@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import UThumbnail from 'apps/University/components/Thumbnail';
+
 export const BottomText = styled.div`
   font-weight: 400;
   margin-top: 2px;
@@ -11,20 +13,8 @@ export const TextContainer = styled.div`
   padding: 8px 20px 0;
 `;
 
-export const Thumbnail = styled.img`
-  height: auto;
-  object-fit: cover;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-`;
-
-export const ThumbnailContainer = styled.div`
-  aspect-ratio: 16 / 9;
-  border-radius: 4px;
+export const Thumbnail = styled(UThumbnail)`
   margin: 0 20px;
-  overflow: hidden;
 `;
 
 export const TopText = styled.div`

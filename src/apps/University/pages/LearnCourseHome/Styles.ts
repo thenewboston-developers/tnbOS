@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import UButton from 'apps/University/components/Button';
 import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
+import UThumbnail from 'apps/University/components/Thumbnail';
 import {colors} from 'apps/University/styles';
 
 export const CloneCourseButton = styled(UButton)`
@@ -45,18 +46,6 @@ export const Playlist = styled(UPlaylist)`
 
 export const Right = styled.div``;
 
-export const Thumbnail = styled.img`
+export const Thumbnail = styled(UThumbnail)`
   box-shadow: 0 2px 2px rgb(0 0 0 / 4%);
-  height: auto;
-  object-fit: cover;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-`;
-
-export const ThumbnailContainer = styled.div`
-  aspect-ratio: 16 / 9;
-  border-radius: 4px;
-  overflow: hidden;
 `;

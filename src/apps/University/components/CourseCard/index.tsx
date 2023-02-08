@@ -11,9 +11,7 @@ export interface CourseCardProps {
 const CourseCard: SFC<CourseCardProps> = ({className, course, onClick}) => {
   return (
     <S.Container className={className} onClick={onClick}>
-      <S.ImgContainer>
-        <S.Img alt="thumbnail" src={course.thumbnailUrl} />
-      </S.ImgContainer>
+      <S.Thumbnail thumbnailUrl={course.thumbnailUrl} />
       <S.Bottom>
         <S.Name>{course.name}</S.Name>
         <S.Description>{course.description}</S.Description>

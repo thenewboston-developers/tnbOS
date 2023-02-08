@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UInstructor from 'apps/University/components/Instructor';
+import UThumbnail from 'apps/University/components/Thumbnail';
 import {colors} from 'apps/University/styles';
 
 export const Bottom = styled.div`
@@ -28,20 +29,6 @@ export const Description = styled.div`
   margin-top: 4px;
 `;
 
-export const Img = styled.img`
-  height: auto;
-  object-fit: cover;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-`;
-
-export const ImgContainer = styled.div`
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-`;
-
 export const Instructor = styled(UInstructor)`
   margin-top: 16px;
 `;
@@ -50,4 +37,8 @@ export const Name = styled.div`
   color: ${colors.fonts.heading};
   font-size: 20px;
   font-weight: 600;
+`;
+
+export const Thumbnail = styled(UThumbnail)`
+  border-radius: 0;
 `;

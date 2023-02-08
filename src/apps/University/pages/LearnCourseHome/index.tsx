@@ -133,9 +133,7 @@ const LearnCourseHome: SFC = ({className}) => {
         <S.Playlist courseId={course.courseId} />
       </S.Left>
       <S.Right>
-        <S.ThumbnailContainer>
-          <S.Thumbnail alt="thumbnail" src={course.thumbnailUrl} />
-        </S.ThumbnailContainer>
+        <S.Thumbnail thumbnailUrl={course.thumbnailUrl} />
         {renderEnrollmentButton()}
         {renderCloneCourseButton()}
       </S.Right>

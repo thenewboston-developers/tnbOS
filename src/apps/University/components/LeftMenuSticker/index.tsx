@@ -10,9 +10,7 @@ export interface LeftMenuStickerProps {
 const LeftMenuSticker: SFC<LeftMenuStickerProps> = ({bottomText, thumbnailUrl, topText}) => {
   return (
     <>
-      <S.ThumbnailContainer>
-        <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
-      </S.ThumbnailContainer>
+      <S.Thumbnail thumbnailUrl={thumbnailUrl} />
       <S.TextContainer>
         <S.TopText>{topText}</S.TopText>
         <S.BottomText>{bottomText}</S.BottomText>

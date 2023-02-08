@@ -8,7 +8,7 @@ export interface ThumbnailMiniProps {
 const ThumbnailMini: SFC<ThumbnailMiniProps> = ({className, thumbnailUrl}) => {
   return (
     <S.Container className={className}>
-      <S.Thumbnail alt="thumbnail" src={thumbnailUrl} />
+      <S.Img alt="thumbnail" src={thumbnailUrl} />
     </S.Container>
   );
 };

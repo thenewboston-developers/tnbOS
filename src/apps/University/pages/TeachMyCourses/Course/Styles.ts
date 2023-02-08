@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import UThumbnail from 'apps/University/components/Thumbnail';
 import {mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
 
 export const Actions = styled.div`
@@ -26,21 +27,8 @@ export const Name = styled.div`
 
 export const PublicationStatus = styled.div``;
 
-export const Thumbnail = styled.img`
-  height: auto;
-  object-fit: cover;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
-
+export const Thumbnail = styled(UThumbnail)`
   &:hover {
     cursor: pointer;
   }
-`;
-
-export const ThumbnailContainer = styled.div`
-  aspect-ratio: 16 / 9;
-  border-radius: 4px;
-  overflow: hidden;
 `;

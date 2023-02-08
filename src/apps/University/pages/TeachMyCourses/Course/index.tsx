@@ -70,9 +70,7 @@ const Course: SFC<CourseProps> = ({course}) => {
 
   return (
     <>
-      <S.ThumbnailContainer>
-        <S.Thumbnail alt="thumbnail" onClick={handleEditCourseClick} src={thumbnailUrl} />
-      </S.ThumbnailContainer>
+      <S.Thumbnail onClick={handleEditCourseClick} thumbnailUrl={thumbnailUrl} />
       <S.Details>
         <S.Name onClick={handleEditCourseClick}>{name}</S.Name>
         <S.Description>{truncate(description, 200)}</S.Description>
