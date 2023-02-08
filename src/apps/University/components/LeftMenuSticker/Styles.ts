@@ -14,11 +14,18 @@ export const TextContainer = styled.div`
 export const Thumbnail = styled.img`
   border-radius: 4px;
   height: auto;
+  object-fit: cover;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
 `;
 
 export const ThumbnailContainer = styled.div`
-  padding: 8px 20px 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  margin: 0 20px;
+  overflow: hidden;
 `;
 
 export const TopText = styled.div`

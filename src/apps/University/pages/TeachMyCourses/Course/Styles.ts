@@ -28,9 +28,19 @@ export const PublicationStatus = styled.div``;
 
 export const Thumbnail = styled.img`
   ${mixinListItemThumbnail};
+  object-fit: cover;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
 
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const ThumbnailContainer = styled.div`
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
 `;
