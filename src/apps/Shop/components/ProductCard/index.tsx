@@ -15,6 +15,7 @@ const ProductCard: SFC<ProductCardProps> = ({className, onClick, product}) => {
       <S.Bottom>
         <S.Name>{product.name}</S.Name>
         <S.Description>{product.description}</S.Description>
+        <S.AccountLabel label="Seller" accountNumber={product.seller} />
       </S.Bottom>
     </S.Container>
   );

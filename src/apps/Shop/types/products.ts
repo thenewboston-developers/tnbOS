@@ -9,6 +9,7 @@ export interface Product {
   modifiedDate: string;
   name: string;
   productId: string;
+  seller: string;
 }
 
 export type Products = Dict<Product>;

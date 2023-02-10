@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/Shop/components/Button';
@@ -7,6 +7,7 @@ import {Input} from 'apps/Shop/components/FormElements';
 import {setProduct} from 'apps/Shop/store/products';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
 import {ActivationStatus, Page, Product} from 'apps/Shop/types';
+import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
@@ -20,6 +21,7 @@ interface ProductModalProps {
 
 const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const self = useSelector(getSelf);
 
   const initialValues = {
     description: '',
@@ -41,6 +43,7 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
       modifiedDate: now,
       name: values.name,
       productId,
+      seller: self.accountNumber,
     };
 
     dispatch(setProduct(product));

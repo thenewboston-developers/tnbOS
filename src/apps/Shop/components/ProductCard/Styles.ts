@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
+import UAccountLabel from 'apps/Shop/components/AccountLabel';
 import UThumbnail from 'apps/Shop/components/Thumbnail';
 import {colors} from 'apps/Shop/styles';
+
+export const AccountLabel = styled(UAccountLabel)`
+  margin-top: 16px;
+`;
 
 export const Bottom = styled.div`
   display: flex;
