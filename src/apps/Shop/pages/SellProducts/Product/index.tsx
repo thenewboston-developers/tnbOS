@@ -3,9 +3,10 @@ import {useDispatch} from 'react-redux';
 import ActionLink from 'apps/Shop/components/ActionLink';
 import ActivationBadge from 'apps/Shop/components/ActivationBadge';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
-import {unsetProduct} from 'apps/Shop/store/products';
-import {Page, Product as TProduct} from 'apps/Shop/types';
+import {setProduct, unsetProduct} from 'apps/Shop/store/products';
+import {ActivationStatus, Page, Product as TProduct} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
 import {truncate} from 'system/utils/strings';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
@@ -19,6 +20,21 @@ const Product: SFC<ProductProps> = ({product}) => {
 
   const {activationStatus, description, imageUrl, name, productId} = product;
 
+  const handleActivationActionLinkClick = () => {
+    let newActivationStatus = ActivationStatus.draft;
+
+    if (activationStatus === ActivationStatus.draft) newActivationStatus = ActivationStatus.active;
+
+    const _product = {
+      ...product,
+      activationStatus: newActivationStatus,
+      modifiedDate: currentSystemDate(),
+    };
+
+    dispatch(setProduct(_product));
+    displayToast(`Product set to ${newActivationStatus}`, ToastType.success);
+  };
+
   const handleDeleteProductClick = () => {
     dispatch(unsetProduct(productId));
     displayToast(`Product deleted`, ToastType.success);
@@ -27,6 +43,11 @@ const Product: SFC<ProductProps> = ({product}) => {
   const handleEditProductClick = () => {
     dispatch(setActiveSellProductId(productId));
     dispatch(setActivePage(Page.sellProductDetails));
+  };
+
+  const renderActivationActionLink = () => {
+    const actionText = activationStatus === ActivationStatus.draft ? 'Activate' : 'Deactivate';
+    return <ActionLink onClick={handleActivationActionLinkClick}>{actionText}</ActionLink>;
   };
 
   return (
@@ -42,6 +63,7 @@ const Product: SFC<ProductProps> = ({product}) => {
       <S.Actions>
         <ActionLink onClick={handleEditProductClick}>Edit</ActionLink>
         <ActionLink onClick={handleDeleteProductClick}>Delete</ActionLink>
+        {renderActivationActionLink()}
       </S.Actions>
     </>
   );
