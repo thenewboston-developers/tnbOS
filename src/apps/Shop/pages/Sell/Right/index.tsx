@@ -2,6 +2,7 @@ import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 
 import SellOrders from 'apps/Shop/pages/SellOrders';
+import SellProductDetails from 'apps/Shop/pages/SellProductDetails';
 import SellProducts from 'apps/Shop/pages/SellProducts';
 import SellShipping from 'apps/Shop/pages/SellShipping';
 import {getActivePage} from 'apps/Shop/selectors/state';
@@ -20,6 +21,7 @@ const Right: SFC = ({className}) => {
     const pages: PageDict = {
       [Page.buyHome]: null,
       [Page.sellOrders]: <SellOrders />,
+      [Page.sellProductDetails]: <SellProductDetails />,
       [Page.sellProducts]: <SellProducts />,
       [Page.sellShipping]: <SellShipping />,
     };

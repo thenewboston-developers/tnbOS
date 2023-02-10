@@ -19,6 +19,7 @@ const MainArea: SFC = ({className}) => {
     const pages: PageDict = {
       [Page.buyHome]: <BuyHome />,
       [Page.sellOrders]: <Sell />,
+      [Page.sellProductDetails]: <Sell />,
       [Page.sellProducts]: <Sell />,
       [Page.sellShipping]: <Sell />,
     };

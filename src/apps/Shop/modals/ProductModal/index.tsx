@@ -5,7 +5,8 @@ import {Form, Formik} from 'formik';
 import {ButtonType} from 'apps/Shop/components/Button';
 import {Input} from 'apps/Shop/components/FormElements';
 import {setProduct} from 'apps/Shop/store/products';
-import {ActivationStatus, Product} from 'apps/Shop/types';
+import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
+import {ActivationStatus, Page, Product} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
@@ -43,8 +44,8 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
     };
 
     dispatch(setProduct(product));
-    // dispatch(setActiveTeachCourseId(courseId));
-    // dispatch(setActivePage(Page.teachCourseDetails));
+    dispatch(setActiveSellProductId(productId));
+    dispatch(setActivePage(Page.sellProductDetails));
     displayToast('Product created!', ToastType.success);
 
     close();

@@ -7,6 +7,7 @@ import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Manager = {
   activePage: Page.buyHome,
+  activeSellProductId: null,
 };
 
 const manager = createSlice({
@@ -17,9 +18,13 @@ const manager = createSlice({
       state.activePage = activePage;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_MANAGER, state: current(state)});
     },
+    setActiveSellProductId: (state: Manager, {payload: activeSellProductId}: PayloadAction<string | null>) => {
+      state.activeSellProductId = activeSellProductId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_MANAGER, state: current(state)});
+    },
     setManager: setLocalAndStateReducer<Manager>(SHOP_MANAGER),
   },
 });
 
-export const {setActivePage, setManager} = manager.actions;
+export const {setActivePage, setActiveSellProductId, setManager} = manager.actions;
 export default manager.reducer;
