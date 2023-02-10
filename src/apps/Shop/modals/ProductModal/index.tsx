@@ -1,13 +1,11 @@
 import {useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Form, Formik} from 'formik';
 
-import {ButtonType} from 'apps/University/components/Button';
-import {Input} from 'apps/University/components/FormElements';
-import {setCourse} from 'apps/University/store/courses';
-import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
-import {Course, Page, PublicationStatus} from 'apps/University/types';
-import {getSelf} from 'system/selectors/state';
+import {ButtonType} from 'apps/Shop/components/Button';
+import {Input} from 'apps/Shop/components/FormElements';
+import {setProduct} from 'apps/Shop/store/products';
+import {ActivationStatus, Product} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
@@ -15,41 +13,39 @@ import {generateNetworkUUID} from 'system/utils/uuid';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
 
-interface CourseModalProps {
+interface ProductModalProps {
   close(): void;
 }
 
-const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
+const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const self = useSelector(getSelf);
 
   const initialValues = {
     description: '',
+    imageUrl: '',
     name: '',
-    thumbnailUrl: '',
   };
 
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues) => {
-    const courseId = generateNetworkUUID();
     const now = currentSystemDate();
+    const productId = generateNetworkUUID();
 
-    const course: Course = {
-      courseId,
+    const product: Product = {
+      activationStatus: ActivationStatus.draft,
       createdDate: now,
       description: values.description,
-      instructor: self.accountNumber,
+      imageUrl: values.imageUrl,
       modifiedDate: now,
       name: values.name,
-      publicationStatus: PublicationStatus.draft,
-      thumbnailUrl: values.thumbnailUrl,
+      productId,
     };
 
-    dispatch(setCourse(course));
-    dispatch(setActiveTeachCourseId(courseId));
-    dispatch(setActivePage(Page.teachCourseDetails));
-    displayToast('Course created!', ToastType.success);
+    dispatch(setProduct(product));
+    // dispatch(setActiveTeachCourseId(courseId));
+    // dispatch(setActivePage(Page.teachCourseDetails));
+    displayToast('Product created!', ToastType.success);
 
     close();
   };
@@ -57,13 +53,13 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   const validationSchema = useMemo(() => {
     return yup.object().shape({
       description: yup.string().required(),
+      imageUrl: yup.string().url().required(),
       name: yup.string().required(),
-      thumbnailUrl: yup.string().url().required(),
     });
   }, []);
 
   return (
-    <S.Modal className={className} close={close} header="New Course">
+    <S.Modal className={className} close={close} header="New Product">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -72,9 +68,9 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
       >
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
-            <Input errors={errors} label="Course Name" name="name" touched={touched} />
+            <Input errors={errors} label="Product Name" name="name" touched={touched} />
             <Input errors={errors} label="Description" name="description" touched={touched} />
-            <Input errors={errors} label="Thumbnail URL" name="thumbnailUrl" touched={touched} />
+            <Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
             <S.Button
               dirty={dirty}
               disabled={isSubmitting}
@@ -90,4 +86,4 @@ const CourseModal: SFC<CourseModalProps> = ({className, close}) => {
   );
 };
 
-export default CourseModal;
+export default ProductModal;
