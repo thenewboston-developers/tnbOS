@@ -8,8 +8,11 @@ import {ButtonType} from 'apps/Shop/components/Button';
 import {Checkbox, Input} from 'apps/Shop/components/FormElements';
 import ProductCard from 'apps/Shop/components/ProductCard';
 import {useActiveSellProduct} from 'apps/Shop/hooks';
+import {setProduct} from 'apps/Shop/store/products';
 import {ActivationStatus} from 'apps/Shop/types';
-import {AppDispatch, SFC} from 'system/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
+import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
 
@@ -27,9 +30,23 @@ const SellProductDetails: SFC = ({className}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
-    console.log(dispatch);
+    if (!activeSellProduct) return;
+
+    const activationStatus = values.activationStatus ? ActivationStatus.active : ActivationStatus.draft;
+
+    const product = {
+      ...activeSellProduct,
+      ...values,
+      activationStatus,
+      modifiedDate: currentSystemDate(),
+    };
+
+    dispatch(setProduct(product));
+
     setSubmitting(false);
     setValues(values);
+
+    displayToast('Product updated!', ToastType.success);
   };
 
   const renderPreview = (values: FormValues) => {
