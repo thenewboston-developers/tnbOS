@@ -1,8 +1,10 @@
+import {useSelector} from 'react-redux';
 import {mdiPlus} from '@mdi/js';
 
 import Button from 'apps/Shop/components/Button';
 import EmptyText from 'apps/Shop/components/EmptyText';
 import ProductModal from 'apps/Shop/modals/ProductModal';
+import {getProducts} from 'apps/Shop/selectors/state';
 import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 
@@ -11,6 +13,7 @@ import * as S from './Styles';
 
 const SellProducts: SFC = ({className}) => {
   const [productModalIsOpen, toggleProductModal] = useToggle(false);
+  const products = useSelector(getProducts);
 
   const renderAddProductButton = () => {
     return <Button iconLeft={mdiPlus} onClick={toggleProductModal} text="Add" />;
@@ -22,12 +25,8 @@ const SellProducts: SFC = ({className}) => {
   };
 
   const renderProducts = () => {
-    return (
-      <S.Products>
-        <Product />
-        <Product />
-      </S.Products>
-    );
+    const _products = Object.values(products).map((product) => <Product key={product.productId} product={product} />);
+    return <S.Products>{_products}</S.Products>;
   };
 
   const renderProductModal = () => {
