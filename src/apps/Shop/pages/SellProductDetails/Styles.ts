@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
+import UBack from 'apps/Shop/components/Back';
 import UButton from 'apps/Shop/components/Button';
 
 export const ActivationStatus = styled.div`
   display: flex;
   justify-content: end;
   margin-bottom: 12px;
+`;
+
+export const Back = styled(UBack)`
+  margin-bottom: 32px;
 `;
 
 export const Button = styled(UButton)`

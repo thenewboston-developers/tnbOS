@@ -8,8 +8,9 @@ import {ButtonType} from 'apps/Shop/components/Button';
 import {Checkbox, Input} from 'apps/Shop/components/FormElements';
 import ProductCard from 'apps/Shop/components/ProductCard';
 import {useActiveSellProduct} from 'apps/Shop/hooks';
+import {setActivePage} from 'apps/Shop/store/manager';
 import {setProduct} from 'apps/Shop/store/products';
-import {ActivationStatus} from 'apps/Shop/types';
+import {ActivationStatus, Page} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
@@ -28,6 +29,10 @@ const SellProductDetails: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  const handleBackClick = () => {
+    dispatch(setActivePage(Page.sellProducts));
+  };
 
   const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
     if (!activeSellProduct) return;
@@ -75,35 +80,38 @@ const SellProductDetails: SFC = ({className}) => {
   }, []);
 
   return (
-    <Formik
-      enableReinitialize={true}
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validateOnMount={false}
-      validationSchema={validationSchema}
-    >
-      {({dirty, errors, isSubmitting, isValid, touched, values}) => (
-        <S.Container className={className}>
-          <S.Left>
-            <Form>
-              <Input errors={errors} label="Product Name" name="name" touched={touched} />
-              <Input errors={errors} label="Description" name="description" touched={touched} />
-              <Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
-              <Checkbox errors={errors} label="Activate Product" name="activationStatus" touched={touched} />
-              <S.Button
-                dirty={dirty}
-                disabled={isSubmitting}
-                isSubmitting={isSubmitting}
-                isValid={isValid}
-                text="Submit"
-                type={ButtonType.submit}
-              />
-            </Form>
-          </S.Left>
-          <S.Right>{renderPreview(values)}</S.Right>
-        </S.Container>
-      )}
-    </Formik>
+    <>
+      <S.Back onClick={handleBackClick}>Back to products</S.Back>
+      <Formik
+        enableReinitialize={true}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validateOnMount={false}
+        validationSchema={validationSchema}
+      >
+        {({dirty, errors, isSubmitting, isValid, touched, values}) => (
+          <S.Container className={className}>
+            <S.Left>
+              <Form>
+                <Input errors={errors} label="Product Name" name="name" touched={touched} />
+                <Input errors={errors} label="Description" name="description" touched={touched} />
+                <Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
+                <Checkbox errors={errors} label="Activate Product" name="activationStatus" touched={touched} />
+                <S.Button
+                  dirty={dirty}
+                  disabled={isSubmitting}
+                  isSubmitting={isSubmitting}
+                  isValid={isValid}
+                  text="Submit"
+                  type={ButtonType.submit}
+                />
+              </Form>
+            </S.Left>
+            <S.Right>{renderPreview(values)}</S.Right>
+          </S.Container>
+        )}
+      </Formik>
+    </>
   );
 };
 
