@@ -1,0 +1,5 @@
+import {ShopElectronStore} from 'apps/Shop/types/electronStore';
+import {Manager} from 'apps/Shop/types/manager';
+import {Page} from 'apps/Shop/types/pages';
+
+export {Manager, Page, ShopElectronStore};
