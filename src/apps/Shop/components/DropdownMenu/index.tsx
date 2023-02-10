@@ -1,8 +1,11 @@
 import {CSSProperties, useCallback, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
+import {useDispatch} from 'react-redux';
 
+import {setActivePage} from 'apps/Shop/store/manager';
+import {Page} from 'apps/Shop/types';
 import {useEventListener, useToggle} from 'system/hooks';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const dropDown = document.getElementById('dropdown-root')!;
@@ -10,10 +13,11 @@ const dropDown = document.getElementById('dropdown-root')!;
 const DropdownMenu: SFC = ({className}) => {
   const [isOpen, toggleIsOpen] = useToggle(false);
   const [menuPosition, setMenuPosition] = useState<CSSProperties | undefined>(undefined);
+  const dispatch = useDispatch<AppDispatch>();
   const iconRef = useRef<HTMLImageElement>(null);
 
   const handleBuyClick = () => {
-    console.log('Buy');
+    dispatch(setActivePage(Page.buyHome));
     toggleIsOpen(false);
   };
 
@@ -25,7 +29,7 @@ const DropdownMenu: SFC = ({className}) => {
   useEventListener('mousedown', handleClick, document);
 
   const handleSellClick = () => {
-    console.log('Sell');
+    dispatch(setActivePage(Page.sellHome));
     toggleIsOpen(false);
   };
 
