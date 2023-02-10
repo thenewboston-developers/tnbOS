@@ -5,12 +5,12 @@ import noop from 'lodash/noop';
 
 import ActivationBadge from 'apps/Shop/components/ActivationBadge';
 import {ButtonType} from 'apps/Shop/components/Button';
-import {Checkbox, Input} from 'apps/Shop/components/FormElements';
+import {Checkbox, Input, Select} from 'apps/Shop/components/FormElements';
 import ProductCard from 'apps/Shop/components/ProductCard';
 import {useActiveSellProduct} from 'apps/Shop/hooks';
 import {setActivePage} from 'apps/Shop/store/manager';
 import {setProduct} from 'apps/Shop/store/products';
-import {ActivationStatus, Page} from 'apps/Shop/types';
+import {ActivationStatus, Page, SelectOption} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
@@ -26,6 +26,8 @@ const SellProductDetails: SFC = ({className}) => {
     description: activeSellProduct?.description || '',
     imageUrl: activeSellProduct?.imageUrl || '',
     name: activeSellProduct?.name || '',
+    priceAmount: activeSellProduct?.priceAmount || '',
+    priceNetwork: activeSellProduct?.priceNetwork || '',
   };
 
   type FormValues = typeof initialValues;
@@ -44,6 +46,7 @@ const SellProductDetails: SFC = ({className}) => {
       ...values,
       activationStatus,
       modifiedDate: currentSystemDate(),
+      priceAmount: parseInt(values.priceAmount.toString(), 10),
     };
 
     dispatch(setProduct(product));
@@ -58,7 +61,12 @@ const SellProductDetails: SFC = ({className}) => {
     if (!activeSellProduct) return null;
 
     const activationStatus = values.activationStatus ? ActivationStatus.active : ActivationStatus.draft;
-    const product = {...activeSellProduct, ...values, activationStatus};
+    const product = {
+      ...activeSellProduct,
+      ...values,
+      activationStatus,
+      priceAmount: parseInt(values.priceAmount.toString(), 10),
+    };
 
     return (
       <>
@@ -76,8 +84,16 @@ const SellProductDetails: SFC = ({className}) => {
       description: yup.string().required(),
       imageUrl: yup.string().url().required(),
       name: yup.string().required(),
+      priceAmount: yup.number().integer().min(0).required(),
+      priceNetwork: yup
+        .string()
+        .required()
+        .test('valid-price-network', 'Price network is a required field', (priceNetwork) => priceNetwork !== '-'),
     });
   }, []);
+
+  // TODO: Remove
+  const options: SelectOption[] = [{value: '-'}, {value: 'thenewboston.network'}, {value: 'vataxia.io'}];
 
   return (
     <>
@@ -96,6 +112,8 @@ const SellProductDetails: SFC = ({className}) => {
                 <Input errors={errors} label="Product Name" name="name" touched={touched} />
                 <Input errors={errors} label="Description" name="description" touched={touched} />
                 <Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
+                <Select errors={errors} label="Price Network" name="priceNetwork" options={options} touched={touched} />
+                <Input errors={errors} label="Price Amount" name="priceAmount" touched={touched} />
                 <Checkbox errors={errors} label="Activate Product" name="activationStatus" touched={touched} />
                 <S.Button
                   dirty={dirty}
