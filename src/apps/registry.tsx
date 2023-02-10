@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {AccountManager, AccountManagerRegistration} from 'apps/AccountManager/registration';
 import {Chat, ChatElectronStore, ChatRegistration} from 'apps/Chat/registration';
 import {NetworkManager, NetworkManagerRegistration} from 'apps/NetworkManager/registration';
+import {Shop, ShopRegistration} from 'apps/Shop/registration';
 import {SpeedTest, SpeedTestElectronStore, SpeedTestRegistration} from 'apps/SpeedTest/registration';
 import {Trade, TradeElectronStore, TradeRegistration} from 'apps/Trade/registration';
 import {University, UniversityElectronStore, UniversityRegistration} from 'apps/University/registration';
@@ -27,6 +28,7 @@ export const appRegistrations: AppRegistration[] = [
   ChatRegistration,
   TradeRegistration,
   SpeedTestRegistration,
+  ShopRegistration,
   AccountManagerRegistration,
   NetworkManagerRegistration,
 ];
@@ -46,6 +48,7 @@ export const Apps: SFC = () => {
       <AccountManager display={activeApp === AccountManagerRegistration.appId} />
       <Chat display={activeApp === ChatRegistration.appId} />
       <NetworkManager display={activeApp === NetworkManagerRegistration.appId} />
+      <Shop display={activeApp === ShopRegistration.appId} />
       <SpeedTest display={activeApp === SpeedTestRegistration.appId} />
       <Trade display={activeApp === TradeRegistration.appId} />
       <University display={activeApp === UniversityRegistration.appId} />
