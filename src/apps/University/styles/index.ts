@@ -7,11 +7,4 @@ import {
   mixinListItemName,
 } from 'apps/University/styles/mixins';
 
-export {
-  colors,
-  mixinLectureDescription,
-  mixinLectureName,
-  mixinLeftMenu,
-  mixinListItemDescription,
-  mixinListItemName,
-};
+export {colors, mixinLectureDescription, mixinLectureName, mixinLeftMenu, mixinListItemDescription, mixinListItemName};
