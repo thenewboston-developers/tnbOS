@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UAccountLabel from 'apps/Shop/components/AccountLabel';
+import ULine from 'apps/University/components/Line';
 import UThumbnail from 'apps/Shop/components/Thumbnail';
 import {colors} from 'apps/Shop/styles';
 
@@ -33,10 +34,31 @@ export const Description = styled.div`
   margin-top: 4px;
 `;
 
+export const Line = styled(ULine)`
+  margin: 16px 0;
+`;
+
 export const Name = styled.div`
   color: ${colors.fonts.heading};
   font-size: 20px;
   font-weight: 600;
+`;
+
+export const Price = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
+export const PriceAmount = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 8px;
+`;
+
+export const PriceNetworkImage = styled.img`
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
 `;
 
 export const Thumbnail = styled(UThumbnail)`
