@@ -17,8 +17,12 @@ const products = createSlice({
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCTS, state: current(state)});
     },
     setProducts: setLocalAndStateReducer<Products>(SHOP_PRODUCTS),
+    unsetProduct: (state: Products, {payload: productId}: PayloadAction<string>) => {
+      delete state[productId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCTS, state: current(state)});
+    },
   },
 });
 
-export const {setProduct, setProducts} = products.actions;
+export const {setProduct, setProducts, unsetProduct} = products.actions;
 export default products.reducer;
