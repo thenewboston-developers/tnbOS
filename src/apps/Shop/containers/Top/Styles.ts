@@ -8,7 +8,14 @@ export const Container = styled.div`
   padding: 8px 12px;
 `;
 
-export const Left = styled.div``;
+export const Left = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
+export const Logo = styled.img`
+  height: 26px;
+`;
 
 export const Right = styled.div`
   display: flex;
