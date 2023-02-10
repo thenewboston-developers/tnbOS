@@ -15,6 +15,10 @@ export const Left = styled.div`
 
 export const Logo = styled.img`
   height: 26px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Right = styled.div`
