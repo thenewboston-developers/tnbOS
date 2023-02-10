@@ -4,9 +4,11 @@ import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/Shop/components/Button';
 import {Input, Select} from 'apps/Shop/components/FormElements';
+import {DEFAULT_SELECT_OPTION} from 'apps/Shop/constants/forms';
+import {useNetworkSelectOptions} from 'apps/Shop/hooks';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
 import {setProduct} from 'apps/Shop/store/products';
-import {ActivationStatus, Page, Product, SelectOption} from 'apps/Shop/types';
+import {ActivationStatus, Page, Product} from 'apps/Shop/types';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
@@ -21,6 +23,7 @@ interface ProductModalProps {
 
 const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
   const dispatch = useDispatch<AppDispatch>();
+  const networkSelectOptions = useNetworkSelectOptions();
   const self = useSelector(getSelf);
 
   const initialValues = {
@@ -59,7 +62,7 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
   };
 
   const validationSchema = useMemo(() => {
-    return yup.object().shape({
+    return yup.object({
       description: yup.string().required(),
       imageUrl: yup.string().url().required(),
       name: yup.string().required(),
@@ -67,12 +70,13 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
       priceNetwork: yup
         .string()
         .required()
-        .test('valid-price-network', 'Price network is a required field', (priceNetwork) => priceNetwork !== '-'),
+        .test(
+          'valid-price-network',
+          'Price network is a required field',
+          (priceNetwork) => priceNetwork !== DEFAULT_SELECT_OPTION,
+        ),
     });
   }, []);
-
-  // TODO: Remove
-  const options: SelectOption[] = [{value: '-'}, {value: 'thenewboston.network'}, {value: 'vataxia.io'}];
 
   return (
     <S.Modal className={className} close={close} header="New Product">
@@ -87,7 +91,13 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
             <Input errors={errors} label="Product Name" name="name" touched={touched} />
             <Input errors={errors} label="Description" name="description" touched={touched} />
             <Input errors={errors} label="Image URL" name="imageUrl" touched={touched} />
-            <Select errors={errors} label="Price Network" name="priceNetwork" options={options} touched={touched} />
+            <Select
+              errors={errors}
+              label="Price Network"
+              name="priceNetwork"
+              options={networkSelectOptions}
+              touched={touched}
+            />
             <Input errors={errors} label="Price Amount" name="priceAmount" touched={touched} />
             <S.Button
               dirty={dirty}
