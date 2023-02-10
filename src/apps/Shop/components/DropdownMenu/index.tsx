@@ -29,7 +29,7 @@ const DropdownMenu: SFC = ({className}) => {
   useEventListener('mousedown', handleClick, document);
 
   const handleSellClick = () => {
-    dispatch(setActivePage(Page.sellHome));
+    dispatch(setActivePage(Page.sellProducts));
     toggleIsOpen(false);
   };
 

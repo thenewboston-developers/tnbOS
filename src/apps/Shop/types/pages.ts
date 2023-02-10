@@ -1,4 +1,6 @@
 export enum Page {
   buyHome = 'buyHome',
-  sellHome = 'sellHome',
+  sellOrders = 'sellOrders',
+  sellProducts = 'sellProducts',
+  sellShipping = 'sellShipping',
 }

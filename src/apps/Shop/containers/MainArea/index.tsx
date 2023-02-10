@@ -18,7 +18,9 @@ const MainArea: SFC = ({className}) => {
   const renderActivePage = () => {
     const pages: PageDict = {
       [Page.buyHome]: <BuyHome />,
-      [Page.sellHome]: <Sell />,
+      [Page.sellOrders]: <Sell />,
+      [Page.sellProducts]: <Sell />,
+      [Page.sellShipping]: <Sell />,
     };
 
     return pages[activePage];

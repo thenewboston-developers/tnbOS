@@ -7,4 +7,5 @@ export const Container = styled.div`
   flex-direction: column;
   flex: auto;
   overflow: auto;
+  padding-top: 16px;
 `;

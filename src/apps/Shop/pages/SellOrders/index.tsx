@@ -1,12 +1,12 @@
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const SellHome: SFC = ({className}) => {
+const SellOrders: SFC = ({className}) => {
   return (
     <S.Container className={className}>
-      <h1>Sell home</h1>
+      SellOrders
     </S.Container>
   );
 };
 
-export default SellHome;
+export default SellOrders;
