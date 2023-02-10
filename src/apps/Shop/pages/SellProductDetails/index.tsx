@@ -1,4 +1,3 @@
-import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 import {Form, Formik, FormikHelpers} from 'formik';
 import noop from 'lodash/noop';
@@ -7,16 +6,20 @@ import ActivationBadge from 'apps/Shop/components/ActivationBadge';
 import {ButtonType} from 'apps/Shop/components/Button';
 import {Checkbox, Input, Select} from 'apps/Shop/components/FormElements';
 import ProductCard from 'apps/Shop/components/ProductCard';
-import {DEFAULT_SELECT_OPTION} from 'apps/Shop/constants/forms';
 import {useActiveSellProduct, useNetworkSelectOptions} from 'apps/Shop/hooks';
 import {setActivePage} from 'apps/Shop/store/manager';
 import {setProduct} from 'apps/Shop/store/products';
 import {ActivationStatus, Page} from 'apps/Shop/types';
+import {productValidator} from 'apps/Shop/validators/products';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
+
+const validationSchema = productValidator.shape({
+  activationStatus: yup.boolean().required(),
+});
 
 const SellProductDetails: SFC = ({className}) => {
   const activeSellProduct = useActiveSellProduct();
@@ -63,6 +66,7 @@ const SellProductDetails: SFC = ({className}) => {
     if (!activeSellProduct) return null;
 
     const activationStatus = values.activationStatus ? ActivationStatus.active : ActivationStatus.draft;
+
     const product = {
       ...activeSellProduct,
       ...values,
@@ -79,24 +83,6 @@ const SellProductDetails: SFC = ({className}) => {
       </>
     );
   };
-
-  const validationSchema = useMemo(() => {
-    return yup.object({
-      activationStatus: yup.boolean().required(),
-      description: yup.string().required(),
-      imageUrl: yup.string().url().required(),
-      name: yup.string().required(),
-      priceAmount: yup.number().integer().min(0).required(),
-      priceNetwork: yup
-        .string()
-        .required()
-        .test(
-          'valid-price-network',
-          'Price network is a required field',
-          (priceNetwork) => priceNetwork !== DEFAULT_SELECT_OPTION,
-        ),
-    });
-  }, []);
 
   return (
     <>

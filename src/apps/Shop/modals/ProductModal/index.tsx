@@ -1,20 +1,18 @@
-import {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Formik} from 'formik';
 
 import {ButtonType} from 'apps/Shop/components/Button';
 import {Input, Select} from 'apps/Shop/components/FormElements';
-import {DEFAULT_SELECT_OPTION} from 'apps/Shop/constants/forms';
 import {useNetworkSelectOptions} from 'apps/Shop/hooks';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
 import {setProduct} from 'apps/Shop/store/products';
 import {ActivationStatus, Page, Product} from 'apps/Shop/types';
+import {productValidator} from 'apps/Shop/validators/products';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {displayToast} from 'system/utils/toast';
 import {generateNetworkUUID} from 'system/utils/uuid';
-import yup from 'system/utils/yup';
 import * as S from './Styles';
 
 interface ProductModalProps {
@@ -61,30 +59,13 @@ const ProductModal: SFC<ProductModalProps> = ({className, close}) => {
     close();
   };
 
-  const validationSchema = useMemo(() => {
-    return yup.object({
-      description: yup.string().required(),
-      imageUrl: yup.string().url().required(),
-      name: yup.string().required(),
-      priceAmount: yup.number().integer().min(0).required(),
-      priceNetwork: yup
-        .string()
-        .required()
-        .test(
-          'valid-price-network',
-          'Price network is a required field',
-          (priceNetwork) => priceNetwork !== DEFAULT_SELECT_OPTION,
-        ),
-    });
-  }, []);
-
   return (
     <S.Modal className={className} close={close} header="New Product">
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validateOnMount={false}
-        validationSchema={validationSchema}
+        validationSchema={productValidator}
       >
         {({dirty, errors, isSubmitting, touched, isValid}) => (
           <Form>
