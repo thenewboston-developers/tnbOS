@@ -44,23 +44,6 @@ export const Name = styled.div`
   font-weight: 600;
 `;
 
-export const Price = styled.div`
-  align-items: center;
-  display: flex;
-`;
-
-export const PriceAmount = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  margin-left: 8px;
-`;
-
-export const PriceNetworkImage = styled.img`
-  border-radius: 50%;
-  height: 18px;
-  width: 18px;
-`;
-
 export const Thumbnail = styled(UThumbnail)`
   border-radius: 0;
 `;

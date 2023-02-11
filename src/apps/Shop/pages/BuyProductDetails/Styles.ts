@@ -39,6 +39,17 @@ export const Name = styled.div`
   margin-top: 4px;
 `;
 
+export const PriceContainer = styled.div`
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 8px;
+`;
+
 export const Right = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,5 +1,7 @@
 import {useDispatch} from 'react-redux';
 
+import Button from 'apps/Shop/components/Button';
+import Price from 'apps/Shop/components/Price';
 import {useActiveBuyProduct} from 'apps/Shop/hooks';
 import {setActivePage} from 'apps/Shop/store/manager';
 import {Page} from 'apps/Shop/types';
@@ -23,10 +25,15 @@ const BuyProductDetails: SFC = ({className}) => {
   };
 
   const renderRight = () => {
+    if (!activeBuyProduct) return null;
     return (
       <S.Right>
-        <S.Name>{activeBuyProduct?.name || '-'}</S.Name>
-        <S.Description>{activeBuyProduct?.description || '-'}</S.Description>
+        <S.Name>{activeBuyProduct.name || '-'}</S.Name>
+        <S.Description>{activeBuyProduct.description || '-'}</S.Description>
+        <S.PriceContainer>
+          <Price product={activeBuyProduct} />
+          <Button onClick={() => {}} text="Add to Cart" />
+        </S.PriceContainer>
       </S.Right>
     );
   };
