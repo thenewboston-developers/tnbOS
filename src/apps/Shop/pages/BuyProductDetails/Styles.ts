@@ -54,3 +54,9 @@ export const Right = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const SellerMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+`;

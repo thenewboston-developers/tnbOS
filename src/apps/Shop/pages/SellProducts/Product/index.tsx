@@ -35,12 +35,12 @@ const Product: SFC<ProductProps> = ({product}) => {
     displayToast(`Product set to ${newActivationStatus}`, ToastType.success);
   };
 
-  const handleDeleteProductClick = () => {
+  const handleDeleteClick = () => {
     dispatch(unsetProduct(productId));
     displayToast(`Product deleted`, ToastType.success);
   };
 
-  const handleEditProductClick = () => {
+  const handleEditClick = () => {
     dispatch(setActiveSellProductId(productId));
     dispatch(setActivePage(Page.sellProductDetails));
   };
@@ -52,17 +52,17 @@ const Product: SFC<ProductProps> = ({product}) => {
 
   return (
     <>
-      <S.Thumbnail onClick={handleEditProductClick} thumbnailUrl={imageUrl} />
+      <S.Thumbnail onClick={handleEditClick} thumbnailUrl={imageUrl} />
       <S.Details>
-        <S.Name onClick={handleEditProductClick}>{name}</S.Name>
+        <S.Name onClick={handleEditClick}>{name}</S.Name>
         <S.Description>{truncate(description, 200)}</S.Description>
       </S.Details>
       <S.ActivationStatus>
         <ActivationBadge activationStatus={activationStatus} />
       </S.ActivationStatus>
       <S.Actions>
-        <ActionLink onClick={handleEditProductClick}>Edit</ActionLink>
-        <ActionLink onClick={handleDeleteProductClick}>Delete</ActionLink>
+        <ActionLink onClick={handleEditClick}>Edit</ActionLink>
+        <ActionLink onClick={handleDeleteClick}>Delete</ActionLink>
         {renderActivationActionLink()}
       </S.Actions>
     </>
