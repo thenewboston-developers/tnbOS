@@ -1,10 +1,15 @@
 import {mdiDotsVertical} from '@mdi/js';
 
+import {useCartProductList} from 'apps/Shop/hooks';
 import DropdownMenu from 'system/components/DropdownMenu';
 import {SFC} from 'system/types';
+
+import CartProduct from './CartProduct';
 import * as S from './Styles';
 
 const BuyCheckout: SFC = ({className}) => {
+  const cartProductList = useCartProductList();
+
   const handleEditAddressClick = () => {
     console.log('Edit address modal');
   };
@@ -46,10 +51,12 @@ const BuyCheckout: SFC = ({className}) => {
   };
 
   const renderProducts = () => {
+    const _cartProducts = cartProductList.map((product) => <CartProduct key={product.productId} product={product} />);
     return (
       <>
         <S.Heading>Products</S.Heading>
         <S.Line />
+        <S.CartProducts>{_cartProducts}</S.CartProducts>
       </>
     );
   };

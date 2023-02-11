@@ -10,8 +10,6 @@ export const Actions = styled.div`
   white-space: nowrap;
 `;
 
-export const Container = styled.div``;
-
 export const Description = styled.div`
   ${mixinListItemDescription};
 `;

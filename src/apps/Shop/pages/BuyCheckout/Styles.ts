@@ -8,6 +8,12 @@ export const AddressCard = styled(UAddressCard)`
   width: fit-content;
 `;
 
+export const CartProducts = styled.div`
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 5fr;
+`;
+
 export const Container = styled.div`
   display: grid;
   gap: 48px;
