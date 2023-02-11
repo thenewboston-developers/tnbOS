@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 
 import BuyAddresses from 'apps/Shop/pages/BuyAddresses';
 import BuyHome from 'apps/Shop/pages/BuyHome';
+import BuyProductDetails from 'apps/Shop/pages/BuyProductDetails';
 import Sell from 'apps/Shop/pages/Sell';
 import {getActivePage} from 'apps/Shop/selectors/state';
 import {Page} from 'apps/Shop/types';
@@ -20,6 +21,7 @@ const MainArea: SFC = ({className}) => {
     const pages: PageDict = {
       [Page.buyAddresses]: <BuyAddresses />,
       [Page.buyHome]: <BuyHome />,
+      [Page.buyProductDetails]: <BuyProductDetails />,
       [Page.sellOrders]: <Sell />,
       [Page.sellProductDetails]: <Sell />,
       [Page.sellProducts]: <Sell />,

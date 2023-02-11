@@ -21,6 +21,7 @@ const Right: SFC = ({className}) => {
     const pages: PageDict = {
       [Page.buyAddresses]: null,
       [Page.buyHome]: null,
+      [Page.buyProductDetails]: null,
       [Page.sellOrders]: <SellOrders />,
       [Page.sellProductDetails]: <SellProductDetails />,
       [Page.sellProducts]: <SellProducts />,

@@ -1,19 +1,27 @@
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import ProductCard from 'apps/Shop/components/ProductCard';
 import ProductCardsContainer from 'apps/Shop/components/ProductCardsContainer';
 import {getProducts} from 'apps/Shop/selectors/state';
+import {setActiveBuyProductId, setActivePage} from 'apps/Shop/store/manager';
+import {Page} from 'apps/Shop/types';
 import EmptyPage from 'system/components/EmptyPage';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC} from 'system/types';
 
 import BuyHomeEmptyStateGraphic from './assets/buy-home-empty-state.png';
 import * as S from './Styles';
 
 const BuyHome: SFC = ({className}) => {
+  const dispatch = useDispatch<AppDispatch>();
   const products = useSelector(getProducts);
 
   // TODO: Update this logic
   const availableProducts = Object.values(products);
+
+  const handleClick = (productId: string) => {
+    dispatch(setActiveBuyProductId(productId));
+    dispatch(setActivePage(Page.buyProductDetails));
+  };
 
   const renderPageContent = () => {
     if (!!availableProducts.length) {
@@ -31,7 +39,7 @@ const BuyHome: SFC = ({className}) => {
 
   const renderProductCards = () => {
     return availableProducts.map((product) => (
-      <ProductCard key={product.productId} onClick={() => {}} product={product} />
+      <ProductCard key={product.productId} onClick={() => handleClick(product.productId)} product={product} />
     ));
   };
 
