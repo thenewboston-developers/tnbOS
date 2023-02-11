@@ -8,6 +8,7 @@ import {AppDispatch, SFC} from 'system/types';
 
 import BuyLogo from './assets/buy-logo.png';
 import SellLogo from './assets/sell-logo.png';
+import BuyMenuItems from './BuyMenuItems';
 import * as S from './Styles';
 
 const Top: SFC = ({className}) => {
@@ -18,21 +19,8 @@ const Top: SFC = ({className}) => {
     dispatch(setActivePage(Page.buyHome));
   };
 
-  const handleMyAddressesClick = () => {
-    dispatch(setActivePage(Page.buyAddresses));
-  };
-
   const handleSellLogoClick = () => {
     dispatch(setActivePage(Page.sellProducts));
-  };
-
-  const renderBuyMenuItems = () => {
-    return (
-      <>
-        <S.MenuItem onClick={handleMyAddressesClick}>My Addresses</S.MenuItem>
-        <S.MenuItem>Orders</S.MenuItem>
-      </>
-    );
   };
 
   const renderLogo = () => {
@@ -42,7 +30,7 @@ const Top: SFC = ({className}) => {
   };
 
   const renderMenuItems = () => {
-    if (isOnBuyPage) return renderBuyMenuItems();
+    if (isOnBuyPage) return <BuyMenuItems />;
     return null;
   };
 

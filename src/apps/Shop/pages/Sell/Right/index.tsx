@@ -22,6 +22,7 @@ const Right: SFC = ({className}) => {
       [Page.buyAddressDetails]: null,
       [Page.buyAddresses]: null,
       [Page.buyHome]: null,
+      [Page.buyOrders]: null,
       [Page.buyProductDetails]: null,
       [Page.sellOrders]: <SellOrders />,
       [Page.sellProductDetails]: <SellProductDetails />,

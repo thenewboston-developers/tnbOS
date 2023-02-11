@@ -21,16 +21,6 @@ export const Logo = styled.img`
   }
 `;
 
-export const MenuItem = styled.div`
-  color: #eee;
-  font-weight: 500;
-
-  &:hover {
-    color: #fff;
-    cursor: pointer;
-  }
-`;
-
 export const Right = styled.div`
   align-items: center;
   display: flex;

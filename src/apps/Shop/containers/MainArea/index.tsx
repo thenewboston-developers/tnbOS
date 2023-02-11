@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import BuyAddressDetails from 'apps/Shop/pages/BuyAddressDetails';
 import BuyAddresses from 'apps/Shop/pages/BuyAddresses';
 import BuyHome from 'apps/Shop/pages/BuyHome';
+import BuyOrders from 'apps/Shop/pages/BuyOrders';
 import BuyProductDetails from 'apps/Shop/pages/BuyProductDetails';
 import Sell from 'apps/Shop/pages/Sell';
 import {getActivePage} from 'apps/Shop/selectors/state';
@@ -23,6 +24,7 @@ const MainArea: SFC = ({className}) => {
       [Page.buyAddressDetails]: <BuyAddressDetails />,
       [Page.buyAddresses]: <BuyAddresses />,
       [Page.buyHome]: <BuyHome />,
+      [Page.buyOrders]: <BuyOrders />,
       [Page.buyProductDetails]: <BuyProductDetails />,
       [Page.sellOrders]: <Sell />,
       [Page.sellProductDetails]: <Sell />,
