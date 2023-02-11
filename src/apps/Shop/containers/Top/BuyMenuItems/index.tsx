@@ -2,12 +2,14 @@ import {useDispatch} from 'react-redux';
 import {mdiCartOutline} from '@mdi/js';
 
 import TopMenuItem from 'apps/Shop/components/TopMenuItem';
+import {useCartProductList} from 'apps/Shop/hooks';
 import {setActivePage} from 'apps/Shop/store/manager';
 import {Page} from 'apps/Shop/types';
 import {AppDispatch, SFC} from 'system/types';
 import * as S from './Styles';
 
 const BuyMenuItems: SFC = () => {
+  const cartProductList = useCartProductList();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleCartClick = () => {
@@ -23,8 +25,8 @@ const BuyMenuItems: SFC = () => {
   };
 
   const renderProductCount = () => {
-    if (!2) return null;
-    return <S.ProductCount>2</S.ProductCount>;
+    if (!cartProductList.length) return null;
+    return <S.ProductCount>{cartProductList.length}</S.ProductCount>;
   };
 
   return (
