@@ -28,11 +28,6 @@ const DropdownMenu: SFC = ({className}) => {
 
   useEventListener('mousedown', handleClick, document);
 
-  const handleMyAddressesClick = () => {
-    dispatch(setActivePage(Page.buyAddresses));
-    toggleIsOpen(false);
-  };
-
   const handleSellClick = () => {
     dispatch(setActivePage(Page.sellProducts));
     toggleIsOpen(false);
@@ -61,7 +56,6 @@ const DropdownMenu: SFC = ({className}) => {
     return (
       <S.Menu style={menuPosition}>
         <S.Option onClick={handleBuyClick}>Buy</S.Option>
-        <S.Option onClick={handleMyAddressesClick}>My Addresses</S.Option>
         <S.Option onClick={handleSellClick}>Sell</S.Option>
       </S.Menu>
     );
