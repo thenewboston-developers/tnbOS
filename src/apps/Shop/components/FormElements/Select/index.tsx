@@ -20,7 +20,11 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
   ({className, errors, label, name, onBlur, onChange, onFocus, options, touched}, ref) => {
     const renderOptions = useCallback((): ReactNode => {
       if (!options.length) return <S.OptionEmptyState>{'No available options.'}</S.OptionEmptyState>;
-      return options.map((option) => <S.Option key={option.value}>{option.value}</S.Option>);
+      return options.map((option) => (
+        <S.Option key={option.value} value={option.value}>
+          {option.displayName || option.value}
+        </S.Option>
+      ));
     }, [options]);
 
     return (

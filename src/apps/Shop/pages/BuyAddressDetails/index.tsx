@@ -74,7 +74,11 @@ const BuyAddressDetails: SFC = ({className}) => {
   }, []);
 
   // TODO: Remove
-  const options = [{value: DEFAULT_SELECT_OPTION}, {value: 'India'}, {value: 'USA'}];
+  const options = [
+    {value: DEFAULT_SELECT_OPTION},
+    {displayName: 'India', value: 'IN'},
+    {displayName: 'United States', value: 'US'},
+  ];
 
   return (
     <S.Container className={className}>
