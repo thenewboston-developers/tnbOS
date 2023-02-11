@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
+import {getData} from 'country-list';
 import {Form, Formik, FormikHelpers} from 'formik';
 
 import {ButtonType} from 'apps/Shop/components/Button';
@@ -18,11 +19,16 @@ const BuyAddressDetails: SFC = ({className}) => {
   const activeBuyAddress = useActiveBuyAddress();
   const dispatch = useDispatch<AppDispatch>();
 
+  const countryOptions = useMemo(() => {
+    const options = getData().map((country) => ({displayName: country.name, value: country.code}));
+    return [{value: DEFAULT_SELECT_OPTION}, ...options];
+  }, []);
+
   const initialValues = {
     address1: activeBuyAddress?.address1 || '',
     address2: activeBuyAddress?.address2 || '',
     city: activeBuyAddress?.city || '',
-    country: activeBuyAddress?.country || '',
+    countryCode: activeBuyAddress?.countryCode || '',
     fullName: activeBuyAddress?.fullName || '',
     state: activeBuyAddress?.state || '',
     zipCode: activeBuyAddress?.zipCode || '',
@@ -63,22 +69,15 @@ const BuyAddressDetails: SFC = ({className}) => {
       address1: yup.string().required(),
       address2: yup.string().required(),
       city: yup.string().required(),
-      country: yup
+      countryCode: yup
         .string()
         .required()
-        .test('valid-country', 'Country is a required field', (country) => country !== DEFAULT_SELECT_OPTION),
+        .test('valid-country', 'Country is a required field', (countryCode) => countryCode !== DEFAULT_SELECT_OPTION),
       fullName: yup.string().required(),
       state: yup.string().required(),
       zipCode: yup.string().required(),
     });
   }, []);
-
-  // TODO: Remove
-  const options = [
-    {value: DEFAULT_SELECT_OPTION},
-    {displayName: 'India', value: 'IN'},
-    {displayName: 'United States', value: 'US'},
-  ];
 
   return (
     <S.Container className={className}>
@@ -99,7 +98,7 @@ const BuyAddressDetails: SFC = ({className}) => {
             <Input errors={errors} label="City" name="city" touched={touched} />
             <Input errors={errors} label="State" name="state" touched={touched} />
             <Input errors={errors} label="ZIP Code" name="zipCode" touched={touched} />
-            <Select errors={errors} label="Country" name="country" options={options} touched={touched} />
+            <Select errors={errors} label="Country" name="countryCode" options={countryOptions} touched={touched} />
             <S.Button
               dirty={dirty}
               disabled={isSubmitting}

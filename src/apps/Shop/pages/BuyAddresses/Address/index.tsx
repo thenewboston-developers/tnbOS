@@ -1,4 +1,5 @@
 import {useDispatch} from 'react-redux';
+import {getName} from 'country-list';
 import {mdiDotsVertical} from '@mdi/js';
 
 import {Address as TAddress, Page} from 'apps/Shop/types';
@@ -16,7 +17,7 @@ export interface AddressProps {
 const Address: SFC<AddressProps> = ({address, className}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {address1, address2, addressId, city, country, fullName, state, zipCode} = address;
+  const {address1, address2, addressId, city, countryCode, fullName, state, zipCode} = address;
 
   const handleEditClick = () => {
     dispatch(setActiveBuyAddressId(addressId));
@@ -28,10 +29,18 @@ const Address: SFC<AddressProps> = ({address, className}) => {
     displayToast(`Product deleted`, ToastType.success);
   };
 
-  const menuOptions = [
-    {label: 'Edit', onClick: handleEditClick},
-    {label: 'Delete', onClick: handleDeleteClick},
-  ];
+  const renderCountryName = () => {
+    return <div>{getName(countryCode)}</div>;
+  };
+
+  const renderDropdownMenu = () => {
+    const menuOptions = [
+      {label: 'Edit', onClick: handleEditClick},
+      {label: 'Delete', onClick: handleDeleteClick},
+    ];
+
+    return <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
+  };
 
   return (
     <S.Container className={className}>
@@ -43,11 +52,9 @@ const Address: SFC<AddressProps> = ({address, className}) => {
           {city}, {state}
         </div>
         <div>{zipCode}</div>
-        <div>{country}</div>
+        {renderCountryName()}
       </S.Left>
-      <S.Right>
-        <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />
-      </S.Right>
+      <S.Right>{renderDropdownMenu()}</S.Right>
     </S.Container>
   );
 };
