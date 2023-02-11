@@ -6,6 +6,7 @@ import {IpcChannel} from 'shared/types';
 import {setLocalAndStateReducer} from 'system/utils/ipc';
 
 export const initialState: Manager = {
+  activeBuyAddressId: null,
   activeBuyProductId: null,
   activePage: Page.buyHome,
   activeSellProductId: null,
@@ -15,6 +16,10 @@ const manager = createSlice({
   initialState,
   name: SHOP_MANAGER,
   reducers: {
+    setActiveBuyAddressId: (state: Manager, {payload: activeBuyAddressId}: PayloadAction<string | null>) => {
+      state.activeBuyAddressId = activeBuyAddressId;
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_MANAGER, state: current(state)});
+    },
     setActiveBuyProductId: (state: Manager, {payload: activeBuyProductId}: PayloadAction<string | null>) => {
       state.activeBuyProductId = activeBuyProductId;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_MANAGER, state: current(state)});
@@ -31,5 +36,6 @@ const manager = createSlice({
   },
 });
 
-export const {setActiveBuyProductId, setActivePage, setActiveSellProductId, setManager} = manager.actions;
+export const {setActiveBuyAddressId, setActiveBuyProductId, setActivePage, setActiveSellProductId, setManager} =
+  manager.actions;
 export default manager.reducer;

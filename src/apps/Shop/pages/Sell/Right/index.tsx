@@ -19,6 +19,7 @@ const Right: SFC = ({className}) => {
 
   const renderActivePage = () => {
     const pages: PageDict = {
+      [Page.buyAddressDetails]: null,
       [Page.buyAddresses]: null,
       [Page.buyHome]: null,
       [Page.buyProductDetails]: null,
