@@ -6,9 +6,11 @@ import {ButtonType} from 'apps/Shop/components/Button';
 import {Input, Select} from 'apps/Shop/components/FormElements';
 import {DEFAULT_SELECT_OPTION} from 'apps/Shop/constants/forms';
 import {useActiveBuyAddress} from 'apps/Shop/hooks';
+import {setAddress} from 'apps/Shop/store/addresses';
 import {setActivePage} from 'apps/Shop/store/manager';
-import {Page} from 'apps/Shop/types';
-import {AppDispatch, SFC} from 'system/types';
+import {Address, Page} from 'apps/Shop/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
+import {displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
 
@@ -33,9 +35,22 @@ const BuyAddressDetails: SFC = ({className}) => {
   };
 
   const handleSubmit = (values: FormValues, {setSubmitting, setValues}: FormikHelpers<FormValues>) => {
-    console.log(values);
+    const addressId = activeBuyAddress ? activeBuyAddress.addressId : crypto.randomUUID();
+
+    const address: Address = {
+      ...values,
+      addressId,
+    };
+
+    dispatch(setAddress(address));
+
     setSubmitting(false);
     setValues(values);
+
+    const actionText = activeBuyAddress ? 'updated' : 'added';
+    displayToast(`Address ${actionText}!`, ToastType.success);
+
+    dispatch(setActivePage(Page.buyAddresses));
   };
 
   const renderSectionHeading = () => {
