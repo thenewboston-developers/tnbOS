@@ -5,7 +5,7 @@ export const Container = styled.div`
   color: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 16px;
 `;
 
 export const Left = styled.div`
@@ -24,5 +24,5 @@ export const Logo = styled.img`
 export const Right = styled.div`
   align-items: center;
   display: flex;
-  gap: 12px;
+  gap: 16px;
 `;
