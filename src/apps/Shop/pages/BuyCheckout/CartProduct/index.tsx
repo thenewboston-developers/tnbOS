@@ -1,7 +1,12 @@
+import {useDispatch} from 'react-redux';
+
+import ActionLink from 'apps/Shop/components/ActionLink';
 import Thumbnail from 'apps/Shop/components/Thumbnail';
+import {unsetCartProduct} from 'apps/Shop/store/cartProducts';
 import {Product} from 'apps/Shop/types';
-import {SFC} from 'system/types';
+import {AppDispatch, SFC, ToastType} from 'system/types';
 import {truncate} from 'system/utils/strings';
+import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
 export interface CartProductProps {
@@ -9,7 +14,14 @@ export interface CartProductProps {
 }
 
 const CartProduct: SFC<CartProductProps> = ({product}) => {
-  const {description, imageUrl, name} = product;
+  const dispatch = useDispatch<AppDispatch>();
+
+  const {description, imageUrl, name, productId} = product;
+
+  const handleRemoveClick = () => {
+    dispatch(unsetCartProduct(productId));
+    displayToast(`Product removed`, ToastType.success);
+  };
 
   return (
     <>
@@ -18,6 +30,9 @@ const CartProduct: SFC<CartProductProps> = ({product}) => {
         <S.Name>{name}</S.Name>
         <S.Description>{truncate(description, 200)}</S.Description>
       </S.Details>
+      <S.Actions>
+        <ActionLink onClick={handleRemoveClick}>Remove</ActionLink>
+      </S.Actions>
     </>
   );
 };

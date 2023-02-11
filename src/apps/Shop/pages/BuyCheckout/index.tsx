@@ -41,6 +41,11 @@ const BuyCheckout: SFC = ({className}) => {
     return <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
   };
 
+  const renderCartProducts = () => {
+    const _cartProducts = cartProductList.map((product) => <CartProduct key={product.productId} product={product} />);
+    return <S.CartProducts>{_cartProducts}</S.CartProducts>;
+  };
+
   const renderLeft = () => {
     return (
       <S.Left>
@@ -51,12 +56,17 @@ const BuyCheckout: SFC = ({className}) => {
   };
 
   const renderProducts = () => {
-    const _cartProducts = cartProductList.map((product) => <CartProduct key={product.productId} product={product} />);
+    const content = !!cartProductList.length ? (
+      renderCartProducts()
+    ) : (
+      <S.EmptyText>No products to display.</S.EmptyText>
+    );
+
     return (
       <>
         <S.Heading>Products</S.Heading>
         <S.Line />
-        <S.CartProducts>{_cartProducts}</S.CartProducts>
+        {content}
       </>
     );
   };

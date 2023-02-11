@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UAddressCard from 'apps/Shop/components/AddressCard';
+import UEmptyText from 'apps/Shop/components/EmptyText';
 import ULine from 'apps/Shop/components/Line';
 
 export const AddressCard = styled(UAddressCard)`
@@ -11,7 +12,7 @@ export const AddressCard = styled(UAddressCard)`
 export const CartProducts = styled.div`
   display: grid;
   gap: 12px;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 5fr 1fr;
 `;
 
 export const Container = styled.div`
@@ -21,6 +22,10 @@ export const Container = styled.div`
   height: 100%;
   padding: 24px;
   width: 100%;
+`;
+
+export const EmptyText = styled(UEmptyText)`
+  padding-top: 0;
 `;
 
 export const Heading = styled.div`
