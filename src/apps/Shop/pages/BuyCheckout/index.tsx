@@ -5,6 +5,7 @@ import DropdownMenu from 'system/components/DropdownMenu';
 import {SFC} from 'system/types';
 
 import CartProduct from './CartProduct';
+import PaymentDetails from './PaymentDetails';
 import * as S from './Styles';
 
 const BuyCheckout: SFC = ({className}) => {
@@ -74,7 +75,9 @@ const BuyCheckout: SFC = ({className}) => {
   const renderRight = () => {
     return (
       <S.Right>
-        <h1>payment</h1>
+        <S.Heading>Total</S.Heading>
+        <S.Line />
+        <PaymentDetails />
       </S.Right>
     );
   };
