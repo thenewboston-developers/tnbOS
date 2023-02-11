@@ -10,6 +10,10 @@ import * as S from './Styles';
 const BuyMenuItems: SFC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  const handleCartClick = () => {
+    dispatch(setActivePage(Page.buyCheckout));
+  };
+
   const handleMyAddressesClick = () => {
     dispatch(setActivePage(Page.buyAddresses));
   };
@@ -27,7 +31,7 @@ const BuyMenuItems: SFC = () => {
     <>
       <TopMenuItem onClick={handleMyAddressesClick}>My Addresses</TopMenuItem>
       <TopMenuItem onClick={handleOrdersClick}>Orders</TopMenuItem>
-      <S.IconContainer>
+      <S.IconContainer onClick={handleCartClick}>
         <S.Icon path={mdiCartOutline} size="32px" />
         {renderProductCount()}
       </S.IconContainer>
