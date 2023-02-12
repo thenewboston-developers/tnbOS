@@ -1,24 +1,14 @@
-import {useMemo} from 'react';
-
-import {useCartProductList} from 'apps/Shop/hooks';
+import {GenericVoidFunction} from 'shared/types';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface PaymentDetailsProps {
+  handlePlaceOrderClick: GenericVoidFunction;
   isButtonDisabled: boolean;
+  totalPrice: number;
 }
 
-const PaymentDetails: SFC<PaymentDetailsProps> = ({className, isButtonDisabled}) => {
-  const cartProductList = useCartProductList();
-
-  const totalPrice = useMemo(() => {
-    return cartProductList.reduce((previousValue, product) => previousValue + product.priceAmount, 0);
-  }, [cartProductList]);
-
-  const handlePlaceOrderClick = () => {
-    console.log('Place order');
-  };
-
+const PaymentDetails: SFC<PaymentDetailsProps> = ({className, handlePlaceOrderClick, isButtonDisabled, totalPrice}) => {
   return (
     <S.Container className={className}>
       <S.PriceContainer>

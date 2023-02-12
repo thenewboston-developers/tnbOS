@@ -1,0 +1,2 @@
+export const APPROVAL_WINDOW_SECONDS = 60;
+export const PAYMENT_WINDOW_SECONDS = 600;
