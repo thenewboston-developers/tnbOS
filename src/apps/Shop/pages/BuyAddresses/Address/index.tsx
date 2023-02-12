@@ -23,7 +23,7 @@ const Address: SFC<AddressProps> = ({address, className}) => {
 
   const handleDeleteClick = () => {
     dispatch(unsetAddress(address.addressId));
-    displayToast(`Product deleted`, ToastType.success);
+    displayToast(`Address deleted`, ToastType.success);
   };
 
   const renderDropdownMenu = () => {

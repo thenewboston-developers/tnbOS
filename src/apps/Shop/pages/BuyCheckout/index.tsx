@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
@@ -24,6 +24,10 @@ const BuyCheckout: SFC = ({className}) => {
     const addressIds = Object.keys(addresses);
     if (!!addressIds.length) setSelectedAddressId(addressIds[0]);
   }, [addresses]);
+
+  const isPlaceOrderButtonDisabled = useMemo(() => {
+    return !cartProductList.length || !selectedAddressId;
+  }, [cartProductList.length, selectedAddressId]);
 
   const renderAddressSelectModal = () => {
     if (!addressSelectModalIsOpen) return null;
@@ -88,7 +92,7 @@ const BuyCheckout: SFC = ({className}) => {
       <S.Right>
         <S.Heading>Total</S.Heading>
         <S.Line />
-        <PaymentDetails />
+        <PaymentDetails isButtonDisabled={isPlaceOrderButtonDisabled} />
       </S.Right>
     );
   };
