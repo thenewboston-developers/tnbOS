@@ -2,6 +2,8 @@ import {mdiDotsVertical} from '@mdi/js';
 
 import {useCartProductList} from 'apps/Shop/hooks';
 import DropdownMenu from 'system/components/DropdownMenu';
+import AddressSelectModal from 'apps/Shop/modals/AddressSelectModal';
+import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 
 import CartProduct from './CartProduct';
@@ -9,10 +11,12 @@ import PaymentDetails from './PaymentDetails';
 import * as S from './Styles';
 
 const BuyCheckout: SFC = ({className}) => {
+  const [addressSelectModalIsOpen, toggleAddressSelectModal] = useToggle(false);
   const cartProductList = useCartProductList();
 
-  const handleEditAddressClick = () => {
-    console.log('Edit address modal');
+  const renderAddressSelectModal = () => {
+    if (!addressSelectModalIsOpen) return null;
+    return <AddressSelectModal close={toggleAddressSelectModal} />;
   };
 
   const renderAddress = () => {
@@ -37,7 +41,7 @@ const BuyCheckout: SFC = ({className}) => {
   };
 
   const renderAddressDropdownMenu = () => {
-    const menuOptions = [{label: 'Edit', onClick: handleEditAddressClick}];
+    const menuOptions = [{label: 'Edit', onClick: toggleAddressSelectModal}];
 
     return <DropdownMenu icon={mdiDotsVertical} options={menuOptions} />;
   };
@@ -83,10 +87,13 @@ const BuyCheckout: SFC = ({className}) => {
   };
 
   return (
-    <S.Container className={className}>
-      {renderLeft()}
-      {renderRight()}
-    </S.Container>
+    <>
+      <S.Container className={className}>
+        {renderLeft()}
+        {renderRight()}
+      </S.Container>
+      {renderAddressSelectModal()}
+    </>
   );
 };
 
