@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import UAccountLabel from 'apps/Shop/components/AccountLabel';
 import UBack from 'apps/Shop/components/Back';
+
+export const AccountLabel = styled(UAccountLabel)`
+  margin-top: 16px;
+`;
 
 export const Back = styled(UBack)`
   margin-bottom: 24px;

@@ -42,11 +42,6 @@ const BuyProductDetails: SFC = ({className}) => {
     dispatch(setActivePage(Page.buyHome));
   };
 
-  const renderCartButton = () => {
-    if (isInCart) return <Button onClick={handleRemoveFromCartClick} text="Remove from Cart" />;
-    return <Button onClick={handleAddToCartClick} text="Add to Cart" />;
-  };
-
   const handleDeleteClick = () => {
     if (!activeBuyProduct) return;
     dispatch(setActivePage(Page.buyHome));
@@ -66,6 +61,11 @@ const BuyProductDetails: SFC = ({className}) => {
     displayToast(`Product removed from cart`, ToastType.success);
   };
 
+  const renderCartButton = () => {
+    if (isInCart) return <Button onClick={handleRemoveFromCartClick} text="Remove from Cart" />;
+    return <Button onClick={handleAddToCartClick} text="Add to Cart" />;
+  };
+
   const renderLeft = () => {
     return (
       <S.Left>
@@ -79,8 +79,9 @@ const BuyProductDetails: SFC = ({className}) => {
     if (!activeBuyProduct) return null;
     return (
       <S.Right>
-        <S.Name>{activeBuyProduct.name || '-'}</S.Name>
-        <S.Description>{activeBuyProduct.description || '-'}</S.Description>
+        <S.Name>{activeBuyProduct.name}</S.Name>
+        <S.Description>{activeBuyProduct.description}</S.Description>
+        <S.AccountLabel label="Seller" accountNumber={activeBuyProduct.seller} />
         <S.PriceContainer>
           <Price product={activeBuyProduct} />
           {renderCartButton()}
