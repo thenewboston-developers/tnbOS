@@ -3,10 +3,9 @@ import {useSelector} from 'react-redux';
 import orderBy from 'lodash/orderBy';
 
 import EmptyText from 'apps/Shop/components/EmptyText';
+import Order from 'apps/Shop/components/Order';
 import {getOrders} from 'apps/Shop/selectors/state';
 import {SFC} from 'system/types';
-
-import Order from './Order';
 import * as S from './Styles';
 
 const BuyOrders: SFC = ({className}) => {

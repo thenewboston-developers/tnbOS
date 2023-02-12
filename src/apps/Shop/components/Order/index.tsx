@@ -6,6 +6,7 @@ import {Order as TOrder} from 'apps/Shop/types';
 import {SFC} from 'system/types';
 
 import OrderProduct from './OrderProduct';
+import OrderTop from './OrderTop';
 import * as S from './Styles';
 
 export interface OrderProps {
@@ -15,7 +16,7 @@ export interface OrderProps {
 const Order: SFC<OrderProps> = ({className, order}) => {
   const products = useSelector(getProducts);
 
-  const {address, productIds, total} = order;
+  const {address, productIds} = order;
 
   const orderProductList = useMemo(() => {
     return productIds.map((productId) => products[productId]);
@@ -37,33 +38,9 @@ const Order: SFC<OrderProps> = ({className, order}) => {
     return <S.OrderProducts>{_orderProducts}</S.OrderProducts>;
   };
 
-  const renderPrice = () => {
-    return (
-      <S.PriceContainer>
-        <S.PriceNetworkImage alt="display image" src="https://avatars.githubusercontent.com/u/12706692?s=200&v=4" />
-        <S.PriceAmount>{total.toLocaleString()}</S.PriceAmount>
-      </S.PriceContainer>
-    );
-  };
-
-  const renderTop = () => {
-    return (
-      <S.Top>
-        <S.TopDetail>
-          <S.TopLabel>ORDER DATE</S.TopLabel>
-          <S.TopValue>February 3, 2023</S.TopValue>
-        </S.TopDetail>
-        <S.TopDetail>
-          <S.TopLabel>TOTAL</S.TopLabel>
-          <S.TopValue>{renderPrice()}</S.TopValue>
-        </S.TopDetail>
-      </S.Top>
-    );
-  };
-
   return (
     <S.Container className={className}>
-      {renderTop()}
+      <OrderTop order={order} />
       {renderBottom()}
     </S.Container>
   );
