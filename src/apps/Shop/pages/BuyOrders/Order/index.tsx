@@ -1,22 +1,27 @@
-import {Product} from 'apps/Shop/types';
+import {useMemo} from 'react';
+import {useSelector} from 'react-redux';
+
+import {getProducts} from 'apps/Shop/selectors/state';
+import {Order as TOrder} from 'apps/Shop/types';
 import {SFC} from 'system/types';
 
 import OrderProduct from './OrderProduct';
 import * as S from './Styles';
 
-const Order: SFC = ({className}) => {
-  const renderBottom = () => {
-    const address = {
-      address1: '708 Apple Road',
-      address2: 'PO Box 284',
-      addressId: 'abc',
-      city: 'Pittsburgh',
-      countryCode: 'US',
-      fullName: 'Bucky Roberts',
-      state: 'PA',
-      zipCode: '15101',
-    };
+export interface OrderProps {
+  order: TOrder;
+}
 
+const Order: SFC<OrderProps> = ({className, order}) => {
+  const products = useSelector(getProducts);
+
+  const {address, productIds, total} = order;
+
+  const orderProductList = useMemo(() => {
+    return productIds.map((productId) => products[productId]);
+  }, [productIds, products]);
+
+  const renderBottom = () => {
     return (
       <S.Bottom>
         <S.AddressCard address={address} />
@@ -26,7 +31,6 @@ const Order: SFC = ({className}) => {
   };
 
   const renderOrderProducts = () => {
-    const orderProductList: Product[] = [];
     const _orderProducts = orderProductList.map((product) => (
       <OrderProduct key={product.productId} product={product} />
     ));
@@ -37,7 +41,7 @@ const Order: SFC = ({className}) => {
     return (
       <S.PriceContainer>
         <S.PriceNetworkImage alt="display image" src="https://avatars.githubusercontent.com/u/12706692?s=200&v=4" />
-        <S.PriceAmount>2,600</S.PriceAmount>
+        <S.PriceAmount>{total.toLocaleString()}</S.PriceAmount>
       </S.PriceContainer>
     );
   };

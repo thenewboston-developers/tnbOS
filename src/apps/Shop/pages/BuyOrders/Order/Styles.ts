@@ -21,7 +21,8 @@ export const Container = styled.div`
 export const OrderProducts = styled.div`
   display: grid;
   gap: 12px;
-  grid-template-columns: 1fr 6fr;
+  grid-template-columns: 100px auto;
+  margin-top: 16px;
 `;
 
 export const PriceAmount = styled.div`
