@@ -35,6 +35,7 @@ const BuyProductDetails: SFC = ({className}) => {
         productId: activeBuyProduct.productId,
       }),
     );
+    displayToast(`Product added to cart!`, ToastType.success);
   };
 
   const handleBackClick = () => {
@@ -62,6 +63,7 @@ const BuyProductDetails: SFC = ({className}) => {
   const handleRemoveFromCartClick = () => {
     if (!activeBuyProduct) return;
     dispatch(unsetCartProduct(activeBuyProduct.productId));
+    displayToast(`Product removed from cart`, ToastType.success);
   };
 
   const renderLeft = () => {

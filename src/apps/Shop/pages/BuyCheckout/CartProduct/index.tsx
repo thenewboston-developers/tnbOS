@@ -29,6 +29,7 @@ const CartProduct: SFC<CartProductProps> = ({product}) => {
       <S.Details>
         <S.Name>{name}</S.Name>
         <S.Description>{truncate(description, 200)}</S.Description>
+        <S.PriceMini product={product} />
       </S.Details>
       <S.Actions>
         <ActionLink onClick={handleRemoveClick}>Remove</ActionLink>

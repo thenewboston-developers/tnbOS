@@ -52,6 +52,7 @@ export const PriceContainer = styled.div`
 
 export const Right = styled.div`
   display: flex;
+  flex: auto;
   flex-direction: column;
 `;
 
