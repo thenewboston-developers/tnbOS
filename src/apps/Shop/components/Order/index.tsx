@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
+import OrderPayment from 'apps/Shop/components/OrderPayment';
 import {getProducts} from 'apps/Shop/selectors/state';
 import {Order as TOrder} from 'apps/Shop/types';
 import {SFC} from 'system/types';
@@ -27,6 +28,7 @@ const Order: SFC<OrderProps> = ({className, order}) => {
       <S.Bottom>
         <S.AddressCard address={address} />
         {renderOrderProducts()}
+        <OrderPayment />
       </S.Bottom>
     );
   };
