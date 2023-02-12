@@ -2,6 +2,7 @@ import {useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import {getAddresses} from 'apps/Shop/selectors/state';
+import {GenericVoidFunction} from 'shared/types';
 import {SFC} from 'system/types';
 
 import AddressSelectCard from './AddressSelectCard';
@@ -9,9 +10,10 @@ import * as S from './Styles';
 
 interface AddressSelectModalProps {
   close(): void;
+  setAddressId: GenericVoidFunction;
 }
 
-const AddressSelectModal: SFC<AddressSelectModalProps> = ({className, close}) => {
+const AddressSelectModal: SFC<AddressSelectModalProps> = ({className, close, setAddressId}) => {
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
   const addresses = useSelector(getAddresses);
 
@@ -28,7 +30,7 @@ const AddressSelectModal: SFC<AddressSelectModalProps> = ({className, close}) =>
   };
 
   const handleButtonClick = () => {
-    console.log(selectedAddressId);
+    setAddressId(selectedAddressId);
     close();
   };
 
@@ -45,9 +47,14 @@ const AddressSelectModal: SFC<AddressSelectModalProps> = ({className, close}) =>
     return <S.AddressSelectCards>{_addresses}</S.AddressSelectCards>;
   };
 
+  const renderContent = () => {
+    if (!!addressList.length) return renderAddressSelectCards();
+    return <S.EmptyText>No addresses to display.</S.EmptyText>;
+  };
+
   return (
     <S.Modal className={className} close={close} header="Select Address">
-      {renderAddressSelectCards()}
+      {renderContent()}
       <S.Button disabled={!selectedAddressId} onClick={handleButtonClick} text="Submit" />
     </S.Modal>
   );

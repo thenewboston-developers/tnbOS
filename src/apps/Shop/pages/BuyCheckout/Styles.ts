@@ -5,8 +5,11 @@ import UEmptyText from 'apps/Shop/components/EmptyText';
 import ULine from 'apps/Shop/components/Line';
 
 export const AddressCard = styled(UAddressCard)`
-  margin-bottom: 32px;
   width: fit-content;
+`;
+
+export const AddressContent = styled.div`
+  margin-bottom: 32px;
 `;
 
 export const CartProducts = styled.div`

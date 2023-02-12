@@ -1,8 +1,12 @@
+import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
-import {useCartProductList} from 'apps/Shop/hooks';
+import Button from 'apps/Shop/components/Button';
 import DropdownMenu from 'system/components/DropdownMenu';
+import {useCartProductList} from 'apps/Shop/hooks';
 import AddressSelectModal from 'apps/Shop/modals/AddressSelectModal';
+import {getAddresses} from 'apps/Shop/selectors/state';
 import {useToggle} from 'system/hooks';
 import {SFC} from 'system/types';
 
@@ -12,30 +16,33 @@ import * as S from './Styles';
 
 const BuyCheckout: SFC = ({className}) => {
   const [addressSelectModalIsOpen, toggleAddressSelectModal] = useToggle(false);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+  const addresses = useSelector(getAddresses);
   const cartProductList = useCartProductList();
+
+  useEffect(() => {
+    const addressIds = Object.keys(addresses);
+    if (!!addressIds.length) setSelectedAddressId(addressIds[0]);
+  }, [addresses]);
 
   const renderAddressSelectModal = () => {
     if (!addressSelectModalIsOpen) return null;
-    return <AddressSelectModal close={toggleAddressSelectModal} />;
+    return <AddressSelectModal close={toggleAddressSelectModal} setAddressId={setSelectedAddressId} />;
   };
 
   const renderAddress = () => {
-    const address = {
-      address1: '423',
-      address2: 'rewqrwe eqw',
-      addressId: 'rrewrweqr',
-      city: 'LIC',
-      countryCode: 'US',
-      fullName: 'Bucky',
-      state: 'NY',
-      zipCode: '43245',
-    };
+    let content = <Button onClick={toggleAddressSelectModal} text="Select Address" />;
+
+    if (selectedAddressId) {
+      const address = addresses[selectedAddressId];
+      content = <S.AddressCard address={address} rightContent={renderAddressDropdownMenu()} />;
+    }
 
     return (
       <>
         <S.Heading>Address</S.Heading>
         <S.Line />
-        <S.AddressCard address={address} rightContent={renderAddressDropdownMenu()} />
+        <S.AddressContent>{content}</S.AddressContent>
       </>
     );
   };
