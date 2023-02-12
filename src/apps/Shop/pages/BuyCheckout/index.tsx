@@ -8,8 +8,10 @@ import {APPROVAL_WINDOW_SECONDS, PAYMENT_WINDOW_SECONDS} from 'apps/Shop/constan
 import {useCartProductList} from 'apps/Shop/hooks';
 import AddressSelectModal from 'apps/Shop/modals/AddressSelectModal';
 import {getAddresses} from 'apps/Shop/selectors/state';
+import {resetCartProducts} from 'apps/Shop/store/cartProducts';
+import {setActivePage} from 'apps/Shop/store/manager';
 import {setOrder} from 'apps/Shop/store/orders';
-import {ApprovalStatus, PaymentStatus} from 'apps/Shop/types';
+import {ApprovalStatus, Page, PaymentStatus} from 'apps/Shop/types';
 import {useToggle} from 'system/hooks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
@@ -67,8 +69,8 @@ const BuyCheckout: SFC = ({className}) => {
     };
 
     dispatch(setOrder(order));
-    // empty cart
-    // redirect to orders page
+    dispatch(resetCartProducts());
+    dispatch(setActivePage(Page.buyOrders));
   };
 
   const renderAddressSelectModal = () => {

@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
 import EmptyText from 'apps/Shop/components/EmptyText';
 import {getOrders} from 'apps/Shop/selectors/state';
@@ -12,7 +13,7 @@ const BuyOrders: SFC = ({className}) => {
   const orders = useSelector(getOrders);
 
   const orderList = useMemo(() => {
-    return Object.values(orders);
+    return orderBy(Object.values(orders), ['createdDate'], ['desc']);
   }, [orders]);
 
   const renderOrders = () => {
