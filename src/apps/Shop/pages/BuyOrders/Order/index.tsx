@@ -1,4 +1,7 @@
+import {Product} from 'apps/Shop/types';
 import {SFC} from 'system/types';
+
+import OrderProduct from './OrderProduct';
 import * as S from './Styles';
 
 const Order: SFC = ({className}) => {
@@ -17,8 +20,17 @@ const Order: SFC = ({className}) => {
     return (
       <S.Bottom>
         <S.AddressCard address={address} />
+        {renderOrderProducts()}
       </S.Bottom>
     );
+  };
+
+  const renderOrderProducts = () => {
+    const orderProductList: Product[] = [];
+    const _orderProducts = orderProductList.map((product) => (
+      <OrderProduct key={product.productId} product={product} />
+    ));
+    return <S.OrderProducts>{_orderProducts}</S.OrderProducts>;
   };
 
   const renderPrice = () => {

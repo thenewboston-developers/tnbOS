@@ -18,6 +18,12 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
+export const OrderProducts = styled.div`
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 6fr;
+`;
+
 export const PriceAmount = styled.div`
   font-weight: 700;
   margin-left: 6px;
