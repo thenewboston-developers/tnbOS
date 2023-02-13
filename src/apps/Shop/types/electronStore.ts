@@ -1,5 +1,12 @@
-import {SHOP_ADDRESSES, SHOP_CART_PRODUCTS, SHOP_MANAGER, SHOP_ORDERS, SHOP_PRODUCTS} from 'apps/Shop/store/constants';
-import {Addresses, CartProducts, Manager, Orders, Products} from 'apps/Shop/types';
+import {
+  SHOP_ADDRESSES,
+  SHOP_CART_PRODUCTS,
+  SHOP_MANAGER,
+  SHOP_ORDERS,
+  SHOP_PRODUCT_RECORDS,
+  SHOP_PRODUCTS,
+} from 'apps/Shop/store/constants';
+import {Addresses, CartProducts, Manager, Orders, ProductRecords, Products} from 'apps/Shop/types';
 
 export interface ShopElectronStore {
   [SHOP_ADDRESSES]: Addresses;
@@ -7,4 +14,5 @@ export interface ShopElectronStore {
   [SHOP_MANAGER]: Manager;
   [SHOP_ORDERS]: Orders;
   [SHOP_PRODUCTS]: Products;
+  [SHOP_PRODUCT_RECORDS]: ProductRecords;
 }

@@ -3,6 +3,7 @@ import {useDispatch} from 'react-redux';
 import ActionLink from 'apps/Shop/components/ActionLink';
 import ActivationBadge from 'apps/Shop/components/ActivationBadge';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
+import {setSelfProductRecord, unsetProductRecord} from 'apps/Shop/store/productRecords';
 import {setProduct, unsetProduct} from 'apps/Shop/store/products';
 import {ActivationStatus, Page, Product as TProduct} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
@@ -32,11 +33,24 @@ const Product: SFC<ProductProps> = ({product}) => {
     };
 
     dispatch(setProduct(_product));
+
+    const {modifiedDate, seller} = _product;
+
+    if (newActivationStatus === ActivationStatus.active) {
+      dispatch(setSelfProductRecord({modifiedDate, productId, seller}));
+      // TODO: Reset product record recipients
+    } else if (newActivationStatus === ActivationStatus.draft) {
+      dispatch(unsetProductRecord({productId, seller}));
+      // TODO: Reset product record recipients
+    }
+
     displayToast(`Product set to ${newActivationStatus}`, ToastType.success);
   };
 
   const handleDeleteClick = () => {
     dispatch(unsetProduct(productId));
+    dispatch(unsetProductRecord({productId, seller: product.seller}));
+    // TODO: Reset product record recipients
     displayToast(`Product deleted`, ToastType.success);
   };
 

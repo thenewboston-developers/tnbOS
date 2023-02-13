@@ -8,6 +8,7 @@ import {Checkbox, Input, Select} from 'apps/Shop/components/FormElements';
 import ProductCard from 'apps/Shop/components/ProductCard';
 import {useActiveSellProduct, useNetworkSelectOptions} from 'apps/Shop/hooks';
 import {setActivePage} from 'apps/Shop/store/manager';
+import {setSelfProductRecord, unsetProductRecord} from 'apps/Shop/store/productRecords';
 import {setProduct} from 'apps/Shop/store/products';
 import {ActivationStatus, Page} from 'apps/Shop/types';
 import {productValidator} from 'apps/Shop/validators/products';
@@ -55,6 +56,19 @@ const SellProductDetails: SFC = ({className}) => {
     };
 
     dispatch(setProduct(product));
+
+    const {modifiedDate, productId, seller} = product;
+
+    if (activationStatus === ActivationStatus.active) {
+      dispatch(setSelfProductRecord({modifiedDate, productId, seller}));
+      // TODO: Reset product record recipients
+    } else if (
+      activeSellProduct?.activationStatus === ActivationStatus.active &&
+      activationStatus === ActivationStatus.draft
+    ) {
+      dispatch(unsetProductRecord({productId, seller}));
+      // TODO: Reset product record recipients
+    }
 
     setSubmitting(false);
     setValues(values);

@@ -7,6 +7,7 @@ import {SelectOption} from 'apps/Shop/types/forms';
 import {Manager} from 'apps/Shop/types/manager';
 import {ApprovalStatus, Order, Orders, PaymentStatus, ShippingStatus} from 'apps/Shop/types/orders';
 import {Page} from 'apps/Shop/types/pages';
+import {ProductRecord, ProductRecords} from 'apps/Shop/types/productRecords';
 import {Product, Products} from 'apps/Shop/types/products';
 
 export {
@@ -23,6 +24,8 @@ export {
   Page,
   PaymentStatus,
   Product,
+  ProductRecord,
+  ProductRecords,
   Products,
   SelectOption,
   SetPaymentStatusParams,

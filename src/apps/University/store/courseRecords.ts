@@ -27,24 +27,28 @@ const courseRecords = createSlice({
     ) => {
       const {courseId, instructor, modifiedDate} = payload;
 
-      if (!state[instructor]) {
+      if (!!state[instructor]) {
+        state[instructor].courseModifiedDates[courseId] = modifiedDate;
+        state[instructor].recordModifiedDate = modifiedDate;
+      } else {
         state[instructor] = {
           courseModifiedDates: {
             [courseId]: modifiedDate,
           },
           recordModifiedDate: modifiedDate,
         };
-      } else {
-        state[instructor].courseModifiedDates[courseId] = modifiedDate;
-        state[instructor].recordModifiedDate = modifiedDate;
       }
 
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_COURSE_RECORDS, state: current(state)});
     },
     unsetCourseRecord: (state: CourseRecords, {payload}: PayloadAction<{courseId: string; instructor: string}>) => {
       const {courseId, instructor} = payload;
-      delete state[instructor].courseModifiedDates[courseId];
-      state[instructor].recordModifiedDate = currentSystemDate();
+
+      if (!!state[instructor]) {
+        delete state[instructor].courseModifiedDates[courseId];
+        state[instructor].recordModifiedDate = currentSystemDate();
+      }
+
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_COURSE_RECORDS, state: current(state)});
     },
   },
