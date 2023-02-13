@@ -37,6 +37,7 @@ export const appRegistrations: AppRegistration[] = [
 
 export const appRouters: AppDataHandlers = {
   chat: ChatRegistration.router!,
+  shop: ShopRegistration.router!,
   speedTest: SpeedTestRegistration.router!,
   trade: TradeRegistration.router!,
   university: UniversityRegistration.router!,
