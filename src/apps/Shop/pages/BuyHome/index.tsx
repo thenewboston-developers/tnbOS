@@ -1,8 +1,8 @@
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import ProductCard from 'apps/Shop/components/ProductCard';
 import ProductCardsContainer from 'apps/Shop/components/ProductCardsContainer';
-import {getProducts} from 'apps/Shop/selectors/state';
+import {useAvailableProducts} from 'apps/Shop/hooks';
 import {setActiveBuyProductId, setActivePage} from 'apps/Shop/store/manager';
 import {Page} from 'apps/Shop/types';
 import EmptyPage from 'system/components/EmptyPage';
@@ -12,11 +12,8 @@ import BuyHomeEmptyStateGraphic from './assets/buy-home-empty-state.png';
 import * as S from './Styles';
 
 const BuyHome: SFC = ({className}) => {
+  const availableProducts = useAvailableProducts();
   const dispatch = useDispatch<AppDispatch>();
-  const products = useSelector(getProducts);
-
-  // TODO: Update this logic
-  const availableProducts = Object.values(products);
 
   const handleClick = (productId: string) => {
     dispatch(setActiveBuyProductId(productId));

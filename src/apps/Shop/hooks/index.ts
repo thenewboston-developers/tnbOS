@@ -1,6 +1,7 @@
 import useActiveBuyAddress from 'apps/Shop/hooks/useActiveBuyAddress';
 import useActiveBuyProduct from 'apps/Shop/hooks/useActiveBuyProduct';
 import useActiveSellProduct from 'apps/Shop/hooks/useActiveSellProduct';
+import useAvailableProducts from 'apps/Shop/hooks/useAvailableProducts';
 import useCartProductList from 'apps/Shop/hooks/useCartProductList';
 import useIsOnBuyPage from 'apps/Shop/hooks/useIsOnBuyPage';
 import useNetworkSelectOptions from 'apps/Shop/hooks/useNetworkSelectOptions';
@@ -15,6 +16,7 @@ export {
   useActiveBuyAddress,
   useActiveBuyProduct,
   useActiveSellProduct,
+  useAvailableProducts,
   useCartProductList,
   useIsOnBuyPage,
   useNetworkSelectOptions,

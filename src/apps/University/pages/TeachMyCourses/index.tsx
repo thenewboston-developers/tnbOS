@@ -1,5 +1,3 @@
-import {useMemo} from 'react';
-
 import Button from 'apps/University/components/Button';
 import EmptyText from 'apps/University/components/EmptyText';
 import {useTaughtCourses} from 'apps/University/hooks';
@@ -14,17 +12,13 @@ const TeachMyCourses: SFC = ({className}) => {
   const [courseModalIsOpen, toggleCourseModal] = useToggle(false);
   const taughtCourses = useTaughtCourses();
 
-  const courses = useMemo(() => {
-    return Object.values(taughtCourses);
-  }, [taughtCourses]);
-
   const renderContent = () => {
-    if (!!courses.length) return renderCourses();
+    if (!!taughtCourses.length) return renderCourses();
     return <EmptyText>No courses to display.</EmptyText>;
   };
 
   const renderCourses = () => {
-    const _courses = courses.map((course) => <Course course={course} key={course.courseId} />);
+    const _courses = taughtCourses.map((course) => <Course course={course} key={course.courseId} />);
     return <S.Courses>{_courses}</S.Courses>;
   };
 
