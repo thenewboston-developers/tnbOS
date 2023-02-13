@@ -64,13 +64,12 @@ const setCourseRecordListener = (block: Block, dispatch: AppDispatch, networkId:
         );
 
         const removedCourseIds = getRemovedCourseIds(courseRecord, existingCourseRecord);
+        const updatedCourseIds = getUpdatedCourseIds(courseRecord, courses);
 
         dispatch(unsetEnrollmentsFromCourseIds(removedCourseIds));
         dispatch(unsetLectureRecordsFromCourseIds(removedCourseIds));
         dispatch(unsetLecturesFromCourseIds(removedCourseIds));
         dispatch(unsetCourses(removedCourseIds));
-
-        const updatedCourseIds = getUpdatedCourseIds(courseRecord, courses);
 
         if (!!updatedCourseIds.length) {
           await getCourseListBlock({
