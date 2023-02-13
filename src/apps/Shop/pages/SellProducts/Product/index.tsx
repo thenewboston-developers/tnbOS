@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 
 import ActionLink from 'apps/Shop/components/ActionLink';
 import ActivationBadge from 'apps/Shop/components/ActivationBadge';
+import ProductListDetails from 'apps/Shop/components/ProductListDetails';
 import {setActivePage, setActiveSellProductId} from 'apps/Shop/store/manager';
 import {resetProductRecordRecipients} from 'apps/Shop/store/productRecordRecipients';
 import {setSelfProductRecord, unsetProductRecord} from 'apps/Shop/store/productRecords';
@@ -9,7 +10,6 @@ import {setProduct, unsetProduct} from 'apps/Shop/store/products';
 import {ActivationStatus, Page, Product as TProduct} from 'apps/Shop/types';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import {truncate} from 'system/utils/strings';
 import {displayToast} from 'system/utils/toast';
 import * as S from './Styles';
 
@@ -20,7 +20,7 @@ export interface ProductProps {
 const Product: SFC<ProductProps> = ({product}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {activationStatus, description, imageUrl, name, productId} = product;
+  const {activationStatus, imageUrl, productId} = product;
 
   const handleActivationActionLinkClick = () => {
     let newActivationStatus = ActivationStatus.draft;
@@ -68,10 +68,7 @@ const Product: SFC<ProductProps> = ({product}) => {
   return (
     <>
       <S.Thumbnail onClick={handleEditClick} thumbnailUrl={imageUrl} />
-      <S.Details>
-        <S.Name onClick={handleEditClick}>{name}</S.Name>
-        <S.Description>{truncate(description, 200)}</S.Description>
-      </S.Details>
+      <ProductListDetails onClick={handleEditClick} product={product} />
       <S.ActivationStatus>
         <ActivationBadge activationStatus={activationStatus} />
       </S.ActivationStatus>
