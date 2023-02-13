@@ -9,3 +9,7 @@ export interface SetPaymentStatusParams {
   orderId: string;
   paymentStatus: PaymentStatus;
 }
+
+export enum ShopFn {
+  setProductRecord = 'setProductRecord',
+}

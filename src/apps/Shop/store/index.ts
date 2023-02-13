@@ -4,6 +4,7 @@ import addressesReducer from 'apps/Shop/store/addresses';
 import cartProductsReducer from 'apps/Shop/store/cartProducts';
 import managerReducer from 'apps/Shop/store/manager';
 import ordersReducer from 'apps/Shop/store/orders';
+import productRecordRecipientsRecordsReducer from 'apps/Shop/store/productRecordRecipients';
 import productRecordsReducer from 'apps/Shop/store/productRecords';
 import productsReducer from 'apps/Shop/store/products';
 
@@ -12,6 +13,7 @@ const shopReducer = combineReducers({
   cartProducts: cartProductsReducer,
   manager: managerReducer,
   orders: ordersReducer,
+  productRecordRecipients: productRecordRecipientsRecordsReducer,
   productRecords: productRecordsReducer,
   products: productsReducer,
 });

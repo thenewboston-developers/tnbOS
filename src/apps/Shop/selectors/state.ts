@@ -1,4 +1,12 @@
-import {Addresses, CartProducts, Orders, Page, ProductRecords, Products} from 'apps/Shop/types';
+import {
+  Addresses,
+  CartProducts,
+  Orders,
+  Page,
+  ProductRecordRecipients,
+  ProductRecords,
+  Products,
+} from 'apps/Shop/types';
 import {RootState} from 'system/types';
 
 export const getActiveBuyAddressId = (state: RootState): string | null => state.shop.manager.activeBuyAddressId;
@@ -8,5 +16,7 @@ export const getActiveSellProductId = (state: RootState): string | null => state
 export const getAddresses = (state: RootState): Addresses => state.shop.addresses;
 export const getCartProducts = (state: RootState): CartProducts => state.shop.cartProducts;
 export const getOrders = (state: RootState): Orders => state.shop.orders;
+export const getProductRecordRecipients = (state: RootState): ProductRecordRecipients =>
+  state.shop.productRecordRecipients;
 export const getProductRecords = (state: RootState): ProductRecords => state.shop.productRecords;
 export const getProducts = (state: RootState): Products => state.shop.products;
