@@ -24,7 +24,7 @@ const LeftMenuItem: SFC<LeftMenuItemProps> = ({children, className, icon, page})
 
   return (
     <S.Container $isActivePage={isActivePage} className={className} onClick={handleClick}>
-      <S.Icon $isActivePage={isActivePage} path={icon} size="20px" />
+      <S.Icon path={icon} size="20px" />
       <S.Text $isActivePage={isActivePage}>{children}</S.Text>
     </S.Container>
   );

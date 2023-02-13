@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: #101827;
+  background: #24292f;
   color: #fff;
   display: flex;
   justify-content: space-between;

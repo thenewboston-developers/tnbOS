@@ -23,7 +23,7 @@ export const Container = styled.div`
   gap: 48px;
   grid-template-columns: auto 30%;
   height: 100%;
-  padding: 24px;
+  padding: 24px 32px;
   width: 100%;
 `;
 

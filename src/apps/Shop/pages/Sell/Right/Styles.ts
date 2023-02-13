@@ -9,5 +9,5 @@ export const MainContent = styled.div`
   background: #f8f8fb;
   flex: auto;
   overflow: auto;
-  padding: 24px;
+  padding: 24px 32px;
 `;

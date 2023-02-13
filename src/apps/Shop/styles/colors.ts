@@ -1,13 +1,17 @@
 /* eslint-disable sort-keys */
 
 const colors = {
+  border: {
+    default: '#d0d7de',
+  },
+  canvas: {
+    subtle: '#f5f8fa',
+  },
   fonts: {
-    default: '#555',
+    default: '#24292f',
     error: '#ac1818',
-    heading: '#373e4a',
-    leftMenuBackground: '#303641',
-    leftMenuText: '#aaabae',
-    secondary: '#999',
+    muted: '#57606a',
+    subtle: '#6e7781',
   },
   palette: {
     black: {

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import UAccountLabel from 'apps/Shop/components/AccountLabel';
 import UBack from 'apps/Shop/components/Back';
+import {colors} from 'apps/Shop/styles';
 
 export const AccountLabel = styled(UAccountLabel)`
   margin-top: 16px;
@@ -14,11 +15,11 @@ export const Back = styled(UBack)`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 24px 32px;
 `;
 
 export const Description = styled.div`
-  color: #777;
+  color: ${colors.fonts.muted};
   margin-top: 16px;
 `;
 
@@ -38,7 +39,6 @@ export const MainContent = styled.div`
 `;
 
 export const Name = styled.div`
-  color: #222;
   font-size: 32px;
   font-weight: 700;
   margin-top: 4px;
@@ -47,7 +47,7 @@ export const Name = styled.div`
 export const PriceContainer = styled.div`
   align-items: center;
   border-radius: 4px;
-  border: 1px solid #eee;
+  border: 1px solid ${colors.border.default};
   display: flex;
   gap: 24px;
   justify-content: space-between;

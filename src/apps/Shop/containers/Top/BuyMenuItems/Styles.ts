@@ -4,9 +4,11 @@ import MdiIcon from '@mdi/react';
 export const Icon = styled(MdiIcon)``;
 
 export const IconContainer = styled.div`
+  color: #fff;
   position: relative;
 
   &:hover {
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
   }
 `;

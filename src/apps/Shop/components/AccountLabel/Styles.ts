@@ -18,7 +18,7 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: ${colors.fonts.secondary};
+  color: ${colors.fonts.muted};
   font-size: 12px;
 `;
 

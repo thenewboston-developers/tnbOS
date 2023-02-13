@@ -18,7 +18,7 @@ export const Content = styled.div`
 
 export const Header = styled.div`
   align-items: center;
-  color: ${colors.fonts.heading};
+  color: ${colors.fonts.default};
   display: flex;
   font-size: 16px;
   font-weight: 500;

@@ -25,11 +25,11 @@ const OrderTop: SFC<OrderTopProps> = ({className, order}) => {
   return (
     <S.Container className={className}>
       <S.Detail>
-        <S.DetailLabel>ORDER DATE</S.DetailLabel>
+        <S.DetailLabel>Order Date</S.DetailLabel>
         <S.DetailValue>{longDate(createdDate)}</S.DetailValue>
       </S.Detail>
       <S.Detail>
-        <S.DetailLabel>TOTAL</S.DetailLabel>
+        <S.DetailLabel>Total</S.DetailLabel>
         <S.DetailValue>{renderPrice()}</S.DetailValue>
       </S.Detail>
     </S.Container>

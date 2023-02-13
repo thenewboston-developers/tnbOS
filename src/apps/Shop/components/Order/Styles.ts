@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UAddressCard from 'apps/Shop/components/AddressCard';
+import {colors} from 'apps/Shop/styles';
 
 export const AddressCard = styled(UAddressCard)`
   padding: 8px 12px;
@@ -14,9 +15,11 @@ export const Bottom = styled.div`
 
 export const Container = styled.div`
   border-radius: 4px;
-  border: 1px solid #e3e8ee;
+  border: 1px solid ${colors.border.default};
+  box-shadow: 0 3px 6px rgb(140 149 159 / 15%);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export const OrderProducts = styled.div`

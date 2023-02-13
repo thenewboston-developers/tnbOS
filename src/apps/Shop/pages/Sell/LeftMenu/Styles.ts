@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Shop/styles';
+
 export const Container = styled.div`
-  background: #1e2a3c;
+  background: #fff;
+  border-right: 1px solid ${colors.border.default};
   display: flex;
   flex-direction: column;
   flex: auto;

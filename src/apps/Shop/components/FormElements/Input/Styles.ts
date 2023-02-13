@@ -29,7 +29,7 @@ export const Field = styled(UField)`
 `;
 
 export const Label = styled.div`
-  color: ${colors.fonts.secondary};
+  color: ${colors.fonts.muted};
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 6px;

@@ -16,9 +16,10 @@ export const Bottom = styled.div`
 `;
 
 export const Container = styled.div`
+  background: #fff;
   border-radius: 4px;
-  border: 1px solid #ebebeb;
-  box-shadow: 0 3px 1px rgb(0 0 0 / 4%);
+  border: 1px solid ${colors.border.default};
+  box-shadow: 0 3px 6px rgb(140 149 159 / 15%);
   overflow: hidden;
   transition: all 0.2s ease-in-out 0s;
 
@@ -29,7 +30,7 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: ${colors.fonts.secondary};
+  color: ${colors.fonts.muted};
   font-size: 12px;
   margin-top: 4px;
 `;
@@ -39,7 +40,7 @@ export const Line = styled(ULine)`
 `;
 
 export const Name = styled.div`
-  color: ${colors.fonts.heading};
+  color: ${colors.fonts.default};
   font-size: 20px;
   font-weight: 600;
 `;

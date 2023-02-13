@@ -17,7 +17,7 @@ export const Addresses = styled.div`
 `;
 
 export const Container = styled.div`
-  padding: 24px;
+  padding: 24px 32px;
 `;
 
 export const SectionHeading = styled(USectionHeading)`
