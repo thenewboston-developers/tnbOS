@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import UButton from 'apps/Shop/components/Button';
-import {colors} from 'apps/Shop/styles';
 
 export const Amount = styled.div`
   font-size: 26px;
@@ -16,10 +15,8 @@ export const Button = styled(UButton)`
 export const Container = styled.div`
   align-items: center;
   border-radius: 4px;
-  border: 1px solid ${colors.border.default};
   display: flex;
   flex-direction: column;
-  padding: 12px;
 `;
 
 export const NetworkImage = styled.img`
