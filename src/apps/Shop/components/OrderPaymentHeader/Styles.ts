@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const BUBBLE_SIZE = 24;
-const TEXT_MARGIN_LEFT = 8;
+const TEXT_MARGIN_LEFT = 12;
 export const TOTAL_LEFT_SPACING = BUBBLE_SIZE + TEXT_MARGIN_LEFT;
 
 export const Bubble = styled.div`

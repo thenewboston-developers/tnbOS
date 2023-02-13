@@ -5,25 +5,17 @@ import {TableRow} from 'apps/Shop/components/Table';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-const BuyerPayment: SFC = ({className}) => {
+const Shipping: SFC = ({className}) => {
   const tableRows: TableRow[] = [
     {
-      key: 'Seller Receiving Address',
-      value: '579c314f574bf3fe6d8d5920239abac80efbe6a9e8e9a3b001ac09765b89aaa0',
-    },
-    {
-      key: 'Payment Expiration Date',
-      value: 'February 7, 2023 at 8:44:10 PM EST',
-    },
-    {
-      key: 'Payment Status',
-      value: <Badge badgeStyle={BadgeStyle.success} text="Complete" />,
+      key: 'Shipping Status',
+      value: <Badge badgeStyle={BadgeStyle.dark} text="Not Shipped" />,
     },
   ];
 
   return (
     <S.Container className={className}>
-      <OrderPaymentHeader number={2} text="Buyer Payment" />
+      <OrderPaymentHeader number={4} text="Shipping" />
       <OrderPaymentContent>
         <S.Table rows={tableRows} />
       </OrderPaymentContent>
@@ -31,4 +23,4 @@ const BuyerPayment: SFC = ({className}) => {
   );
 };
 
-export default BuyerPayment;
+export default Shipping;

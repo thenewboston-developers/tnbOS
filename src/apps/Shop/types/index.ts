@@ -5,7 +5,7 @@ import {ShopElectronStore} from 'apps/Shop/types/electronStore';
 import {ApproveOrderParams, SetPaymentStatusParams} from 'apps/Shop/types/fns';
 import {SelectOption} from 'apps/Shop/types/forms';
 import {Manager} from 'apps/Shop/types/manager';
-import {ApprovalStatus, Order, Orders, PaymentStatus} from 'apps/Shop/types/orders';
+import {ApprovalStatus, Order, Orders, PaymentStatus, ShippingStatus} from 'apps/Shop/types/orders';
 import {Page} from 'apps/Shop/types/pages';
 import {Product, Products} from 'apps/Shop/types/products';
 
@@ -26,5 +26,6 @@ export {
   Products,
   SelectOption,
   SetPaymentStatusParams,
+  ShippingStatus,
   ShopElectronStore,
 };

@@ -21,6 +21,7 @@ export interface Order {
   productIds: string[];
   receivingAddress: string | null;
   seller: string;
+  shippingStatus: ShippingStatus;
   total: number;
 }
 
@@ -32,4 +33,10 @@ export enum PaymentStatus {
   expired = 'expired',
   none = 'none',
   partial = 'partial',
+}
+
+export enum ShippingStatus {
+  delivered = 'delivered',
+  notShipped = 'notShipped',
+  shipped = 'shipped',
 }
