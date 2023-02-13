@@ -24,12 +24,11 @@ export const BubbleNumber = styled.div`
 export const Container = styled.div`
   align-items: center;
   display: flex;
-  margin: 16px 0 4px;
+  margin: 24px 0 4px;
 `;
 
 export const Text = styled.div`
-  color: #343a40;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   margin-left: ${`${TEXT_MARGIN_LEFT}px`};
 `;

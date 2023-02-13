@@ -8,7 +8,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   overflow: hidden;
-  padding: 12px;
+  padding: 12px 24px;
 `;
 
 export const Detail = styled.div`

@@ -20,7 +20,7 @@ const AddressCard: SFC<AddressCardProps> = ({address, className, rightContent}) 
   return (
     <S.Container className={className}>
       <S.Left>
-        <div>{fullName}</div>
+        <S.FullName>{fullName}</S.FullName>
         <div>{address1}</div>
         {address2 ? <div>{address2}</div> : null}
         <div>

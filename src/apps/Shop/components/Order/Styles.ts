@@ -10,7 +10,7 @@ export const AddressCard = styled(UAddressCard)`
 
 export const Bottom = styled.div`
   background: #fff;
-  padding: 12px;
+  padding: 16px 24px;
 `;
 
 export const Container = styled.div`
@@ -26,5 +26,5 @@ export const OrderProducts = styled.div`
   display: grid;
   gap: 12px;
   grid-template-columns: 100px auto;
-  margin-top: 16px;
+  margin-top: 24px;
 `;

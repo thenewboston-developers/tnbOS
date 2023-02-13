@@ -12,6 +12,10 @@ export const Container = styled.div`
   padding: 8px 2px 8px 10px;
 `;
 
+export const FullName = styled.div`
+  font-weight: 600;
+`;
+
 export const Left = styled.div``;
 
 export const Right = styled.div``;
