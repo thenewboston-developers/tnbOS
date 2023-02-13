@@ -1,5 +1,6 @@
 import difference from 'lodash/difference';
 
+import {getProductListBlock, setProductRecordReceiptBlock} from 'apps/Shop/blocks';
 import {setIncomingProductRecord} from 'apps/Shop/store/productRecords';
 import {unsetProducts} from 'apps/Shop/store/products';
 import {ProductRecord, Products} from 'apps/Shop/types';
@@ -65,22 +66,19 @@ const setProductRecordListener = (block: Block, dispatch: AppDispatch, networkId
         dispatch(unsetProducts(removedProductIds));
 
         if (!!updatedProductIds.length) {
-          // TODO: Fix
-          console.log(networkId);
-          console.log(updatedProductIds);
-          // await getProductListBlock({
-          //   networkId,
-          //   params: updatedProductIds,
-          //   recipient: blockSender,
-          // });
+          await getProductListBlock({
+            networkId,
+            params: updatedProductIds,
+            recipient: blockSender,
+          });
         }
       }
 
-      // await setProductRecordReceiptBlock({
-      //   networkId,
-      //   params: {recordModifiedDate},
-      //   recipient: blockSender,
-      // });
+      await setProductRecordReceiptBlock({
+        networkId,
+        params: {recordModifiedDate},
+        recipient: blockSender,
+      });
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');

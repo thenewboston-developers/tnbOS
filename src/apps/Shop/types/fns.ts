@@ -10,6 +10,12 @@ export interface SetPaymentStatusParams {
   paymentStatus: PaymentStatus;
 }
 
+export interface SetProductRecordReceiptParams {
+  recordModifiedDate: string;
+}
+
 export enum ShopFn {
+  getProductList = 'getProductList',
   setProductRecord = 'setProductRecord',
+  setProductRecordReceipt = 'setProductRecordReceipt',
 }
