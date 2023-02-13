@@ -22,7 +22,7 @@ const courseValidator: yup.SchemaOf<ICourse> = yup
         'Publication status must be set to published',
         (publicationStatus: any) => publicationStatus === PublicationStatus.published,
       ),
-    thumbnailUrl: yup.string().required(),
+    thumbnailUrl: yup.string().url().required(),
   })
   .noUnknown();
 

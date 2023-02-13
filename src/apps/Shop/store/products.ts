@@ -16,6 +16,13 @@ const products = createSlice({
       state[productId] = product;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCTS, state: current(state)});
     },
+    setProductList: (state: Products, {payload: productList}: PayloadAction<Product[]>) => {
+      for (const product of productList) {
+        const {productId} = product;
+        state[productId] = product;
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCTS, state: current(state)});
+    },
     setProducts: setLocalAndStateReducer<Products>(SHOP_PRODUCTS),
     unsetProduct: (state: Products, {payload: productId}: PayloadAction<string>) => {
       delete state[productId];
@@ -30,5 +37,5 @@ const products = createSlice({
   },
 });
 
-export const {setProduct, setProducts, unsetProduct, unsetProducts} = products.actions;
+export const {setProduct, setProductList, setProducts, unsetProduct, unsetProducts} = products.actions;
 export default products.reducer;
