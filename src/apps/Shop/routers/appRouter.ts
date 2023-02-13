@@ -1,4 +1,4 @@
-import {setProductRecordListener, setProductRecordReceiptListener} from 'apps/Shop/listeners';
+import {getProductListListener, setProductRecordListener, setProductRecordReceiptListener} from 'apps/Shop/listeners';
 import {ShopFn} from 'apps/Shop/types';
 import {Block} from 'shared/types';
 import {AppDataHandlers, AppDispatch} from 'system/types';
@@ -10,6 +10,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
   } = block;
 
   const fnHandlers: AppDataHandlers = {
+    [ShopFn.getProductList]: getProductListListener,
     [ShopFn.setProductRecord]: setProductRecordListener,
     [ShopFn.setProductRecordReceipt]: setProductRecordReceiptListener,
   };

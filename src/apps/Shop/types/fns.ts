@@ -16,6 +16,7 @@ export interface SetProductRecordReceiptParams {
 
 export enum ShopFn {
   getProductList = 'getProductList',
+  setProductList = 'setProductList',
   setProductRecord = 'setProductRecord',
   setProductRecordReceipt = 'setProductRecordReceipt',
 }
