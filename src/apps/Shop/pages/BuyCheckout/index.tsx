@@ -133,6 +133,7 @@ const BuyCheckout: SFC = ({className}) => {
   };
 
   const renderRight = () => {
+    const networkId = !!cartProductList.length ? cartProductList[0].priceNetwork : null;
     return (
       <S.Right>
         <S.Heading>Total</S.Heading>
@@ -140,6 +141,7 @@ const BuyCheckout: SFC = ({className}) => {
         <PaymentDetails
           handlePlaceOrderClick={handlePlaceOrderClick}
           isButtonDisabled={isPlaceOrderButtonDisabled}
+          networkId={networkId}
           totalPrice={totalPrice}
         />
       </S.Right>

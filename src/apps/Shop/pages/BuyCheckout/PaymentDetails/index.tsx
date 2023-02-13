@@ -1,18 +1,28 @@
 import {GenericVoidFunction} from 'shared/types';
+import {useNetworkDisplayImage} from 'system/hooks';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
 export interface PaymentDetailsProps {
   handlePlaceOrderClick: GenericVoidFunction;
   isButtonDisabled: boolean;
+  networkId: string | null;
   totalPrice: number;
 }
 
-const PaymentDetails: SFC<PaymentDetailsProps> = ({className, handlePlaceOrderClick, isButtonDisabled, totalPrice}) => {
+const PaymentDetails: SFC<PaymentDetailsProps> = ({
+  className,
+  handlePlaceOrderClick,
+  isButtonDisabled,
+  networkId,
+  totalPrice,
+}) => {
+  const networkDisplayImage = useNetworkDisplayImage(networkId);
+
   return (
     <S.Container className={className}>
       <S.PriceContainer>
-        <S.NetworkImage alt="display image" src="https://avatars.githubusercontent.com/u/12706692?s=200&v=4" />
+        {networkId && <S.NetworkImage alt="display image" src={networkDisplayImage} />}
         <S.Amount>{totalPrice.toLocaleString()}</S.Amount>
       </S.PriceContainer>
       <S.Button disabled={isButtonDisabled} onClick={handlePlaceOrderClick} text="Place Order" />
