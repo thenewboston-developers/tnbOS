@@ -31,7 +31,6 @@ const MainArea: SFC = ({className}) => {
       [Page.sellOrders]: <Sell />,
       [Page.sellProductDetails]: <Sell />,
       [Page.sellProducts]: <Sell />,
-      [Page.sellShipping]: <Sell />,
     };
 
     return pages[activePage];

@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 import SellOrders from 'apps/Shop/pages/SellOrders';
 import SellProductDetails from 'apps/Shop/pages/SellProductDetails';
 import SellProducts from 'apps/Shop/pages/SellProducts';
-import SellShipping from 'apps/Shop/pages/SellShipping';
 import {getActivePage} from 'apps/Shop/selectors/state';
 import {Page} from 'apps/Shop/types';
 import {SFC} from 'system/types';
@@ -28,7 +27,6 @@ const Right: SFC = ({className}) => {
       [Page.sellOrders]: <SellOrders />,
       [Page.sellProductDetails]: <SellProductDetails />,
       [Page.sellProducts]: <SellProducts />,
-      [Page.sellShipping]: <SellShipping />,
     };
 
     return pages[activePage];

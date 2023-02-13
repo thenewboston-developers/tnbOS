@@ -8,5 +8,4 @@ export enum Page {
   sellOrders = 'sellOrders',
   sellProductDetails = 'sellProductDetails',
   sellProducts = 'sellProducts',
-  sellShipping = 'sellShipping',
 }

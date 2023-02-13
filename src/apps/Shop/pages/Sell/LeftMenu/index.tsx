@@ -1,4 +1,4 @@
-import {mdiInboxArrowDown, mdiTag, mdiTruck} from '@mdi/js';
+import {mdiInboxArrowDown, mdiTag} from '@mdi/js';
 
 import LeftMenuItem from 'apps/Shop/components/LeftMenuItem';
 import {Page} from 'apps/Shop/types';
@@ -13,9 +13,6 @@ const LeftMenu: SFC = ({className}) => {
       </LeftMenuItem>
       <LeftMenuItem icon={mdiInboxArrowDown} page={Page.sellOrders}>
         Orders
-      </LeftMenuItem>
-      <LeftMenuItem icon={mdiTruck} page={Page.sellShipping}>
-        Shipping
       </LeftMenuItem>
     </S.Container>
   );
