@@ -22,6 +22,7 @@ import {sortAttributesAlphabetically} from 'system/utils/attributes';
 import {systemDate} from 'system/utils/dates';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {displayErrorToast} from 'system/utils/toast';
+import {generateNetworkUUID} from 'system/utils/uuid';
 
 import CartProduct from './CartProduct';
 import PaymentDetails from './PaymentDetails';
@@ -56,7 +57,7 @@ const BuyCheckout: SFC = ({className}) => {
 
     const address: Address = sortAttributesAlphabetically(addresses[selectedAddressId!]);
     const approvalExpirationDate = new Date(now.getTime() + APPROVAL_WINDOW_SECONDS * 1000);
-    const orderId = crypto.randomUUID();
+    const orderId = generateNetworkUUID();
     const paymentExpirationDate = new Date(now.getTime() + PAYMENT_WINDOW_SECONDS * 1000);
     const productIds = cartProductList.map(({productId}) => productId);
     const seller = cartProductList[0].seller;
