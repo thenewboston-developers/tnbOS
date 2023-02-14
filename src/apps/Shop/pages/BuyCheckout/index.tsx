@@ -72,9 +72,14 @@ const BuyCheckout: SFC = ({className}) => {
       total: totalPrice,
     };
 
+    // TODO: ensure you can connect to seller via recipientsDefaultNetworkId
+
     dispatch(setOrderProductList(cartProductList));
     dispatch(setOrder(order));
     dispatch(resetCartProducts());
+
+    // TODO: await createOrderBlock()
+
     dispatch(setActivePage(Page.buyOrders));
   };
 

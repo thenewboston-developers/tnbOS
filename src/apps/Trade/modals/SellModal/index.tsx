@@ -69,55 +69,54 @@ const SellModal: SFC<SellModalProps> = ({className, close, offer}) => {
     const now = new Date();
     const approvalExpirationDate = new Date(now.getTime() + APPROVAL_WINDOW_SECONDS * 1000);
     const paymentExpirationDate = new Date(now.getTime() + PAYMENT_WINDOW_SECONDS * 1000);
+    const keypair = generateAccount();
+    const orderId = crypto.randomUUID();
+
+    const order: Order = {
+      approvalExpirationDate: systemDate(approvalExpirationDate),
+      approvalStatus: ApprovalStatus.pending,
+      client: {
+        accountNumber: self.accountNumber,
+        outgoingAmount: parseInt(values.sellersOutgoingAssetQuantity, 10),
+        outgoingAsset: sellersOutgoingAsset,
+        receivingAddress: keypair.publicKeyHex,
+      },
+      createdDate: systemDate(now),
+      fillStatus: FillStatus.none,
+      host: {
+        accountNumber: offer.host,
+        outgoingAmount: parseInt(values.total, 10),
+        outgoingAsset: sellersIncomingAsset,
+        receivingAddress: null,
+      },
+      orderId,
+      paymentExpirationDate: systemDate(paymentExpirationDate),
+      paymentStatus: PaymentStatus.none,
+    };
+
+    const receivingAccount = {
+      accountNumber: keypair.publicKeyHex,
+      fundsTransferredOut: false,
+      networkId: sellersIncomingAsset,
+      orderId,
+      signingKey: keypair.signingKeyHex,
+    };
+
+    const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+      balances,
+      networkAccountOnlineStatuses,
+      recipient: offer.host,
+    });
+
+    if (!recipientsDefaultNetworkId) {
+      displayErrorToast('Unable to connect to host');
+      return;
+    }
+
+    dispatch(setOrder(order));
+    dispatch(setReceivingAccount(receivingAccount));
 
     try {
-      const keypair = generateAccount();
-      const orderId = crypto.randomUUID();
-
-      const order: Order = {
-        approvalExpirationDate: systemDate(approvalExpirationDate),
-        approvalStatus: ApprovalStatus.pending,
-        client: {
-          accountNumber: self.accountNumber,
-          outgoingAmount: parseInt(values.sellersOutgoingAssetQuantity, 10),
-          outgoingAsset: sellersOutgoingAsset,
-          receivingAddress: keypair.publicKeyHex,
-        },
-        createdDate: systemDate(now),
-        fillStatus: FillStatus.none,
-        host: {
-          accountNumber: offer.host,
-          outgoingAmount: parseInt(values.total, 10),
-          outgoingAsset: sellersIncomingAsset,
-          receivingAddress: null,
-        },
-        orderId,
-        paymentExpirationDate: systemDate(paymentExpirationDate),
-        paymentStatus: PaymentStatus.none,
-      };
-
-      const receivingAccount = {
-        accountNumber: keypair.publicKeyHex,
-        fundsTransferredOut: false,
-        networkId: sellersIncomingAsset,
-        orderId,
-        signingKey: keypair.signingKeyHex,
-      };
-
-      const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
-        balances,
-        networkAccountOnlineStatuses,
-        recipient: offer.host,
-      });
-
-      if (!recipientsDefaultNetworkId) {
-        displayErrorToast('Unable to connect to host');
-        return;
-      }
-
-      dispatch(setOrder(order));
-      dispatch(setReceivingAccount(receivingAccount));
-
       await createOrderBlock({
         networkId: recipientsDefaultNetworkId,
         params: order,
