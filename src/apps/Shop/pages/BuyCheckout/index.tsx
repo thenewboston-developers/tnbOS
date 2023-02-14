@@ -14,10 +14,11 @@ import {resetCartProducts} from 'apps/Shop/store/cartProducts';
 import {setActivePage} from 'apps/Shop/store/manager';
 import {setOrderProductList} from 'apps/Shop/store/orderProducts';
 import {setOrder} from 'apps/Shop/store/orders';
-import {ApprovalStatus, Page, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
+import {Address, ApprovalStatus, Page, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
 import {useToggle} from 'system/hooks';
 import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
+import {sortAttributesAlphabetically} from 'system/utils/attributes';
 import {systemDate} from 'system/utils/dates';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {displayErrorToast} from 'system/utils/toast';
@@ -51,11 +52,11 @@ const BuyCheckout: SFC = ({className}) => {
   }, [cartProductList]);
 
   const handlePlaceOrderClick = async (): Promise<void> => {
-    const address = addresses[selectedAddressId!];
-    const orderId = crypto.randomUUID();
-
     const now = new Date();
+
+    const address: Address = sortAttributesAlphabetically(addresses[selectedAddressId!]);
     const approvalExpirationDate = new Date(now.getTime() + APPROVAL_WINDOW_SECONDS * 1000);
+    const orderId = crypto.randomUUID();
     const paymentExpirationDate = new Date(now.getTime() + PAYMENT_WINDOW_SECONDS * 1000);
     const productIds = cartProductList.map(({productId}) => productId);
     const seller = cartProductList[0].seller;

@@ -1,6 +1,6 @@
 import {Dict} from 'system/types';
 
-export const sortAttributesAlphabetically = (object: Dict<any>) => {
+export const sortAttributesAlphabetically = <T>(object: Dict<any>): T => {
   const keys = Object.keys(object);
   keys.sort();
 
@@ -9,6 +9,6 @@ export const sortAttributesAlphabetically = (object: Dict<any>) => {
       ...previousValue,
       [key]: object[key],
     }),
-    {},
+    {} as T,
   );
 };
