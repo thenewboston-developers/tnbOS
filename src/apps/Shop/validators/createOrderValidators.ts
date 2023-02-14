@@ -1,6 +1,11 @@
-import {ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS, APPROVAL_WINDOW_SECONDS} from 'apps/Shop/constants/protocol';
+import {
+  ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS,
+  APPROVAL_WINDOW_SECONDS,
+  PAYMENT_WINDOW_SECONDS,
+} from 'apps/Shop/constants/protocol';
 import {Address, ApprovalStatus, Order, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
 import {orderIdSchema, productIdSchema} from 'apps/Shop/utils/yup';
+import {Dict, Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
 
 const addressValidator: yup.SchemaOf<Address> = yup
@@ -75,4 +80,27 @@ export const validateApprovalExpirationDateIsCorrectValue = (approvalExpirationD
       `Approval expiration date must be exactly ${APPROVAL_WINDOW_SECONDS} seconds greater than created date`,
     );
   }
+};
+
+export const validateBuyerIsNotSeller = (buyer: string, seller: string) => {
+  if (buyer === seller) throw new Error('Buyer can not be the same as the seller');
+};
+
+export const validateOrderIdIsUnique = (orderId: string, orders: Dict<Order>) => {
+  const orderIds = Object.keys(orders);
+  if (orderIds.includes(orderId)) throw new Error('Order ID must be unique');
+};
+
+export const validatePaymentExpirationDateIsCorrectValue = (createdDate: string, paymentExpirationDate: string) => {
+  const createdTime = new Date(createdDate).getTime();
+  const paymentExpirationTime = new Date(paymentExpirationDate).getTime();
+  if ((paymentExpirationTime - createdTime) / 1000 !== PAYMENT_WINDOW_SECONDS) {
+    throw new Error(
+      `Payment expiration date must be exactly ${PAYMENT_WINDOW_SECONDS} seconds greater than created date`,
+    );
+  }
+};
+
+export const validateSellerIsSelf = (seller: string, self: Self) => {
+  if (seller !== self.accountNumber) throw new Error('Seller must match block recipient');
 };

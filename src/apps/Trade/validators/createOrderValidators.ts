@@ -135,9 +135,9 @@ export const validateOfferExists = (offers: Offer[], order: Order): TradeDetails
   throw new Error('Offer does not exist for the requested order');
 };
 
-export const validateOrderIdIsUnique = (id: string, orders: Dict<Order>) => {
+export const validateOrderIdIsUnique = (orderId: string, orders: Dict<Order>) => {
   const orderIds = Object.keys(orders);
-  if (orderIds.includes(id)) throw new Error('Order ID must be unique');
+  if (orderIds.includes(orderId)) throw new Error('Order ID must be unique');
 };
 
 export const validateOutgoingAmounts = (order: Order) => {
