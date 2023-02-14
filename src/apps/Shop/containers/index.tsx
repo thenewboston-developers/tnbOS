@@ -2,6 +2,7 @@ import {
   useOnConnection,
   useOnDisconnection,
   useOnResetProductRecordRecipients,
+  useOrderApprovalStatusTask,
   useProductRecordSyncTask,
 } from 'apps/Shop/hooks';
 import MainArea from 'apps/Shop/containers/MainArea';
@@ -14,6 +15,7 @@ const Shop: SFC<AppProps> = ({className, display}) => {
   useOnConnection();
   useOnDisconnection();
   useOnResetProductRecordRecipients();
+  useOrderApprovalStatusTask();
   useProductRecordSyncTask();
 
   if (!display) return null;

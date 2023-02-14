@@ -10,6 +10,7 @@ import useNetworkSelectOptions from 'apps/Shop/hooks/useNetworkSelectOptions';
 import useOnConnection from 'apps/Shop/hooks/useOnConnection';
 import useOnDisconnection from 'apps/Shop/hooks/useOnDisconnection';
 import useOnResetProductRecordRecipients from 'apps/Shop/hooks/useOnResetProductRecordRecipients';
+import useOrderApprovalStatusTask from 'apps/Shop/hooks/useOrderApprovalStatusTask';
 import useProductRecordSyncTask from 'apps/Shop/hooks/useProductRecordSyncTask';
 import useSelfProductRecord from 'apps/Shop/hooks/useSelfProductRecord';
 import useSellProducts from 'apps/Shop/hooks/useSellProducts';
@@ -28,6 +29,7 @@ export {
   useOnConnection,
   useOnDisconnection,
   useOnResetProductRecordRecipients,
+  useOrderApprovalStatusTask,
   useProductRecordSyncTask,
   useSelfProductRecord,
   useSellProducts,
