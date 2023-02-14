@@ -8,6 +8,7 @@ import {
   validatePaymentExpirationDateIsCorrectValue,
   validateProductsAreAvailable,
   validateSellerIsSelf,
+  validateTotal,
 } from 'apps/Shop/validators/createOrderValidators';
 import {Block} from 'shared/types';
 import store from 'system/store';
@@ -26,7 +27,7 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
 
       await createOrderValidator.validate(params);
       const order: Order = params;
-      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, productIds, seller} = order;
+      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, productIds, seller, total} = order;
 
       validateApprovalExpirationDateIsCorrectValue(approvalExpirationDate, createdDate);
       validateBlockSenderIsBuyer(blockSender, buyer);
@@ -35,6 +36,7 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       validatePaymentExpirationDateIsCorrectValue(createdDate, paymentExpirationDate);
       validateProductsAreAvailable(products, productIds);
       validateSellerIsSelf(seller, self);
+      validateTotal(products, productIds, total);
 
       console.log(dispatch);
       console.log(networkId);

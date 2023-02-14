@@ -122,3 +122,12 @@ export const validateProductsAreAvailable = (products: Products, productIds: str
 export const validateSellerIsSelf = (seller: string, self: Self) => {
   if (seller !== self.accountNumber) throw new Error('Seller must match block recipient');
 };
+
+export const validateTotal = (products: Products, productIds: string[], total: number) => {
+  const expectedTotal = productIds.reduce((previousValue, productId) => {
+    const product = products[productId];
+    return previousValue + product.priceAmount;
+  }, 0);
+
+  if (total !== expectedTotal) throw new Error(`Total of ${total} does not match expected total of ${expectedTotal}`);
+};
