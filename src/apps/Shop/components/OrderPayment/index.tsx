@@ -15,7 +15,7 @@ const OrderPayment: SFC<OrderPaymentProps> = ({className, order}) => {
   return (
     <S.Container className={className}>
       <SellerApproval order={order} />
-      <BuyerPayment />
+      <BuyerPayment order={order} />
       <FinalTransfer />
       <Shipping />
     </S.Container>

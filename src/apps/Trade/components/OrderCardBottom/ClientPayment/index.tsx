@@ -18,13 +18,13 @@ import {SFC} from 'system/types';
 import {longDate} from 'system/utils/dates';
 import * as S from './Styles';
 
-interface ClientPaymentProps {
-  order: Order;
-}
-
 type PaymentStatusBadgeDict = {
   [key in PaymentStatus]: ReactNode;
 };
+
+interface ClientPaymentProps {
+  order: Order;
+}
 
 const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
   const transactions = useSelector(getTransactions);
