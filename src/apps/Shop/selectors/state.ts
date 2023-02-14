@@ -15,6 +15,7 @@ export const getActivePage = (state: RootState): Page => state.shop.manager.acti
 export const getActiveSellProductId = (state: RootState): string | null => state.shop.manager.activeSellProductId;
 export const getAddresses = (state: RootState): Addresses => state.shop.addresses;
 export const getCartProducts = (state: RootState): CartProducts => state.shop.cartProducts;
+export const getOrderProducts = (state: RootState): Products => state.shop.orderProducts;
 export const getOrders = (state: RootState): Orders => state.shop.orders;
 export const getProductRecordRecipients = (state: RootState): ProductRecordRecipients =>
   state.shop.productRecordRecipients;

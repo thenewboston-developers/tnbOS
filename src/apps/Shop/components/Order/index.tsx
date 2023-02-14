@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
 import OrderPayment from 'apps/Shop/components/OrderPayment';
-import {getProducts} from 'apps/Shop/selectors/state';
+import {getOrderProducts} from 'apps/Shop/selectors/state';
 import {Order as TOrder} from 'apps/Shop/types';
 import {SFC} from 'system/types';
 
@@ -15,13 +15,13 @@ export interface OrderProps {
 }
 
 const Order: SFC<OrderProps> = ({className, order}) => {
-  const products = useSelector(getProducts);
+  const orderProducts = useSelector(getOrderProducts);
 
   const {address, productIds} = order;
 
   const orderProductList = useMemo(() => {
-    return productIds.map((productId) => products[productId]);
-  }, [productIds, products]);
+    return productIds.map((productId) => orderProducts[productId]);
+  }, [orderProducts, productIds]);
 
   const renderBottom = () => {
     return (

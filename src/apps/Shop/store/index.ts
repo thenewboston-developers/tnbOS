@@ -3,6 +3,7 @@ import {combineReducers} from '@reduxjs/toolkit';
 import addressesReducer from 'apps/Shop/store/addresses';
 import cartProductsReducer from 'apps/Shop/store/cartProducts';
 import managerReducer from 'apps/Shop/store/manager';
+import orderProductsReducer from 'apps/Shop/store/orderProducts';
 import ordersReducer from 'apps/Shop/store/orders';
 import productRecordRecipientsRecordsReducer from 'apps/Shop/store/productRecordRecipients';
 import productRecordsReducer from 'apps/Shop/store/productRecords';
@@ -12,6 +13,7 @@ const shopReducer = combineReducers({
   addresses: addressesReducer,
   cartProducts: cartProductsReducer,
   manager: managerReducer,
+  orderProducts: orderProductsReducer,
   orders: ordersReducer,
   productRecordRecipients: productRecordRecipientsRecordsReducer,
   productRecords: productRecordsReducer,

@@ -11,6 +11,7 @@ import AddressSelectModal from 'apps/Shop/modals/AddressSelectModal';
 import {getAddresses} from 'apps/Shop/selectors/state';
 import {resetCartProducts} from 'apps/Shop/store/cartProducts';
 import {setActivePage} from 'apps/Shop/store/manager';
+import {setOrderProductList} from 'apps/Shop/store/orderProducts';
 import {setOrder} from 'apps/Shop/store/orders';
 import {ApprovalStatus, Page, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
 import {useToggle} from 'system/hooks';
@@ -71,6 +72,7 @@ const BuyCheckout: SFC = ({className}) => {
       total: totalPrice,
     };
 
+    dispatch(setOrderProductList(cartProductList));
     dispatch(setOrder(order));
     dispatch(resetCartProducts());
     dispatch(setActivePage(Page.buyOrders));
