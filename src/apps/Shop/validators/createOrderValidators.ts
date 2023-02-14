@@ -3,7 +3,15 @@ import {
   APPROVAL_WINDOW_SECONDS,
   PAYMENT_WINDOW_SECONDS,
 } from 'apps/Shop/constants/protocol';
-import {Address, ApprovalStatus, Order, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
+import {
+  ActivationStatus,
+  Address,
+  ApprovalStatus,
+  Order,
+  PaymentStatus,
+  Products,
+  ShippingStatus,
+} from 'apps/Shop/types';
 import {orderIdSchema, productIdSchema} from 'apps/Shop/utils/yup';
 import {Dict, Self} from 'system/types';
 import yup, {accountNumberSchema} from 'system/utils/yup';
@@ -98,6 +106,16 @@ export const validatePaymentExpirationDateIsCorrectValue = (createdDate: string,
     throw new Error(
       `Payment expiration date must be exactly ${PAYMENT_WINDOW_SECONDS} seconds greater than created date`,
     );
+  }
+};
+
+export const validateProductsAreAvailable = (products: Products, productIds: string[]) => {
+  for (const productId of productIds) {
+    const product = products[productId];
+
+    if (!product || product.activationStatus !== ActivationStatus.active) {
+      throw new Error('One or more of those products are no longer available');
+    }
   }
 };
 

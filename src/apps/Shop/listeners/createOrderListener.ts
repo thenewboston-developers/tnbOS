@@ -6,6 +6,7 @@ import {
   validateBuyerIsNotSeller,
   validateOrderIdIsUnique,
   validatePaymentExpirationDateIsCorrectValue,
+  validateProductsAreAvailable,
   validateSellerIsSelf,
 } from 'apps/Shop/validators/createOrderValidators';
 import {Block} from 'shared/types';
@@ -19,22 +20,22 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       const {payload, sender: blockSender} = block;
       const {params} = payload;
       const {
-        shop: {orders},
+        shop: {orders, products},
         system: {self},
       } = store.getState();
 
       await createOrderValidator.validate(params);
       const order: Order = params;
-      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, seller} = order;
+      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, productIds, seller} = order;
 
       validateApprovalExpirationDateIsCorrectValue(approvalExpirationDate, createdDate);
       validateBlockSenderIsBuyer(blockSender, buyer);
       validateBuyerIsNotSeller(buyer, seller);
       validateOrderIdIsUnique(orderId, orders);
       validatePaymentExpirationDateIsCorrectValue(createdDate, paymentExpirationDate);
+      validateProductsAreAvailable(products, productIds);
       validateSellerIsSelf(seller, self);
 
-      console.log(blockSender);
       console.log(dispatch);
       console.log(networkId);
     } catch (error) {
