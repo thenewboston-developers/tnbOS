@@ -4,6 +4,7 @@ import {
   createOrderValidator,
   validateApprovalExpirationDateIsCorrectValue,
   validateBuyerIsNotSeller,
+  validateNetwork,
   validateOrderIdIsUnique,
   validatePaymentExpirationDateIsCorrectValue,
   validateProductsAreAvailable,
@@ -33,6 +34,7 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       validateApprovalExpirationDateIsCorrectValue(approvalExpirationDate, createdDate);
       validateBlockSenderIsBuyer(blockSender, buyer);
       validateBuyerIsNotSeller(buyer, seller);
+      validateNetwork(order.networkId, products, productIds);
       validateOrderIdIsUnique(orderId, orders);
       validatePaymentExpirationDateIsCorrectValue(createdDate, paymentExpirationDate);
       validateProductsAreAvailable(products, productIds);

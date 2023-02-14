@@ -94,6 +94,18 @@ export const validateBuyerIsNotSeller = (buyer: string, seller: string) => {
   if (buyer === seller) throw new Error('Buyer can not be the same as the seller');
 };
 
+export const validateNetwork = (networkId: string, products: Products, productIds: string[]) => {
+  if (productIds.length === 0) throw new Error('Order must include a minimum of one product');
+
+  for (const productId of productIds) {
+    const product = products[productId];
+
+    if (!product || product.priceNetwork !== networkId) {
+      throw new Error('Price network for all products must match the order network');
+    }
+  }
+};
+
 export const validateOrderIdIsUnique = (orderId: string, orders: Dict<Order>) => {
   const orderIds = Object.keys(orders);
   if (orderIds.includes(orderId)) throw new Error('Order ID must be unique');
