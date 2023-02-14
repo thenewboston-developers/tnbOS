@@ -28,7 +28,7 @@ const Order: SFC<OrderProps> = ({className, order}) => {
       <S.Bottom>
         <S.AddressCard address={address} />
         {renderOrderProducts()}
-        <OrderPayment />
+        <OrderPayment order={order} />
       </S.Bottom>
     );
   };
