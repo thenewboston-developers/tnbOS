@@ -6,8 +6,9 @@ import {
   SHOP_ORDERS,
   SHOP_PRODUCT_RECORDS,
   SHOP_PRODUCTS,
+  SHOP_RECEIVING_ACCOUNTS,
 } from 'apps/Shop/store/constants';
-import {Addresses, CartProducts, Manager, Orders, ProductRecords, Products} from 'apps/Shop/types';
+import {Addresses, CartProducts, Manager, Orders, ProductRecords, Products, ReceivingAccounts} from 'apps/Shop/types';
 
 export interface ShopElectronStore {
   [SHOP_ADDRESSES]: Addresses;
@@ -17,4 +18,5 @@ export interface ShopElectronStore {
   [SHOP_ORDER_PRODUCTS]: Products;
   [SHOP_PRODUCTS]: Products;
   [SHOP_PRODUCT_RECORDS]: ProductRecords;
+  [SHOP_RECEIVING_ACCOUNTS]: ReceivingAccounts;
 }

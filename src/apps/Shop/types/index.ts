@@ -10,6 +10,7 @@ import {Page} from 'apps/Shop/types/pages';
 import {ProductRecordRecipient, ProductRecordRecipients} from 'apps/Shop/types/productRecordRecipients';
 import {ProductRecord, ProductRecords} from 'apps/Shop/types/productRecords';
 import {Product, Products} from 'apps/Shop/types/products';
+import {ReceivingAccount, ReceivingAccounts} from 'apps/Shop/types/receivingAccounts';
 
 export {
   ActivationStatus,
@@ -30,6 +31,8 @@ export {
   ProductRecordRecipients,
   ProductRecords,
   Products,
+  ReceivingAccount,
+  ReceivingAccounts,
   SelectOption,
   SetPaymentStatusParams,
   SetProductRecordReceiptParams,

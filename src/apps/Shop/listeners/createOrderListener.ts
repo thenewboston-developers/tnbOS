@@ -1,3 +1,5 @@
+import {setOrder} from 'apps/Shop/store/orders';
+import {setReceivingAccount} from 'apps/Shop/store/receivingAccounts';
 import {Order} from 'apps/Shop/types';
 import {validateBlockSenderIsBuyer} from 'apps/Shop/validators/common';
 import {
@@ -14,6 +16,7 @@ import {
 import {Block} from 'shared/types';
 import store from 'system/store';
 import {AppDispatch} from 'system/types';
+import {generateAccount} from 'system/utils/tnb';
 import {displayErrorToast} from 'system/utils/toast';
 
 const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
@@ -41,7 +44,22 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       validateSellerIsSelf(seller, self);
       validateTotal(products, productIds, total);
 
-      console.log(dispatch);
+      const keypair = generateAccount();
+
+      dispatch(setOrder(order));
+      dispatch(
+        setReceivingAccount({
+          accountNumber: keypair.publicKeyHex,
+          fundsTransferredOut: false,
+          networkId: order.networkId,
+          orderId,
+          signingKey: keypair.signingKeyHex,
+        }),
+      );
+
+      // TODO: dispatch approveOrder()
+      // TODO: await approveOrderBlock()
+
       console.log(networkId);
     } catch (error) {
       console.error(error);

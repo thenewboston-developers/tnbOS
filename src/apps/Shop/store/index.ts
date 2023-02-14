@@ -8,6 +8,7 @@ import ordersReducer from 'apps/Shop/store/orders';
 import productRecordRecipientsRecordsReducer from 'apps/Shop/store/productRecordRecipients';
 import productRecordsReducer from 'apps/Shop/store/productRecords';
 import productsReducer from 'apps/Shop/store/products';
+import receivingAccountsReducer from 'apps/Shop/store/receivingAccounts';
 
 const shopReducer = combineReducers({
   addresses: addressesReducer,
@@ -18,6 +19,7 @@ const shopReducer = combineReducers({
   productRecordRecipients: productRecordRecipientsRecordsReducer,
   productRecords: productRecordsReducer,
   products: productsReducer,
+  receivingAccounts: receivingAccountsReducer,
 });
 
 export default shopReducer;
