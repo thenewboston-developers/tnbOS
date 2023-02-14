@@ -1,4 +1,5 @@
 import {
+  createOrderListener,
   getProductListListener,
   setProductListListener,
   setProductRecordListener,
@@ -15,6 +16,7 @@ const appRouter = (block: Block, dispatch: AppDispatch, networkId: string) => {
   } = block;
 
   const fnHandlers: AppDataHandlers = {
+    [ShopFn.createOrder]: createOrderListener,
     [ShopFn.getProductList]: getProductListListener,
     [ShopFn.setProductList]: setProductListListener,
     [ShopFn.setProductRecord]: setProductRecordListener,

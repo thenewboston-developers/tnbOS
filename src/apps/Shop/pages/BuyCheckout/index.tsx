@@ -2,6 +2,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
+import {createOrderBlock} from 'apps/Shop/blocks';
 import AccountLabel from 'apps/Shop/components/AccountLabel';
 import Button from 'apps/Shop/components/Button';
 import DropdownMenu from 'system/components/DropdownMenu';
@@ -15,9 +16,11 @@ import {setOrderProductList} from 'apps/Shop/store/orderProducts';
 import {setOrder} from 'apps/Shop/store/orders';
 import {ApprovalStatus, Page, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
 import {useToggle} from 'system/hooks';
-import {getSelf} from 'system/selectors/state';
+import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC} from 'system/types';
 import {systemDate} from 'system/utils/dates';
+import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
+import {displayErrorToast} from 'system/utils/toast';
 
 import CartProduct from './CartProduct';
 import PaymentDetails from './PaymentDetails';
@@ -27,9 +30,11 @@ const BuyCheckout: SFC = ({className}) => {
   const [addressSelectModalIsOpen, toggleAddressSelectModal] = useToggle(false);
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
   const addresses = useSelector(getAddresses);
+  const balances = useSelector(getBalances);
   const cartProductList = useCartProductList();
   const cartSeller = useCartSeller();
   const dispatch = useDispatch<AppDispatch>();
+  const networkAccountOnlineStatuses = useSelector(getNetworkAccountOnlineStatuses);
   const self = useSelector(getSelf);
 
   useEffect(() => {
@@ -45,15 +50,15 @@ const BuyCheckout: SFC = ({className}) => {
     return cartProductList.reduce((previousValue, product) => previousValue + product.priceAmount, 0);
   }, [cartProductList]);
 
-  const handlePlaceOrderClick = () => {
+  const handlePlaceOrderClick = async (): Promise<void> => {
     const address = addresses[selectedAddressId!];
     const orderId = crypto.randomUUID();
 
     const now = new Date();
     const approvalExpirationDate = new Date(now.getTime() + APPROVAL_WINDOW_SECONDS * 1000);
     const paymentExpirationDate = new Date(now.getTime() + PAYMENT_WINDOW_SECONDS * 1000);
-
     const productIds = cartProductList.map(({productId}) => productId);
+    const seller = cartProductList[0].seller;
 
     const order = {
       address,
@@ -67,20 +72,37 @@ const BuyCheckout: SFC = ({className}) => {
       paymentStatus: PaymentStatus.none,
       productIds,
       receivingAddress: null,
-      seller: cartProductList[0].seller,
+      seller,
       shippingStatus: ShippingStatus.notShipped,
       total: totalPrice,
     };
 
-    // TODO: ensure you can connect to seller via recipientsDefaultNetworkId
+    const recipientsDefaultNetworkId = getRecipientsDefaultNetworkId({
+      balances,
+      networkAccountOnlineStatuses,
+      recipient: seller,
+    });
+
+    if (!recipientsDefaultNetworkId) {
+      displayErrorToast('Unable to connect to seller');
+      return;
+    }
 
     dispatch(setOrderProductList(cartProductList));
     dispatch(setOrder(order));
     dispatch(resetCartProducts());
 
-    // TODO: await createOrderBlock()
+    try {
+      await createOrderBlock({
+        networkId: recipientsDefaultNetworkId,
+        params: order,
+        recipient: seller,
+      });
 
-    dispatch(setActivePage(Page.buyOrders));
+      dispatch(setActivePage(Page.buyOrders));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const renderAddressSelectModal = () => {
