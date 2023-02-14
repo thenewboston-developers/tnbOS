@@ -1,6 +1,6 @@
 import styled, {keyframes} from 'styled-components';
 
-import {colors} from 'apps/University/styles';
+import {colors} from 'apps/Shop/styles';
 import UIcon from 'system/components/Icon';
 
 const addOverlay = keyframes`

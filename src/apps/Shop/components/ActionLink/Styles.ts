@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import {colors} from 'apps/University/styles';
+import {colors} from 'apps/Shop/styles';
 
 export const Container = styled.div`
   color: ${colors.palette.blue['200']};

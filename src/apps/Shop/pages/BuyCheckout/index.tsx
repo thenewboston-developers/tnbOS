@@ -2,10 +2,11 @@ import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {mdiDotsVertical} from '@mdi/js';
 
+import AccountLabel from 'apps/Shop/components/AccountLabel';
 import Button from 'apps/Shop/components/Button';
 import DropdownMenu from 'system/components/DropdownMenu';
 import {APPROVAL_WINDOW_SECONDS, PAYMENT_WINDOW_SECONDS} from 'apps/Shop/constants/protocol';
-import {useCartProductList} from 'apps/Shop/hooks';
+import {useCartProductList, useCartSeller} from 'apps/Shop/hooks';
 import AddressSelectModal from 'apps/Shop/modals/AddressSelectModal';
 import {getAddresses} from 'apps/Shop/selectors/state';
 import {resetCartProducts} from 'apps/Shop/store/cartProducts';
@@ -26,6 +27,7 @@ const BuyCheckout: SFC = ({className}) => {
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
   const addresses = useSelector(getAddresses);
   const cartProductList = useCartProductList();
+  const cartSeller = useCartSeller();
   const dispatch = useDispatch<AppDispatch>();
   const self = useSelector(getSelf);
 
@@ -88,11 +90,11 @@ const BuyCheckout: SFC = ({className}) => {
     }
 
     return (
-      <>
+      <S.Address>
         <S.Heading>Address</S.Heading>
         <S.Line />
-        <S.AddressContent>{content}</S.AddressContent>
-      </>
+        {content}
+      </S.Address>
     );
   };
 
@@ -110,9 +112,31 @@ const BuyCheckout: SFC = ({className}) => {
   const renderLeft = () => {
     return (
       <S.Left>
-        {renderAddress()}
+        <S.LeftTop>
+          {renderAddress()}
+          {renderParticipants()}
+        </S.LeftTop>
         {renderProducts()}
       </S.Left>
+    );
+  };
+
+  const renderParticipants = () => {
+    const content = !!cartProductList.length ? (
+      <>
+        <AccountLabel label="Buyer" accountNumber={self.accountNumber} />
+        {cartSeller && <S.AccountLabel label="Seller" accountNumber={cartSeller} />}
+      </>
+    ) : (
+      <S.EmptyText>No buyer or seller to display.</S.EmptyText>
+    );
+
+    return (
+      <S.Participants>
+        <S.Heading>Participants</S.Heading>
+        <S.Line />
+        {content}
+      </S.Participants>
     );
   };
 

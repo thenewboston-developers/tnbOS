@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 
+import UAccountLabel from 'apps/Shop/components/AccountLabel';
 import UAddressCard from 'apps/Shop/components/AddressCard';
 import UEmptyText from 'apps/Shop/components/EmptyText';
 import ULine from 'apps/Shop/components/Line';
 
-export const AddressCard = styled(UAddressCard)`
-  width: fit-content;
+export const AccountLabel = styled(UAccountLabel)`
+  margin-top: 16px;
 `;
 
-export const AddressContent = styled.div`
-  margin-bottom: 32px;
+export const Address = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+`;
+
+export const AddressCard = styled(UAddressCard)`
+  width: fit-content;
 `;
 
 export const CartProducts = styled.div`
@@ -20,7 +27,7 @@ export const CartProducts = styled.div`
 
 export const Container = styled.div`
   display: grid;
-  gap: 48px;
+  gap: 32px;
   grid-template-columns: auto 30%;
   height: 100%;
   padding: 24px 32px;
@@ -32,7 +39,6 @@ export const EmptyText = styled(UEmptyText)`
 `;
 
 export const Heading = styled.div`
-  color: #111827;
   font-size: 18px;
   font-weight: 700;
   padding-bottom: 4px;
@@ -43,8 +49,20 @@ export const Left = styled.div`
   overflow-y: auto;
 `;
 
+export const LeftTop = styled.div`
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+`;
+
 export const Line = styled(ULine)`
   margin-bottom: 12px;
+`;
+
+export const Participants = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: auto;
 `;
 
 export const Right = styled.div`

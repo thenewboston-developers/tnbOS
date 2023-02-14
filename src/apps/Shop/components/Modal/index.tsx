@@ -2,7 +2,7 @@ import {ReactNode} from 'react';
 import {createPortal} from 'react-dom';
 import {mdiClose} from '@mdi/js';
 
-import Line from 'apps/University/components/Line';
+import Line from 'apps/Shop/components/Line';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 

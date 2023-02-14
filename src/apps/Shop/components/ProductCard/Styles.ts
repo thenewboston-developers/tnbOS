@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import UAccountLabel from 'apps/Shop/components/AccountLabel';
-import ULine from 'apps/University/components/Line';
+import ULine from 'apps/Shop/components/Line';
 import UThumbnail from 'apps/Shop/components/Thumbnail';
 import {colors} from 'apps/Shop/styles';
 
