@@ -1,4 +1,4 @@
-import {ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS} from 'apps/Shop/constants/protocol';
+import {ACCEPTABLE_ORDER_CREATED_DATE_LEEWAY_SECONDS, APPROVAL_WINDOW_SECONDS} from 'apps/Shop/constants/protocol';
 import {Address, ApprovalStatus, Order, PaymentStatus, ShippingStatus} from 'apps/Shop/types';
 import {orderIdSchema, productIdSchema} from 'apps/Shop/utils/yup';
 import yup, {accountNumberSchema} from 'system/utils/yup';
@@ -66,3 +66,13 @@ export const createOrderValidator: yup.SchemaOf<IOrder> = yup
     total: yup.number().integer().min(0).required(),
   })
   .noUnknown();
+
+export const validateApprovalExpirationDateIsCorrectValue = (approvalExpirationDate: string, createdDate: string) => {
+  const createdTime = new Date(createdDate).getTime();
+  const approvalExpirationTime = new Date(approvalExpirationDate).getTime();
+  if ((approvalExpirationTime - createdTime) / 1000 !== APPROVAL_WINDOW_SECONDS) {
+    throw new Error(
+      `Approval expiration date must be exactly ${APPROVAL_WINDOW_SECONDS} seconds greater than created date`,
+    );
+  }
+};
