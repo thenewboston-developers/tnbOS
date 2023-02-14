@@ -25,8 +25,15 @@ const cartProducts = createSlice({
       delete state[productId];
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_CART_PRODUCTS, state: current(state)});
     },
+    unsetCartProducts: (state: CartProducts, {payload: productIds}: PayloadAction<string[]>) => {
+      for (const productId of productIds) {
+        if (state[productId]) delete state[productId];
+      }
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_CART_PRODUCTS, state: current(state)});
+    },
   },
 });
 
-export const {resetCartProducts, setCartProduct, setCartProducts, unsetCartProduct} = cartProducts.actions;
+export const {resetCartProducts, setCartProduct, setCartProducts, unsetCartProduct, unsetCartProducts} =
+  cartProducts.actions;
 export default cartProducts.reducer;

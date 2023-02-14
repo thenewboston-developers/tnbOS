@@ -1,6 +1,7 @@
 import difference from 'lodash/difference';
 
 import {getProductListBlock, setProductRecordReceiptBlock} from 'apps/Shop/blocks';
+import {unsetCartProducts} from 'apps/Shop/store/cartProducts';
 import {setIncomingProductRecord} from 'apps/Shop/store/productRecords';
 import {unsetProducts} from 'apps/Shop/store/products';
 import {ProductRecord, Products} from 'apps/Shop/types';
@@ -63,6 +64,7 @@ const setProductRecordListener = (block: Block, dispatch: AppDispatch, networkId
         const removedProductIds = getRemovedProductIds(productRecord, existingProductRecord);
         const updatedProductIds = getUpdatedProductIds(productRecord, products);
 
+        dispatch(unsetCartProducts(removedProductIds));
         dispatch(unsetProducts(removedProductIds));
 
         if (!!updatedProductIds.length) {
