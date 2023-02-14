@@ -13,6 +13,7 @@ import useOnResetProductRecordRecipients from 'apps/Shop/hooks/useOnResetProduct
 import useProductRecordSyncTask from 'apps/Shop/hooks/useProductRecordSyncTask';
 import useSelfProductRecord from 'apps/Shop/hooks/useSelfProductRecord';
 import useSellProducts from 'apps/Shop/hooks/useSellProducts';
+import useUnavailableProductIds from 'apps/Shop/hooks/useUnavailableProductIds';
 
 export {
   useActiveBuyAddress,
@@ -30,4 +31,5 @@ export {
   useProductRecordSyncTask,
   useSelfProductRecord,
   useSellProducts,
+  useUnavailableProductIds,
 };

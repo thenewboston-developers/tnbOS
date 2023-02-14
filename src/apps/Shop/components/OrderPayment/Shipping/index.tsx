@@ -9,7 +9,7 @@ const Shipping: SFC = ({className}) => {
   const tableRows: TableRow[] = [
     {
       key: 'Shipping Status',
-      value: <Badge badgeStyle={BadgeStyle.dark} text="Not Shipped" />,
+      value: <Badge badgeStyle={BadgeStyle.warning} text="logic needed" />,
     },
   ];
 

@@ -9,7 +9,7 @@ const FinalTransfer: SFC = ({className}) => {
   const tableRows: TableRow[] = [
     {
       key: 'Transfer Status',
-      value: <Badge badgeStyle={BadgeStyle.success} text="Completed" />,
+      value: <Badge badgeStyle={BadgeStyle.warning} text="logic needed" />,
     },
   ];
 
