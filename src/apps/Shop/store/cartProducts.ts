@@ -11,8 +11,8 @@ const cartProducts = createSlice({
   initialState,
   name: SHOP_CART_PRODUCTS,
   reducers: {
-    resetCartProducts: (state: CartProducts) => {
-      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_CART_PRODUCTS, state: current(state)});
+    resetCartProducts: () => {
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_CART_PRODUCTS, state: initialState});
       return initialState;
     },
     setCartProduct: (state: CartProducts, {payload: cartProduct}: PayloadAction<CartProduct>) => {

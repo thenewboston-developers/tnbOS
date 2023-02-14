@@ -27,7 +27,8 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
 
       await createOrderValidator.validate(params);
       const order: Order = params;
-      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, productIds, seller, total} = order;
+      const {approvalExpirationDate, buyer, createdDate, orderId, paymentExpirationDate, productIds, seller, total} =
+        order;
 
       validateApprovalExpirationDateIsCorrectValue(approvalExpirationDate, createdDate);
       validateBlockSenderIsBuyer(blockSender, buyer);
