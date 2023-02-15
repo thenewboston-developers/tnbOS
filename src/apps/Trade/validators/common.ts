@@ -1,6 +1,5 @@
-import {Order, OrderClient, OrderHost, PaymentStatus} from 'apps/Trade/types';
+import {Order, OrderClient, OrderHost, Orders, PaymentStatus} from 'apps/Trade/types';
 import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
-import {Dict} from 'system/types';
 
 export const validateBlockSenderIsOrderClient = (blockSender: string, orderClient: OrderClient) => {
   if (blockSender !== orderClient.accountNumber) throw new Error('Block sender must match order client account number');
@@ -10,7 +9,7 @@ export const validateBlockSenderIsOrderHost = (blockSender: string, orderHost: O
   if (blockSender !== orderHost.accountNumber) throw new Error('Block sender must match order host account number');
 };
 
-export const validateOrderExists = (orderId: string, orders: Dict<Order>): Order => {
+export const validateOrderExists = (orderId: string, orders: Orders): Order => {
   const order = orders[orderId];
   if (!order) throw new Error('Order does not exist');
   return order;
@@ -40,7 +39,7 @@ export const validatePayment = async (order: Order, newPaymentStatus: PaymentSta
   throw new Error('Error validating payment');
 };
 
-export const validateReceivingAddressIsUnique = (orders: Dict<Order>, receivingAddress: string) => {
+export const validateReceivingAddressIsUnique = (orders: Orders, receivingAddress: string) => {
   const accountNumbers = Object.values(orders).reduce((acc: string[], order) => {
     let newAddresses = [order.client.accountNumber, order.client.receivingAddress, order.host.accountNumber];
     if (order.host.receivingAddress) newAddresses = [...newAddresses, order.host.receivingAddress];
