@@ -10,7 +10,7 @@ import store from 'system/store';
 import {AppDispatch} from 'system/types';
 import {displayErrorToast} from 'system/utils/toast';
 
-const setPaymentStatusListener = (block: Block, dispatch: AppDispatch, networkId: string) => {
+const setPaymentStatusListener = (block: Block, dispatch: AppDispatch) => {
   (async () => {
     try {
       const {payload, sender: blockSender} = block;
@@ -29,9 +29,6 @@ const setPaymentStatusListener = (block: Block, dispatch: AppDispatch, networkId
       await validatePayment(order, paymentStatus);
 
       dispatch(setPaymentStatus({orderId, paymentStatus}));
-
-      // TODO: fix this
-      console.log(networkId);
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');
