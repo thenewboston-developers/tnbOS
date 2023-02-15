@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {Form, Formik, FormikHelpers} from 'formik';
 import noop from 'lodash/noop';
@@ -15,7 +16,7 @@ import {ActivationStatus, Page} from 'apps/Shop/types';
 import {productValidator} from 'apps/Shop/validators/products';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
-import {displayToast} from 'system/utils/toast';
+import {displayErrorToast, displayToast} from 'system/utils/toast';
 import yup from 'system/utils/yup';
 import * as S from './Styles';
 
@@ -38,6 +39,13 @@ const SellProductDetails: SFC = ({className}) => {
   };
 
   type FormValues = typeof initialValues;
+
+  useEffect(() => {
+    if (!activeSellProduct) {
+      displayErrorToast('The product you were viewing has been ordered');
+      dispatch(setActivePage(Page.sellProducts));
+    }
+  }, [activeSellProduct, dispatch]);
 
   const handleBackClick = () => {
     dispatch(setActivePage(Page.sellProducts));
