@@ -1,5 +1,6 @@
+import {approveOrderBlock} from 'apps/Shop/blocks';
 import {setOrderProductList} from 'apps/Shop/store/orderProducts';
-import {setOrder} from 'apps/Shop/store/orders';
+import {approveOrder, setOrder} from 'apps/Shop/store/orders';
 import {resetProductRecordRecipients} from 'apps/Shop/store/productRecordRecipients';
 import {unsetProductRecords} from 'apps/Shop/store/productRecords';
 import {unsetProducts} from 'apps/Shop/store/products';
@@ -67,10 +68,17 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
         }),
       );
 
-      // TODO: dispatch approveOrder()
-      // TODO: await approveOrderBlock()
+      const approveOrderParams = {
+        orderId,
+        receivingAddress: keypair.publicKeyHex,
+      };
+      dispatch(approveOrder(approveOrderParams));
 
-      console.log(networkId);
+      await approveOrderBlock({
+        networkId,
+        params: approveOrderParams,
+        recipient: blockSender,
+      });
     } catch (error) {
       console.error(error);
       displayErrorToast('Invalid block received');
