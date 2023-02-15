@@ -41,6 +41,24 @@ const productRecords = createSlice({
 
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCT_RECORDS, state: current(state)});
     },
+    setSelfProductRecords: (
+      state: ProductRecords,
+      {payload}: PayloadAction<{modifiedDate: string; productIds: string[]; seller: string}>,
+    ) => {
+      const {modifiedDate, productIds, seller} = payload;
+
+      if (!state[seller]) {
+        state[seller] = {
+          productModifiedDates: {},
+          recordModifiedDate: modifiedDate,
+        };
+      }
+
+      for (const productId of productIds) state[seller].productModifiedDates[productId] = modifiedDate;
+      state[seller].recordModifiedDate = modifiedDate;
+
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: SHOP_PRODUCT_RECORDS, state: current(state)});
+    },
     unsetProductRecord: (state: ProductRecords, {payload}: PayloadAction<{productId: string; seller: string}>) => {
       const {productId, seller} = payload;
 
@@ -71,6 +89,7 @@ export const {
   setProductRecords,
   setIncomingProductRecord,
   setSelfProductRecord,
+  setSelfProductRecords,
   unsetProductRecord,
   unsetProductRecords,
 } = productRecords.actions;

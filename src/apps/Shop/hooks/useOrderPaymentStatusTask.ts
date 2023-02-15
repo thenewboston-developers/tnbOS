@@ -2,15 +2,42 @@ import {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {ORDER_PAYMENT_STATUS_TASK_RUN_INTERVAL_SECONDS} from 'apps/Shop/constants/protocol';
-import {getOrders} from 'apps/Shop/selectors/state';
+import {getOrderProducts, getOrders} from 'apps/Shop/selectors/state';
 import {setPaymentStatus} from 'apps/Shop/store/orders';
-import {ApprovalStatus, PaymentStatus} from 'apps/Shop/types';
+import {setSelfProductRecords} from 'apps/Shop/store/productRecords';
+import {setProductList} from 'apps/Shop/store/products';
+import {ApprovalStatus, Order, PaymentStatus, Product} from 'apps/Shop/types';
 import {validatePayment} from 'apps/Shop/validators/common';
+import {getSelf} from 'system/selectors/state';
 import {AppDispatch} from 'system/types';
+import {currentSystemDate} from 'system/utils/dates';
+import {generateNetworkUUID} from 'system/utils/uuid';
 
 const useOrderPaymentStatusTask = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const orderProducts = useSelector(getOrderProducts);
   const orders = useSelector(getOrders);
+  const self = useSelector(getSelf);
+
+  const cloneOrderProductsToProducts = useCallback(
+    (order: Order) => {
+      const productList: Product[] = order.productIds.map((productId) => ({
+        ...orderProducts[productId],
+        productId: generateNetworkUUID(),
+      }));
+
+      dispatch(setProductList(productList));
+
+      dispatch(
+        setSelfProductRecords({
+          modifiedDate: currentSystemDate(),
+          productIds: productList.map(({productId}) => productId),
+          seller: self.accountNumber,
+        }),
+      );
+    },
+    [dispatch, orderProducts, self.accountNumber],
+  );
 
   const ordersPendingPayment = useMemo(() => {
     return Object.values(orders).filter(({approvalStatus, paymentStatus}) => {
@@ -31,6 +58,7 @@ const useOrderPaymentStatusTask = () => {
         if (paymentExpirationDate < now) {
           try {
             await validatePayment(order, PaymentStatus.complete);
+
             dispatch(
               setPaymentStatus({
                 orderId: order.orderId,
@@ -44,11 +72,15 @@ const useOrderPaymentStatusTask = () => {
                 paymentStatus: PaymentStatus.expired,
               }),
             );
+
+            if (order.seller === self.accountNumber) {
+              cloneOrderProductsToProducts(order);
+            }
           }
         }
       }
     })();
-  }, [dispatch, ordersPendingPayment]);
+  }, [cloneOrderProductsToProducts, dispatch, ordersPendingPayment, self.accountNumber]);
 
   useEffect(() => {
     const runInterval = setInterval(() => run(), ORDER_PAYMENT_STATUS_TASK_RUN_INTERVAL_SECONDS * 1000);
