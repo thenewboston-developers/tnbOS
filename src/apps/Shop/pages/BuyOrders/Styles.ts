@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import USectionHeading from 'apps/Shop/components/SectionHeading';
+import UViewMore from 'apps/Shop/components/ViewMore';
 
 export const Container = styled.div`
   height: 100%;
@@ -16,4 +17,8 @@ export const Orders = styled.div`
 
 export const SectionHeading = styled(USectionHeading)`
   margin-bottom: 24px;
+`;
+
+export const ViewMore = styled(UViewMore)`
+  margin-top: 24px;
 `;
