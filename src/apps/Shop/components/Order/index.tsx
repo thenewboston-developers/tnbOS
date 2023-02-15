@@ -1,6 +1,7 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
+import AccountLabel from 'apps/Shop/components/AccountLabel';
 import OrderPayment from 'apps/Shop/components/OrderPayment';
 import {getOrderProducts} from 'apps/Shop/selectors/state';
 import {Order as TOrder} from 'apps/Shop/types';
@@ -17,19 +18,31 @@ export interface OrderProps {
 const Order: SFC<OrderProps> = ({className, order}) => {
   const orderProducts = useSelector(getOrderProducts);
 
-  const {address, productIds} = order;
+  const {address, buyer, productIds, seller} = order;
 
   const orderProductList = useMemo(() => {
     return productIds.map((productId) => orderProducts[productId]);
   }, [orderProducts, productIds]);
 
-  const renderBottom = () => {
+  const renderDetailsRow = () => {
     return (
-      <S.Bottom>
+      <S.DetailsRow>
         <S.AddressCard address={address} />
+        <S.Participants>
+          <AccountLabel label="Buyer" accountNumber={buyer} />
+          <AccountLabel label="Seller" accountNumber={seller} />
+        </S.Participants>
+      </S.DetailsRow>
+    );
+  };
+
+  const renderMainArea = () => {
+    return (
+      <S.MainArea>
+        {renderDetailsRow()}
         {renderOrderProducts()}
         <OrderPayment order={order} />
-      </S.Bottom>
+      </S.MainArea>
     );
   };
 
@@ -43,7 +56,7 @@ const Order: SFC<OrderProps> = ({className, order}) => {
   return (
     <S.Container className={className}>
       <OrderTop order={order} />
-      {renderBottom()}
+      {renderMainArea()}
     </S.Container>
   );
 };

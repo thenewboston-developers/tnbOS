@@ -8,11 +8,6 @@ export const AddressCard = styled(UAddressCard)`
   width: fit-content;
 `;
 
-export const Bottom = styled.div`
-  background: #fff;
-  padding: 16px 24px;
-`;
-
 export const Container = styled.div`
   border-radius: 4px;
   border: 1px solid ${colors.border.default};
@@ -22,9 +17,26 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
+export const DetailsRow = styled.div`
+  display: flex;
+  gap: 24px;
+`;
+
+export const MainArea = styled.div`
+  background: #fff;
+  padding: 16px 24px;
+`;
+
 export const OrderProducts = styled.div`
   display: grid;
   gap: 12px;
   grid-template-columns: 100px auto;
   margin-top: 24px;
+`;
+
+export const Participants = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  gap: 16px;
 `;
