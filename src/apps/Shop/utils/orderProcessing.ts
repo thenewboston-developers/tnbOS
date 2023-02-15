@@ -1,3 +1,4 @@
+import {setPaymentStatusBlock} from 'apps/Shop/blocks';
 import {setPaymentStatus} from 'apps/Shop/store/orders';
 import {Order, PaymentStatus} from 'apps/Shop/types';
 import {createTransaction} from 'apps/Shop/utils/transactions';
@@ -19,11 +20,11 @@ export const handleOrderPayment = async ({order, receivingAddress}: HandleOrderP
     };
     store.dispatch(setPaymentStatus(setPaymentStatusParams));
 
-    // await setPaymentStatusBlock({
-    //   networkId,
-    //   params: setPaymentStatusParams,
-    //   recipient: order.host.accountNumber,
-    // });
+    await setPaymentStatusBlock({
+      networkId: order.networkId,
+      params: setPaymentStatusParams,
+      recipient: order.seller,
+    });
   } catch (error) {
     console.error(error);
     displayErrorToast('Error handling order payment');
@@ -34,11 +35,11 @@ export const handleOrderPayment = async ({order, receivingAddress}: HandleOrderP
     };
     store.dispatch(setPaymentStatus(setPaymentStatusParams));
 
-    // await setPaymentStatusBlock({
-    //   networkId,
-    //   params: setPaymentStatusParams,
-    //   recipient: order.host.accountNumber,
-    // });
+    await setPaymentStatusBlock({
+      networkId: order.networkId,
+      params: setPaymentStatusParams,
+      recipient: order.seller,
+    });
   }
 };
 

@@ -18,6 +18,7 @@ export enum ShopFn {
   approveOrder = 'approveOrder',
   createOrder = 'createOrder',
   getProductList = 'getProductList',
+  setPaymentStatus = 'setPaymentStatus',
   setProductList = 'setProductList',
   setProductRecord = 'setProductRecord',
   setProductRecordReceipt = 'setProductRecordReceipt',
