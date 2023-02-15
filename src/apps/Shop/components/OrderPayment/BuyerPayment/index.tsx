@@ -1,11 +1,19 @@
 import {ReactNode, useCallback, useMemo} from 'react';
+import {useSelector} from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
+import orderBy from 'lodash/orderBy';
 
 import Badge, {BadgeStyle} from 'apps/Shop/components/Badge';
 import CountdownTimer from 'apps/Shop/components/CountdownTimer';
 import OrderPaymentContent from 'apps/Shop/components/OrderPaymentContent';
 import OrderPaymentHeader from 'apps/Shop/components/OrderPaymentHeader';
 import {TableRow} from 'apps/Shop/components/Table';
-import {ApprovalStatus, Order, PaymentStatus} from 'apps/Shop/types';
+import {TickerTableRow} from 'apps/Shop/components/TickerTable';
+import Transaction from 'apps/Shop/components/Transaction';
+import {getTransactions} from 'apps/Shop/selectors/state';
+import {ApprovalStatus, Order, PaymentStatus, Transaction as TTransaction} from 'apps/Shop/types';
+import {getTotalAmount} from 'apps/Shop/utils/orders';
+import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
 import {longDate} from 'system/utils/dates';
 import * as S from './Styles';
@@ -19,7 +27,36 @@ export interface BuyerPaymentProps {
 }
 
 const BuyerPayment: SFC<BuyerPaymentProps> = ({className, order}) => {
-  const {approvalStatus, createdDate, paymentExpirationDate, paymentStatus, receivingAddress} = order;
+  const self = useSelector(getSelf);
+  const transactions = useSelector(getTransactions);
+
+  const {
+    approvalStatus,
+    buyer,
+    createdDate,
+    networkId,
+    orderId,
+    paymentExpirationDate,
+    paymentStatus,
+    receivingAddress,
+    seller,
+    total,
+  } = order;
+
+  const paymentTransactions = useMemo((): TTransaction[] => {
+    const orderTransactions = transactions[orderId];
+    if (!orderTransactions) return [];
+
+    const networkTransactions = orderTransactions[networkId];
+    if (!networkTransactions || isEmpty(networkTransactions)) return [];
+
+    return Object.values(networkTransactions).filter(({sender}) => buyer === sender);
+  }, [buyer, networkId, orderId, transactions]);
+
+  const remaining = useMemo(() => {
+    if (paymentStatus === PaymentStatus.complete) return 0;
+    return Math.max(total - getTotalAmount(paymentTransactions), 0);
+  }, [paymentStatus, paymentTransactions, total]);
 
   const renderPaymentStatusBadge = useCallback(() => {
     const paymentStatusBadges: PaymentStatusBadgeDict = {
@@ -31,6 +68,12 @@ const BuyerPayment: SFC<BuyerPaymentProps> = ({className, order}) => {
     };
     return paymentStatusBadges[paymentStatus];
   }, [paymentStatus]);
+
+  const sortedTransactions = useMemo(() => {
+    return orderBy(paymentTransactions, ['date'], ['desc']).map((transaction) => (
+      <Transaction key={transaction.id} transaction={transaction} />
+    ));
+  }, [paymentTransactions]);
 
   const tableRows = useMemo((): TableRow[] => {
     let paymentTimeRemainingRow: TableRow[] = [];
@@ -64,11 +107,32 @@ const BuyerPayment: SFC<BuyerPaymentProps> = ({className, order}) => {
     ];
   }, [approvalStatus, createdDate, paymentExpirationDate, paymentStatus, receivingAddress, renderPaymentStatusBadge]);
 
+  const transferDetailsRows = useMemo((): TickerTableRow[] => {
+    return [
+      {
+        key: 'Total Due',
+        value: total,
+      },
+      {
+        key: 'Remaining',
+        value: remaining,
+      },
+    ];
+  }, [remaining, total]);
+
+  const renderTransferDetails = () => {
+    if (seller === self.accountNumber) return null;
+    return (
+      <S.TransferDetails networkId={order.networkId} rows={transferDetailsRows} transactions={sortedTransactions} />
+    );
+  };
+
   return (
     <S.Container className={className}>
       <OrderPaymentHeader number={2} text="Buyer Payment" />
       <OrderPaymentContent>
         <S.Table rows={tableRows} />
+        {renderTransferDetails()}
       </OrderPaymentContent>
     </S.Container>
   );

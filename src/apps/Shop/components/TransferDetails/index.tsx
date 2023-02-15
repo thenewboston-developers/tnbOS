@@ -4,7 +4,7 @@ import {TickerTableRow} from 'apps/Shop/components/TickerTable';
 import {SFC} from 'system/types';
 import * as S from './Styles';
 
-interface TransferDetailsProps {
+export interface TransferDetailsProps {
   networkId: string;
   rows: TickerTableRow[];
   transactions: ReactNode[];

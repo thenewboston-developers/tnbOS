@@ -57,6 +57,12 @@ const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
     return paymentStatusBadges[paymentStatus];
   }, [paymentStatus]);
 
+  const sortedTransactions = useMemo(() => {
+    return orderBy(paymentTransactions, ['date'], ['desc']).map((transaction) => (
+      <Transaction key={transaction.id} transaction={transaction} />
+    ));
+  }, [paymentTransactions]);
+
   const tableRows = useMemo(() => {
     let paymentTimeRemainingRow: TableRow[] = [];
 
@@ -108,12 +114,6 @@ const ClientPayment: SFC<ClientPaymentProps> = ({className, order}) => {
       },
     ];
   }, [client.outgoingAmount, remaining]);
-
-  const sortedTransactions = useMemo(() => {
-    return orderBy(paymentTransactions, ['date'], ['desc']).map((transaction) => (
-      <Transaction key={transaction.id} transaction={transaction} />
-    ));
-  }, [paymentTransactions]);
 
   return (
     <S.Container className={className}>
