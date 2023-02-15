@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ORDER_PAYMENT_STATUS_TASK_RUN_INTERVAL_SECONDS} from 'apps/Shop/constants/protocol';
 import {getOrderProducts, getOrders} from 'apps/Shop/selectors/state';
 import {setPaymentStatus} from 'apps/Shop/store/orders';
+import {resetProductRecordRecipients} from 'apps/Shop/store/productRecordRecipients';
 import {setSelfProductRecords} from 'apps/Shop/store/productRecords';
 import {setProductList} from 'apps/Shop/store/products';
 import {ApprovalStatus, Order, PaymentStatus, Product} from 'apps/Shop/types';
@@ -35,6 +36,8 @@ const useOrderPaymentStatusTask = () => {
           seller: self.accountNumber,
         }),
       );
+
+      dispatch(resetProductRecordRecipients());
     },
     [dispatch, orderProducts, self.accountNumber],
   );

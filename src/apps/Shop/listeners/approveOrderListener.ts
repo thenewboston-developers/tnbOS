@@ -32,7 +32,7 @@ const approveOrderListener = (block: Block, dispatch: AppDispatch, networkId: st
 
       dispatch(approveOrder({orderId, receivingAddress}));
 
-      await handleOrderPayment({order, receivingAddress});
+      // await handleOrderPayment({order, receivingAddress});
       console.log(networkId);
     } catch (error) {
       console.error(error);
