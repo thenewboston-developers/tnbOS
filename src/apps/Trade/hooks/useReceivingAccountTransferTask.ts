@@ -6,7 +6,6 @@ import {getOrders, getReceivingAccounts, getTransactions} from 'apps/Trade/selec
 import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
 import {setTransaction} from 'apps/Trade/store/transactions';
 import {FillStatus, PaymentStatus, ReceivingAccount} from 'apps/Trade/types';
-import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
 import {getReceivingAccountOutgoingTransactions} from 'apps/Trade/utils/receivingAccounts';
 import {UnsignedBlock} from 'shared/types';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
@@ -14,6 +13,7 @@ import {createBlock} from 'system/core/blocks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, Dict} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
+import {getLiveBalance} from 'system/utils/liveBalances';
 import {signData} from 'system/utils/signing';
 
 const useReceivingAccountTransferTask = () => {

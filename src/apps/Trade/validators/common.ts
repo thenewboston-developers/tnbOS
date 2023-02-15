@@ -1,5 +1,5 @@
 import {Order, OrderClient, OrderHost, Orders, PaymentStatus} from 'apps/Trade/types';
-import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
+import {getLiveBalance} from 'system/utils/liveBalances';
 
 export const validateBlockSenderIsOrderClient = (blockSender: string, orderClient: OrderClient) => {
   if (blockSender !== orderClient.accountNumber) throw new Error('Block sender must match order client account number');

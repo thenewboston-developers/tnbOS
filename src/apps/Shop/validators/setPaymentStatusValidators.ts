@@ -1,4 +1,4 @@
-import {PaymentStatus, SetPaymentStatusParams} from 'apps/Trade/types';
+import {PaymentStatus, SetPaymentStatusParams} from 'apps/Shop/types';
 import yup from 'system/utils/yup';
 
 export const setPaymentStatusValidator: yup.SchemaOf<SetPaymentStatusParams> = yup
