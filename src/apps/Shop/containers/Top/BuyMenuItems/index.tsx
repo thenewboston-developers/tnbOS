@@ -16,6 +16,10 @@ const BuyMenuItems: SFC = () => {
     dispatch(setActivePage(Page.buyCheckout));
   };
 
+  const handleHomeClick = () => {
+    dispatch(setActivePage(Page.buyHome));
+  };
+
   const handleMyAddressesClick = () => {
     dispatch(setActivePage(Page.buyAddresses));
   };
@@ -31,6 +35,7 @@ const BuyMenuItems: SFC = () => {
 
   return (
     <>
+      <TopMenuItem onClick={handleHomeClick}>Home</TopMenuItem>
       <TopMenuItem onClick={handleMyAddressesClick}>My Addresses</TopMenuItem>
       <TopMenuItem onClick={handleOrdersClick}>Orders</TopMenuItem>
       <S.IconContainer onClick={handleCartClick}>

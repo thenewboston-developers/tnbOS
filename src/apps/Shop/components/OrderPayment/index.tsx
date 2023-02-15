@@ -7,7 +7,6 @@ import {SFC} from 'system/types';
 import BuyerPayment from './BuyerPayment';
 import FinalTransfer from './FinalTransfer';
 import SellerApproval from './SellerApproval';
-import Shipping from './Shipping';
 import * as S from './Styles';
 
 export interface OrderPaymentProps {
@@ -27,7 +26,6 @@ const OrderPayment: SFC<OrderPaymentProps> = ({className, order}) => {
       <SellerApproval order={order} />
       <BuyerPayment order={order} />
       {renderFinalTransfer()}
-      <Shipping order={order} />
     </S.Container>
   );
 };
