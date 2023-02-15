@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UButton from 'apps/Shop/components/Button';
+import {colors} from 'apps/Shop/styles';
 
 export const Amount = styled.div`
   font-size: 26px;
@@ -17,6 +18,12 @@ export const Container = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+`;
+
+export const ErrorMessage = styled.div`
+  color: ${colors.fonts.error};
+  font-size: 10px;
+  margin-top: 10px;
 `;
 
 export const NetworkImage = styled.img`
