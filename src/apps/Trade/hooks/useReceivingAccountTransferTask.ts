@@ -55,35 +55,39 @@ const useReceivingAccountTransferTask = () => {
 
   const transferToNetworkAccount = useCallback(
     async (receivingAccount: ReceivingAccount) => {
-      const balance = await getLiveBalance(receivingAccount.accountNumber, receivingAccount.networkId);
+      try {
+        const balance = await getLiveBalance(receivingAccount.accountNumber, receivingAccount.networkId);
 
-      const data: UnsignedBlock = {
-        amount: balance - CORE_TRANSACTION_FEE,
-        id: crypto.randomUUID(),
-        payload: {},
-        recipient: self.accountNumber,
-        sender: receivingAccount.accountNumber,
-        transaction_fee: CORE_TRANSACTION_FEE,
-      };
+        const data: UnsignedBlock = {
+          amount: balance - CORE_TRANSACTION_FEE,
+          id: crypto.randomUUID(),
+          payload: {},
+          recipient: self.accountNumber,
+          sender: receivingAccount.accountNumber,
+          transaction_fee: CORE_TRANSACTION_FEE,
+        };
 
-      const block = signData(data, receivingAccount.signingKey);
-      await createBlock(block, receivingAccount.networkId);
+        const block = signData(data, receivingAccount.signingKey);
+        await createBlock(block, receivingAccount.networkId);
 
-      dispatch(
-        setReceivingAccount({
-          ...receivingAccount,
-          fundsTransferredOut: true,
-        }),
-      );
+        dispatch(
+          setReceivingAccount({
+            ...receivingAccount,
+            fundsTransferredOut: true,
+          }),
+        );
 
-      dispatch(
-        setTransaction({
-          ...block,
-          date: currentSystemDate(),
-          networkId: receivingAccount.networkId,
-          orderId: receivingAccount.orderId,
-        }),
-      );
+        dispatch(
+          setTransaction({
+            ...block,
+            date: currentSystemDate(),
+            networkId: receivingAccount.networkId,
+            orderId: receivingAccount.orderId,
+          }),
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
     [dispatch, self],
   );
