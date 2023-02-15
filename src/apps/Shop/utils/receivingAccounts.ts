@@ -1,4 +1,4 @@
-import {ReceivingAccount, Transaction, Transactions} from 'apps/Trade/types';
+import {ReceivingAccount, Transaction, Transactions} from 'apps/Shop/types';
 import isEmpty from 'lodash/isEmpty';
 
 export const getReceivingAccountOutgoingTransactions = (
