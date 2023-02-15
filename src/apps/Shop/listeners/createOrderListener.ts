@@ -1,4 +1,8 @@
+import {setOrderProductList} from 'apps/Shop/store/orderProducts';
 import {setOrder} from 'apps/Shop/store/orders';
+import {resetProductRecordRecipients} from 'apps/Shop/store/productRecordRecipients';
+import {unsetProductRecords} from 'apps/Shop/store/productRecords';
+import {unsetProducts} from 'apps/Shop/store/products';
 import {setReceivingAccount} from 'apps/Shop/store/receivingAccounts';
 import {Order} from 'apps/Shop/types';
 import {validateBlockSenderIsBuyer} from 'apps/Shop/validators/common';
@@ -45,8 +49,14 @@ const createOrderListener = (block: Block, dispatch: AppDispatch, networkId: str
       validateTotal(products, productIds, total);
 
       const keypair = generateAccount();
+      const productList = productIds.map((productId) => products[productId]);
 
+      dispatch(setOrderProductList(productList));
       dispatch(setOrder(order));
+      dispatch(unsetProducts(productIds));
+      dispatch(unsetProductRecords({productIds, seller}));
+      dispatch(resetProductRecordRecipients());
+
       dispatch(
         setReceivingAccount({
           accountNumber: keypair.publicKeyHex,
