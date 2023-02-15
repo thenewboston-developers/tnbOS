@@ -13,6 +13,7 @@ import useOnResetProductRecordRecipients from 'apps/Shop/hooks/useOnResetProduct
 import useOrderApprovalStatusTask from 'apps/Shop/hooks/useOrderApprovalStatusTask';
 import useOrderPaymentStatusTask from 'apps/Shop/hooks/useOrderPaymentStatusTask';
 import useProductRecordSyncTask from 'apps/Shop/hooks/useProductRecordSyncTask';
+import useReceivingAccountTransferTask from 'apps/Shop/hooks/useReceivingAccountTransferTask';
 import useSelfProductRecord from 'apps/Shop/hooks/useSelfProductRecord';
 import useSellProducts from 'apps/Shop/hooks/useSellProducts';
 import useUnavailableProductIds from 'apps/Shop/hooks/useUnavailableProductIds';
@@ -33,6 +34,7 @@ export {
   useOrderApprovalStatusTask,
   useOrderPaymentStatusTask,
   useProductRecordSyncTask,
+  useReceivingAccountTransferTask,
   useSelfProductRecord,
   useSellProducts,
   useUnavailableProductIds,

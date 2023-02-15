@@ -6,6 +6,8 @@ import {
   ProductRecordRecipients,
   ProductRecords,
   Products,
+  ReceivingAccounts,
+  Transactions,
 } from 'apps/Shop/types';
 import {RootState} from 'system/types';
 
@@ -21,3 +23,5 @@ export const getProductRecordRecipients = (state: RootState): ProductRecordRecip
   state.shop.productRecordRecipients;
 export const getProductRecords = (state: RootState): ProductRecords => state.shop.productRecords;
 export const getProducts = (state: RootState): Products => state.shop.products;
+export const getReceivingAccounts = (state: RootState): ReceivingAccounts => state.shop.receivingAccounts;
+export const getTransactions = (state: RootState): Transactions => state.shop.transactions;

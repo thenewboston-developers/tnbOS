@@ -5,6 +5,7 @@ import {
   useOrderApprovalStatusTask,
   useOrderPaymentStatusTask,
   useProductRecordSyncTask,
+  useReceivingAccountTransferTask,
 } from 'apps/Shop/hooks';
 import MainArea from 'apps/Shop/containers/MainArea';
 import Top from 'apps/Shop/containers/Top';
@@ -19,6 +20,7 @@ const Shop: SFC<AppProps> = ({className, display}) => {
   useOrderApprovalStatusTask();
   useOrderPaymentStatusTask();
   useProductRecordSyncTask();
+  useReceivingAccountTransferTask();
 
   if (!display) return null;
 

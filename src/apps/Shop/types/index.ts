@@ -11,7 +11,7 @@ import {ProductRecordRecipient, ProductRecordRecipients} from 'apps/Shop/types/p
 import {ProductRecord, ProductRecords} from 'apps/Shop/types/productRecords';
 import {Product, Products} from 'apps/Shop/types/products';
 import {ReceivingAccount, ReceivingAccounts} from 'apps/Shop/types/receivingAccounts';
-import {Transaction, Transactions} from 'apps/Shop/types/transactions';
+import {Transaction, TransactionPerspective, Transactions, TransactionStatus} from 'apps/Shop/types/transactions';
 
 export {
   ActivationStatus,
@@ -41,5 +41,7 @@ export {
   ShopElectronStore,
   ShopFn,
   Transaction,
+  TransactionPerspective,
+  TransactionStatus,
   Transactions,
 };
