@@ -1,4 +1,7 @@
+import {useSelector} from 'react-redux';
+
 import {Order} from 'apps/Shop/types';
+import {getSelf} from 'system/selectors/state';
 import {SFC} from 'system/types';
 
 import BuyerPayment from './BuyerPayment';
@@ -12,12 +15,19 @@ export interface OrderPaymentProps {
 }
 
 const OrderPayment: SFC<OrderPaymentProps> = ({className, order}) => {
+  const self = useSelector(getSelf);
+
+  const renderFinalTransfer = () => {
+    if (self.accountNumber === order.buyer) return null;
+    return <FinalTransfer order={order} />;
+  };
+
   return (
     <S.Container className={className}>
       <SellerApproval order={order} />
       <BuyerPayment order={order} />
-      <FinalTransfer order={order} />
-      <Shipping />
+      {renderFinalTransfer()}
+      <Shipping order={order} />
     </S.Container>
   );
 };
