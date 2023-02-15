@@ -6,7 +6,6 @@ import {getOrders, getReceivingAccounts, getTransactions} from 'apps/Trade/selec
 import {setReceivingAccount} from 'apps/Trade/store/receivingAccounts';
 import {setTransaction} from 'apps/Trade/store/transactions';
 import {FillStatus, PaymentStatus, ReceivingAccount} from 'apps/Trade/types';
-import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
 import {getReceivingAccountOutgoingTransactions} from 'apps/Trade/utils/receivingAccounts';
 import {UnsignedBlock} from 'shared/types';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
@@ -14,6 +13,7 @@ import {createBlock} from 'system/core/blocks';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch, Dict} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
+import {getLiveBalance} from 'system/utils/liveBalances';
 import {signData} from 'system/utils/signing';
 
 const useReceivingAccountTransferTask = () => {
@@ -55,35 +55,39 @@ const useReceivingAccountTransferTask = () => {
 
   const transferToNetworkAccount = useCallback(
     async (receivingAccount: ReceivingAccount) => {
-      const balance = await getLiveBalance(receivingAccount.accountNumber, receivingAccount.networkId);
+      try {
+        const balance = await getLiveBalance(receivingAccount.accountNumber, receivingAccount.networkId);
 
-      const data: UnsignedBlock = {
-        amount: balance - CORE_TRANSACTION_FEE,
-        id: crypto.randomUUID(),
-        payload: {},
-        recipient: self.accountNumber,
-        sender: receivingAccount.accountNumber,
-        transaction_fee: CORE_TRANSACTION_FEE,
-      };
+        const data: UnsignedBlock = {
+          amount: balance - CORE_TRANSACTION_FEE,
+          id: crypto.randomUUID(),
+          payload: {},
+          recipient: self.accountNumber,
+          sender: receivingAccount.accountNumber,
+          transaction_fee: CORE_TRANSACTION_FEE,
+        };
 
-      const block = signData(data, receivingAccount.signingKey);
-      await createBlock(block, receivingAccount.networkId);
+        const block = signData(data, receivingAccount.signingKey);
+        await createBlock(block, receivingAccount.networkId);
 
-      dispatch(
-        setReceivingAccount({
-          ...receivingAccount,
-          fundsTransferredOut: true,
-        }),
-      );
+        dispatch(
+          setReceivingAccount({
+            ...receivingAccount,
+            fundsTransferredOut: true,
+          }),
+        );
 
-      dispatch(
-        setTransaction({
-          ...block,
-          date: currentSystemDate(),
-          networkId: receivingAccount.networkId,
-          orderId: receivingAccount.orderId,
-        }),
-      );
+        dispatch(
+          setTransaction({
+            ...block,
+            date: currentSystemDate(),
+            networkId: receivingAccount.networkId,
+            orderId: receivingAccount.orderId,
+          }),
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
     [dispatch, self],
   );

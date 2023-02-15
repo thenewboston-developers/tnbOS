@@ -14,6 +14,8 @@ const University: SFC<AppProps> = ({className, display}) => {
   useOnResetCourseRecordRecipients();
   useCourseRecordSyncTask();
 
+  if (!display) return null;
+
   return (
     <AppWindow className={className} display={display}>
       <S.Container>

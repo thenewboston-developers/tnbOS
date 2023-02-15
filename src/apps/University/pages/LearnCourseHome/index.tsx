@@ -9,12 +9,12 @@ import {useActiveLearnCourse, useCourseLectures, useIsSelfEnrolled} from 'apps/U
 import {setEnrollment, unsetEnrollment} from 'apps/University/store/enrollments';
 import {setActivePage, setActiveTeachCourseId} from 'apps/University/store/manager';
 import {Course, Lecture, Page, PublicationStatus} from 'apps/University/types';
-import {generateNetworkUUID} from 'apps/University/utils/uuid';
 import {getBalances, getNetworkAccountOnlineStatuses, getSelf} from 'system/selectors/state';
 import {AppDispatch, SFC, ToastType} from 'system/types';
 import {currentSystemDate} from 'system/utils/dates';
 import {getRecipientsDefaultNetworkId} from 'system/utils/networks';
 import {displayErrorToast, displayToast} from 'system/utils/toast';
+import {generateNetworkUUID} from 'system/utils/uuid';
 import * as S from './Styles';
 
 const LearnCourseHome: SFC = ({className}) => {

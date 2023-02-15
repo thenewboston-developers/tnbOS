@@ -49,34 +49,30 @@ const OfferModal: SFC<OfferModalProps> = ({className, clientAsset, close, offer}
     };
   }, [offer]);
 
-  const handleSubmit = async (values: FormValues): Promise<void> => {
+  const handleSubmit = (values: FormValues) => {
     const {purchaseOrderMax, purchaseOrderMin, purchasePrice, saleOrderMax, saleOrderMin, salePrice} = values;
 
-    try {
-      const offerData = {
-        clientAsset,
-        host: self.accountNumber,
-        hostAsset,
-        purchaseTerms: {
-          enabled: offer ? offer.purchaseTerms.enabled : false,
-          orderMax: parseFloat(purchaseOrderMax),
-          orderMin: parseFloat(purchaseOrderMin),
-          price: parseFloat(purchasePrice),
-        },
-        saleTerms: {
-          enabled: offer ? offer.saleTerms.enabled : false,
-          orderMax: parseFloat(saleOrderMax),
-          orderMin: parseFloat(saleOrderMin),
-          price: parseFloat(salePrice),
-        },
-      };
+    const offerData = {
+      clientAsset,
+      host: self.accountNumber,
+      hostAsset,
+      purchaseTerms: {
+        enabled: offer ? offer.purchaseTerms.enabled : false,
+        orderMax: parseFloat(purchaseOrderMax),
+        orderMin: parseFloat(purchaseOrderMin),
+        price: parseFloat(purchasePrice),
+      },
+      saleTerms: {
+        enabled: offer ? offer.saleTerms.enabled : false,
+        orderMax: parseFloat(saleOrderMax),
+        orderMin: parseFloat(saleOrderMin),
+        price: parseFloat(salePrice),
+      },
+    };
 
-      dispatch(setOffer(offerData));
-      displayToast(`${clientAssetDisplayName} terms saved`, ToastType.success);
-      close();
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(setOffer(offerData));
+    displayToast(`${clientAssetDisplayName} terms saved`, ToastType.success);
+    close();
   };
 
   const renderAssetLogoContainer = () => (

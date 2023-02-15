@@ -5,9 +5,9 @@ import {ORDER_FILL_STATUS_TASK_RUN_INTERVAL_SECONDS} from 'apps/Trade/constants/
 import {getOrderErrors, getOrders, getReceivingAccounts} from 'apps/Trade/selectors/state';
 import {setFillStatus} from 'apps/Trade/store/orders';
 import {FillStatus, PaymentStatus} from 'apps/Trade/types';
-import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
 import {getSelf} from 'system/selectors/state';
 import {AppDispatch} from 'system/types';
+import {getLiveBalance} from 'system/utils/liveBalances';
 
 const useOrderFillStatusTask = () => {
   const dispatch = useDispatch<AppDispatch>();

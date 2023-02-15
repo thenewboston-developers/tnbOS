@@ -1,16 +1,4 @@
-import yup, {accountNumberSchema} from 'system/utils/yup';
-
-const networkUUIDSchema = (testName: string, testMessage: string) =>
-  yup
-    .string()
-    .required()
-    .test(testName, testMessage, async (id: any) => {
-      const accountNumber = id.substring(0, 64);
-      const uuid = id.substring(65);
-      const isAccountNumberValid = await accountNumberSchema.required().isValid(accountNumber);
-      const isUUIDValid = await yup.string().required().uuid().isValid(uuid);
-      return isAccountNumberValid && isUUIDValid;
-    });
+import {networkUUIDSchema} from 'system/utils/yup';
 
 export const courseIdSchema = networkUUIDSchema(
   'course-id-is-correct-format',

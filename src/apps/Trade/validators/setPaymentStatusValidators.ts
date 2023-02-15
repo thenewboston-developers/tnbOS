@@ -17,12 +17,12 @@ export const validatePaymentStatusTransition = (
   newPaymentStatus: PaymentStatus,
 ) => {
   if (currentPaymentStatus === PaymentStatus.none) {
-    return [PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial].includes(newPaymentStatus);
+    const isValid = [PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial].includes(newPaymentStatus);
+    if (!isValid) throw new Error('Invalid payment status transition');
   }
 
   if (currentPaymentStatus === PaymentStatus.partial) {
-    return [PaymentStatus.complete, PaymentStatus.error].includes(newPaymentStatus);
+    const isValid = [PaymentStatus.complete, PaymentStatus.error].includes(newPaymentStatus);
+    if (!isValid) throw new Error('Invalid payment status transition');
   }
-
-  throw new Error('Invalid payment status transition');
 };

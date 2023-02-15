@@ -19,7 +19,7 @@ const NetworkModal: SFC<NetworkModalProps> = ({className, close}) => {
   };
 
   return (
-    <S.Modal className={className} close={close} header="Select Account">
+    <S.Modal className={className} close={close} header="Select Network">
       {renderNetworkSelectCards()}
     </S.Modal>
   );

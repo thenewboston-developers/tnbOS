@@ -1,6 +1,6 @@
 import {FillStatus, Order, SetFillStatusParams} from 'apps/Trade/types';
-import {getLiveBalance} from 'apps/Trade/utils/liveBalances';
 import {CORE_TRANSACTION_FEE} from 'system/constants/protocol';
+import {getLiveBalance} from 'system/utils/liveBalances';
 import yup from 'system/utils/yup';
 
 export const setFillStatusValidator: yup.SchemaOf<SetFillStatusParams> = yup
