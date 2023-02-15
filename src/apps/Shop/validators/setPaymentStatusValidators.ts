@@ -1,9 +1,10 @@
 import {PaymentStatus, SetPaymentStatusParams} from 'apps/Shop/types';
+import {orderIdSchema} from 'apps/Shop/utils/yup';
 import yup from 'system/utils/yup';
 
 export const setPaymentStatusValidator: yup.SchemaOf<SetPaymentStatusParams> = yup
   .object({
-    orderId: yup.string().required().uuid(),
+    orderId: orderIdSchema,
     paymentStatus: yup.mixed().oneOf([PaymentStatus.complete, PaymentStatus.error, PaymentStatus.partial]),
   })
   .noUnknown();
