@@ -1,4 +1,5 @@
 import {approveOrder} from 'apps/Shop/store/orders';
+import {handleOrderPayment} from 'apps/Shop/utils/orderProcessing';
 import {
   approveOrderValidator,
   validateOrderIsPending,
@@ -31,7 +32,7 @@ const approveOrderListener = (block: Block, dispatch: AppDispatch, networkId: st
 
       dispatch(approveOrder({orderId, receivingAddress}));
 
-      // TODO: handle order payment
+      await handleOrderPayment({order, receivingAddress});
       console.log(networkId);
     } catch (error) {
       console.error(error);

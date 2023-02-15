@@ -9,6 +9,7 @@ import productRecordRecipientsRecordsReducer from 'apps/Shop/store/productRecord
 import productRecordsReducer from 'apps/Shop/store/productRecords';
 import productsReducer from 'apps/Shop/store/products';
 import receivingAccountsReducer from 'apps/Shop/store/receivingAccounts';
+import transactionsReducer from 'apps/Shop/store/transactions';
 
 const shopReducer = combineReducers({
   addresses: addressesReducer,
@@ -20,6 +21,7 @@ const shopReducer = combineReducers({
   productRecords: productRecordsReducer,
   products: productsReducer,
   receivingAccounts: receivingAccountsReducer,
+  transactions: transactionsReducer,
 });
 
 export default shopReducer;

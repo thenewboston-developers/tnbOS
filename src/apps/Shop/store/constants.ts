@@ -7,3 +7,4 @@ export const SHOP_PRODUCTS = 'shopProducts';
 export const SHOP_PRODUCT_RECORDS = 'shopProductRecords';
 export const SHOP_PRODUCT_RECORD_RECIPIENTS = 'shopProductRecordRecipients';
 export const SHOP_RECEIVING_ACCOUNTS = 'shopReceivingAccounts';
+export const SHOP_TRANSACTIONS = 'shopTransactions';
