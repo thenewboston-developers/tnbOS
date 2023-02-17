@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  align-self: flex-start;
   aspect-ratio: 16 / 9;
   border-radius: 4px;
+  flex-shrink: 0;
   overflow: hidden;
 `;
 
 export const Img = styled.img`
-  align-self: flex-start;
-  flex-shrink: 0;
   height: auto;
   object-fit: cover;
   position: relative;
