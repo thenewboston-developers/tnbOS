@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {getLectureRecordBlock} from 'apps/University/blocks';
 import {ButtonColor} from 'apps/University/components/Button';
+import Date from 'apps/University/components/Date';
+import Instructor from 'apps/University/components/Instructor';
 import {setCourse} from 'apps/University/store/courses';
 import {setLectureList} from 'apps/University/store/lectures';
 import {useActiveLearnCourse, useCourseLectures, useIsSelfEnrolled} from 'apps/University/hooks';
@@ -128,7 +130,10 @@ const LearnCourseHome: SFC = ({className}) => {
     <S.Container className={className}>
       <S.Left>
         <S.CourseName>{course.name}</S.CourseName>
-        <S.Instructor accountNumber={course.instructor} />
+        <S.Details>
+          <Instructor accountNumber={course.instructor} />
+          <Date date={course.modifiedDate} label="Last Updated" />
+        </S.Details>
         <S.CourseDescription>{course.description}</S.CourseDescription>
         <S.Playlist courseId={course.courseId} />
       </S.Left>
