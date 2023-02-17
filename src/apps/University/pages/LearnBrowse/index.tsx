@@ -1,4 +1,6 @@
+import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
+import orderBy from 'lodash/orderBy';
 
 import CourseCard from 'apps/University/components/CourseCard';
 import CourseCardsContainer from 'apps/University/components/CourseCardsContainer';
@@ -15,19 +17,23 @@ const LearnBrowse: SFC = ({className}) => {
   const availableCourses = useAvailableCourses();
   const dispatch = useDispatch<AppDispatch>();
 
+  const courseList = useMemo(() => {
+    return orderBy(availableCourses, ['modifiedDate'], ['desc']);
+  }, [availableCourses]);
+
   const handleClick = (courseId: string) => {
     dispatch(setActiveLearnCourseId(courseId));
     dispatch(setActivePage(Page.learnCourseHome));
   };
 
   const renderCourseCards = () => {
-    return availableCourses.map((course) => (
+    return courseList.map((course) => (
       <CourseCard course={course} key={course.courseId} onClick={() => handleClick(course.courseId)} />
     ));
   };
 
   const renderPageContent = () => {
-    if (!!availableCourses.length) {
+    if (!!courseList.length) {
       return <CourseCardsContainer>{renderCourseCards()}</CourseCardsContainer>;
     }
 
