@@ -23,7 +23,7 @@ const MenuItem: SFC<MenuItemProps> = ({children, className, icon, isCollapsed, p
   const isActivePage = useMemo(() => {
     if (page === activePage) return true;
 
-    const isEnrolledInActiveLearnCourse = !!enrollments[activeLearnCourseId];
+    const isEnrolledInActiveLearnCourse = activeLearnCourseId && !!enrollments[activeLearnCourseId];
 
     if (page === Page.learnBrowse) {
       if (activePage === Page.learnCourseHome && !isEnrolledInActiveLearnCourse) return true;

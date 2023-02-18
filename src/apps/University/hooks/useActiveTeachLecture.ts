@@ -9,7 +9,7 @@ const useActiveTeachLecture = (): Lecture | undefined => {
   const lectures = useSelector(getLectures);
 
   return useMemo(() => {
-    return lectures[activeTeachLectureId];
+    return activeTeachLectureId ? lectures[activeTeachLectureId] : undefined;
   }, [activeTeachLectureId, lectures]);
 };
 
