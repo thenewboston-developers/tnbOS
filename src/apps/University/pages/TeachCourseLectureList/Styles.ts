@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const Lectures = styled.div`
   display: grid;
   gap: 12px;
-  grid-template-columns: 2fr 6fr 1fr 1fr;
+  grid-template-columns: auto 2fr 6fr 1fr 1fr;
 `;
 
 export const SectionHeading = styled(USectionHeading)`

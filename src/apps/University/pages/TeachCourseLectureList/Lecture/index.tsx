@@ -18,7 +18,7 @@ export interface LectureProps {
 const Lecture: SFC<LectureProps> = ({lecture}) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {description, lectureId, name, publicationStatus, thumbnailUrl} = lecture;
+  const {description, lectureId, name, position, publicationStatus, thumbnailUrl} = lecture;
 
   const handleDeleteLectureClick = () => {
     dispatch(unsetLecture(lectureId));
@@ -62,6 +62,7 @@ const Lecture: SFC<LectureProps> = ({lecture}) => {
 
   return (
     <>
+      <S.Position>{position + 1}</S.Position>
       <S.Thumbnail onClick={handleEditLectureClick} thumbnailUrl={thumbnailUrl} />
       <S.Details>
         <S.Name onClick={handleEditLectureClick}>{name}</S.Name>
