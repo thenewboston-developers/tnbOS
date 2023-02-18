@@ -4,6 +4,7 @@ import orderBy from 'lodash/orderBy';
 
 import CourseCard from 'apps/University/components/CourseCard';
 import CourseCardsContainer from 'apps/University/components/CourseCardsContainer';
+import Search from 'apps/University/components/Search';
 import {useAvailableCourses} from 'apps/University/hooks';
 import {setActiveLearnCourseId, setActivePage} from 'apps/University/store/manager';
 import {Page} from 'apps/University/types';
@@ -70,9 +71,7 @@ const LearnBrowse: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.Search>
-        <S.Input onChange={handleInputChange} placeholder="Search courses..." type="text" />
-      </S.Search>
+      <Search onChange={handleInputChange} />
       <S.PageContent>{renderPageContent()}</S.PageContent>
     </S.Container>
   );

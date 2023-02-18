@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import UThumbnail from 'apps/University/components/Thumbnail';
-import {mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
+import {colors, mixinListItemDescription, mixinListItemName} from 'apps/University/styles';
 
 export const Actions = styled.div`
   font-size: 13px;
@@ -28,6 +28,16 @@ export const Name = styled.div`
     cursor: pointer;
     text-decoration: underline;
   }
+`;
+
+export const Position = styled.div`
+  align-items: center;
+  color: ${colors.fonts.secondary};
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+  padding: 0 8px;
+  width: 24px;
 `;
 
 export const PublicationStatus = styled.div``;

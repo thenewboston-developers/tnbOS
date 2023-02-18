@@ -1,4 +1,5 @@
 import {createSlice, current, PayloadAction} from '@reduxjs/toolkit';
+import orderBy from 'lodash/orderBy';
 
 import {UNIVERSITY_LECTURES} from 'apps/University/store/constants';
 import {Lecture, Lectures} from 'apps/University/types';
@@ -36,11 +37,15 @@ const lectures = createSlice({
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: UNIVERSITY_LECTURES, state: current(state)});
     },
     unsetLecture: (state: Lectures, {payload: lectureId}: PayloadAction<string>) => {
+      const courseId = state[lectureId].courseId;
       delete state[lectureId];
-      const lectureList = Object.values(state);
+
+      let courseLectureList = Object.values(state).filter((lecture) => lecture.courseId === courseId);
+      courseLectureList = orderBy(courseLectureList, ['position']);
+
       let position = 0;
 
-      for (const lecture of lectureList) {
+      for (const lecture of courseLectureList) {
         state[lecture.lectureId].position = position;
         position += 1;
       }
