@@ -35,6 +35,8 @@ const LectureModal: SFC<LectureModalProps> = ({className, close}) => {
   type FormValues = typeof initialValues;
 
   const handleSubmit = (values: FormValues) => {
+    if (!activeTeachCourseId) return;
+
     const courseId = activeTeachCourseId;
     const lectureId = generateNetworkUUID();
     const now = currentSystemDate();

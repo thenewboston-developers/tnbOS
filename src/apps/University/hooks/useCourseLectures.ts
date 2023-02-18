@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {getLectures} from 'apps/University/selectors/state';
 import {Lecture} from 'apps/University/types';
 
-const useCourseLectures = (courseId: string | undefined): Lecture[] => {
+const useCourseLectures = (courseId: string | null | undefined): Lecture[] => {
   const lectures = useSelector(getLectures);
 
   return useMemo(() => {

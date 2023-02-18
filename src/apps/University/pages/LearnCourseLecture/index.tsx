@@ -41,7 +41,7 @@ const LearnCourseLecture: SFC = ({className}) => {
           <S.Description>{lecture.description}</S.Description>
         </S.LectureContainer>
         <S.PlaylistContainer>
-          <Playlist activeLectureId={activeLearnLectureId} courseId={lecture.courseId} />
+          <Playlist activeLectureId={activeLearnLectureId!} courseId={lecture.courseId} />
         </S.PlaylistContainer>
       </S.Container>
     </>
