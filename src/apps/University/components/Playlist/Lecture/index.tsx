@@ -4,6 +4,7 @@ import ThumbnailMini from 'apps/University/components/ThumbnailMini';
 import {setActiveLearnLectureId, setActivePage} from 'apps/University/store/manager';
 import {Lecture as TLecture, Page} from 'apps/University/types';
 import {AppDispatch, SFC} from 'system/types';
+import {truncate} from 'system/utils/strings';
 import * as S from './Styles';
 
 export interface LectureProps {
@@ -27,7 +28,7 @@ const Lecture: SFC<LectureProps> = ({className, isActive, lecture}) => {
       <ThumbnailMini thumbnailUrl={thumbnailUrl} />
       <S.Details>
         <S.Name>{name}</S.Name>
-        <S.Description>{description}</S.Description>
+        <S.Description>{truncate(description, 128)}</S.Description>
       </S.Details>
     </S.Container>
   );

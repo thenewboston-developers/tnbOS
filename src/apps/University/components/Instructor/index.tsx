@@ -13,8 +13,8 @@ const Instructor: SFC<InstructorProps> = ({accountNumber, className}) => {
     <S.Container className={className}>
       <S.Avatar accountNumber={accountNumber} />
       <S.Right>
-        <S.Name>{displayName}</S.Name>
         <S.Description>Instructor</S.Description>
+        <S.Name>{displayName}</S.Name>
       </S.Right>
     </S.Container>
   );

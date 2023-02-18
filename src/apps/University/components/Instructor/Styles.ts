@@ -24,8 +24,9 @@ export const Description = styled.div`
 
 export const Name = styled.div`
   color: ${colors.fonts.default};
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
+  margin-top: 2px;
 `;
 
 export const Right = styled.div`

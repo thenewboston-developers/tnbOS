@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import UButton from 'apps/University/components/Button';
-import UInstructor from 'apps/University/components/Instructor';
 import UPlaylist from 'apps/University/components/Playlist';
 import UThumbnail from 'apps/University/components/Thumbnail';
 import {colors} from 'apps/University/styles';
@@ -24,18 +23,20 @@ export const CourseDescription = styled.div`
 
 export const CourseName = styled.div`
   color: ${colors.fonts.heading};
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
   margin-top: 8px;
+`;
+
+export const Details = styled.div`
+  display: flex;
+  gap: 32px;
+  margin-top: 12px;
 `;
 
 export const EnrollmentButton = styled(UButton)`
   margin-top: 16px;
   width: 100%;
-`;
-
-export const Instructor = styled(UInstructor)`
-  margin-top: 12px;
 `;
 
 export const Left = styled.div``;
