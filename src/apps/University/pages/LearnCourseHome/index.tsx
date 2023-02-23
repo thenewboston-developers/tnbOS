@@ -69,7 +69,7 @@ const LearnCourseHome: SFC = ({className}) => {
         createdDate: now,
         lectureId,
         modifiedDate: now,
-        publicationStatus: PublicationStatus.draft,
+        publicationStatus: PublicationStatus.published,
       };
     });
 
