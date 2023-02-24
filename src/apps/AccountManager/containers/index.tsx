@@ -16,6 +16,8 @@ const AccountManager: SFC<AppProps> = ({className, display}) => {
   const [accountModalIsOpen, toggleAccountModal] = useToggle(false);
   const accounts = useSelector(getAccounts);
 
+  if (!display) return null;
+
   const renderEmptyPage = () => {
     return (
       <EmptyPage

@@ -9,6 +9,8 @@ import * as S from './Styles';
 import 'apps/SpeedTest/styles/fonts.css';
 
 const SpeedTest: SFC<AppProps> = ({className, display}) => {
+  if (!display) return null;
+
   return (
     <AppWindow className={className} display={display}>
       <S.Container>

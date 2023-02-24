@@ -16,6 +16,8 @@ const NetworkManager: SFC<AppProps> = ({className, display}) => {
   const [networkModalIsOpen, toggleNetworkModal] = useToggle(false);
   const networks = useSelector(getNetworks);
 
+  if (!display) return null;
+
   const renderEmptyPage = () => {
     return (
       <EmptyPage
