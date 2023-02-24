@@ -21,16 +21,10 @@ const Chat: SFC<AppProps> = ({className, display}) => {
     );
   };
 
-  const renderTasks = () => (
-    <>
-      <ResendPendingMessages />
-    </>
-  );
-
   return (
     <>
       {renderAppWindow()}
-      {renderTasks()}
+      <ResendPendingMessages />
     </>
   );
 };
