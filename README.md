@@ -1,6 +1,16 @@
-# tnbOS
+<p align="center">
+  <img alt="logo" src="https://i.imgur.com/MP1kOuU.png" width="260">
+</p>
 
-Platform for applications.
+<p align="center">
+  <img alt="banner" src="https://i.imgur.com/NuD4ZGG.png">
+</p>
+
+## Overview
+
+tnbOS is a platform that allows for the development and hosting of p2p applications. By running the software, clients 
+are able to communicate with one another in real time. In addition, each device is also capable of storing data which 
+allows for the development of full-featured applications without the need for any centralized database.
 
 ## Project Setup
 
