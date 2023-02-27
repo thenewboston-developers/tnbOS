@@ -1,31 +1,22 @@
-import {useUpdateNotificationCount} from 'apps/Chat/hooks';
-import ResendPendingMessages from 'apps/Chat/tasks/ResendPendingMessages';
+import {useResendPendingMessages, useUpdateNotificationCount} from 'apps/Chat/hooks';
 import AppWindow from 'system/components/AppWindow';
 import {AppProps, SFC} from 'system/types';
 import * as S from './Styles';
 import 'apps/Chat/styles/fonts.css';
 
 const Chat: SFC<AppProps> = ({className, display}) => {
+  useResendPendingMessages();
   useUpdateNotificationCount();
 
-  const renderAppWindow = () => {
-    if (!display) return null;
-
-    return (
-      <AppWindow className={className} display={display}>
-        <S.Container>
-          <S.Left />
-          <S.Right />
-        </S.Container>
-      </AppWindow>
-    );
-  };
+  if (!display) return null;
 
   return (
-    <>
-      {renderAppWindow()}
-      <ResendPendingMessages />
-    </>
+    <AppWindow className={className} display={display}>
+      <S.Container>
+        <S.Left />
+        <S.Right />
+      </S.Container>
+    </AppWindow>
   );
 };
 
