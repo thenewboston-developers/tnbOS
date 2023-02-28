@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import UMdiIcon from '@mdi/react';
 
 import {Status} from 'apps/Chat/components/Avatar/Styles';
 import {colors, fonts} from 'apps/Chat/styles';
@@ -12,6 +13,16 @@ export const Container = styled.div`
 
   ${Status} {
     border-color: ${colors.rightBackground};
+  }
+`;
+
+export const Icon = styled(UMdiIcon)`
+  color: ${colors.iconGray};
+  margin-left: 10px;
+
+  &:hover {
+    color: ${fonts.color.default};
+    cursor: pointer;
   }
 `;
 

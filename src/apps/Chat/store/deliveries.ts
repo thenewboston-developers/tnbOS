@@ -17,8 +17,12 @@ const deliveries = createSlice({
       state[messageId] = delivery;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_DELIVERIES, state: current(state)});
     },
+    unsetDeliveries: (state: Deliveries, {payload: messageIds}: PayloadAction<string[]>) => {
+      for (const messageId of messageIds) delete state[messageId];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_DELIVERIES, state: current(state)});
+    },
   },
 });
 
-export const {setDeliveries, setDelivery} = deliveries.actions;
+export const {setDeliveries, setDelivery, unsetDeliveries} = deliveries.actions;
 export default deliveries.reducer;
