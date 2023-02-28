@@ -18,8 +18,12 @@ const contacts = createSlice({
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_CONTACTS, state: current(state)});
     },
     setContacts: setLocalAndStateReducer<Contacts>(CHAT_CONTACTS),
+    unsetContact: (state: Contacts, {payload: accountNumber}: PayloadAction<string>) => {
+      delete state[accountNumber];
+      window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_CONTACTS, state: current(state)});
+    },
   },
 });
 
-export const {setContact, setContacts} = contacts.actions;
+export const {setContact, setContacts, unsetContact} = contacts.actions;
 export default contacts.reducer;

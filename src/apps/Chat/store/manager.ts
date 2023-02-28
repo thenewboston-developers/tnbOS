@@ -14,7 +14,7 @@ const manager = createSlice({
   initialState,
   name: CHAT_MANAGER,
   reducers: {
-    setActiveChat: (state: Manager, {payload: accountNumber}: PayloadAction<string>) => {
+    setActiveChat: (state: Manager, {payload: accountNumber}: PayloadAction<string | null>) => {
       state.activeChat = accountNumber;
       window.electron.ipc.send(IpcChannel.setStoreValue, {key: CHAT_MANAGER, state: current(state)});
     },
