@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
 import UAvatar from 'system/components/Avatar';
 import {Status} from 'system/components/Avatar/Styles';
 
@@ -17,12 +18,12 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 
 export const Name = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 14px;
   font-weight: 600;
 `;

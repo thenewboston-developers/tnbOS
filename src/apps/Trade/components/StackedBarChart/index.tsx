@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
 import {getResolutions} from 'apps/Trade/selectors/state';
+import {colors} from 'apps/Trade/styles';
 import {FillStatus, Order, ResolutionStatus} from 'apps/Trade/types';
 import {SFC} from 'system/types';
 
@@ -49,8 +50,8 @@ const StackedBarChart: SFC<StackedBarChartProps> = ({className, orderList}) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="filled" fill="#34c38f" stackId="a" />
-        <Bar dataKey="cancelled" fill="#f46a6a" stackId="a" />
+        <Bar dataKey="filled" fill={colors.palette.green['300']} stackId="a" />
+        <Bar dataKey="cancelled" fill={colors.palette.red['300']} stackId="a" />
       </BarChart>
     </ResponsiveContainer>
   );

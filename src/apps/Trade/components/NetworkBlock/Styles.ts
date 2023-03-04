@@ -1,18 +1,19 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
+import {colors} from 'apps/Trade/styles';
 import {TransactionStatus} from 'apps/Trade/types';
 
 const receivedMixin = css`
-  color: #34c38f;
+  color: ${colors.palette.green['300']};
 `;
 
 const sentMixin = css`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
 `;
 
 export const BottomText = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
   font-weight: 300;
 `;
@@ -27,7 +28,7 @@ export const Details = styled.div`
 `;
 
 export const DetailsTopText = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 14px;
   font-weight: 600;
 `;
@@ -47,7 +48,7 @@ export const Top = styled.div`
   padding: 8px;
 
   &:hover {
-    background: #f6f6f6;
+    background: ${colors.palette.lightGray['400']};
     cursor: pointer;
   }
 `;

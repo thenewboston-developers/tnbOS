@@ -6,6 +6,7 @@ import UAssetLogo from 'apps/Trade/components/AssetLogo';
 import Badge from 'apps/Trade/components/Badge';
 import Card from 'apps/Trade/components/Card';
 import UUser from 'apps/Trade/components/User';
+import {colors} from 'apps/Trade/styles';
 
 export const Amount = styled(UAmount)`
   flex-basis: 20%;
@@ -49,7 +50,7 @@ export const ResolutionBadge = styled(Badge)`
 `;
 
 export const Time = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 
@@ -60,7 +61,7 @@ export const Top = styled.div`
   padding: 12px;
 
   &:hover {
-    background: #fcfcfc;
+    background: ${colors.palette.lightGray['300']};
     cursor: pointer;
   }
 `;

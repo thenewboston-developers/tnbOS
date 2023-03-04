@@ -1,39 +1,40 @@
 import styled, {css} from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
 import {BadgeStyle} from '.';
 
 const dangerMixin = css`
-  background-color: #f46a6a;
+  background-color: ${colors.palette.red['300']};
 `;
 
 const darkLightMixin = css`
   background-color: rgba(52, 58, 64, 0.18);
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
 `;
 
 const darkMixin = css`
-  background-color: #74788d;
+  background-color: ${colors.palette.slateGray['300']};
 `;
 
 const infoMixin = css`
-  background-color: #50a5f1;
+  background-color: ${colors.palette.lightBlue['300']};
 `;
 
 const primaryMixin = css`
-  background-color: #556ee6;
+  background-color: ${colors.palette.royalBlue['300']};
 `;
 
 const successMixin = css`
-  background-color: #34c38f;
+  background-color: ${colors.palette.green['300']};
 `;
 
 const warningMixin = css`
-  background-color: #f1b44c;
+  background-color: ${colors.palette.yellow['300']};
 `;
 
 export const Container = styled.div<{badgeStyle: BadgeStyle}>`
   border-radius: 4px;
-  color: white;
+  color: #fff;
   font-size: 10px;
   font-weight: 500;
   padding: 2px 4px;

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const Container = styled.div<{isActive: boolean}>`
   align-items: center;
   border-radius: 4px;
-  border: 2px solid ${({isActive}) => (isActive ? '#556ee6' : '#f6f6f6')};
+  border: 2px solid ${({isActive}) => (isActive ? colors.palette.royalBlue['300'] : colors.palette.lightGray['400'])};
   display: flex;
   flex: auto;
   justify-content: center;

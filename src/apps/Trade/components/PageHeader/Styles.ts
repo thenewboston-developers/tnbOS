@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const Container = styled.div`
   align-items: baseline;
   display: flex;
@@ -8,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Left = styled.div`
-  color: #495057;
+  color: ${colors.fonts.default};
   font-size: 16px;
   font-weight: 600;
 `;

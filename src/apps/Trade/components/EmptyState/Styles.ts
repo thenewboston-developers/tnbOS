@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const Container = styled.div`
   align-items: center;
   display: flex;
@@ -21,11 +23,11 @@ export const Img = styled.img`
 `;
 
 export const SpanBlue = styled.span`
-  color: #556cd6;
+  color: ${colors.palette.royalBlue['300']};
   cursor: pointer;
   font-weight: 600;
 `;
 
 export const SpanGrey = styled.span`
-  color: #697386;
+  color: ${colors.palette.slateGray['200']};
 `;

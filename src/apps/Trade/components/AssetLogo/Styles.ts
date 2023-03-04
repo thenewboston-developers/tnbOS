@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const BottomText = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 
@@ -23,7 +25,7 @@ export const Right = styled.div`
 `;
 
 export const TopText = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 14px;
   font-weight: 600;
 `;
