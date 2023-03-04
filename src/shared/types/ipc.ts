@@ -9,7 +9,10 @@ export interface IpcApi {
 
 export enum IpcChannel {
   clearStore = 'clear-store',
+  exportStoreData = 'export-store-data',
+  importStoreData = 'import-store-data',
   loadStoreData = 'load-store-data',
+  restartApp = 'restart-app',
   setStoreValue = 'set-store-value',
 }
 
