@@ -81,35 +81,37 @@ const BuyAddressDetails: SFC = ({className}) => {
 
   return (
     <S.Container className={className}>
-      <S.Back onClick={handleBackClick}>Back to addresses</S.Back>
-      {renderSectionHeading()}
-      <Formik
-        enableReinitialize={true}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validateOnMount={false}
-        validationSchema={validationSchema}
-      >
-        {({dirty, errors, isSubmitting, isValid, touched}) => (
-          <Form>
-            <Input errors={errors} label="Full Name" name="fullName" touched={touched} />
-            <Input errors={errors} label="Address 1" name="address1" touched={touched} />
-            <Input errors={errors} label="Address 2" name="address2" touched={touched} />
-            <Input errors={errors} label="City" name="city" touched={touched} />
-            <Input errors={errors} label="State" name="state" touched={touched} />
-            <Input errors={errors} label="ZIP Code" name="zipCode" touched={touched} />
-            <Select errors={errors} label="Country" name="countryCode" options={countryOptions} touched={touched} />
-            <S.Button
-              dirty={dirty}
-              disabled={isSubmitting}
-              isSubmitting={isSubmitting}
-              isValid={isValid}
-              text="Submit"
-              type={ButtonType.submit}
-            />
-          </Form>
-        )}
-      </Formik>
+      <S.InnerContainer>
+        <S.Back onClick={handleBackClick}>Back to addresses</S.Back>
+        {renderSectionHeading()}
+        <Formik
+          enableReinitialize={true}
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validateOnMount={false}
+          validationSchema={validationSchema}
+        >
+          {({dirty, errors, isSubmitting, isValid, touched}) => (
+            <Form>
+              <Input errors={errors} label="Full Name" name="fullName" touched={touched} />
+              <Input errors={errors} label="Address 1" name="address1" touched={touched} />
+              <Input errors={errors} label="Address 2" name="address2" touched={touched} />
+              <Input errors={errors} label="City" name="city" touched={touched} />
+              <Input errors={errors} label="State" name="state" touched={touched} />
+              <Input errors={errors} label="ZIP Code" name="zipCode" touched={touched} />
+              <Select errors={errors} label="Country" name="countryCode" options={countryOptions} touched={touched} />
+              <S.Button
+                dirty={dirty}
+                disabled={isSubmitting}
+                isSubmitting={isSubmitting}
+                isValid={isValid}
+                text="Submit"
+                type={ButtonType.submit}
+              />
+            </Form>
+          )}
+        </Formik>
+      </S.InnerContainer>
     </S.Container>
   );
 };

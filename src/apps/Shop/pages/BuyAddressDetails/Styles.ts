@@ -13,9 +13,14 @@ export const Button = styled(UButton)`
 `;
 
 export const Container = styled.div`
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px 32px;
+`;
+
+export const InnerContainer = styled.div`
   margin: 0 auto;
   max-width: 500px;
-  padding: 24px 32px;
 `;
 
 export const SectionHeading = styled(USectionHeading)`
