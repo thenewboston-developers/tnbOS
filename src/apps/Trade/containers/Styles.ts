@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 import ULeftMenu from 'apps/Trade/containers/LeftMenu';
 import URight from 'apps/Trade/containers/Right';
-import {fonts} from 'apps/Trade/styles';
+import {colors, fonts} from 'apps/Trade/styles';
 
 export const Container = styled.div`
-  color: #495057;
+  color: ${colors.fonts.default};
   display: grid;
   font-family: ${fonts.family.default};
   font-weight: ${fonts.weight.regular};

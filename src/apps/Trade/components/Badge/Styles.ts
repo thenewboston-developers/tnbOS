@@ -17,7 +17,7 @@ const darkMixin = css`
 `;
 
 const infoMixin = css`
-  background-color: #50a5f1;
+  background-color: ${colors.palette.lightBlue['300']};
 `;
 
 const primaryMixin = css`
@@ -25,11 +25,11 @@ const primaryMixin = css`
 `;
 
 const successMixin = css`
-  background-color: #34c38f;
+  background-color: ${colors.palette.green['300']};
 `;
 
 const warningMixin = css`
-  background-color: #f1b44c;
+  background-color: ${colors.palette.yellow['300']};
 `;
 
 export const Container = styled.div<{badgeStyle: BadgeStyle}>`

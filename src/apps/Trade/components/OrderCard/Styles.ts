@@ -61,7 +61,7 @@ export const Top = styled.div`
   padding: 12px;
 
   &:hover {
-    background: #fcfcfc;
+    background: ${colors.palette.lightGray['300']};
     cursor: pointer;
   }
 `;

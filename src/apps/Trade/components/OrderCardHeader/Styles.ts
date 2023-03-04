@@ -8,9 +8,9 @@ export const TOTAL_LEFT_SPACING = BUBBLE_SIZE + TEXT_MARGIN_LEFT;
 
 export const Bubble = styled.div`
   align-items: center;
-  background-color: #34c38f;
+  background-color: ${colors.palette.green['300']};
   border-radius: 50%;
-  border: 2px solid #34c38f;
+  border: 2px solid ${colors.palette.green['300']};
   display: flex;
   height: ${`${BUBBLE_SIZE}px`};
   justify-content: center;

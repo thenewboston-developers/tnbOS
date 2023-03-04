@@ -10,7 +10,7 @@ const dangerMixin = css`
   background-color: ${colors.palette.red['300']};
 
   &:hover {
-    background: #cf5a5a;
+    background: ${colors.palette.red['400']};
   }
 `;
 
@@ -32,10 +32,10 @@ const hasIconMixin = css`
 `;
 
 const successMixin = css`
-  background-color: #34c38f;
+  background-color: ${colors.palette.green['300']};
 
   &:hover {
-    background: #2ca67a;
+    background: ${colors.palette.green['400']};
   }
 `;
 
@@ -51,7 +51,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   padding: 0 12px;
 
   &:hover {
-    background: #485ec4;
+    background: ${colors.palette.royalBlue['400']};
   }
 
   ${({$color}) => {

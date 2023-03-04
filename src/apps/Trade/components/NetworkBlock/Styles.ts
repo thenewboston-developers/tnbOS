@@ -5,7 +5,7 @@ import {colors} from 'apps/Trade/styles';
 import {TransactionStatus} from 'apps/Trade/types';
 
 const receivedMixin = css`
-  color: #34c38f;
+  color: ${colors.palette.green['300']};
 `;
 
 const sentMixin = css`
@@ -48,7 +48,7 @@ export const Top = styled.div`
   padding: 8px;
 
   &:hover {
-    background: #f6f6f6;
+    background: ${colors.palette.lightGray['400']};
     cursor: pointer;
   }
 `;

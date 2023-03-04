@@ -11,17 +11,17 @@ export const Balance = styled.div`
 
 export const Container = styled.div<{isActive: boolean}>`
   align-items: flex-start;
-  background: ${({isActive}) => (isActive ? '#f6f6f6' : '#fff')};
+  background: ${({isActive}) => (isActive ? colors.palette.lightGray['400'] : '#fff')};
   border-radius: 4px;
   display: flex;
   padding: 8px 12px;
 
   ${Status} {
-    border-color: ${({isActive}) => (isActive ? '#f6f6f6' : '#fff')};
+    border-color: ${({isActive}) => (isActive ? colors.palette.lightGray['400'] : '#fff')};
   }
 
   &:hover {
-    background: #f6f6f6;
+    background: ${colors.palette.lightGray['400']};
     cursor: pointer;
   }
 `;
