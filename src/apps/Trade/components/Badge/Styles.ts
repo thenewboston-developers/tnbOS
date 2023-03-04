@@ -21,7 +21,7 @@ const infoMixin = css`
 `;
 
 const primaryMixin = css`
-  background-color: #556ee6;
+  background-color: ${colors.palette.royalBlue['300']};
 `;
 
 const successMixin = css`

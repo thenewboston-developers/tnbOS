@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const Tab = styled.div<{isActive?: boolean}>`
-  background: ${({isActive}) => (isActive ? '#556ee6' : 'transparent')};
+  background: ${({isActive}) => (isActive ? colors.palette.royalBlue['300'] : 'transparent')};
   border-radius: 4px;
   color: ${({isActive}) => (isActive ? 'white' : '#495057')};
   font-size: 13px;

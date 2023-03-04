@@ -15,12 +15,12 @@ const dangerMixin = css`
 `;
 
 const disabledMixin = css`
-  background: #556ee6;
+  background: ${colors.palette.royalBlue['300']};
   cursor: not-allowed;
   opacity: 0.65;
 
   &:hover {
-    background: #556ee6;
+    background: ${colors.palette.royalBlue['300']};
   }
 `;
 
@@ -40,7 +40,7 @@ const successMixin = css`
 `;
 
 export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
-  background: #556ee6;
+  background: ${colors.palette.royalBlue['300']};
   border-radius: ${`${BUTTON_HEIGHT / 2}px`};
   border: 1px solid transparent;
   color: white;
