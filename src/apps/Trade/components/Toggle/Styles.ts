@@ -21,7 +21,7 @@ export const Container = styled.div<{checked: boolean}>`
 `;
 
 export const Inner = styled.div<{checked: boolean}>`
-  background: ${({checked}) => (checked ? 'white' : '#bfbfbf')};
+  background: ${({checked}) => (checked ? '#fff' : '#bfbfbf')};
   border-radius: 100%;
   height: ${`${TOGGLE_SIZE}px`};
   left: ${({checked}) => (checked ? `${TOGGLED_LEFT}px` : '2px')};

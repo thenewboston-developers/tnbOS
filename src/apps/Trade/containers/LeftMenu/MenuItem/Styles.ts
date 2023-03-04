@@ -14,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Icon = styled(MdiIcon)<{$isActivePage: boolean}>`
-  color: ${({$isActivePage}) => ($isActivePage ? 'white' : '#6a7187')};
+  color: ${({$isActivePage}) => ($isActivePage ? '#fff' : '#6a7187')};
   margin-right: 12px;
 `;
 
@@ -42,6 +42,6 @@ export const NotificationCountContainer = styled.div`
 `;
 
 export const Text = styled.div<{$isActivePage: boolean}>`
-  color: ${({$isActivePage}) => ($isActivePage ? 'white' : '#a6b0cf')};
+  color: ${({$isActivePage}) => ($isActivePage ? '#fff' : '#a6b0cf')};
   font-size: 13px;
 `;
