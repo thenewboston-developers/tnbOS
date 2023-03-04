@@ -43,7 +43,7 @@ export const Button = styled.button<{$color: ButtonColor; hasIcon: boolean}>`
   background: ${colors.palette.royalBlue['300']};
   border-radius: ${`${BUTTON_HEIGHT / 2}px`};
   border: 1px solid transparent;
-  color: white;
+  color: #fff;
   cursor: pointer;
   display: block;
   font-family: Poppins, sans-serif;

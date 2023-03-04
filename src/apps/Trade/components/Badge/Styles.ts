@@ -34,7 +34,7 @@ const warningMixin = css`
 
 export const Container = styled.div<{badgeStyle: BadgeStyle}>`
   border-radius: 4px;
-  color: white;
+  color: #fff;
   font-size: 10px;
   font-weight: 500;
   padding: 2px 4px;

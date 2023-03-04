@@ -18,7 +18,7 @@ export const Bubble = styled.div`
 `;
 
 export const BubbleNumber = styled.div`
-  color: white;
+  color: #fff;
   font-size: 12px;
   font-weight: 500;
 `;

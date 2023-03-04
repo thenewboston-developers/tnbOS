@@ -28,7 +28,7 @@ export const Balance = styled.div`
 `;
 
 export const Container = styled.div`
-  background: white;
+  background: #fff;
   box-shadow: 0 12px 24px rgb(18 38 63 / 3%);
   color: ${colors.palette.slateGray['300']};
   display: flex;
