@@ -1,12 +1,13 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
+import {colors} from 'apps/Trade/styles';
 import {ButtonColor} from './types';
 
 const BUTTON_HEIGHT = 36;
 
 const dangerMixin = css`
-  background-color: #f46a6a;
+  background-color: ${colors.palette.red['300']};
 
   &:hover {
     background: #cf5a5a;

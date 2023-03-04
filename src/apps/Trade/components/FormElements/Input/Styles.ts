@@ -1,15 +1,17 @@
 import {Field as UField} from 'formik';
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const ErrorMessage = styled.div`
-  color: #f46a6a;
+  color: ${colors.palette.red['300']};
   font-size: 11px;
   margin-top: 6px;
 `;
 
 export const Field = styled(UField)`
   border-radius: 3px;
-  border: 1px solid ${({$error}) => ($error ? '#f46a6a' : '#ced4da')};
+  border: 1px solid ${({$error}) => ($error ? colors.palette.red['300'] : '#ced4da')};
   display: block;
   font-family: Poppins, sans-serif;
   min-width: 200px;

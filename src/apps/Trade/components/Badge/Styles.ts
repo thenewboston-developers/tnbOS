@@ -4,12 +4,12 @@ import {colors} from 'apps/Trade/styles';
 import {BadgeStyle} from '.';
 
 const dangerMixin = css`
-  background-color: #f46a6a;
+  background-color: ${colors.palette.red['300']};
 `;
 
 const darkLightMixin = css`
   background-color: rgba(52, 58, 64, 0.18);
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
 `;
 
 const darkMixin = css`

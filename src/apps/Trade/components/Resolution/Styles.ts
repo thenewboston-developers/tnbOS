@@ -18,7 +18,7 @@ export const Container = styled.div`
 `;
 
 export const Icon = styled(MdiIcon)`
-  color: #f46a6a;
+  color: ${colors.palette.red['300']};
   margin-right: 12px;
 `;
 
@@ -30,7 +30,7 @@ export const Heading = styled.div`
 `;
 
 export const HeadingText = styled.div`
-  color: #f46a6aff;
+  color: ${colors.palette.red['300']};
   font-size: 16px;
   font-weight: 500;
 `;
@@ -50,7 +50,7 @@ export const OptionsContainer = styled.div`
 
 export const Panel = styled.div`
   border-radius: 4px;
-  border: 1px solid #f46a6a;
+  border: 1px solid ${colors.palette.red['300']};
 `;
 
 export const PanelBody = styled.div`

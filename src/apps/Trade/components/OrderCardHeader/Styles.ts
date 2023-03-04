@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 const BUBBLE_SIZE = 32;
 const TEXT_MARGIN_LEFT = 12;
 export const TOTAL_LEFT_SPACING = BUBBLE_SIZE + TEXT_MARGIN_LEFT;
@@ -28,7 +30,7 @@ export const Container = styled.div`
 `;
 
 export const Text = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 16px;
   font-weight: 600;
   margin-left: ${`${TEXT_MARGIN_LEFT}px`};

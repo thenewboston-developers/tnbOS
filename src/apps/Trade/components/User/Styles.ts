@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
 import UAvatar from 'system/components/Avatar';
 import {Status} from 'system/components/Avatar/Styles';
-import {colors} from 'apps/Trade/styles';
 
 export const Avatar = styled(UAvatar)`
   margin-right: 8px;
@@ -23,7 +23,7 @@ export const Description = styled.div`
 `;
 
 export const Name = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 14px;
   font-weight: 600;
 `;

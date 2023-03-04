@@ -28,7 +28,7 @@ export const Details = styled.div`
 `;
 
 export const DetailsTopText = styled.div`
-  color: #343a40;
+  color: ${colors.palette.onyx['300']};
   font-size: 14px;
   font-weight: 600;
 `;
