@@ -1,6 +1,7 @@
 import styled, {css} from 'styled-components';
 import UIcon from '@mdi/react';
 
+import {colors} from 'apps/Trade/styles';
 import {TransactionStatus} from 'apps/Trade/types';
 
 const receivedMixin = css`
@@ -8,11 +9,11 @@ const receivedMixin = css`
 `;
 
 const sentMixin = css`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
 `;
 
 export const BottomText = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
   font-weight: 300;
 `;

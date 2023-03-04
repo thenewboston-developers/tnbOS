@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import UTickerTable from 'apps/Trade/components/TickerTable';
+import {colors} from 'apps/Trade/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ export const Transactions = styled.div`
 
 export const TransactionsEmptyState = styled.div`
   align-items: center;
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   display: flex;
   flex: auto;
   font-size: 13px;

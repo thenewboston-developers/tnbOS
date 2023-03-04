@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const ActiveNetwork = styled.div`
   align-items: center;
   display: flex;
@@ -28,7 +30,7 @@ export const Balance = styled.div`
 export const Container = styled.div`
   background: white;
   box-shadow: 0 12px 24px rgb(18 38 63 / 3%);
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   display: flex;
   font-size: 12px;
   justify-content: space-between;

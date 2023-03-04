@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-
 import MdiIcon from '@mdi/react';
 
+import {colors} from 'apps/Trade/styles';
+
 export const ButtonHelperText = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
   margin-top: 12px;
 `;

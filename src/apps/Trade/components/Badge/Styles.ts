@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
 import {BadgeStyle} from '.';
 
 const dangerMixin = css`
@@ -12,7 +13,7 @@ const darkLightMixin = css`
 `;
 
 const darkMixin = css`
-  background-color: #74788d;
+  background-color: ${colors.palette.slateGray['300']};
 `;
 
 const infoMixin = css`

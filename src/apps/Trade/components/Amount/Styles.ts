@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
+
 export const AmountContainer = styled.div`
   align-items: center;
   display: flex;
@@ -7,7 +9,7 @@ export const AmountContainer = styled.div`
 `;
 
 export const BottomText = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 

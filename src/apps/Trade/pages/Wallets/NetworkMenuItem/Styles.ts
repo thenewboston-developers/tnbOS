@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/Trade/styles';
 import UNetworkLogo from 'system/components/NetworkLogo';
 import {Status} from 'system/components/NetworkLogo/Styles';
 
 export const Balance = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 
@@ -32,7 +33,7 @@ export const DisplayName = styled.div`
 `;
 
 export const NetworkId = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 

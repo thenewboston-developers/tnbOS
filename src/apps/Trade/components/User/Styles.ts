@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import UAvatar from 'system/components/Avatar';
 import {Status} from 'system/components/Avatar/Styles';
+import {colors} from 'apps/Trade/styles';
 
 export const Avatar = styled(UAvatar)`
   margin-right: 8px;
@@ -17,7 +18,7 @@ export const Container = styled.div`
 `;
 
 export const Description = styled.div`
-  color: #74788d;
+  color: ${colors.palette.slateGray['300']};
   font-size: 12px;
 `;
 
