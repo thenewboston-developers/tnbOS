@@ -1,15 +1,15 @@
 import styled, {css} from 'styled-components';
 
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 
 const disabledMixin = css`
-  border: 1px solid #74788d;
-  color: #74788d;
+  border: 1px solid ${colors.slateGray};
+  color: ${colors.slateGray};
 
   &:hover {
     background: transparent;
-    border: 1px solid #74788d;
-    color: #74788d;
+    border: 1px solid ${colors.slateGray};
+    color: ${colors.slateGray};
     cursor: not-allowed;
   }
 `;
@@ -18,8 +18,8 @@ export const Container = styled.div<{enabled: boolean}>`
   align-items: center;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1px solid #34c38f;
-  color: #34c38f;
+  border: 1px solid ${colors.palette.green['100']};
+  color: ${colors.palette.green['100']};
   display: flex;
   font-size: 36px;
   font-weight: ${fonts.weight.light};
@@ -30,8 +30,8 @@ export const Container = styled.div<{enabled: boolean}>`
   transition: all 0.2s;
 
   &:hover {
-    background: rgba(52, 195, 143, 0.1);
-    color: #34c38f;
+    background-color: ${colors.palette.green['200']};
+    color: ${colors.palette.green['100']};
     cursor: pointer;
   }
 

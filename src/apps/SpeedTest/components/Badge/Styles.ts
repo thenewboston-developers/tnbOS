@@ -1,26 +1,26 @@
 import styled, {css} from 'styled-components';
 
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 import {RunStatus} from 'apps/SpeedTest/types';
 
 const errorMixin = css`
-  background-color: hsla(0, 86%, 69%, 0.18);
-  color: #f46a6a;
+  background-color: ${colors.palette.red['200']};
+  color: ${colors.palette.red['100']};
 `;
 
 const pendingMixin = css`
-  background-color: rgba(80, 165, 241, 0.18);
-  color: #50a5f1;
+  background-color: ${colors.palette.blue['200']};
+  color: ${colors.palette.blue['100']};
 `;
 
 const successMixin = css`
-  background-color: rgba(52, 195, 143, 0.18);
-  color: #34c38f;
+  background-color: ${colors.palette.green['200']};
+  color: ${colors.palette.green['100']};
 `;
 
 const timeoutMixin = css`
-  background-color: rgba(241, 180, 76, 0.18);
-  color: #f1b44c;
+  background-color: ${colors.palette.yellow['200']};
+  color: ${colors.palette.yellow['100']};
 `;
 
 export const Container = styled.div<{status: RunStatus}>`

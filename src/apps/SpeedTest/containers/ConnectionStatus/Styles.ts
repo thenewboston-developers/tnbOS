@@ -1,18 +1,19 @@
 import styled, {css} from 'styled-components';
 import UMdiIcon from '@mdi/react';
 
+import {colors} from 'apps/SpeedTest/styles';
 import {ConnectionStatus} from 'apps/SpeedTest/types';
 
 const connectedMixin = css`
-  color: #34c38f;
+  color: ${colors.palette.green['100']};
 `;
 
 const disconnectedMixin = css`
-  color: #f46a6a;
+  color: ${colors.palette.red['100']};
 `;
 
 const invalidMixin = css`
-  color: #74788d;
+  color: ${colors.slateGray};
 `;
 
 export const Container = styled.div`
@@ -33,6 +34,6 @@ export const Icon = styled(UMdiIcon)<{status: ConnectionStatus}>`
 `;
 
 export const Text = styled.div`
-  color: #c3cbe4;
+  color: ${colors.fonts.secondary};
   font-size: 13px;
 `;
