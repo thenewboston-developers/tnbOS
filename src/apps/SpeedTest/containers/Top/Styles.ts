@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import UAccountIdentification from 'apps/SpeedTest/components/AccountIdentification';
 import UNetworkIdentification from 'apps/SpeedTest/components/NetworkIdentification';
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 
 export const AccountIdentification = styled(UAccountIdentification)`
   margin-right: 10px;
@@ -10,9 +10,9 @@ export const AccountIdentification = styled(UAccountIdentification)`
 
 export const Button = styled.button`
   background: transparent;
-  border: 1px solid #74788d;
+  border: 1px solid ${colors.slateGray};
   border-radius: 4px;
-  color: #c3cbe4;
+  color: ${colors.fonts.secondary};
   font-family: ${fonts.family.default};
   padding: 8px 12px;
   transition: all 0.15s;

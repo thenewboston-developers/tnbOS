@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import UMdiIcon from '@mdi/react';
 
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 
 const cellStyling = `
   border-bottom: 1px solid #32394e;
@@ -30,20 +30,20 @@ export const Header = styled.div`
 `;
 
 export const History = styled.span`
-  color: #f6f6f6;
+  color: ${colors.fonts.bright};
   font-size: 16px;
   font-weight: ${fonts.weight.bold};
 `;
 
 export const Icon = styled(UMdiIcon)`
   border-radius: 50%;
-  color: #74788d;
+  color: ${colors.slateGray};
   margin-left: 8px;
   transition: all 0.15s;
 
   &:hover {
-    background: #31394e;
-    color: #556ee5;
+    background: ${colors.icon.hoverBackground};
+    color: ${colors.icon.hoverColor};
     cursor: pointer;
   }
 `;

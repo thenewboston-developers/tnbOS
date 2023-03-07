@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import {colors} from 'apps/SpeedTest/styles';
+
 export const BottomText = styled.div`
   font-size: 12px;
   margin-top: 2px;
@@ -19,6 +21,6 @@ export const Img = styled.img`
 export const Text = styled.div``;
 
 export const TopText = styled.div`
-  color: #f6f6f6;
+  color: ${colors.fonts.bright};
   font-size: 14px;
 `;

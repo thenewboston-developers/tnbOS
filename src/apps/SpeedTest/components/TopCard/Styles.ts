@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 
 export const Container = styled.div`
-  background: #2a3042;
+  background: ${colors.gunMetal};
   border-radius: 8px;
   display: flex;
   flex: 1;
@@ -16,7 +16,7 @@ export const Content = styled.div`
 `;
 
 export const Heading = styled.div`
-  color: #c3cbe4;
+  color: ${colors.fonts.secondary};
   font-size: 13px;
   font-weight: ${fonts.weight.medium};
 `;

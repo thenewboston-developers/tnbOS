@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import {fonts, scrollStyle} from 'apps/SpeedTest/styles';
+import {colors, fonts, scrollStyle} from 'apps/SpeedTest/styles';
 
 export const Container = styled.div`
   align-items: center;
   background: #222736;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgb(0 0 0 / 3%);
-  color: #a6b0cf;
+  color: ${colors.fonts.default};
   display: flex;
   flex-direction: column;
   font-family: ${fonts.family.default};

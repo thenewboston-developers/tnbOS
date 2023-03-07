@@ -1,6 +1,6 @@
 import styled, {keyframes} from 'styled-components';
 
-import {fonts} from 'apps/SpeedTest/styles';
+import {colors, fonts} from 'apps/SpeedTest/styles';
 import UIcon from 'system/components/Icon';
 
 const addOverlay = keyframes`
@@ -18,8 +18,8 @@ export const Content = styled.div`
 
 export const Header = styled.div`
   align-items: center;
-  border-bottom: 1px solid #32394e;
-  color: #a6b0cf;
+  border-bottom: 1px solid ${colors.charcoal};
+  color: ${colors.fonts.default};
   display: flex;
   font-size: 16px;
   font-weight: ${fonts.weight.medium};
@@ -29,17 +29,17 @@ export const Header = styled.div`
 `;
 
 export const Icon = styled(UIcon)`
-  color: #74788d;
+  color: ${colors.slateGray};
 
   &:hover {
-    background: #31394e;
-    color: #556ee5;
+    background: ${colors.icon.hoverBackground};
+    color: ${colors.icon.hoverColor};
   }
 `;
 
 export const Modal = styled.div`
-  background: #2a3042;
-  border: 1px solid #32394e;
+  background: ${colors.gunMetal};
+  border: 1px solid ${colors.charcoal};
   border-radius: 8px;
   font-family: ${fonts.family.default};
   left: 50%;
