@@ -15,6 +15,8 @@ export const Back = styled(UBack)`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
   padding: 24px 32px;
 `;
 

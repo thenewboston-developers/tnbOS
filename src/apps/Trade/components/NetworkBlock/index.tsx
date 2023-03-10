@@ -122,7 +122,7 @@ const NetworkBlock: SFC<NetworkBlockProps> = ({className, networkBlock, networkD
       <S.ValueContainer>
         <S.Value transactionStatus={transactionStatus}>
           {sign}
-          {networkBlock.amount}
+          {networkBlock.amount.toLocaleString()}
         </S.Value>
       </S.ValueContainer>
     );
